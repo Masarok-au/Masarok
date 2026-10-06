@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مسار | دليل الدراسة في أستراليا</title>
+<meta name="description" content="دليل مجاني بقلم طالب للطلاب السعوديين الراغبين في الدراسة في سيدني: خيارات الدراسة، والابتعاث، والمكافأة، والسكن، وروابط رسمية.">
+<link rel="alternate" hreflang="en" href="https://bader-almasri.github.io/Masar/">
+<link rel="alternate" hreflang="ar" href="https://bader-almasri.github.io/Masar/ar/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Noto+Kufi+Arabic:wght@700;800&display=swap">
+<style>
+/* Layout: full-bleed night-sky hero where Najd dunes meet Sydney Harbour under the Southern Cross, Al Sadu woven bands as dividers, then a calm reading column of guide sections. */
+:root{
+  --bg:#F3F4F1;
+  --surface:#FFFFFF;
+  --ink:#18212C;
+  --muted:#56606C;
+  --line:#DCDFE2;
+  --green:#0B6B3A;
+  --green-soft:#E3EFE7;
+  --sand:#9A6A22;
+  --sand-soft:#F5EBDA;
+  --harbour:#1F4E86;
+
+  /* the hero and footer are always night scenes */
+  --night:#0B1626;
+  --night-2:#173252;
+  --night-ink:#EEF2F7;
+  --night-dim:#A9B8CB;
+  --gold:#E2B66C;
+
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --f-ar:"IBM Plex Sans Arabic", "Geeza Pro", "Segoe UI", Tahoma, sans-serif;
+
+  --step-0:1.0625rem;
+  --step-1:1.25rem;
+  --step-2:clamp(1.5rem, 1.2vw + 1.1rem, 1.85rem);
+  --step-3:clamp(2.2rem, 4.5vw + 1rem, 3.8rem);
+  --radius:10px;
+  --sadu:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='18' viewBox='0 0 48 18'%3E%3Crect width='48' height='18' fill='%232A1612'/%3E%3Crect width='48' height='2' fill='%23C99A5B'/%3E%3Crect y='16' width='48' height='2' fill='%23C99A5B'/%3E%3Cpath d='M0 2h8l-4 5zM8 2h8l-4 5zM16 2h8l-4 5zM24 2h8l-4 5zM32 2h8l-4 5zM40 2h8l-4 5zM0 16h8l-4-5zM8 16h8l-4-5zM16 16h8l-4-5zM24 16h8l-4-5zM32 16h8l-4-5zM40 16h8l-4-5z' fill='%239C2A22'/%3E%3Cpath d='M24 5l4 4-4 4-4-4z' fill='%23F3EBDD'/%3E%3Cpath d='M8 7.5l1.5 1.5L8 10.5 6.5 9zM40 7.5l1.5 1.5-1.5 1.5L38.5 9z' fill='%23C99A5B'/%3E%3C/svg%3E");
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F141B; --surface:#161D27; --ink:#E6EAF0; --muted:#A3AEBB; --line:#27313D;
+    --green:#5BC08A; --green-soft:#1B3127; --sand:#E1B56E; --sand-soft:#33291A; --harbour:#86AEE0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F141B; --surface:#161D27; --ink:#E6EAF0; --muted:#A3AEBB; --line:#27313D;
+  --green:#5BC08A; --green-soft:#1B3127; --sand:#E1B56E; --sand-soft:#33291A; --harbour:#86AEE0;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:var(--f-body); font-size:var(--step-0); line-height:1.65;
+}
+.wrap{max-width:50rem; margin-inline:auto; padding-inline:16px}
+a{color:var(--green); text-underline-offset:3px}
+a:focus-visible, button:focus-visible, input:focus-visible{outline:3px solid var(--sand); outline-offset:2px; border-radius:4px}
+h1,h2,h3{font-family:var(--f-display); line-height:1.15; text-wrap:balance; margin:0}
+h2{font-size:var(--step-2); font-weight:700; letter-spacing:-.01em}
+h3{font-size:var(--step-1); font-weight:700}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono); font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:var(--sand); display:flex; align-items:center; gap:10px}
+.eyebrow::before{content:""; width:9px; height:9px; background:var(--sand); transform:rotate(45deg); flex:none}
+
+/* hero: night sky, Southern Cross, dunes meeting the harbour */
+.hero{position:relative; overflow:hidden; color:var(--night-ink);
+  background:radial-gradient(110% 90% at 85% 0%, var(--night-2) 0%, var(--night) 65%);
+  padding-inline:16px}
+.hero-inner{position:relative; z-index:2; max-width:62rem; margin-inline:auto}
+.sky, .cross, .scene{position:absolute; pointer-events:none}
+.sky{inset:0; width:100%; height:100%; z-index:0}
+.cross{top:72px; right:max(16px, calc(50% - 31rem)); width:150px; height:150px; z-index:1}
+.scene{left:0; bottom:18px; width:100%; height:200px; z-index:1}
+.sadu{height:18px; background:var(--sadu) repeat-x left center; background-size:auto 18px}
+.hero > .sadu{position:absolute; left:0; right:0; bottom:0; z-index:2}
+
+.top{display:flex; justify-content:space-between; align-items:center; gap:12px 20px; flex-wrap:wrap; padding-block:20px; border-bottom:1px solid rgba(238,242,247,.12)}
+.brand{font-family:var(--f-display); font-weight:800; font-size:1.25rem; color:var(--night-ink); text-decoration:none; display:flex; align-items:baseline; gap:10px}
+.brand .ar{font-family:var(--f-ar); font-weight:500; color:var(--gold); font-size:1.1rem}
+.top nav{display:flex; gap:6px 18px; flex-wrap:wrap; font-size:.93rem}
+.top nav a{color:var(--night-dim); text-decoration:none}
+.top nav a:hover{color:var(--night-ink)}
+.top nav a.lang{border:1px solid rgba(238,242,247,.35); border-radius:999px; padding:1px 12px; color:var(--night-ink)}
+.top nav a.lang:lang(ar){font-family:var(--f-ar)}
+.top nav a.lang:hover{border-color:var(--gold); color:var(--gold)}
+
+.hero-copy{display:grid; gap:20px; max-width:38rem; padding-block:56px 240px}
+.hero h1{font-size:var(--step-3); font-weight:800; letter-spacing:-.025em; color:var(--night-ink)}
+.hero h1 em{font-style:normal; color:var(--gold)}
+.hero .lede{color:#C8D3E0; font-size:1.12rem; max-width:34rem}
+.hero .tagline{font-family:var(--f-ar); color:var(--gold); font-size:1.15rem; width:fit-content}
+.hero .cta{display:flex; flex-wrap:wrap; gap:10px}
+.trust{display:flex; flex-wrap:wrap; gap:6px 18px; font-family:var(--f-mono); font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:var(--night-dim)}
+.trust span{display:flex; align-items:center; gap:8px}
+.trust span::before{content:""; width:6px; height:6px; background:var(--gold); transform:rotate(45deg)}
+.btn{display:inline-block; font-family:var(--f-body); font-weight:700; font-size:.98rem; padding:11px 18px; border-radius:8px; text-decoration:none; border:1.5px solid transparent}
+.btn-primary{background:var(--gold); color:#1A1206}
+.btn-ghost{border-color:rgba(238,242,247,.35); color:var(--night-ink)}
+.btn:hover{filter:brightness(1.08)}
+
+section{padding-block:56px 0; display:grid; gap:18px}
+section > p.intro{color:var(--muted); max-width:40rem}
+
+/* author note */
+.author{display:grid; grid-template-columns:auto 1fr; gap:16px; align-items:start; padding:20px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); margin-top:22px}
+.avatar{width:52px; height:52px; border-radius:50%; background:var(--green-soft); color:var(--green); display:grid; place-items:center; font-family:var(--f-display); font-weight:800; font-size:1.3rem}
+.author p{color:var(--muted)}
+.author strong{color:var(--ink)}
+
+/* study options: parallel choices, not a sequence */
+.group-label{font-family:var(--f-mono); font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--green); margin-top:6px}
+.options{display:grid; grid-template-columns:repeat(auto-fit, minmax(17rem, 1fr)); gap:14px}
+.option{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px; display:grid; gap:10px; align-content:start; min-width:0}
+.option .ticket{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; font-family:var(--f-mono); font-size:.75rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding-bottom:10px; border-bottom:1px dashed var(--line)}
+.option .ticket b{font-weight:500; color:var(--sand)}
+.option p{color:var(--muted); font-size:.97rem}
+.option dl{margin:0; display:grid; gap:8px}
+.option dt{font-weight:700; font-size:.88rem; color:var(--ink)}
+.option dd{margin:0; color:var(--muted); font-size:.95rem}
+.option .sacm{background:var(--green-soft); border-radius:6px; padding:10px 12px; font-size:.92rem; color:var(--ink)}
+.option .sacm b{color:var(--green)}
+
+/* SACM section */
+.tracks{display:grid; grid-template-columns:repeat(auto-fit, minmax(15rem, 1fr)); gap:12px}
+.track{border:1px solid var(--line); border-radius:8px; padding:14px 16px; background:var(--surface); display:grid; gap:4px; align-content:start; min-width:0}
+.track .name{display:flex; justify-content:space-between; align-items:baseline; gap:8px; flex-wrap:wrap}
+.track .name .ar{font-family:var(--f-ar); color:var(--green); font-size:1rem}
+.track p{color:var(--muted); font-size:.93rem}
+.track .tag{font-family:var(--f-mono); font-size:.75rem; color:var(--sand)}
+.rules{list-style:none; margin:0; padding:0; display:grid; gap:0; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius)}
+.rules li{display:grid; grid-template-columns:minmax(0, 13rem) minmax(0, 1fr); gap:6px 20px; padding:14px 18px; border-top:1px solid var(--line)}
+.rules li:first-child{border-top:0}
+.rules .r-k{font-weight:700}
+.rules .r-v{color:var(--muted); font-size:.97rem}
+.phase{display:grid; gap:14px}
+.phase h3 .ar{font-family:var(--f-ar); font-weight:500; color:var(--green); font-size:1rem; margin-inline-start:8px}
+code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-soft); padding:1px 6px; border-radius:4px; overflow-wrap:anywhere}
+@media (max-width:560px){ .rules li{grid-template-columns:1fr} }
+/* allowance + budget */
+.allowance{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.3fr); gap:0; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
+.amount{background:var(--night); color:var(--night-ink); padding:24px; display:grid; gap:6px; align-content:center}
+.amount .k{font-family:var(--f-mono); font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--night-dim)}
+.amount .fig{font-family:var(--f-display); font-weight:800; font-size:clamp(2.4rem, 5vw + 1rem, 3.4rem); line-height:1; color:var(--gold); font-variant-numeric:tabular-nums}
+.amount .per{color:#C8D3E0; font-size:.95rem}
+.budget{padding:20px 22px; display:grid; gap:12px; min-width:0}
+.budget h3{font-size:1.1rem}
+.budget .hint{color:var(--muted); font-size:.9rem}
+.brow{display:grid; grid-template-columns:minmax(0,1fr) 7.5rem; gap:12px; align-items:center}
+.brow label{font-size:.95rem}
+.brow label small{display:block; color:var(--muted); font-size:.8rem}
+.money-in{display:flex; align-items:center; border:1px solid var(--line); border-radius:6px; background:var(--bg); padding-inline:8px}
+.money-in span{color:var(--muted); font-size:.9rem}
+.money-in input{width:100%; border:0; background:transparent; color:var(--ink); font:inherit; padding:7px 4px; font-variant-numeric:tabular-nums; text-align:right; min-width:0}
+.totals{border-top:1px solid var(--line); padding-top:12px; display:grid; gap:6px; font-variant-numeric:tabular-nums}
+.totals div{display:flex; justify-content:space-between; gap:12px}
+.totals .left b{font-size:1.15rem}
+.totals .left.ok b{color:var(--green)}
+.totals .left.low b{color:#C0392B}
+@media (max-width:640px){ .allowance{grid-template-columns:1fr} }
+
+
+.note{background:var(--sand-soft); border-inline-start:3px solid var(--sand); padding:12px 16px; border-radius:6px; color:var(--ink); font-size:.97rem}
+
+/* checklists */
+.checklist{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:6px 0}
+.cl-head{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 18px 8px; flex-wrap:wrap}
+.progress{font-family:var(--f-mono); font-size:.85rem; color:var(--muted); font-variant-numeric:tabular-nums; display:flex; align-items:center; gap:10px}
+.bar{width:90px; height:6px; border-radius:3px; background:var(--line); overflow:hidden}
+.bar i{display:block; height:100%; width:0; background:var(--green); transition:width .25s ease}
+.checklist ul{list-style:none; margin:0; padding:0}
+.checklist li{border-top:1px solid var(--line)}
+.checklist label{display:grid; grid-template-columns:22px 1fr; gap:12px; padding:12px 18px; cursor:pointer; align-items:start}
+.checklist input{width:20px; height:20px; margin:3px 0 0; accent-color:var(--green)}
+.checklist .t{font-weight:700}
+.checklist .d{display:block; color:var(--muted); font-size:.95rem; font-weight:400}
+.checklist input:checked + span .t{text-decoration:line-through; text-decoration-color:var(--green); color:var(--muted)}
+.reset{background:none; border:0; color:var(--muted); font:inherit; font-size:.85rem; text-decoration:underline; cursor:pointer; padding:0}
+
+/* two-column facts */
+.facts{display:grid; grid-template-columns:repeat(auto-fit, minmax(15rem, 1fr)); gap:14px}
+.fact{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px; display:grid; gap:8px; align-content:start; min-width:0}
+.fact p{color:var(--muted); font-size:.97rem}
+.fact .k{font-family:var(--f-mono); font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; color:var(--green)}
+
+/* lessons */
+.lessons{counter-reset:none; display:grid; gap:14px; margin:0; padding:0; list-style:none}
+.lessons li{display:grid; gap:4px; padding-inline-start:16px; border-inline-start:2px solid var(--green)}
+.lessons li p{color:var(--muted)}
+
+/* links */
+.links{display:grid; grid-template-columns:repeat(auto-fit, minmax(14rem, 1fr)); gap:10px}
+.links a{display:grid; gap:2px; padding:14px 16px; border:1px solid var(--line); border-radius:8px; background:var(--surface); text-decoration:none; color:var(--ink); min-width:0}
+.links a:hover{border-color:var(--green)}
+.links a span{font-weight:700}
+.links a small{color:var(--muted); font-size:.85rem; overflow-wrap:anywhere}
+
+.site-foot{margin-top:72px; background:var(--night); color:var(--night-dim); font-size:.92rem}
+.site-foot .wrap{display:grid; gap:10px; padding-block:28px 40px}
+.site-foot b{color:var(--night-ink)}
+.site-foot .ar{font-family:var(--f-ar); color:var(--gold)}
+
+@media (max-width:560px){
+  .author{grid-template-columns:1fr}
+  .cross{width:96px; height:96px; top:120px; opacity:.8}
+  .scene{height:150px}
+  .hero-copy{padding-block:40px 180px}
+}
+@media (prefers-reduced-motion: reduce){ .bar i{transition:none} }
+</style>
+
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+
+<style>
+/* Arabic (RTL) overrides */
+:root{
+  --f-display:"Noto Kufi Arabic", "IBM Plex Sans Arabic", "Geeza Pro", Tahoma, sans-serif;
+  --f-body:"IBM Plex Sans Arabic", "Geeza Pro", "Segoe UI", Tahoma, sans-serif;
+  --f-mono:"IBM Plex Sans Arabic", "Geeza Pro", Tahoma, sans-serif;
+  --f-latin:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --step-3:clamp(1.9rem, 3.8vw + 1rem, 3.2rem);
+}
+body{line-height:1.85}
+h1,h2,h3{line-height:1.45; letter-spacing:0}
+.hero h1, h2{letter-spacing:0}
+.eyebrow, .trust, .option .ticket, .fact .k, .group-label, .amount .k, .track .tag, .progress{letter-spacing:0; text-transform:none}
+.eyebrow{font-size:.9rem}
+.trust{font-size:.88rem}
+.option .ticket, .fact .k, .group-label, .amount .k{font-size:.85rem}
+.hero .tagline{font-family:var(--f-latin)}
+.cross{right:auto; left:max(16px, calc(50% - 31rem))}
+.money-in input{text-align:left}
+.amount .fig{justify-self:start}
+</style>
+</head>
+<body>
+<div class="hero">
+  <svg class="sky" viewBox="0 0 1440 720" preserveAspectRatio="xMidYMin slice" aria-hidden="true"><g fill="#F3E7C8"><circle cx="466" cy="78" r="0.8" opacity="0.29"/><circle cx="772" cy="190" r="0.8" opacity="0.75"/><circle cx="309" cy="45" r="1.2" opacity="0.29"/><circle cx="131" cy="221" r="1.5" opacity="0.32"/><circle cx="321" cy="326" r="0.8" opacity="0.57"/><circle cx="571" cy="508" r="0.8" opacity="0.56"/><circle cx="192" cy="218" r="1.5" opacity="0.31"/><circle cx="444" cy="424" r="0.8" opacity="0.31"/><circle cx="823" cy="98" r="0.8" opacity="0.55"/><circle cx="90" cy="31" r="0.8" opacity="0.52"/><circle cx="766" cy="404" r="1.2" opacity="0.57"/><circle cx="653" cy="156" r="0.8" opacity="0.63"/><circle cx="351" cy="299" r="1.5" opacity="0.52"/><circle cx="495" cy="233" r="1.5" opacity="0.79"/><circle cx="170" cy="217" r="1" opacity="0.33"/><circle cx="704" cy="20" r="0.8" opacity="0.67"/><circle cx="825" cy="455" r="1" opacity="0.44"/><circle cx="504" cy="258" r="1.2" opacity="0.29"/><circle cx="135" cy="140" r="0.8" opacity="0.28"/><circle cx="1010" cy="337" r="1.2" opacity="0.41"/><circle cx="556" cy="348" r="0.8" opacity="0.77"/><circle cx="512" cy="318" r="1.2" opacity="0.28"/><circle cx="1106" cy="67" r="0.8" opacity="0.47"/><circle cx="1320" cy="258" r="0.8" opacity="0.50"/><circle cx="791" cy="459" r="1.2" opacity="0.73"/><circle cx="401" cy="216" r="1" opacity="0.63"/><circle cx="548" cy="120" r="0.8" opacity="0.35"/><circle cx="334" cy="121" r="1.2" opacity="0.71"/><circle cx="263" cy="147" r="0.8" opacity="0.48"/><circle cx="532" cy="294" r="0.8" opacity="0.63"/><circle cx="742" cy="321" r="0.8" opacity="0.50"/><circle cx="1254" cy="495" r="1.5" opacity="0.47"/><circle cx="575" cy="54" r="1.2" opacity="0.28"/><circle cx="97" cy="109" r="0.8" opacity="0.31"/><circle cx="865" cy="53" r="1.5" opacity="0.33"/><circle cx="146" cy="189" r="0.8" opacity="0.29"/><circle cx="299" cy="196" r="1" opacity="0.78"/><circle cx="867" cy="247" r="0.8" opacity="0.72"/><circle cx="1430" cy="242" r="1.2" opacity="0.42"/><circle cx="208" cy="390" r="1" opacity="0.51"/><circle cx="997" cy="268" r="0.8" opacity="0.77"/><circle cx="761" cy="76" r="1.5" opacity="0.75"/><circle cx="1092" cy="155" r="0.8" opacity="0.63"/><circle cx="376" cy="191" r="0.8" opacity="0.45"/><circle cx="321" cy="282" r="1.5" opacity="0.43"/><circle cx="321" cy="422" r="0.8" opacity="0.69"/><circle cx="1178" cy="385" r="0.8" opacity="0.36"/><circle cx="710" cy="380" r="0.8" opacity="0.68"/><circle cx="680" cy="101" r="1.5" opacity="0.78"/><circle cx="644" cy="487" r="1" opacity="0.78"/><circle cx="525" cy="115" r="0.8" opacity="0.51"/><circle cx="486" cy="251" r="1.5" opacity="0.71"/><circle cx="690" cy="340" r="0.8" opacity="0.71"/><circle cx="173" cy="202" r="0.8" opacity="0.51"/><circle cx="257" cy="410" r="1" opacity="0.30"/><circle cx="1362" cy="375" r="1.2" opacity="0.47"/><circle cx="1363" cy="377" r="0.8" opacity="0.80"/><circle cx="40" cy="307" r="1.2" opacity="0.69"/><circle cx="210" cy="430" r="1.2" opacity="0.61"/><circle cx="505" cy="285" r="0.8" opacity="0.26"/><circle cx="1151" cy="378" r="0.8" opacity="0.54"/><circle cx="1344" cy="226" r="0.8" opacity="0.70"/><circle cx="304" cy="131" r="1" opacity="0.53"/><circle cx="1100" cy="170" r="1.5" opacity="0.48"/><circle cx="189" cy="473" r="1" opacity="0.74"/><circle cx="954" cy="424" r="1.5" opacity="0.48"/><circle cx="1322" cy="261" r="1.5" opacity="0.33"/><circle cx="735" cy="454" r="0.8" opacity="0.58"/><circle cx="1117" cy="78" r="0.8" opacity="0.51"/><circle cx="1044" cy="289" r="1" opacity="0.63"/></g></svg>
+  <svg class="cross" viewBox="0 0 200 200" aria-hidden="true"><g stroke="#E2B66C" stroke-opacity=".22" stroke-width="1" stroke-dasharray="2 5"><line x1="100" y1="28" x2="108" y2="168"/><line x1="44" y1="94" x2="156" y2="84"/></g><circle cx="100" cy="28" r="8.32" fill="#F3E7C8" opacity=".12"/><circle cx="100" cy="28" r="3.2" fill="#F7EED6"/><circle cx="108" cy="168" r="10.920000000000002" fill="#F3E7C8" opacity=".12"/><circle cx="108" cy="168" r="4.2" fill="#F7EED6"/><circle cx="44" cy="94" r="9.879999999999999" fill="#F3E7C8" opacity=".12"/><circle cx="44" cy="94" r="3.8" fill="#F7EED6"/><circle cx="156" cy="84" r="7.279999999999999" fill="#F3E7C8" opacity=".12"/><circle cx="156" cy="84" r="2.8" fill="#F7EED6"/><circle cx="130" cy="126" r="5.2" fill="#F3E7C8" opacity=".12"/><circle cx="130" cy="126" r="2" fill="#F7EED6"/></svg>
+  <svg class="scene" viewBox="0 0 1440 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><rect x="640" y="186" width="800" height="34" fill="#0A1B30"/><g stroke="#86AEE0" stroke-opacity=".25" stroke-width="1.5"><line x1="900" y1="200" x2="960" y2="200"/><line x1="1080" y1="207" x2="1150" y2="207"/><line x1="1220" y1="198" x2="1270" y2="198"/><line x1="760" y1="210" x2="800" y2="210"/></g><g fill="#C9D3DE" opacity=".5"><rect x="836" y="134" width="30" height="54"/><rect x="1294" y="134" width="30" height="54"/></g><g fill="none" stroke="#D9E3EE" stroke-linecap="round" opacity=".75"><path d="M880 168 Q1080 40 1280 168" stroke-width="3"/><path d="M900 168 Q1080 70 1260 168" stroke-width="2"/><line x1="740" y1="168" x2="1420" y2="168" stroke-width="3"/><g stroke-width="1" opacity=".6"><line x1="920" y1="145.0" x2="920" y2="168"/><line x1="950" y1="131.0" x2="950" y2="168"/><line x1="980" y1="120.0" x2="980" y2="168"/><line x1="1010" y1="111.8" x2="1010" y2="168"/><line x1="1040" y1="106.6" x2="1040" y2="168"/><line x1="1070" y1="104.2" x2="1070" y2="168"/><line x1="1100" y1="104.6" x2="1100" y2="168"/><line x1="1130" y1="108.0" x2="1130" y2="168"/><line x1="1160" y1="114.2" x2="1160" y2="168"/><line x1="1190" y1="123.4" x2="1190" y2="168"/><line x1="1220" y1="135.4" x2="1220" y2="168"/><line x1="1250" y1="150.2" x2="1250" y2="168"/></g></g><path d="M0 132 C120 98 230 96 340 124 S540 112 660 142 C700 152 740 164 780 186 L780 220 L0 220 Z" fill="#C7924A" opacity=".45"/><path d="M0 176 C140 140 270 150 390 170 S610 160 720 186 L760 220 L0 220 Z" fill="#A8742F" opacity=".9"/><g fill="#3B2A16" opacity=".9"><path d="M214 150 C212 128 214 112 220 96 L223 97 C218 113 217 129 219 151 Z"/><path d="M221 96 C206 88 192 90 182 99 C194 93 206 94 221 98 Z"/><path d="M221 96 C234 86 250 87 260 96 C248 91 236 92 222 99 Z"/><path d="M221 96 C214 82 202 76 190 78 C202 81 212 88 220 99 Z"/><path d="M221 96 C228 80 240 74 252 76 C240 80 231 87 223 99 Z"/><path d="M246 160 C245 142 247 130 252 118 L254.5 119 C250 131 249 143 250 161 Z"/><path d="M253 118 C242 112 231 113 224 120 C233 116 242 117 253 121 Z"/><path d="M253 118 C263 111 275 112 282 119 C273 115 264 116 254 121 Z"/><path d="M253 118 C248 107 239 103 230 104 C239 107 246 112 252 121 Z"/></g></svg>
+  <div class="hero-inner">
+    <header class="top">
+      <a class="brand" href="#top">مسار <span class="ar" lang="en" dir="ltr">Masar</span></a>
+      <nav aria-label="أقسام الدليل">
+      <a href="#options">خيارات الدراسة</a>
+      <a href="#sacm">الابتعاث</a>
+      <a href="#allowance">المكافأة</a>
+      <a href="#before">قبل السفر</a>
+      <a href="#arrival">الأسابيع الأولى</a>
+      <a href="#housing">السكن</a>
+      <a href="#money">المال والعمل</a>
+      <a href="#links">روابط رسمية</a>
+      <a class="lang" href="../" lang="en" hreflang="en" dir="ltr">English</a>
+    </nav>
+    </header>
+    <div class="hero-copy" id="top">
+      <h1>من السعودية إلى شهادة جامعية في <em>سيدني</em>.</h1>
+      <p class="lede">دليل مجاني للطلاب السعوديين الراغبين في الدراسة في أستراليا. يشرح لك خيارات الدراسة، وطريقة عمل الابتعاث، وما تحتاج إلى ترتيبه قبل السفر، وأسابيعك الأولى في سيدني.</p>
+      <p class="tagline" lang="en" dir="ltr">Your guide to studying in Australia</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#options">قارن خيارات الدراسة</a>
+        <a class="btn btn-ghost" href="#sacm">دليل الابتعاث</a>
+      </div>
+      <div class="trust"><span>مجاني</span><span>بقلم طالب</span><span>مرتبط بالمصادر الرسمية</span></div>
+    </div>
+  </div>
+  <div class="sadu" aria-hidden="true"></div>
+</div>
+
+<div class="wrap">
+  <main>
+    <div class="author">
+      <div class="avatar" aria-hidden="true">ب</div>
+      <div>
+        <p><strong>بقلم بدر</strong>، طالب هندسة التعدين في جامعة UNSW سيدني. بدأت بسنة تأسيسية، ثم أكملت دبلوم الهندسة في UNSW College، وانتقلت بعدها إلى السنة الثانية من البكالوريوس. هذا الدليل هو ما تمنيت أن يكون معي من اليوم الأول.</p>
+      </div>
+    </div>
+
+    <section id="options" aria-labelledby="options-h">
+      <p class="eyebrow">اختر طريقك</p>
+      <h2 id="options-h">خيارات الدراسة</h2>
+      <p class="intro">لا يوجد طريق واحد صحيح. اختر الخيار الذي يناسب درجاتك ومستواك في اللغة الإنجليزية وأهدافك. الأمثلة هنا من جامعة UNSW وUNSW College، لكن أغلب الجامعات الأسترالية تقدم خيارات مشابهة.</p>
+
+      <p class="group-label">بعد الثانوية</p>
+      <div class="options">
+        <article class="option">
+          <div class="ticket"><span>خيار</span><b>قبول مباشر</b></div>
+          <h3>البدء في البكالوريوس مباشرة</h3>
+          <p>تدخل السنة الأولى مباشرة إذا كانت درجاتك في الثانوية ودرجة اختبار اللغة تحقق شروط القبول في الجامعة.</p>
+          <dl>
+            <div><dt>يناسبك إذا</dt><dd>كانت درجاتك قوية ودرجة اختبار اللغة بالمستوى المطلوب للتخصص.</dd></div>
+            <div><dt>المدة</dt><dd>مدة البكالوريوس كاملة، غالبًا من 3 إلى 4 سنوات (الهندسة مع مرتبة الشرف عادةً 4 سنوات).</dd></div>
+          </dl>
+          <p class="sacm"><b>ملاحظة الابتعاث:</b> يجب أن تحقق الجامعة شرط التصنيف في مسارك (أفضل 30 جامعة لمسار الرواد، وأفضل 200 لمسار إمداد).</p>
+        </article>
+
+        <article class="option">
+          <div class="ticket"><span>خيار</span><b>سنة تقريبًا</b></div>
+          <h3>السنة التأسيسية (Foundation)</h3>
+          <p>سنة تحضيرية تربط بين الثانوية والجامعة. تدرس مواد مرتبطة بتخصصك وتتعرف على أسلوب الدراسة في أستراليا، ثم تدخل السنة الأولى.</p>
+          <dl>
+            <div><dt>يناسبك إذا</dt><dd>كانت شهادة الثانوية لا تؤهلك للقبول المباشر، أو أردت بداية أسهل.</dd></div>
+            <div><dt>يؤدي إلى</dt><dd>السنة الأولى من البكالوريوس، إذا حققت متطلبات الانتقال.</dd></div>
+          </dl>
+          <p class="sacm"><b>ملاحظة الابتعاث:</b> ابتداءً من العام 2025–2026، تشترط الوزارة نسبة 90% على الأقل في الثانوية وآيلتس 5.5 (أو ما يعادله) للابتعاث على السنة التحضيرية.</p>
+        </article>
+
+        <article class="option">
+          <div class="ticket"><span>خيار</span><b>سنة تقريبًا</b></div>
+          <h3>الدبلوم (Diploma)</h3>
+          <p>يغطي محتوى السنة الجامعية الأولى في فصول أصغر ومع دعم أكبر. إذا حققت متطلبات الانتقال، تدخل <b>السنة الثانية</b> من البكالوريوس المرتبط به.</p>
+          <dl>
+            <div><dt>يناسبك إذا</dt><dd>كنت تعرف تخصصك مسبقًا، مثل الهندسة أو إدارة الأعمال، وتريد دعمًا إضافيًا في سنتك الأولى.</dd></div>
+            <div><dt>يؤدي إلى</dt><dd>السنة الثانية من البكالوريوس المرتبط، مع معادلة الساعات.</dd></div>
+          </dl>
+          <p class="sacm"><b>ملاحظة الابتعاث:</b> احصل على موافقة الملحقية على الدبلوم والبكالوريوس الذي يؤدي إليه قبل قبول العرض.</p>
+        </article>
+
+        <article class="option">
+          <div class="ticket"><span>خيار</span><b>أسابيع إلى أشهر</b></div>
+          <h3>دورة اللغة الإنجليزية</h3>
+          <p>برنامج إنجليزي أكاديمي يرفع درجتك إلى المستوى الذي يتطلبه برنامجك. بعض البرامج تعفيك منه إذا كانت درجة اختبارك كافية.</p>
+          <dl>
+            <div><dt>يناسبك إذا</dt><dd>كانت درجتك في اللغة أقل من مستوى القبول في البرنامج الذي اخترته.</dd></div>
+            <div><dt>يمكن دمجه مع</dt><dd>أي خيار من الخيارات السابقة، ضمن عرض قبول مشترك.</dd></div>
+          </dl>
+          <p class="sacm"><b>ملاحظة الابتعاث:</b> الملحقية <b>لا</b> تبتعث على دورات اللغة الإنجليزية. ستدفع تكلفتها بنفسك، لذلك حاول الوصول إلى الدرجة المطلوبة قبل أن تبدأ.</p>
+        </article>
+      </div>
+
+      <p class="group-label">بعد البكالوريوس</p>
+      <div class="options">
+        <article class="option">
+          <div class="ticket"><span>خيار</span><b>سنة إلى سنتين</b></div>
+          <h3>الماجستير</h3>
+          <p>ماجستير بالمقررات أو بالبحث للخريجين. يعتمد القبول على معدلك في البكالوريوس وتخصصك ودرجة اللغة.</p>
+          <dl>
+            <div><dt>يناسبك إذا</dt><dd>كنت تحقق شروط المعدل واللغة لبرنامج الماجستير.</dd></div>
+          </dl>
+          <p class="sacm"><b>ملاحظة الابتعاث:</b> مسارات الرواد وإمداد والبحث والتطوير كلها تشمل الماجستير، ولكل منها شرط تصنيف خاص.</p>
+        </article>
+
+        <article class="option">
+          <div class="ticket"><span>خيار</span><b>برنامج قصير</b></div>
+          <h3>برنامج ما قبل الماجستير (Pre-Masters)</h3>
+          <p>برنامج تحضيري للخريجين الذين يحتاجون إلى تقوية مهاراتهم الأكاديمية أو لغتهم قبل الماجستير.</p>
+          <dl>
+            <div><dt>يناسبك إذا</dt><dd>كنت قريبًا من شروط القبول في الماجستير لكنك لم تحققها بعد.</dd></div>
+          </dl>
+          <p class="sacm"><b>ملاحظة الابتعاث:</b> تأكد من الملحقية أن برنامج ما قبل الماجستير مشمول قبل قبول العرض.</p>
+        </article>
+      </div>
+
+      <p class="note"><b>مهم:</b> تبتعث الملحقية على برامج التأسيسي والدبلوم والبكالوريوس والماجستير والدكتوراه. <b>دورات اللغة الإنجليزية غير مشمولة</b>، وتدفع تكلفتها بنفسك.</p>
+      <p class="note">درجات القبول ومدة البرامج وشروط الانتقال تتغير كل عام وتختلف من برنامج لآخر. تحقق دائمًا من الشروط الحالية في الموقع الرسمي لـ <a href="https://www.unswcollege.edu.au" rel="noopener">UNSW College</a> ومواقع الجامعات قبل التقديم.</p>
+    </section>
+
+    <section id="sacm" aria-labelledby="sacm-h">
+      <p class="eyebrow">دليل الابتعاث</p>
+      <h2 id="sacm-h">شرح الابتعاث والملحقية الثقافية</h2>
+      <p class="intro">يدرس أغلب الطلاب السعوديين في أستراليا ضمن برنامج خادم الحرمين الشريفين للابتعاث، الذي تديره وزارة التعليم. تقدم عن طريق الوزارة عبر منصة قبول، وبعد وصولك إلى أستراليا تتولى الملحقية الثقافية السعودية في كانبرا متابعة بعثتك.</p>
+
+      <div class="phase">
+        <h3>مسارات الابتعاث الأربعة <span class="ar" lang="en" dir="ltr">Scholarship tracks</span></h3>
+        <div class="tracks">
+          <div class="track">
+            <div class="name"><b>مسار الرواد</b><span class="ar" lang="en" dir="ltr">Al-Ruwwad</span></div>
+            <span class="tag">أفضل 30 جامعة · بكالوريوس، ماجستير</span>
+            <p>لخريجي الثانوية والجامعة الذين يحصلون على قبول في إحدى أفضل جامعات العالم، في أي تخصص.</p>
+          </div>
+          <div class="track">
+            <div class="name"><b>مسار إمداد</b><span class="ar" lang="en" dir="ltr">Imdad</span></div>
+            <span class="tag">أفضل 200 · بكالوريوس، ماجستير</span>
+            <p>للتخصصات التي يحتاجها سوق العمل السعودي. تُحدَّد قائمة التخصصات المعتمدة كل عام.</p>
+          </div>
+          <div class="track">
+            <div class="name"><b>مسار البحث والتطوير</b><span class="ar" lang="en" dir="ltr">Research &amp; Development</span></div>
+            <span class="tag">أفضل 200 في التخصص · ماجستير، دكتوراه</span>
+            <p>للدراسات العليا في مجالات الأولويات البحثية الوطنية.</p>
+          </div>
+          <div class="track">
+            <div class="name"><b>مسار واعد</b><span class="ar" lang="en" dir="ltr">Wa'id</span></div>
+            <span class="tag">مرتبط بوظيفة · من الدبلوم إلى الدرجات العلمية</span>
+            <p>تدريب ودراسة مرتبطان بالعمل لدى شركة سعودية بعد التخرج. أستراليا من الدول المدرجة.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <h3>قبل التقديم <span class="ar" lang="en" dir="ltr">Before you apply</span></h3>
+        <ul class="rules">
+          <li><span class="r-k">من يحق له التقديم</span><span class="r-v">المواطنون السعوديون حسنو السيرة والسلوك. لا يوجد حد عمر عام لأغلب المسارات.</span></li>
+          <li><span class="r-k">القبول</span><span class="r-v">تحتاج إلى قبول من جامعة تحقق شروط مسارك، في تخصص ضمن القائمة المعتمدة لذلك العام.</span></li>
+          <li><span class="r-k">نمط الدراسة</span><span class="r-v">يجب أن تدرس بانتظام كامل وأن تقيم في بلد الدراسة.</span></li>
+          <li><span class="r-k">السنة التحضيرية</span><span class="r-v">ابتداءً من 2025–2026: معدل 90% على الأقل في الثانوية وآيلتس 5.5 (أو ما يعادله).</span></li>
+          <li><span class="r-k">ما تبتعث عليه الملحقية</span><span class="r-v">برامج التأسيسي والدبلوم والبكالوريوس والماجستير والدكتوراه.</span></li>
+          <li><span class="r-k">دورات اللغة</span><span class="r-v"><b>غير مشمولة.</b> دورات اللغة الإنجليزية على حسابك الخاص، لذلك احرص على تحقيق شرط اللغة قبل بدء برنامجك.</span></li>
+          <li><span class="r-k">اختبارات القدرات</span><span class="r-v">تذكر الوزارة أن التقديم لا يتطلب درجات اختبار القدرات أو التحصيلي، مع أن بعض برامج مسار واعد تطلبها.</span></li>
+          <li><span class="r-k">أين تقدم</span><span class="r-v">يقدم المتقدمون الجدد عبر <b>المنصة الوطنية للقبول الموحد (قبول)</b> بتسجيل الدخول من خلال النفاذ الوطني. أما <b>منصة سفير</b> فهي لمتابعة بعثتك بعد أن تصبح مبتعثًا. والمفاضلة تكون حسب الجدارة والمقاعد المتاحة.</span></li>
+          <li><span class="r-k">مواعيد التقديم</span><span class="r-v">في دورة 2026، فُتح التقديم في بداية فبراير وأُغلق في <b>7 مايو 2026</b>، وأُعلنت النتائج في 12–14 يونيو 2026. تعلن الوزارة مواعيد كل دورة جديدة، لذلك تابع منصة قبول وحسابات الوزارة الرسمية.</span></li>
+          <li><span class="r-k">تدرس على حسابك الخاص؟</span><span class="r-v">يمكنك التقديم للإلحاق بالبعثة إذا انطبقت عليك الشروط العامة وشروط المسار. ولدى الوزارة أيضًا خدمة إلكترونية "للإلحاق بالبعثة" لها شروط تتعلق بتصنيف الجامعة والمعدل والساعات المنجزة.</span></li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <h3>أثناء الدراسة في أستراليا <span class="ar" lang="en" dir="ltr">While you study</span></h3>
+        <ul class="rules">
+          <li><span class="r-k">ما يُغطّى عادةً</span><span class="r-v">الرسوم الدراسية، والتأمين الصحي (OSHC)، ومكافأة شهرية (انظر <a href="#allowance">المكافأة الشهرية</a>). تجد تفاصيل مستحقاتك في قرار ابتعاثك.</span></li>
+          <li><span class="r-k">خطاب الضمان المالي</span><span class="r-v">تحتاج جامعتك إلى خطاب من الملحقية يؤكد ما تتكفل به. في UNSW ترفعه على بوابة المتقدمين عند قبول العرض، ثم ترسل الجامعة الفواتير إلى الملحقية مباشرة.</span></li>
+          <li><span class="r-k">خطاب جديد مع كل تغيير</span><span class="r-v">الانتقال من التأسيسي إلى الدبلوم، أو من الدبلوم إلى البكالوريوس، أو الحاجة إلى وقت إضافي، يتطلب عادةً خطاب ضمان جديد. اطلبه مبكرًا حتى لا يتأخر تسجيلك.</span></li>
+          <li><span class="r-k">تغيير البرنامج أو التخصص</span><span class="r-v">احصل على موافقة الملحقية قبل أي تغيير. البرامج والتخصصات المعتمدة فقط هي المشمولة.</span></li>
+          <li><span class="r-k">النتائج كل فصل</span><span class="r-v">ارفع نتائجك على منصة سفير بعد كل فصل وحافظ على تقدمك الأكاديمي. ضعف التقدم قد يوقف المكافأة أو ينهي البعثة.</span></li>
+          <li><span class="r-k">المواد المحذوفة أو الراسب فيها</span><span class="r-v">قد تتحمل تكلفة المواد التي تنسحب منها متأخرًا أو تعيدها. استشر الملحقية قبل حذف أي مادة.</span></li>
+          <li><span class="r-k">احتفظ بمستنداتك</span><span class="r-v">احفظ كل خطاب بصيغة PDF: القبول، وخطاب تأكيد التسجيل (CoE)، وخطاب حالة التسجيل، ونتيجة معادلة الساعات، والسجل الأكاديمي. قد تطلب الملحقية إثبات برنامجك وتاريخ بدايته في كل مرحلة.</span></li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <h3>بعد التخرج <span class="ar" lang="en" dir="ltr">After you graduate</span></h3>
+        <ul class="rules">
+          <li><span class="r-k">معادلة الشهادة</span><span class="r-v">لتستخدم شهادتك في السعودية، قدّم طلب معادلة الشهادة لدى وزارة التعليم. الانتظام في الدراسة والإقامة في أستراليا خلال دراستك أمران مهمان هنا، لذلك احتفظ بسجلك الأكاديمي وسجل سفرك.</span></li>
+          <li><span class="r-k">الهيئات المهنية</span><span class="r-v">بعض المهن لها تسجيل خاص. فمثلًا، يسجل المهندسون في الهيئة السعودية للمهندسين.</span></li>
+        </ul>
+      </div>
+
+      <p class="note">أنظمة الابتعاث تتحدث باستمرار. يلخص هذا القسم الشروط المنشورة من وزارة التعليم حتى أكتوبر 2026. تأكد دائمًا من الملحقية ومن <a href="https://sites.moe.gov.sa/scholarship-program/conditions/" rel="noopener">صفحة الشروط الرسمية</a> قبل اتخاذ أي قرار.</p>
+    </section>
+
+    <section id="allowance" aria-labelledby="allowance-h">
+      <p class="eyebrow">مصروفك الشهري</p>
+      <h2 id="allowance-h">المكافأة الشهرية من الملحقية</h2>
+      <p class="intro">إضافةً إلى الرسوم الدراسية والتأمين الصحي، تصرف الملحقية للطلاب المبتعثين مكافأة شهرية لتكاليف المعيشة مثل الإيجار والطعام والمواصلات.</p>
+
+      <div class="allowance">
+        <div class="amount">
+          <span class="k">المكافأة الشهرية</span>
+          <span class="fig" dir="ltr">A$2,699</span>
+          <span class="per">شهريًا للطالب الأعزب في أستراليا</span>
+        </div>
+        <div class="budget">
+          <h3>خطط لشهرك</h3>
+          <p class="hint">الإيجار في سيدني يُحسب بالأسبوع. أدخل أرقامك لترى ما يتبقى لك كل شهر. الأرقام أدناه أمثلة فقط.</p>
+          <div class="brow"><label for="rent">الإيجار <small>في الأسبوع</small></label><div class="money-in" dir="ltr"><span>$</span><input id="rent" type="number" inputmode="decimal" min="0" step="10" value="400"></div></div>
+          <div class="brow"><label for="food">البقالة <small>في الأسبوع</small></label><div class="money-in" dir="ltr"><span>$</span><input id="food" type="number" inputmode="decimal" min="0" step="5" value="100"></div></div>
+          <div class="brow"><label for="travel">المواصلات <small>في الأسبوع</small></label><div class="money-in" dir="ltr"><span>$</span><input id="travel" type="number" inputmode="decimal" min="0" step="5" value="40"></div></div>
+          <div class="brow"><label for="bills">الجوال والفواتير <small>في الشهر</small></label><div class="money-in" dir="ltr"><span>$</span><input id="bills" type="number" inputmode="decimal" min="0" step="5" value="80"></div></div>
+          <div class="totals" aria-live="polite">
+            <div><span>المصروف الشهري</span><b id="spend" dir="ltr">$0</b></div>
+            <div class="left" id="leftrow"><span>المتبقي من 2,699 دولارًا</span><b id="left" dir="ltr">$0</b></div>
+          </div>
+        </div>
+      </div>
+      <p class="note">هذا هو المبلغ الذي أستلمه كطالب أعزب في 2026. الطلاب المرافقون لأسرهم قد يحصلون على مبلغ مختلف، ويمكن للملحقية تغيير المكافآت. تحقق من قرار ابتعاثك أو اسأل الملحقية.</p>
+    </section>
+
+    <section id="before" aria-labelledby="before-h">
+      <p class="eyebrow">قائمة التجهيز</p>
+      <h2 id="before-h">قبل السفر</h2>
+      <p class="intro">ضع علامة على كل مهمة تنجزها. يُحفظ تقدمك في هذا المتصفح.</p>
+
+      <div class="checklist" data-list="before">
+        <div class="cl-head">
+          <h3>الأوراق والتخطيط</h3>
+          <div class="progress"><span class="count" dir="ltr">0 / 7</span><span class="bar"><i></i></span></div>
+        </div>
+        <ul>
+          <li><label><input type="checkbox" id="b1"><span><span class="t">اقبل عرضك واستلم خطاب تأكيد التسجيل (CoE)</span><span class="d">خطاب تأكيد التسجيل هو المستند الذي تحتاجه لطلب التأشيرة.</span></span></label></li>
+          <li><label><input type="checkbox" id="b2"><span><span class="t">رتّب التأمين الصحي للطلاب الدوليين (OSHC)</span><span class="d">التأمين الصحي شرط من شروط تأشيرة الطالب، وغالبًا تستطيع جامعتك ترتيبه لك.</span></span></label></li>
+          <li><label><input type="checkbox" id="b3"><span><span class="t">قدّم على تأشيرة الطالب (الفئة 500)</span><span class="d">التقديم إلكتروني عبر وزارة الشؤون الداخلية الأسترالية. اقرأ شروط تأشيرتك بعد صدورها.</span></span></label></li>
+          <li><label><input type="checkbox" id="b4"><span><span class="t">احصل على خطاب الضمان المالي من الملحقية</span><span class="d">اطلبه عبر منصة سفير وارفعه على بوابة جامعتك عند قبول العرض. انظر <a href="#sacm">دليل الابتعاث</a>.</span></span></label></li>
+          <li><label><input type="checkbox" id="b5"><span><span class="t">احجز سكنًا مؤقتًا لمدة أسبوعين تقريبًا</span><span class="d">حجز Airbnb قريب من الجامعة يمنحك وقتًا لتجد سكنًا دائمًا وتعاينه بنفسك. انظر <a href="#housing">البحث عن سكن</a>.</span></span></label></li>
+          <li><label><input type="checkbox" id="b6"><span><span class="t">انسخ مستنداتك المهمة</span><span class="d">الجواز، وقرار التأشيرة، وخطاب CoE، وخطاب القبول، والسجل الأكاديمي، وخطابات الجهة الراعية. احتفظ بنسخ إلكترونية أيضًا.</span></span></label></li>
+          <li><label><input type="checkbox" id="b7"><span><span class="t">تأكد من موعد الأسبوع التعريفي</span><span class="d">خطط للوصول قبل بأيام لتكون مرتاحًا وقت التعريف والتسجيل.</span></span></label></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="arrival" aria-labelledby="arrival-h">
+      <p class="eyebrow">وصلت سيدني</p>
+      <h2 id="arrival-h">أسبوعاك الأولان في سيدني</h2>
+
+      <div class="checklist" data-list="arrival">
+        <div class="cl-head">
+          <h3>الاستقرار</h3>
+          <div class="progress"><span class="count" dir="ltr">0 / 7</span><span class="bar"><i></i></span></div>
+        </div>
+        <ul>
+          <li><label><input type="checkbox" id="a1"><span><span class="t">احصل على شريحة جوال أسترالية</span><span class="d">تحتاج إلى رقم محلي للبنك والجامعة وطلبات العمل.</span></span></label></li>
+          <li><label><input type="checkbox" id="a2"><span><span class="t">افتح حسابًا بنكيًا</span><span class="d">أحضر جوازك وما يثبت عنوانك أو تسجيلك في الجامعة.</span></span></label></li>
+          <li><label><input type="checkbox" id="a3"><span><span class="t">رتّب المواصلات العامة</span><span class="d">استخدم بطاقة أوبال (Opal) أو ادفع ببطاقتك البنكية اللاتلامسية في القطارات والحافلات والقطار الخفيف والعبّارات.</span></span></label></li>
+          <li><label><input type="checkbox" id="a4"><span><span class="t">حدّث عنوانك لدى جامعتك</span><span class="d">يجب على حاملي تأشيرة الطالب إبقاء بيانات التواصل محدثة لدى الجهة التعليمية.</span></span></label></li>
+          <li><label><input type="checkbox" id="a5"><span><span class="t">أكمل إجراءات الوصول مع الملحقية</span><span class="d">حدّث بياناتك في منصة سفير وأرسل ما تطلبه الملحقية من مستندات، مثل خطاب التسجيل.</span></span></label></li>
+          <li><label><input type="checkbox" id="a6"><span><span class="t">احضر الأسبوع التعريفي وشارك في الحياة الطلابية</span><span class="d">في UNSW College وUNSW، تنظم Arc الأندية والفعاليات والتطوع. العضوية مجانية، وهي أسرع طريقة لتكوين صداقات.</span></span></label></li>
+          <li><label><input type="checkbox" id="a7"><span><span class="t">اعرف أماكن الطعام والصلاة</span><span class="d">اسأل جامعتك عن المصليات في الحرم الجامعي. أحياء مثل لاكمبا (Lakemba) وأوبرن (Auburn) معروفة بالمطاعم الحلال.</span></span></label></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="housing" aria-labelledby="housing-h">
+      <p class="eyebrow">مكان تسكن فيه</p>
+      <h2 id="housing-h">البحث عن سكن في سيدني</h2>
+      <p class="intro">نصيحتي: لا توقّع عقد إيجار طويلًا وأنت خارج أستراليا. احجز إقامة قصيرة أولًا، ثم ابحث عن سكنك الحقيقي عندما تستطيع رؤيته بنفسك.</p>
+
+      <ul class="rules">
+        <li><span class="r-k">قبل السفر</span><span class="r-v">احجز <b>أسبوعين تقريبًا في Airbnb</b> (أو سكن قصير مشابه) قريب من جامعتك. يمنحك ذلك مكانًا آمنًا أثناء البحث.</span></li>
+        <li><span class="r-k">عند الوصول</span><span class="r-v">ابدأ البحث فورًا. راسل أكثر من مكان، واحجز مواعيد معاينة، وزُر الغرف بنفسك قبل دفع أي مبلغ.</span></li>
+        <li><span class="r-k">قبل نهاية الأسبوعين</span><span class="r-v">اختر سكنك، وأكّد تاريخ الانتقال كتابيًا، وانتقل قبل انتهاء إقامتك القصيرة. مدّد حجز Airbnb بضعة أيام إذا احتجت إلى وقت أطول.</span></li>
+      </ul>
+
+      <div class="options">
+        <article class="option">
+          <div class="ticket"><span>غرفة في سكن مشترك</span><b>سريع ومرن</b></div>
+          <h3>Flatmates</h3>
+          <p>غرف في بيوت وشقق مشتركة. غالبًا تتعامل مباشرة مع الساكنين فيها.</p>
+          <dl>
+            <div><dt>العقد وطلب الإيجار</dt><dd>غالبًا <b>لا يوجد عقد تُوقّعه ولا طلب إيجار رسمي</b>. يمكنك عادةً الانتقال خلال أيام.</dd></div>
+            <div><dt>الأنسب لـ</dt><dd>سكنك الأول في سيدني، والطلاب الذين يريدون تقاسم التكاليف.</dd></div>
+            <div><dt>انتبه إلى</dt><dd>اطلب مع ذلك اتفاقًا مكتوبًا بسيطًا يوضح الإيجار والتأمين والفواتير ومدة الإشعار.</dd></div>
+          </dl>
+          <p class="sacm"><a href="https://flatmates.com.au" rel="noopener">flatmates.com.au</a></p>
+        </article>
+
+        <article class="option">
+          <div class="ticket"><span>شقة أو استوديو خاص بك</span><b>أوراق أكثر</b></div>
+          <h3>Domain وrealestate.com.au</h3>
+          <p>شقق كاملة واستوديوهات وبيوت، يديرها غالبًا مكتب عقاري.</p>
+          <dl>
+            <div><dt>العقد وطلب الإيجار</dt><dd>يجب أن <b>تقدم طلب إيجار</b> مع إثبات الهوية وما يثبت قدرتك على دفع الإيجار. إذا قُبلت، توقّع عقدًا غالبًا لمدة 6 أو 12 شهرًا.</dd></div>
+            <div><dt>الأنسب لـ</dt><dd>الطلاب الذين يريدون مساحتهم الخاصة، أو القادمين مع أسرهم.</dd></div>
+            <div><dt>انتبه إلى</dt><dd>المنافسة على الطلبات عالية. عاين السكن أولًا، واقرأ العقد جيدًا قبل التوقيع.</dd></div>
+          </dl>
+          <p class="sacm"><a href="https://www.domain.com.au" rel="noopener">domain.com.au</a> · <a href="https://www.realestate.com.au" rel="noopener">realestate.com.au</a></p>
+        </article>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><span class="k">الموقع</span><h3>اسكن قرب المواصلات</h3><p>تحقق من مدة الطريق إلى الجامعة. لطلاب UNSW، الأحياء الواقعة على خط القطار الخفيف أو الحافلات مثل كنسينغتون وكينغسفورد وراندويك مفضلة لدى الطلاب.</p></div>
+        <div class="fact"><span class="k">الأمان</span><h3>احذر من الاحتيال</h3><p>لا تدفع عربونًا لغرفة لم ترها، ولا ترسل مالًا لشخص يقول إنه خارج أستراليا. إذا بدا العرض أرخص من اللازم، فغالبًا هو كذلك.</p></div>
+        <div class="fact"><span class="k">التأمين</span><h3>احمِ مبلغ التأمين</h3><p>في العقود عبر المكاتب العقارية، يجب إيداع مبلغ التأمين (Bond) لدى NSW Fair Trading. التقط صورًا مؤرخة للغرفة يوم انتقالك.</p></div>
+        <div class="fact"><span class="k">مساعدة مجانية</span><h3>خذ رأيًا ثانيًا</h3><p>غير متأكد من عقد أو مالك؟ الخدمة القانونية المجانية من Arc في UNSW تقدم استشارات في الإيجار.</p></div>
+      </div>
+    </section>
+
+    <section id="money" aria-labelledby="money-h">
+      <p class="eyebrow">أمور عملية</p>
+      <h2 id="money-h">المال والعمل</h2>
+      <div class="facts">
+        <div class="fact">
+          <span class="k">حدود العمل</span>
+          <h3>اعرف شروط تأشيرتك</h3>
+          <p>لحاملي تأشيرة الطالب حد لساعات العمل أثناء فترات الدراسة، وهو حاليًا 48 ساعة كل أسبوعين. قد تتغير الأنظمة، لذلك تحقق من موقع وزارة الشؤون الداخلية. وعلى الطلاب المبتعثين أيضًا التحقق من أنظمة جهتهم الراعية بشأن العمل الجزئي.</p>
+        </div>
+        <div class="fact">
+          <span class="k">الأجر</span>
+          <h3>اعرف حقوقك</h3>
+          <p>للطلاب الدوليين نفس حقوق العمل التي يتمتع بها الجميع في أستراليا، ومنها الحد الأدنى للأجور. يشرح لك Fair Work Ombudsman حقوقك مجانًا.</p>
+        </div>
+        <div class="fact">
+          <span class="k">الضرائب</span>
+          <h3>احصل على رقم الملف الضريبي</h3>
+          <p>إذا بدأت العمل، قدّم على رقم الملف الضريبي (TFN) إلكترونيًا عبر مكتب الضرائب الأسترالي. الخدمة مجانية.</p>
+        </div>
+        <div class="fact">
+          <span class="k">الميزانية</span>
+          <h3>خطط للإيجار أولًا</h3>
+          <p>الإيجار عادةً أكبر تكلفة في سيدني. استخدم <a href="#allowance">مخطط الميزانية</a> لترى كم يأخذ من مكافأتك، واقرأ <a href="#housing">البحث عن سكن</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="lessons" aria-labelledby="lessons-h">
+      <p class="eyebrow">من التجربة</p>
+      <h2 id="lessons-h">ما تعلمته في الطريق</h2>
+      <ul class="lessons">
+        <li><h3>احتفظ بكل خطاب رسمي</h3><p>عند انتقالك من التأسيسي إلى الدبلوم، أو من الدبلوم إلى البكالوريوس، قد تطلب جهتك الراعية إثبات برنامجك الجديد وتاريخ بدايته ونتيجة معادلة الساعات وخطاب التسجيل. احفظ كل خطاب بصيغة PDF في يوم استلامه.</p></li>
+        <li><h3>اسأل عن معادلة الساعات مبكرًا</h3><p>نتيجة المعادلة تحدد المواد التي تدرسها في فصلك الأول بالجامعة. معرفتها مبكرًا تساعدك على التخطيط لعبء دراسي كامل.</p></li>
+        <li><h3>لغتك تتحسن أسرع خارج الفصل</h3><p>الأندية والتطوع والعمل الجزئي تمنحك تدريبًا يوميًا. لا تنتظر حتى تشعر بالثقة لتشارك.</p></li>
+        <li><h3>استفد من الدعم المجاني</h3><p>تقدم الجامعات والمنظمات الطلابية مساعدة مجانية في مهارات الدراسة والصحة النفسية والأسئلة القانونية مثل الإيجار. استفد منها قبل أن تكبر المشكلة الصغيرة.</p></li>
+      </ul>
+    </section>
+
+    <section id="links" aria-labelledby="links-h">
+      <p class="eyebrow">مكتب المراجع</p>
+      <h2 id="links-h">روابط رسمية</h2>
+      <p class="intro">الأنظمة تتغير، وهذه المواقع الرسمية فيها المعلومات الحالية.</p>
+      <div class="links">
+        <a href="https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500" rel="noopener"><span>تأشيرة الطالب (الفئة 500)</span><small>وزارة الشؤون الداخلية الأسترالية</small></a>
+        <a href="https://www.studyaustralia.gov.au/en/plan-your-move/your-guide-to-visas/student-visa-subclass-500" rel="noopener"><span>دليل التأشيرة للطلاب</span><small>Study Australia</small></a>
+        <a href="https://privatehealth.gov.au/health_insurance/overseas/overseas_student_health_cover.htm" rel="noopener"><span>التأمين الصحي للطلاب الدوليين</span><small>privatehealth.gov.au</small></a>
+        <a href="https://sites.moe.gov.sa/scholarship-program/" rel="noopener"><span>برنامج الابتعاث</span><small>وزارة التعليم (المسارات والأخبار)</small></a>
+        <a href="https://sites.moe.gov.sa/scholarship-program/conditions/" rel="noopener"><span>شروط الابتعاث</span><small>وزارة التعليم</small></a>
+        <a href="https://www.moe.gov.sa/ar/knowledgecenter/eservices/Pages/ksp.aspx" rel="noopener"><span>التقديم على الابتعاث</span><small>خدمة وزارة التعليم (عبر منصة قبول)</small></a>
+        <a href="https://safeer2.moe.gov.sa/Portal" rel="noopener"><span>منصة سفير</span><small>متابعة البعثة للطلاب المبتعثين</small></a>
+        <a href="https://www.moe.gov.sa/en/knowledgecenter/eservices/pages/joinscholarship.aspx" rel="noopener"><span>الإلحاق بالبعثة</span><small>للدارسين على حسابهم الخاص</small></a>
+        <a href="https://www.unsw.edu.au/study/international-students/sponsored-students" rel="noopener"><span>الطلاب المبتعثون في UNSW</span><small>خطابات الضمان والمواعيد</small></a>
+        <a href="https://www.unswcollege.edu.au" rel="noopener"><span>UNSW College</span><small>برامج التأسيسي والدبلوم واللغة</small></a>
+        <a href="https://www.arc.unsw.edu.au" rel="noopener"><span>Arc @ UNSW</span><small>الأندية والفعاليات والتطوع والدعم</small></a>
+        <a href="https://www.fairwork.gov.au/find-help-for/visa-holders-and-migrants" rel="noopener"><span>حقوق العمل لحاملي التأشيرات</span><small>Fair Work Ombudsman</small></a>
+        <a href="https://www.ato.gov.au/individuals-and-families/tax-file-number" rel="noopener"><span>رقم الملف الضريبي</span><small>مكتب الضرائب الأسترالي</small></a>
+        <a href="https://transportnsw.info" rel="noopener"><span>مواصلات سيدني وبطاقة أوبال</span><small>Transport for NSW</small></a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer class="site-foot">
+  <div class="sadu" aria-hidden="true"></div>
+  <div class="wrap">
+    <p>يشارك هذا الدليل تجربة طالب واحد، وليس استشارة رسمية من أي جامعة أو جهة حكومية أو جهة راعية. تأكد دائمًا من التفاصيل عبر المصادر الرسمية أعلاه.</p>
+    <p><b>مسار</b> · آخر تحديث أكتوبر 2026 · إعداد بدر · <span class="ar" lang="ar">بالتوفيق</span></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var KEY = "masar-checklist-v1";
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e) { saved = {}; }
+
+  function save(){
+    try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e) {}
+  }
+
+  document.querySelectorAll(".checklist").forEach(function(list){
+    var boxes = list.querySelectorAll('input[type="checkbox"]');
+    var count = list.querySelector(".count");
+    var fill = list.querySelector(".bar i");
+
+    function update(){
+      var done = 0;
+      boxes.forEach(function(b){ if (b.checked) done++; });
+      count.textContent = done + " / " + boxes.length;
+      fill.style.width = Math.round(done / boxes.length * 100) + "%";
+    }
+
+    boxes.forEach(function(b){
+      if (saved[b.id]) b.checked = true;
+      b.addEventListener("change", function(){
+        saved[b.id] = b.checked;
+        save();
+        update();
+      });
+    });
+    update();
+  });
+
+  // budget planner
+  var ids = ["rent","food","travel","bills"];
+  var ALLOW = 2699;
+  function num(id){ var v = parseFloat(document.getElementById(id).value); return isFinite(v) && v > 0 ? v : 0; }
+  function money(v){ return (v < 0 ? "-$" : "$") + Math.abs(Math.round(v)).toLocaleString("en-AU"); }
+  function calc(){
+    var weekly = num("rent") + num("food") + num("travel");
+    var spend = weekly * 52 / 12 + num("bills");
+    var left = ALLOW - spend;
+    document.getElementById("spend").textContent = money(spend);
+    document.getElementById("left").textContent = money(left);
+    var row = document.getElementById("leftrow");
+    row.className = "left " + (left >= 0 ? "ok" : "low");
+  }
+  ids.forEach(function(id){ var el = document.getElementById(id); if (el) el.addEventListener("input", calc); });
+  if (document.getElementById("rent")) calc();
+})();
+</script>
+
+</body>
+</html>

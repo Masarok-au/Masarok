@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Masar Student Guide</title>
 <meta name="description" content="A free, student-written guide for Saudi students planning to study in Sydney: study options, the SACM scholarship, checklists and official links.">
+<link rel="alternate" hreflang="en" href="https://bader-almasri.github.io/Masar/">
+<link rel="alternate" hreflang="ar" href="https://bader-almasri.github.io/Masar/ar/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@500&display=swap">
@@ -87,6 +89,9 @@ p{margin:0}
 .top nav{display:flex; gap:6px 18px; flex-wrap:wrap; font-size:.93rem}
 .top nav a{color:var(--night-dim); text-decoration:none}
 .top nav a:hover{color:var(--night-ink)}
+.top nav a.lang{border:1px solid rgba(238,242,247,.35); border-radius:999px; padding:1px 12px; color:var(--night-ink)}
+.top nav a.lang:lang(ar){font-family:var(--f-ar)}
+.top nav a.lang:hover{border-color:var(--gold); color:var(--gold)}
 
 .hero-copy{display:grid; gap:20px; max-width:38rem; padding-block:56px 240px}
 .hero h1{font-size:var(--step-3); font-weight:800; letter-spacing:-.025em; color:var(--night-ink)}
@@ -163,7 +168,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 @media (max-width:640px){ .allowance{grid-template-columns:1fr} }
 
 
-.note{background:var(--sand-soft); border-left:3px solid var(--sand); padding:12px 16px; border-radius:6px; color:var(--ink); font-size:.97rem}
+.note{background:var(--sand-soft); border-inline-start:3px solid var(--sand); padding:12px 16px; border-radius:6px; color:var(--ink); font-size:.97rem}
 
 /* checklists */
 .checklist{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:6px 0}
@@ -188,7 +193,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 
 /* lessons */
 .lessons{counter-reset:none; display:grid; gap:14px; margin:0; padding:0; list-style:none}
-.lessons li{display:grid; gap:4px; padding-left:16px; border-left:2px solid var(--green)}
+.lessons li{display:grid; gap:4px; padding-inline-start:16px; border-inline-start:2px solid var(--green)}
 .lessons li p{color:var(--muted)}
 
 /* links */
@@ -231,6 +236,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       <a href="#housing">Housing</a>
       <a href="#money">Money &amp; work</a>
       <a href="#links">Official links</a>
+      <a class="lang" href="ar/" lang="ar" hreflang="ar" dir="rtl">العربية</a>
     </nav>
     </header>
     <div class="hero-copy" id="top">
@@ -338,7 +344,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
     <section id="sacm" aria-labelledby="sacm-h">
       <p class="eyebrow">Scholarship guide</p>
       <h2 id="sacm-h">The SACM scholarship, explained</h2>
-      <p class="intro">Most Saudi students in Australia study on the Custodian of the Two Holy Mosques Scholarship Program, run by the Ministry of Education. You apply through the Ministry, and once you are in Australia the Saudi Arabian Cultural Mission (SACM) in Canberra manages your scholarship.</p>
+      <p class="intro">Most Saudi students in Australia study on the Custodian of the Two Holy Mosques Scholarship Program, run by the Ministry of Education. You apply through the Ministry using the Qubool platform, and once you are in Australia the Saudi Arabian Cultural Mission (SACM) in Canberra manages your scholarship.</p>
 
       <div class="phase">
         <h3>The four scholarship tracks <span class="ar" lang="ar" dir="rtl">مسارات الابتعاث</span></h3>
@@ -376,7 +382,8 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
           <li><span class="r-k">What SACM sponsors</span><span class="r-v">Foundation, Diploma, Bachelor's, Master's and PhD programs.</span></li>
           <li><span class="r-k">English courses</span><span class="r-v"><b>Not sponsored.</b> English language courses are at your own cost, so aim to meet the English requirement before you start your program.</span></li>
           <li><span class="r-k">Aptitude tests</span><span class="r-v">The Ministry says applications do not require aptitude or achievement test scores, although some Wa'id programs ask for them.</span></li>
-          <li><span class="r-k">Where to apply</span><span class="r-v">The Safeer portal (منصة سفير). You can submit more than one offer, and selection is based on merit and available places.</span></li>
+          <li><span class="r-k">Where to apply</span><span class="r-v">New applicants apply through the <b>National Unified Admission Platform, Qubool</b> (منصة قبول), signing in with Nafath. <b>Safeer</b> (منصة سفير) is where you manage your scholarship once you are a scholarship student. Selection is based on merit and available places.</span></li>
+          <li><span class="r-k">Application dates</span><span class="r-v">In the 2026 cycle, applications opened in early February and closed on <b>7 May 2026</b>, and results were announced on 12–14 June 2026. The Ministry announces the dates for each new cycle, so follow Qubool and the Ministry's official accounts.</span></li>
           <li><span class="r-k">Already self-funded?</span><span class="r-v">You can apply to join the scholarship if you meet the general and track conditions. The Ministry also has a "join the scholarship" e-service with rules on university ranking, GPA and units already completed.</span></li>
         </ul>
       </div>
@@ -568,7 +575,8 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
         <a href="https://privatehealth.gov.au/health_insurance/overseas/overseas_student_health_cover.htm" rel="noopener"><span>Overseas Student Health Cover</span><small>privatehealth.gov.au</small></a>
         <a href="https://sites.moe.gov.sa/scholarship-program/" rel="noopener"><span>Scholarship program</span><small>Ministry of Education (tracks and news)</small></a>
         <a href="https://sites.moe.gov.sa/scholarship-program/conditions/" rel="noopener"><span>Scholarship conditions</span><small>Ministry of Education</small></a>
-        <a href="https://safeer2.moe.gov.sa/Portal" rel="noopener"><span>Safeer portal</span><small>Apply and manage your scholarship</small></a>
+        <a href="https://www.moe.gov.sa/en/knowledgecenter/eservices/Pages/ksp.aspx" rel="noopener"><span>Apply for the scholarship</span><small>Ministry of Education e-service (via Qubool)</small></a>
+        <a href="https://safeer2.moe.gov.sa/Portal" rel="noopener"><span>Safeer portal</span><small>Manage your scholarship as a current student</small></a>
         <a href="https://www.moe.gov.sa/en/knowledgecenter/eservices/pages/joinscholarship.aspx" rel="noopener"><span>Join the scholarship</span><small>For self-funded students</small></a>
         <a href="https://www.unsw.edu.au/study/international-students/sponsored-students" rel="noopener"><span>UNSW sponsored students</span><small>Guarantee letters and deadlines</small></a>
         <a href="https://www.unswcollege.edu.au" rel="noopener"><span>UNSW College</span><small>Foundation, diploma and English programs</small></a>
