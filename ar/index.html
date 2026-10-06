@@ -207,6 +207,12 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 .site-foot .wrap{display:grid; gap:10px; padding-block:28px 40px}
 .site-foot b{color:var(--night-ink)}
 .site-foot .ar{font-family:var(--f-ar); color:var(--gold)}
+.socials{display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px; padding-bottom:6px}
+.socials .lbl{color:var(--night-ink); font-weight:700; margin-inline-end:4px}
+.socials a{display:inline-flex; align-items:baseline; gap:6px; padding:6px 14px; border:1px solid rgba(238,242,247,.25); border-radius:999px; color:var(--night-ink); text-decoration:none; font-size:.9rem}
+.socials a small{color:var(--night-dim); font-size:.82rem}
+.socials a:hover{border-color:var(--gold); color:var(--gold)}
+
 
 @media (max-width:560px){
   .author{grid-template-columns:1fr}
@@ -614,6 +620,12 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
 <footer class="site-foot">
   <div class="sadu" aria-hidden="true"></div>
   <div class="wrap">
+    <div class="socials">
+      <span class="lbl">تواصل معي</span>
+      <a href="https://www.instagram.com/badersm18/" rel="noopener" dir="ltr">Instagram <small>@badersm18</small></a>
+      <a href="https://www.tiktok.com/@badersm18" rel="noopener" dir="ltr">TikTok <small>@badersm18</small></a>
+      <a href="https://www.linkedin.com/in/bader-almasri-270652332" rel="noopener" dir="ltr">LinkedIn <small>Bader Almasri</small></a>
+    </div>
     <p>يشارك هذا الدليل تجربة طالب واحد، وليس استشارة رسمية من أي جامعة أو جهة حكومية أو جهة راعية. تأكد دائمًا من التفاصيل عبر المصادر الرسمية أعلاه.</p>
     <p><b>مسار</b> · آخر تحديث أكتوبر 2026 · إعداد بدر · <span class="ar" lang="ar">بالتوفيق</span></p>
   </div>
