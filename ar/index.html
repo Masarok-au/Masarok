@@ -326,6 +326,24 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 .btn-outline{border-color:var(--line); color:var(--ink); background:var(--surface); justify-self:start; cursor:pointer; font-family:var(--f-body)}
 .btn-outline:hover{border-color:var(--sand)}
 
+
+/* three-step picker */
+.pk-steps{list-style:none; margin:0 0 4px; padding:0; display:flex; flex-wrap:wrap; gap:6px 18px; padding-inline-end:48px}
+.pk-steps button{display:inline-flex; align-items:center; gap:8px; background:none; border:0; padding:4px 0; color:var(--night-dim); font:inherit; font-size:.92rem; cursor:pointer}
+.pk-steps button span{display:grid; place-items:center; width:24px; height:24px; border-radius:50%; border:1px solid rgba(238,242,247,.3); font-size:.8rem; font-variant-numeric:tabular-nums}
+.pk-steps li.done button{color:var(--night-ink)}
+.pk-steps li.done button span{background:rgba(226,182,108,.18); border-color:var(--gold); color:var(--gold)}
+.pk-steps li.on button{color:var(--gold); font-weight:700}
+.pk-steps li.on button span{background:var(--gold); border-color:var(--gold); color:#1A1206}
+.pk-divider{margin-top:6px; padding-top:12px; border-top:1px solid rgba(238,242,247,.14); color:var(--night-dim); font-size:.9rem}
+.pk-dim .uni-card{background:rgba(255,255,255,.02)}
+.pk-levels{grid-template-columns:repeat(2, minmax(0, 1fr))}
+@media (max-width:560px){ .pk-levels{grid-template-columns:1fr} }
+.pk-back{justify-self:start; background:none; border:0; color:var(--night-dim); font:inherit; cursor:pointer; padding:4px 0; text-decoration:underline; text-underline-offset:3px}
+.pk-back:hover{color:var(--gold)}
+.level-banner{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 12px; background:var(--green-soft); border-radius:8px; padding:10px 14px; font-size:.95rem}
+.level-banner b{color:var(--green)}
+
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{animation:none !important; transition:none !important}
   .anim .reveal{opacity:1; transform:none}
@@ -376,7 +394,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
       <a href="#housing">السكن</a>
       <a href="#money">المال والعمل</a>
       <a href="#links">روابط رسمية</a>
-      <button type="button" class="uni-chip" data-open-picker><span>الجامعة:</span> <b>UNSW</b></button>
+      <button type="button" class="uni-chip" data-open-picker="0"><span>دليلك:</span> <b>UNSW</b></button>
       <a class="lang" href="../" lang="en" hreflang="en" dir="ltr">English</a>
     </nav>
     </header>
@@ -385,7 +403,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
       <p class="lede">دليل مجاني للطلاب السعوديين الراغبين في الدراسة في أستراليا. يشرح لك خيارات الدراسة، وطريقة عمل الابتعاث، وما تحتاج إلى ترتيبه قبل السفر، وأسابيعك الأولى في سيدني.</p>
       <p class="tagline" lang="en" dir="ltr">Your guide to studying in Australia</p>
       <div class="cta">
-        <button type="button" class="btn btn-primary" data-open-picker>اختر جامعتك</button>
+        <button type="button" class="btn btn-primary" data-open-picker="0">خصّص دليلك</button>
         <a class="btn btn-ghost" href="#sacm">دليل الابتعاث</a>
       </div>
       <div class="trust"><span>مجاني</span><span>بقلم طالب</span><span>مرتبط بالمصادر الرسمية</span></div>
@@ -406,6 +424,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
     <section id="myuni" aria-labelledby="myuni-h">
       <p class="eyebrow">جامعتك</p>
       <h2 id="myuni-h"><span data-uni-only>لمحة عن <span data-u="name">جامعة نيو ساوث ويلز (UNSW)</span></span><span data-all-only hidden>لمحة عن الجامعات</span></h2>
+      <p class="level-banner" data-level-banner hidden><span></span> <button type="button" class="linkish" data-level-all>اعرض كل شيء</button></p>
       <p class="note" data-u-note hidden></p>
       <dl class="glance" data-uni-only>
         <div><dt>المدينة والحرم</dt><dd><span data-u="city">سيدني</span> · <span data-u="campus">كنسينغتون (Kensington)</span></dd></div>
@@ -420,17 +439,18 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
         <div class="table-wrap"><table id="uni-table"><thead><tr><th scope="col">الجامعة</th><th scope="col">المدينة</th><th scope="col">كلية المسار</th><th scope="col">أحياء الطلاب</th></tr></thead><tbody></tbody></table></div>
       </div>
       <p class="note"><b>قائمة الجامعات المعتمدة للابتعاث قد تتغير كل عام.</b> الجامعة المعتمدة في عام قد لا تكون معتمدة في العام التالي، والحصول على قبول من جامعة لا يعني أنك مبتعث إليها. قبل أن تلتزم، تحقق من <a href="https://ru.moe.gov.sa/Search" rel="noopener">خدمة الاستعلام عن الجامعات الموصى بها</a>، و<a href="https://sites.moe.gov.sa/scholarship-program/countries/australia/" rel="noopener">صفحة أستراليا</a> في موقع الوزارة، و<a href="https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf" rel="noopener">الدليل الاسترشادي لقوائم الجامعات حسب المجالات 2026–2027</a>، وتأكد من الملحقية.</p>
-      <button type="button" class="btn btn-outline" data-open-picker>غيّر الجامعة</button>
+      <button type="button" class="btn btn-outline" data-open-picker="0">غيّر اختياراتك</button>
     </section>
 
     <section id="options" aria-labelledby="options-h">
       <p class="eyebrow">اختر طريقك</p>
       <h2 id="options-h">خيارات الدراسة</h2>
       <p class="intro">لا يوجد طريق واحد صحيح. اختر الخيار الذي يناسب درجاتك ومستواك في اللغة الإنجليزية وأهدافك. الأمثلة هنا من <span data-u="short">UNSW</span> و<span data-u="college">UNSW College</span>، لكن أغلب الجامعات الأسترالية تقدم خيارات مشابهة.</p>
+      <p class="level-banner" data-level-banner hidden><span></span> <button type="button" class="linkish" data-level-all>اعرض كل شيء</button></p>
 
-      <p class="group-label">بعد الثانوية</p>
-      <div class="options">
-        <article class="option">
+      <p class="group-label" data-level="foundation bachelor">بعد الثانوية</p>
+      <div class="options" data-level="foundation bachelor">
+        <article class="option" data-level="bachelor">
           <div class="ticket"><span>خيار</span><b>قبول مباشر</b></div>
           <h3>البدء في البكالوريوس مباشرة</h3>
           <p>تدخل السنة الأولى مباشرة إذا كانت درجاتك في الثانوية ودرجة اختبار اللغة تحقق شروط القبول في الجامعة.</p>
@@ -441,7 +461,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
           <p class="sacm"><b>ملاحظة الابتعاث:</b> يجب أن تحقق الجامعة شرط التصنيف في مسارك (أفضل 30 جامعة لمسار الرواد، وأفضل 200 لمسار إمداد).</p>
         </article>
 
-        <article class="option">
+        <article class="option" data-level="foundation">
           <div class="ticket"><span>خيار</span><b>سنة تقريبًا</b></div>
           <h3>السنة التأسيسية (Foundation)</h3>
           <p>سنة تحضيرية تربط بين الثانوية والجامعة. تدرس مواد مرتبطة بتخصصك وتتعرف على أسلوب الدراسة في أستراليا، ثم تدخل السنة الأولى.</p>
@@ -452,7 +472,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
           <p class="sacm"><b>ملاحظة الابتعاث:</b> ابتداءً من العام 2025–2026، تشترط الوزارة نسبة 90% على الأقل في الثانوية وآيلتس 5.5 (أو ما يعادله) للابتعاث على السنة التحضيرية.</p>
         </article>
 
-        <article class="option">
+        <article class="option" data-level="foundation bachelor">
           <div class="ticket"><span>خيار</span><b>سنة تقريبًا</b></div>
           <h3>الدبلوم (Diploma)</h3>
           <p>يغطي محتوى السنة الجامعية الأولى في فصول أصغر ومع دعم أكبر. إذا حققت متطلبات الانتقال، تدخل <b>السنة الثانية</b> من البكالوريوس المرتبط به.</p>
@@ -475,9 +495,9 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
         </article>
       </div>
 
-      <p class="group-label">بعد البكالوريوس</p>
-      <div class="options">
-        <article class="option">
+      <p class="group-label" data-level="master phd">بعد البكالوريوس</p>
+      <div class="options" data-level="master phd">
+        <article class="option" data-level="master">
           <div class="ticket"><span>خيار</span><b>سنة إلى سنتين</b></div>
           <h3>الماجستير</h3>
           <p>ماجستير بالمقررات أو بالبحث للخريجين. يعتمد القبول على معدلك في البكالوريوس وتخصصك ودرجة اللغة.</p>
@@ -487,7 +507,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
           <p class="sacm"><b>ملاحظة الابتعاث:</b> مسار الرواد (أفضل 30) ومسار إمداد (أفضل 200) يشملان الماجستير. انظر <a href="#postgrad">الماجستير وما قبل الماجستير والدكتوراه</a>.</p>
         </article>
 
-        <article class="option">
+        <article class="option" data-level="master">
           <div class="ticket"><span>خيار</span><b>برنامج قصير</b></div>
           <h3>برنامج ما قبل الماجستير (Pre-Masters)</h3>
           <p>برنامج تحضيري للخريجين الذين يحتاجون إلى تقوية مهاراتهم الأكاديمية أو لغتهم قبل الماجستير.</p>
@@ -497,7 +517,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
           <p class="sacm"><b>ملاحظة الابتعاث:</b> برنامج ما قبل الماجستير ليس ضمن البرامج التي تبتعث عليها الملحقية، لذلك توقع أن تدفع تكلفته بنفسك ما لم تؤكد الملحقية غير ذلك.</p>
         </article>
 
-        <article class="option">
+        <article class="option" data-level="phd">
           <div class="ticket"><span>خيار</span><b>3 إلى 4 سنوات</b></div>
           <h3>الدكتوراه</h3>
           <p>درجة بحثية. تكتب أطروحة عن بحثك الخاص بإشراف مشرف أكاديمي.</p>
@@ -513,7 +533,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
       <p class="note">درجات القبول ومدة البرامج وشروط الانتقال تتغير كل عام وتختلف من برنامج لآخر. تحقق دائمًا من الشروط الحالية في الموقع الرسمي لـ <a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener"><span data-u="college">UNSW College</span></a> وموقع جامعتك قبل التقديم.</p>
     </section>
 
-    <section id="postgrad" aria-labelledby="postgrad-h">
+    <section id="postgrad" aria-labelledby="postgrad-h" data-level="master phd">
       <p class="eyebrow">بعد البكالوريوس</p>
       <h2 id="postgrad-h">الماجستير وما قبل الماجستير والدكتوراه</h2>
       <p class="intro">تبتعث الملحقية أيضًا على الدراسات العليا. أنظمتها تختلف عن مرحلة البكالوريوس، لذلك ابدأ التخطيط مبكرًا.</p>
@@ -529,7 +549,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
         </ul>
       </div>
 
-      <div class="phase" data-level="premaster">
+      <div class="phase" data-level="master">
         <h3>ما قبل الماجستير <span class="ar" lang="en" dir="ltr">Pre-master's</span></h3>
         <ul class="rules">
           <li><span class="r-k">ما هو</span><span class="r-v">برنامج تحضيري قصير للخريجين القريبين من شروط القبول في الماجستير، وتقدمه غالبًا كليات المسار.</span></li>
@@ -601,7 +621,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
           <li><span class="r-k">تحقق من الجامعة</span><span class="r-v">الجامعات والمجالات المعتمدة قد تتغير كل عام. استخدم <a href="https://ru.moe.gov.sa/Search" rel="noopener">خدمة الاستعلام عن الجامعات الموصى بها</a>، و<a href="https://sites.moe.gov.sa/scholarship-program/countries/australia/" rel="noopener">صفحة أستراليا</a>، و<a href="https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf" rel="noopener">الدليل الاسترشادي لقوائم الجامعات 2026–2027</a>.</span></li>
           <li><span class="r-k">القبول</span><span class="r-v">تحتاج إلى قبول من جامعة تحقق شروط مسارك، في تخصص ضمن القائمة المعتمدة لذلك العام.</span></li>
           <li><span class="r-k">نمط الدراسة</span><span class="r-v">يجب أن تدرس بانتظام كامل وأن تقيم في بلد الدراسة.</span></li>
-          <li><span class="r-k">السنة التحضيرية</span><span class="r-v">ابتداءً من 2025–2026: معدل 90% على الأقل في الثانوية وآيلتس 5.5 (أو ما يعادله).</span></li>
+          <li data-level="foundation"><span class="r-k">السنة التحضيرية</span><span class="r-v">ابتداءً من 2025–2026: معدل 90% على الأقل في الثانوية وآيلتس 5.5 (أو ما يعادله).</span></li>
           <li><span class="r-k">ما تبتعث عليه الملحقية</span><span class="r-v">برامج التأسيسي والدبلوم والبكالوريوس والماجستير والدكتوراه.</span></li>
           <li><span class="r-k">دورات اللغة</span><span class="r-v"><b>غير مشمولة.</b> دورات اللغة الإنجليزية على حسابك الخاص، لذلك احرص على تحقيق شرط اللغة قبل بدء برنامجك.</span></li>
           <li><span class="r-k">اختبارات القدرات</span><span class="r-v">تذكر الوزارة أن التقديم لا يتطلب درجات اختبار القدرات أو التحصيلي، مع أن بعض برامج مسار واعد تطلبها.</span></li>

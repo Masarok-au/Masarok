@@ -145,55 +145,106 @@
     }
   };
 
+  var LEVELS = ["foundation", "bachelor", "master", "phd"];
+
   var T = {
     en: {
-      title: "Where will you study?",
-      sub: "Choose your university and the guide will show examples for your campus and city: suburbs, transport, student support and more.",
-      all: "Not sure yet? Show all universities",
+      steps: ["City", "University", "Degree"],
+      stepOf: "Step {n} of 3",
+      titles: ["Which city are you looking at?", "Which university?", "What will you study?"],
+      subs: [
+        "Choose a city to see its universities first. You can still pick a university anywhere in Australia.",
+        "The guide will show examples for your campus and city: suburbs, transport, student support and more.",
+        "The guide will show the study options and scholarship rules for your level."
+      ],
+      cityAll: "Not sure yet",
+      uniAll: "Not sure yet? Show all universities",
+      levelAll: "Show everything",
+      inCity: "In {city}",
+      otherCities: "Other cities",
+      back: "Back",
       note: "<b>Important:</b> the universities SACM sponsors can change each year. Being accepted by a university is not the same as being sponsored to study there. Check the current list on the Ministry's <a href=\"https://ru.moe.gov.sa/Search\" rel=\"noopener\">recommended universities search</a> or with SACM before you commit.",
       close: "Close",
       campus: "Main campus",
-      selected: "Selected"
+      levels: {
+        foundation: ["Foundation or diploma", "A pathway year before your bachelor's degree"],
+        bachelor: ["Bachelor's degree", "Direct entry, or after a pathway program"],
+        master: ["Master's or pre-master's", "Coursework or research master's"],
+        phd: ["PhD", "A research degree with a supervisor"]
+      },
+      chipLevels: { foundation: "Foundation", bachelor: "Bachelor's", master: "Master's", phd: "PhD" },
+      showing: "Showing information for <b>{level}</b>.",
+      showAll: "Show everything"
     },
     ar: {
-      title: "أين ستدرس؟",
-      sub: "اختر جامعتك وسيعرض لك الدليل أمثلة خاصة بحرمك الجامعي ومدينتك: الأحياء، والمواصلات، ودعم الطلاب، وغيرها.",
-      all: "لم تقرر بعد؟ اعرض كل الجامعات",
+      steps: ["المدينة", "الجامعة", "المرحلة"],
+      stepOf: "الخطوة {n} من 3",
+      titles: ["أي مدينة تفكر فيها؟", "أي جامعة؟", "ماذا ستدرس؟"],
+      subs: [
+        "اختر مدينة لتظهر جامعاتها أولًا. يمكنك مع ذلك اختيار أي جامعة في أستراليا.",
+        "سيعرض لك الدليل أمثلة خاصة بحرمك الجامعي ومدينتك: الأحياء، والمواصلات، ودعم الطلاب، وغيرها.",
+        "سيعرض لك الدليل خيارات الدراسة وأنظمة الابتعاث الخاصة بمرحلتك."
+      ],
+      cityAll: "لم أقرر بعد",
+      uniAll: "لم تقرر بعد؟ اعرض كل الجامعات",
+      levelAll: "اعرض كل شيء",
+      inCity: "في {city}",
+      otherCities: "مدن أخرى",
+      back: "رجوع",
       note: "<b>مهم:</b> الجامعات التي تبتعث عليها الملحقية قد تتغير كل عام. الحصول على قبول من جامعة لا يعني أنك مبتعث إليها. تحقق من القائمة الحالية عبر <a href=\"https://ru.moe.gov.sa/Search\" rel=\"noopener\">خدمة الاستعلام عن الجامعات الموصى بها</a> أو من الملحقية قبل أن تلتزم.",
       close: "إغلاق",
       campus: "الحرم الرئيسي",
-      selected: "مختارة"
+      levels: {
+        foundation: ["التأسيسي أو الدبلوم", "سنة مسار قبل البكالوريوس"],
+        bachelor: ["البكالوريوس", "قبول مباشر أو بعد برنامج مسار"],
+        master: ["الماجستير أو ما قبل الماجستير", "ماجستير بالمقررات أو بحثي"],
+        phd: ["الدكتوراه", "درجة بحثية بإشراف مشرف"]
+      },
+      chipLevels: { foundation: "التأسيسي", bachelor: "البكالوريوس", master: "الماجستير", phd: "الدكتوراه" },
+      showing: "يعرض الدليل المعلومات الخاصة بـ <b>{level}</b>.",
+      showAll: "اعرض كل شيء"
     }
   };
 
-  var KEY = "masarok-uni";
   var lang = (document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en";
+  var K = { city: "masarok-city", uni: "masarok-uni", level: "masarok-level" };
 
   function byId(id) { for (var i = 0; i < UNIS.length; i++) if (UNIS[i].id === id) return UNIS[i]; return null; }
-  function readSaved() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
-  function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  function get(k) { try { return localStorage.getItem(K[k]); } catch (e) { return null; } }
+  function put(k, v) { try { localStorage.setItem(K[k], v); } catch (e) {} }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]; }); }
+  function fmt(s, o) { return s.replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); }
 
-  function values(u) {
+  function validCity(v) { return v === "all" || CITIES.hasOwnProperty(v); }
+  function validUni(v) { return v === "all" || !!byId(v); }
+  function validLevel(v) { return v === "all" || LEVELS.indexOf(v) > -1; }
+
+  var state = { city: null, uni: null, level: null };
+
+  function values() {
     var g = GENERIC[lang];
-    if (!u) return { short: g.short, name: g.name, city: g.city, campus: g.campus, college: g.college, union: g.union, legal: g.legal, suburbs: g.suburbs, transport: g.transport, bond: g.bond, food: g.food };
-    var c = CITIES[u.city];
-    return {
-      short: u.short, name: u.name[lang], city: c[lang], campus: u.campus[lang],
-      college: u.college.name, union: u.union.name, legal: u.legal[lang], suburbs: u.suburbs,
-      transport: c.transport[lang], bond: c.bond[lang], food: c.food ? c.food[lang] : g.food,
-      "college-url": u.college.url, "union-url": u.union.url, web: u.web,
-      "transport-url": c.transport.url, "bond-url": c.bond.url
-    };
+    var u = state.uni && state.uni !== "all" ? byId(state.uni) : null;
+    var ck = u ? u.city : (state.city && state.city !== "all" ? state.city : null);
+    var c = ck ? CITIES[ck] : null;
+    var v = { short: g.short, name: g.name, city: g.city, campus: g.campus, college: g.college, union: g.union, legal: g.legal, suburbs: g.suburbs, transport: g.transport, bond: g.bond, food: g.food };
+    if (c) {
+      v.city = c[lang]; v.transport = c.transport[lang]; v.bond = c.bond[lang];
+      v.food = c.food ? c.food[lang] : g.food;
+      v["transport-url"] = c.transport.url; v["bond-url"] = c.bond.url;
+    }
+    if (u) {
+      v.short = u.short; v.name = u.name[lang]; v.campus = u.campus[lang];
+      v.college = u.college.name; v.union = u.union.name; v.legal = u.legal[lang]; v.suburbs = u.suburbs;
+      v["college-url"] = u.college.url; v["union-url"] = u.union.url; v.web = u.web;
+    }
+    return { v: v, u: u, c: c };
   }
 
-  var current = null; // uni id or "all"
-
-  function apply(id) {
-    current = id;
-    var u = id && id !== "all" ? byId(id) : null;
-    var v = values(u);
+  function apply() {
+    var r = values(), v = r.v, u = r.u;
+    var level = state.level && state.level !== "all" ? state.level : null;
     document.documentElement.setAttribute("data-uni", u ? u.id : "all");
+    document.documentElement.setAttribute("data-level", level || "all");
 
     document.querySelectorAll("[data-u]").forEach(function (el) {
       var k = el.getAttribute("data-u");
@@ -205,34 +256,50 @@
     });
     document.querySelectorAll("[data-uni-only]").forEach(function (el) { el.hidden = !u; });
     document.querySelectorAll("[data-all-only]").forEach(function (el) { el.hidden = !!u; });
+    document.querySelectorAll("[data-city-only]").forEach(function (el) { el.hidden = !r.c; });
+
+    // degree-level filter
+    document.querySelectorAll("[data-level]").forEach(function (el) {
+      if (el === document.documentElement) return;
+      var ok = !level || el.getAttribute("data-level").split(" ").indexOf(level) > -1;
+      el.hidden = !ok;
+    });
+    document.querySelectorAll("[data-level-banner]").forEach(function (el) {
+      el.hidden = !level;
+      if (level) el.querySelector("span").innerHTML = fmt(T[lang].showing, { level: esc(T[lang].levels[level][0]) });
+    });
 
     var note = document.querySelector("[data-u-note]");
     if (note) { note.hidden = !(u && u.note); if (u && u.note) note.textContent = u.note[lang]; }
 
     var chip = document.querySelector(".uni-chip b");
-    if (chip) chip.textContent = u ? u.short : GENERIC[lang].chip;
-
-    // keep the choice in shareable links
-    var langLink = document.querySelector(".top nav a.lang");
-    if (langLink) {
-      var base = langLink.getAttribute("href").split("?")[0];
-      langLink.setAttribute("href", base + (u ? "?uni=" + u.id : ""));
+    if (chip) {
+      var parts = [u ? u.short : (r.c ? r.c[lang] : GENERIC[lang].chip)];
+      if (level) parts.push(T[lang].chipLevels[level]);
+      chip.textContent = parts.join(" · ");
     }
-    try {
-      var url = new URL(location.href);
-      if (u) url.searchParams.set("uni", u.id); else url.searchParams.delete("uni");
-      history.replaceState(null, "", url.toString());
-    } catch (e) {}
 
-    document.querySelectorAll(".uni-card").forEach(function (b) {
-      b.setAttribute("aria-pressed", b.getAttribute("data-id") === (u ? u.id : "all") ? "true" : "false");
-    });
+    // shareable links
+    var q = [];
+    if (state.city && state.city !== "all" && !u) q.push("city=" + state.city);
+    if (u) q.push("uni=" + u.id);
+    if (level) q.push("level=" + level);
+    var qs = q.length ? "?" + q.join("&") : "";
+    var langLink = document.querySelector(".top nav a.lang");
+    if (langLink) langLink.setAttribute("href", langLink.getAttribute("href").split("?")[0] + qs);
+    try { history.replaceState(null, "", location.pathname + qs + location.hash); } catch (e) {}
+
+    renderTable();
   }
 
   function renderTable() {
     var tbody = document.querySelector("#uni-table tbody");
     if (!tbody) return;
-    tbody.innerHTML = UNIS.map(function (u) {
+    var ck = state.city && state.city !== "all" ? state.city : null;
+    var list = UNIS.slice().sort(function (a, b) {
+      return (ck ? (a.city === ck ? 0 : 1) - (b.city === ck ? 0 : 1) : 0) || CITY_ORDER.indexOf(a.city) - CITY_ORDER.indexOf(b.city);
+    });
+    tbody.innerHTML = list.map(function (u) {
       var c = CITIES[u.city];
       return "<tr><th scope=\"row\"><button type=\"button\" class=\"linkish\" data-pick=\"" + u.id + "\">" + esc(u.name[lang]) + "</button></th>" +
         "<td>" + esc(c[lang]) + "</td>" +
@@ -241,48 +308,80 @@
     }).join("");
   }
 
-  // ---------- picker dialog ----------
-  var dlg, lastFocus;
-  function buildDialog() {
+  // ---------- three-step picker dialog ----------
+  var dlg, body, lastFocus, step = 0;
+
+  function uniCard(u) {
     var t = T[lang];
-    dlg = document.createElement("div");
-    dlg.className = "picker";
-    dlg.id = "picker";
-    dlg.setAttribute("role", "dialog");
-    dlg.setAttribute("aria-modal", "true");
-    dlg.setAttribute("aria-labelledby", "picker-h");
-    dlg.hidden = true;
+    return "<button type=\"button\" class=\"uni-card\" data-kind=\"uni\" data-id=\"" + u.id + "\" aria-pressed=\"" + (state.uni === u.id) + "\">" +
+      "<span class=\"uc-short\">" + esc(u.short) + "</span>" +
+      "<span class=\"uc-name\">" + esc(u.name[lang]) + "</span>" +
+      "<span class=\"uc-campus\">" + esc(t.campus) + ": " + esc(u.campus[lang]) + "</span></button>";
+  }
 
-    var groups = CITY_ORDER.map(function (ck) {
-      var list = UNIS.filter(function (u) { return u.city === ck; });
-      return "<div class=\"pk-group\"><p class=\"pk-city\">" + esc(CITIES[ck][lang]) + "</p><div class=\"pk-grid\">" +
-        list.map(function (u) {
-          return "<button type=\"button\" class=\"uni-card\" data-id=\"" + u.id + "\" aria-pressed=\"false\">" +
-            "<span class=\"uc-short\">" + esc(u.short) + "</span>" +
-            "<span class=\"uc-name\">" + esc(u.name[lang]) + "</span>" +
-            "<span class=\"uc-campus\">" + esc(t.campus) + ": " + esc(u.campus[lang]) + "</span></button>";
-        }).join("") + "</div></div>";
+  function stepHtml(n) {
+    var t = T[lang], h = "";
+    if (n === 0) {
+      h += "<div class=\"pk-grid\">" + CITY_ORDER.map(function (ck) {
+        var names = UNIS.filter(function (u) { return u.city === ck; }).map(function (u) { return u.short; }).join(" · ");
+        return "<button type=\"button\" class=\"uni-card\" data-kind=\"city\" data-id=\"" + ck + "\" aria-pressed=\"" + (state.city === ck) + "\">" +
+          "<span class=\"uc-short\">" + esc(CITIES[ck][lang]) + "</span><span class=\"uc-campus\" dir=\"ltr\">" + esc(names) + "</span></button>";
+      }).join("") + "</div>" +
+      "<button type=\"button\" class=\"uni-card uni-all\" data-kind=\"city\" data-id=\"all\" aria-pressed=\"" + (state.city === "all") + "\">" + esc(t.cityAll) + "</button>";
+    } else if (n === 1) {
+      var ck = state.city && state.city !== "all" ? state.city : null;
+      var order = ck ? [ck].concat(CITY_ORDER.filter(function (c) { return c !== ck; })) : CITY_ORDER;
+      h += order.map(function (c, i) {
+        var label = ck && i === 0 ? fmt(t.inCity, { city: CITIES[c][lang] }) : CITIES[c][lang];
+        var pre = ck && i === 1 ? "<p class=\"pk-divider\">" + esc(t.otherCities) + "</p>" : "";
+        return pre + "<div class=\"pk-group" + (ck && i > 0 ? " pk-dim" : "") + "\"><p class=\"pk-city\">" + esc(label) + "</p><div class=\"pk-grid\">" +
+          UNIS.filter(function (u) { return u.city === c; }).map(uniCard).join("") + "</div></div>";
+      }).join("") +
+      "<button type=\"button\" class=\"uni-card uni-all\" data-kind=\"uni\" data-id=\"all\" aria-pressed=\"" + (state.uni === "all") + "\">" + esc(t.uniAll) + "</button>";
+    } else {
+      h += "<div class=\"pk-grid pk-levels\">" + LEVELS.map(function (l) {
+        return "<button type=\"button\" class=\"uni-card\" data-kind=\"level\" data-id=\"" + l + "\" aria-pressed=\"" + (state.level === l) + "\">" +
+          "<span class=\"uc-short\">" + esc(t.levels[l][0]) + "</span><span class=\"uc-name\">" + esc(t.levels[l][1]) + "</span></button>";
+      }).join("") + "</div>" +
+      "<button type=\"button\" class=\"uni-card uni-all\" data-kind=\"level\" data-id=\"all\" aria-pressed=\"" + (state.level === "all") + "\">" + esc(t.levelAll) + "</button>";
+    }
+    return h;
+  }
+
+  function render() {
+    var t = T[lang];
+    var tabs = t.steps.map(function (s, i) {
+      return "<li class=\"" + (i === step ? "on" : i < step ? "done" : "") + "\"><button type=\"button\" data-step=\"" + i + "\"" + (i === step ? " aria-current=\"step\"" : "") + "><span>" + (i + 1) + "</span>" + esc(s) + "</button></li>";
     }).join("");
+    body.innerHTML =
+      "<button type=\"button\" class=\"pk-x\" data-close aria-label=\"" + esc(t.close) + "\">&times;</button>" +
+      "<ol class=\"pk-steps\">" + tabs + "</ol>" +
+      "<p class=\"eyebrow\">" + esc(fmt(t.stepOf, { n: step + 1 })) + "</p>" +
+      "<h2 id=\"picker-h\">" + esc(t.titles[step]) + "</h2>" +
+      "<p class=\"pk-sub\">" + esc(t.subs[step]) + "</p>" +
+      stepHtml(step) +
+      (step > 0 ? "<button type=\"button\" class=\"pk-back\" data-step=\"" + (step - 1) + "\">" + (lang === "ar" ? "&rarr; " : "&larr; ") + esc(t.back) + "</button>" : "") +
+      (step === 1 ? "<p class=\"pk-note\">" + t.note + "</p>" : "");
+    var panel = dlg.querySelector(".pk-panel");
+    if (panel) panel.scrollTop = 0;
+    var first = body.querySelector(".uni-card[aria-pressed=\"true\"]") || body.querySelector(".uni-card");
+    setTimeout(function () { if (first) first.focus({ preventScroll: true }); }, 30);
+  }
 
-    dlg.innerHTML =
-      "<div class=\"pk-backdrop\" data-close></div>" +
-      "<div class=\"pk-panel\">" +
-        "<div class=\"sadu\" aria-hidden=\"true\"></div>" +
-        "<div class=\"pk-body\">" +
-          "<button type=\"button\" class=\"pk-x\" data-close aria-label=\"" + esc(t.close) + "\">&times;</button>" +
-          "<p class=\"eyebrow\">" + (lang === "ar" ? "مسارُك" : "Masarok") + "</p>" +
-          "<h2 id=\"picker-h\">" + esc(t.title) + "</h2>" +
-          "<p class=\"pk-sub\">" + esc(t.sub) + "</p>" +
-          groups +
-          "<button type=\"button\" class=\"uni-card uni-all\" data-id=\"all\" aria-pressed=\"false\">" + esc(t.all) + "</button>" +
-          "<p class=\"pk-note\">" + t.note + "</p>" +
-        "</div>" +
-      "</div>";
+  function buildDialog() {
+    dlg = document.createElement("div");
+    dlg.className = "picker"; dlg.id = "picker";
+    dlg.setAttribute("role", "dialog"); dlg.setAttribute("aria-modal", "true"); dlg.setAttribute("aria-labelledby", "picker-h");
+    dlg.hidden = true;
+    dlg.innerHTML = "<div class=\"pk-backdrop\" data-close></div><div class=\"pk-panel\"><div class=\"sadu\" aria-hidden=\"true\"></div><div class=\"pk-body\"></div></div>";
     document.body.appendChild(dlg);
+    body = dlg.querySelector(".pk-body");
 
     dlg.addEventListener("click", function (e) {
       var card = e.target.closest(".uni-card");
-      if (card) { choose(card.getAttribute("data-id")); return; }
+      if (card) { pick(card.getAttribute("data-kind"), card.getAttribute("data-id")); return; }
+      var s = e.target.closest("[data-step]");
+      if (s) { step = +s.getAttribute("data-step"); render(); return; }
       if (e.target.closest("[data-close]")) closeDialog();
     });
     dlg.addEventListener("keydown", function (e) {
@@ -296,53 +395,68 @@
     });
   }
 
-  function openDialog() {
-    if (!dlg) buildDialog();
-    apply(current || "all");
-    lastFocus = document.activeElement;
-    dlg.hidden = false;
-    document.documentElement.classList.add("picker-open");
-    var pressed = current && current !== "all" ? dlg.querySelector(".uni-card[aria-pressed=\"true\"]") : null;
-    var sel = pressed || dlg.querySelector(".uni-card");
-    var panel = dlg.querySelector(".pk-panel");
-    if (!pressed && panel) panel.scrollTop = 0;
-    setTimeout(function () { if (sel) sel.focus({ preventScroll: !pressed }); }, 30);
-  }
-  function closeDialog() {
-    if (!dlg || dlg.hidden) return;
-    dlg.hidden = true;
-    document.documentElement.classList.remove("picker-open");
-    if (!readSaved()) { save("all"); apply("all"); }
-    if (lastFocus && lastFocus.focus) lastFocus.focus();
-  }
-  function choose(id) {
-    if (id !== "all" && !byId(id)) id = "all";
-    save(id);
-    apply(id);
-    closeDialog();
-    if (id !== "all") {
-      var target = document.getElementById("myuni");
-      if (target) setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 60);
+  function pick(kind, id) {
+    if (kind === "city") {
+      state.city = validCity(id) ? id : "all";
+      if (state.uni && state.uni !== "all" && state.city !== "all" && byId(state.uni).city !== state.city) state.uni = null;
+      put("city", state.city); apply(); step = 1; render();
+    } else if (kind === "uni") {
+      state.uni = validUni(id) ? id : "all";
+      if (state.uni !== "all") state.city = byId(state.uni).city;
+      put("uni", state.uni); put("city", state.city || "all"); apply(); step = 2; render();
+    } else {
+      state.level = validLevel(id) ? id : "all";
+      put("level", state.level);
+      if (!state.uni) { state.uni = "all"; put("uni", "all"); }
+      if (!state.city) { state.city = "all"; put("city", "all"); }
+      apply(); closeDialog(true);
     }
   }
 
+  function openDialog(atStep) {
+    if (!dlg) buildDialog();
+    lastFocus = document.activeElement;
+    step = typeof atStep === "number" ? atStep : 0;
+    dlg.hidden = false;
+    document.documentElement.classList.add("picker-open");
+    render();
+  }
+
+  function closeDialog(done) {
+    if (!dlg || dlg.hidden) return;
+    dlg.hidden = true;
+    document.documentElement.classList.remove("picker-open");
+    ["city", "uni", "level"].forEach(function (k) { if (!state[k]) { state[k] = "all"; put(k, "all"); } });
+    apply();
+    if (done) {
+      var target = document.getElementById("myuni");
+      if (target) setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 60);
+    } else if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
   function init() {
-    renderTable();
-    var fromUrl = null;
-    try { fromUrl = new URL(location.href).searchParams.get("uni"); } catch (e) {}
-    var saved = readSaved();
-    var start = (fromUrl && (fromUrl === "all" || byId(fromUrl))) ? fromUrl : (saved && (saved === "all" || byId(saved)) ? saved : null);
-    if (fromUrl && start === fromUrl) save(fromUrl);
-    apply(start || "all");
+    var p = {};
+    try { var sp = new URL(location.href).searchParams; p = { city: sp.get("city"), uni: sp.get("uni"), level: sp.get("level") }; } catch (e) {}
+    var fromUrl = !!(p.city || p.uni || p.level);
+    state.uni = p.uni && validUni(p.uni) ? p.uni : (fromUrl ? null : (validUni(get("uni")) ? get("uni") : null));
+    state.city = p.city && validCity(p.city) ? p.city : (fromUrl ? null : (validCity(get("city")) ? get("city") : null));
+    state.level = p.level && validLevel(p.level) ? p.level : (fromUrl ? null : (validLevel(get("level")) ? get("level") : null));
+    if (state.uni && state.uni !== "all") state.city = byId(state.uni).city;
+    if (fromUrl) ["city", "uni", "level"].forEach(function (k) { if (state[k]) put(k, state[k]); });
+    var nothing = !state.city && !state.uni && !state.level;
+    if (!nothing) ["city", "uni", "level"].forEach(function (k) { if (!state[k]) state[k] = "all"; });
+    apply();
 
     document.addEventListener("click", function (e) {
       var b = e.target.closest("[data-open-picker]");
-      if (b) { e.preventDefault(); openDialog(); return; }
-      var p = e.target.closest("[data-pick]");
-      if (p) { e.preventDefault(); choose(p.getAttribute("data-pick")); }
+      if (b) { e.preventDefault(); openDialog(+(b.getAttribute("data-open-picker") || 0)); return; }
+      var pk = e.target.closest("[data-pick]");
+      if (pk) { e.preventDefault(); state.uni = pk.getAttribute("data-pick"); state.city = byId(state.uni).city; put("uni", state.uni); put("city", state.city); apply(); document.getElementById("myuni").scrollIntoView({ behavior: "smooth" }); return; }
+      var la = e.target.closest("[data-level-all]");
+      if (la) { e.preventDefault(); state.level = "all"; put("level", "all"); apply(); }
     });
 
-    if (!start) openDialog();
+    if (nothing) openDialog(0);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

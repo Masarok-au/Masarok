@@ -326,6 +326,24 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 .btn-outline{border-color:var(--line); color:var(--ink); background:var(--surface); justify-self:start; cursor:pointer; font-family:var(--f-body)}
 .btn-outline:hover{border-color:var(--sand)}
 
+
+/* three-step picker */
+.pk-steps{list-style:none; margin:0 0 4px; padding:0; display:flex; flex-wrap:wrap; gap:6px 18px; padding-inline-end:48px}
+.pk-steps button{display:inline-flex; align-items:center; gap:8px; background:none; border:0; padding:4px 0; color:var(--night-dim); font:inherit; font-size:.92rem; cursor:pointer}
+.pk-steps button span{display:grid; place-items:center; width:24px; height:24px; border-radius:50%; border:1px solid rgba(238,242,247,.3); font-size:.8rem; font-variant-numeric:tabular-nums}
+.pk-steps li.done button{color:var(--night-ink)}
+.pk-steps li.done button span{background:rgba(226,182,108,.18); border-color:var(--gold); color:var(--gold)}
+.pk-steps li.on button{color:var(--gold); font-weight:700}
+.pk-steps li.on button span{background:var(--gold); border-color:var(--gold); color:#1A1206}
+.pk-divider{margin-top:6px; padding-top:12px; border-top:1px solid rgba(238,242,247,.14); color:var(--night-dim); font-size:.9rem}
+.pk-dim .uni-card{background:rgba(255,255,255,.02)}
+.pk-levels{grid-template-columns:repeat(2, minmax(0, 1fr))}
+@media (max-width:560px){ .pk-levels{grid-template-columns:1fr} }
+.pk-back{justify-self:start; background:none; border:0; color:var(--night-dim); font:inherit; cursor:pointer; padding:4px 0; text-decoration:underline; text-underline-offset:3px}
+.pk-back:hover{color:var(--gold)}
+.level-banner{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 12px; background:var(--green-soft); border-radius:8px; padding:10px 14px; font-size:.95rem}
+.level-banner b{color:var(--green)}
+
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{animation:none !important; transition:none !important}
   .anim .reveal{opacity:1; transform:none}
@@ -354,7 +372,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       <a href="#housing">Housing</a>
       <a href="#money">Money &amp; work</a>
       <a href="#links">Official links</a>
-      <button type="button" class="uni-chip" data-open-picker><span>University:</span> <b>UNSW</b></button>
+      <button type="button" class="uni-chip" data-open-picker="0"><span>Your guide:</span> <b>UNSW</b></button>
       <a class="lang" href="ar/" lang="ar" hreflang="ar" dir="rtl">العربية</a>
     </nav>
     </header>
@@ -363,7 +381,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       <p class="lede">A free guide for Saudi students who want to study in Australia. It covers your study options, how the SACM scholarship works, what to sort out before you fly, and your first weeks in Sydney.</p>
       <p class="tagline" lang="ar" dir="rtl">دليلك للدراسة في أستراليا</p>
       <div class="cta">
-        <button type="button" class="btn btn-primary" data-open-picker>Choose your university</button>
+        <button type="button" class="btn btn-primary" data-open-picker="0">Personalise your guide</button>
         <a class="btn btn-ghost" href="#sacm">SACM scholarship guide</a>
       </div>
       <div class="trust"><span>Free</span><span>Written by a student</span><span>Linked to official sources</span></div>
@@ -384,6 +402,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
     <section id="myuni" aria-labelledby="myuni-h">
       <p class="eyebrow">Your university</p>
       <h2 id="myuni-h"><span data-uni-only><span data-u="name">UNSW Sydney</span> at a glance</span><span data-all-only hidden>Universities at a glance</span></h2>
+      <p class="level-banner" data-level-banner hidden><span></span> <button type="button" class="linkish" data-level-all>Show everything</button></p>
       <p class="note" data-u-note hidden></p>
       <dl class="glance" data-uni-only>
         <div><dt>City and campus</dt><dd><span data-u="city">Sydney</span> · <span data-u="campus">Kensington</span></dd></div>
@@ -398,17 +417,18 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
         <div class="table-wrap"><table id="uni-table"><thead><tr><th scope="col">University</th><th scope="col">City</th><th scope="col">Pathway college</th><th scope="col">Student suburbs</th></tr></thead><tbody></tbody></table></div>
       </div>
       <p class="note"><b>SACM sponsorship can change each year.</b> A university that is approved one year may not be approved the next, and being accepted by a university is not the same as being sponsored to study there. Before you commit, check the Ministry's <a href="https://ru.moe.gov.sa/Search" rel="noopener">recommended universities search</a>, its <a href="https://sites.moe.gov.sa/scholarship-program/countries/australia/" rel="noopener">Australia page</a> and the <a href="https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf" rel="noopener">2026–2027 university lists by field</a>, and confirm with SACM.</p>
-      <button type="button" class="btn btn-outline" data-open-picker>Change university</button>
+      <button type="button" class="btn btn-outline" data-open-picker="0">Change your choices</button>
     </section>
 
     <section id="options" aria-labelledby="options-h">
       <p class="eyebrow">Choose your route</p>
       <h2 id="options-h">Your study options</h2>
       <p class="intro">There is no single right way in. Pick the option that matches your results, your English score and your goals. The examples use <span data-u="short">UNSW</span> and <span data-u="college">UNSW College</span>, but most Australian universities offer similar choices.</p>
+      <p class="level-banner" data-level-banner hidden><span></span> <button type="button" class="linkish" data-level-all>Show everything</button></p>
 
-      <p class="group-label">After high school</p>
-      <div class="options">
-        <article class="option">
+      <p class="group-label" data-level="foundation bachelor">After high school</p>
+      <div class="options" data-level="foundation bachelor">
+        <article class="option" data-level="bachelor">
           <div class="ticket"><span>Option</span><b>Direct entry</b></div>
           <h3>Start the bachelor's degree</h3>
           <p>Go straight into first year if your high school results and English score meet the university's entry requirements.</p>
@@ -419,7 +439,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
           <p class="sacm"><b>Scholarship note:</b> the university must meet your track's ranking rule (top 30 for Al-Ruwwad, top 200 for Imdad).</p>
         </article>
 
-        <article class="option">
+        <article class="option" data-level="foundation">
           <div class="ticket"><span>Option</span><b>About 1 year</b></div>
           <h3>Foundation Studies</h3>
           <p>A preparatory year that bridges high school and university. You study subjects linked to your degree and learn how Australian study works, then enter first year.</p>
@@ -430,7 +450,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
           <p class="sacm"><b>Scholarship note:</b> from 2025–26, the Ministry asks for at least 90% in high school and IELTS 5.5 (or equivalent) to be sponsored for a preparatory year.</p>
         </article>
 
-        <article class="option">
+        <article class="option" data-level="foundation bachelor">
           <div class="ticket"><span>Option</span><b>About 1 year</b></div>
           <h3>Diploma</h3>
           <p>Covers first-year university content in smaller classes with more support. If you meet the progression requirements, you enter the <b>second year</b> of a matching degree.</p>
@@ -453,9 +473,9 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
         </article>
       </div>
 
-      <p class="group-label">After a bachelor's degree</p>
-      <div class="options">
-        <article class="option">
+      <p class="group-label" data-level="master phd">After a bachelor's degree</p>
+      <div class="options" data-level="master phd">
+        <article class="option" data-level="master">
           <div class="ticket"><span>Option</span><b>1 to 2 years</b></div>
           <h3>Master's degree</h3>
           <p>Coursework or research master's for graduates. Entry depends on your bachelor's GPA, field and English score.</p>
@@ -465,7 +485,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
           <p class="sacm"><b>Scholarship note:</b> Al-Ruwwad (top 30) and Imdad (top 200) both include master's study. See <a href="#postgrad">Master's, pre-master's and PhD</a>.</p>
         </article>
 
-        <article class="option">
+        <article class="option" data-level="master">
           <div class="ticket"><span>Option</span><b>Short program</b></div>
           <h3>Pre-master's</h3>
           <p>A preparation program for graduates who need to strengthen their academic skills or English before a master's degree.</p>
@@ -475,7 +495,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
           <p class="sacm"><b>Scholarship note:</b> pre-master's is not on the list of programs SACM sponsors, so expect to pay for it yourself unless SACM confirms otherwise.</p>
         </article>
 
-        <article class="option">
+        <article class="option" data-level="phd">
           <div class="ticket"><span>Option</span><b>3 to 4 years</b></div>
           <h3>PhD</h3>
           <p>A research degree. You write a thesis on your own research, guided by a supervisor.</p>
@@ -491,7 +511,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       <p class="note">Entry scores, program lengths and progression rules change each year and differ between programs. Always check the current rules on the official websites of <a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener"><span data-u="college">UNSW College</span></a> and your university before you apply.</p>
     </section>
 
-    <section id="postgrad" aria-labelledby="postgrad-h">
+    <section id="postgrad" aria-labelledby="postgrad-h" data-level="master phd">
       <p class="eyebrow">After your bachelor's</p>
       <h2 id="postgrad-h">Master's, pre-master's and PhD</h2>
       <p class="intro">SACM also sponsors postgraduate study. The rules are different from undergraduate study, so start planning early.</p>
@@ -507,7 +527,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
         </ul>
       </div>
 
-      <div class="phase" data-level="premaster">
+      <div class="phase" data-level="master">
         <h3>Pre-master's <span class="ar" lang="ar" dir="rtl">ما قبل الماجستير</span></h3>
         <ul class="rules">
           <li><span class="r-k">What it is</span><span class="r-v">A short preparation program for graduates who are close to the master's entry requirements. Pathway colleges often offer it.</span></li>
@@ -579,7 +599,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
           <li><span class="r-k">Check the university</span><span class="r-v">Approved universities and fields can change each year. Use the Ministry's <a href="https://ru.moe.gov.sa/Search" rel="noopener">recommended universities search</a>, its <a href="https://sites.moe.gov.sa/scholarship-program/countries/australia/" rel="noopener">Australia page</a> and the <a href="https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf" rel="noopener">2026–2027 university lists by field</a>.</span></li>
           <li><span class="r-k">Admission</span><span class="r-v">You need an offer from a university that meets your track's rules, in a major on that year's approved list.</span></li>
           <li><span class="r-k">Study mode</span><span class="r-v">You must study full time and live in the country of study.</span></li>
-          <li><span class="r-k">Preparatory year</span><span class="r-v">From 2025–26: at least 90% high school average and IELTS 5.5 (or equivalent).</span></li>
+          <li data-level="foundation"><span class="r-k">Preparatory year</span><span class="r-v">From 2025–26: at least 90% high school average and IELTS 5.5 (or equivalent).</span></li>
           <li><span class="r-k">What SACM sponsors</span><span class="r-v">Foundation, Diploma, Bachelor's, Master's and PhD programs.</span></li>
           <li><span class="r-k">English courses</span><span class="r-v"><b>Not sponsored.</b> English language courses are at your own cost, so aim to meet the English requirement before you start your program.</span></li>
           <li><span class="r-k">Aptitude tests</span><span class="r-v">The Ministry says applications do not require aptitude or achievement test scores, although some Wa'id programs ask for them.</span></li>
