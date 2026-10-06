@@ -10,7 +10,7 @@ It covers:
 - **Money and work:** visa work limits, pay rights, tax and rent
 - **Official links:** Home Affairs, the Ministry of Education, Safeer, UNSW and more
 
-**Live site:** https://YOUR-USERNAME.github.io/masar/
+**Live site:** https://bader-almasri.github.io/Masar/
 
 ## Why this exists
 
