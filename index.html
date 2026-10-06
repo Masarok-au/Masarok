@@ -269,6 +269,55 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 .anim .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1)}
 .anim .reveal.in{opacity:1; transform:none}
 
+
+/* ---------- university picker ---------- */
+.picker-open, .picker-open body{overflow:hidden}
+.picker{position:fixed; inset:0; z-index:100; display:grid; place-items:center; padding:16px}
+.picker[hidden]{display:none}
+.pk-backdrop{position:absolute; inset:0; background:rgba(6,12,22,.72); backdrop-filter:blur(6px)}
+.pk-panel{position:relative; width:min(60rem, 100%); max-height:calc(100dvh - 32px); overflow:auto; background:var(--night); color:var(--night-ink);
+  border-radius:16px; box-shadow:0 30px 80px -20px rgba(0,0,0,.7); animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
+.pk-panel > .sadu{position:sticky; top:0; z-index:2}
+.pk-body{position:relative; padding:28px clamp(18px, 4vw, 40px) 32px; display:grid; gap:16px}
+.pk-body h2{font-size:clamp(1.7rem, 2.5vw + 1rem, 2.4rem); color:var(--night-ink)}
+.pk-body .eyebrow{color:var(--gold)}
+.pk-body .eyebrow::before{background:var(--gold)}
+.pk-sub{color:#C8D3E0; max-width:40rem}
+.pk-x{position:absolute; top:14px; inset-inline-end:14px; width:40px; height:40px; border-radius:50%; border:1px solid rgba(238,242,247,.25); background:transparent; color:var(--night-ink); font-size:1.5rem; line-height:1; cursor:pointer}
+.pk-x:hover{border-color:var(--gold); color:var(--gold)}
+.pk-group{display:grid; gap:8px}
+.pk-city{font-family:var(--f-mono); font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:var(--night-dim)}
+.pk-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(12.5rem, 1fr)); gap:10px}
+.uni-card{display:grid; gap:2px; text-align:start; padding:14px 16px; border-radius:10px; border:1px solid rgba(238,242,247,.16); background:rgba(255,255,255,.04);
+  color:var(--night-ink); font:inherit; cursor:pointer; transition:translate .2s ease, border-color .2s ease, background-color .2s ease}
+.uni-card:hover{translate:0 -3px; border-color:var(--gold); background:rgba(226,182,108,.08)}
+.uni-card:focus-visible{outline:3px solid var(--gold); outline-offset:2px}
+.uni-card[aria-pressed="true"]{border-color:var(--gold); background:rgba(226,182,108,.14)}
+.uc-short{font-family:var(--f-display); font-weight:800; font-size:1.25rem}
+.uc-name{font-size:.9rem; color:#C8D3E0}
+.uc-campus{font-size:.8rem; color:var(--night-dim)}
+.uni-all{text-align:center; font-weight:700; padding:13px 16px; border-style:dashed}
+.pk-note{font-size:.9rem; color:#C8D3E0; background:rgba(226,182,108,.08); border-inline-start:3px solid var(--gold); padding:10px 14px; border-radius:6px}
+.pk-note a, .pk-note b{color:var(--gold)}
+
+.uni-chip{display:inline-flex; align-items:center; gap:6px; border:1px solid var(--gold); background:rgba(226,182,108,.12); color:var(--night-ink);
+  border-radius:999px; padding:1px 12px; font:inherit; font-size:.93rem; cursor:pointer}
+.uni-chip span{color:var(--night-dim)}
+.uni-chip:hover{background:rgba(226,182,108,.25)}
+
+.glance{margin:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(15rem, 1fr)); gap:12px}
+.glance > div{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; display:grid; gap:4px; min-width:0}
+.glance dt{font-family:var(--f-mono); font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; color:var(--sand)}
+.glance dd{margin:0; color:var(--ink); overflow-wrap:anywhere}
+.glance dd small{display:block; color:var(--muted); font-size:.88rem}
+.table-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface)}
+#uni-table{width:100%; border-collapse:collapse; font-size:.95rem; min-width:38rem}
+#uni-table th, #uni-table td{padding:10px 14px; text-align:start; border-top:1px solid var(--line); vertical-align:top}
+#uni-table thead th{border-top:0; font-family:var(--f-mono); font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:500}
+.linkish{background:none; border:0; padding:0; font:inherit; font-weight:700; color:var(--green); cursor:pointer; text-align:start; text-decoration:underline; text-underline-offset:3px}
+.btn-outline{border-color:var(--line); color:var(--ink); background:var(--surface); justify-self:start; cursor:pointer; font-family:var(--f-body)}
+.btn-outline:hover{border-color:var(--sand)}
+
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{animation:none !important; transition:none !important}
   .anim .reveal{opacity:1; transform:none}
@@ -297,6 +346,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       <a href="#housing">Housing</a>
       <a href="#money">Money &amp; work</a>
       <a href="#links">Official links</a>
+      <button type="button" class="uni-chip" data-open-picker><span>University:</span> <b>UNSW</b></button>
       <a class="lang" href="ar/" lang="ar" hreflang="ar" dir="rtl">العربية</a>
     </nav>
     </header>
@@ -305,7 +355,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       <p class="lede">A free guide for Saudi students who want to study in Australia. It covers your study options, how the SACM scholarship works, what to sort out before you fly, and your first weeks in Sydney.</p>
       <p class="tagline" lang="ar" dir="rtl">دليلك للدراسة في أستراليا</p>
       <div class="cta">
-        <a class="btn btn-primary" href="#options">Compare study options</a>
+        <button type="button" class="btn btn-primary" data-open-picker>Choose your university</button>
         <a class="btn btn-ghost" href="#sacm">SACM scholarship guide</a>
       </div>
       <div class="trust"><span>Free</span><span>Written by a student</span><span>Linked to official sources</span></div>
@@ -323,10 +373,30 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       </div>
     </div>
 
+    <section id="myuni" aria-labelledby="myuni-h">
+      <p class="eyebrow">Your university</p>
+      <h2 id="myuni-h"><span data-uni-only><span data-u="name">UNSW Sydney</span> at a glance</span><span data-all-only hidden>Universities at a glance</span></h2>
+      <p class="note" data-u-note hidden></p>
+      <dl class="glance" data-uni-only>
+        <div><dt>City and campus</dt><dd><span data-u="city">Sydney</span> · <span data-u="campus">Kensington</span></dd></div>
+        <div><dt>Pathway college</dt><dd><a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener"><span data-u="college">UNSW College</span></a><small>Foundation, diploma or English programs</small></dd></div>
+        <div><dt>Student association</dt><dd><a data-u-href="union-url" href="https://www.arc.unsw.edu.au" rel="noopener"><span data-u="union">Arc @ UNSW</span></a><small data-u="legal">Arc's free legal service gives students advice on renting and other problems.</small></dd></div>
+        <div><dt>Student suburbs</dt><dd data-u="suburbs">Kensington, Kingsford, Randwick</dd></div>
+        <div><dt>Transport</dt><dd><a data-u-href="transport-url" href="https://transportnsw.info" rel="noopener"><span data-u="transport">Opal card</span></a></dd></div>
+        <div><dt>Rental bonds</dt><dd><a data-u-href="bond-url" href="https://www.fairtrading.nsw.gov.au" rel="noopener"><span data-u="bond">NSW Fair Trading</span></a></dd></div>
+      </dl>
+      <div data-all-only hidden>
+        <p class="intro">Choose a university to see examples for its campus and city across the whole guide.</p>
+        <div class="table-wrap"><table id="uni-table"><thead><tr><th scope="col">University</th><th scope="col">City</th><th scope="col">Pathway college</th><th scope="col">Student suburbs</th></tr></thead><tbody></tbody></table></div>
+      </div>
+      <p class="note"><b>SACM sponsorship can change each year.</b> A university that is approved one year may not be approved the next, and being accepted by a university is not the same as being sponsored to study there. Before you commit, check the Ministry's <a href="https://ru.moe.gov.sa/Search" rel="noopener">recommended universities search</a>, its <a href="https://sites.moe.gov.sa/scholarship-program/countries/australia/" rel="noopener">Australia page</a> and the <a href="https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf" rel="noopener">2026–2027 university lists by field</a>, and confirm with SACM.</p>
+      <button type="button" class="btn btn-outline" data-open-picker>Change university</button>
+    </section>
+
     <section id="options" aria-labelledby="options-h">
       <p class="eyebrow">Choose your route</p>
       <h2 id="options-h">Your study options</h2>
-      <p class="intro">There is no single right way in. Pick the option that matches your results, your English score and your goals. The examples use UNSW and UNSW College, but most Australian universities offer similar choices.</p>
+      <p class="intro">There is no single right way in. Pick the option that matches your results, your English score and your goals. The examples use <span data-u="short">UNSW</span> and <span data-u="college">UNSW College</span>, but most Australian universities offer similar choices.</p>
 
       <p class="group-label">After high school</p>
       <div class="options">
@@ -399,7 +469,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       </div>
 
       <p class="note"><b>Important:</b> SACM sponsors Foundation, Diploma, Bachelor's, Master's and PhD programs. <b>English courses are not sponsored</b>, so you pay for them yourself.</p>
-      <p class="note">Entry scores, program lengths and progression rules change each year and differ between programs. Always check the current rules on the official <a href="https://www.unswcollege.edu.au" rel="noopener">UNSW College</a> and university websites before you apply.</p>
+      <p class="note">Entry scores, program lengths and progression rules change each year and differ between programs. Always check the current rules on the official websites of <a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener"><span data-u="college">UNSW College</span></a> and your university before you apply.</p>
     </section>
 
     <section id="sacm" aria-labelledby="sacm-h">
@@ -437,6 +507,9 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
         <h3>Before you apply <span class="ar" lang="ar" dir="rtl">قبل التقديم</span></h3>
         <ul class="rules">
           <li><span class="r-k">Who can apply</span><span class="r-v">Saudi citizens of good conduct. There is no general age limit for most tracks.</span></li>
+          <li><span class="r-k">Conditions on your offer</span><span class="r-v">The Ministry asks for an <b>unconditional</b> offer for a bachelor's, master's or PhD, studied <b>full time</b> at the university's <b>main campus</b>. Executive programs are not accepted, and qualifications from outside Saudi Arabia need equivalency first.</span></li>
+          <li><span class="r-k">Documents you need</span><span class="r-v">A valid national ID card (chip card), a passport valid for at least one year, your registered national address, certified graduation certificate and transcripts, equivalency for any foreign qualification, and your English and other test results.</span></li>
+          <li><span class="r-k">Check the university</span><span class="r-v">Approved universities and fields can change each year. Use the Ministry's <a href="https://ru.moe.gov.sa/Search" rel="noopener">recommended universities search</a>, its <a href="https://sites.moe.gov.sa/scholarship-program/countries/australia/" rel="noopener">Australia page</a> and the <a href="https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf" rel="noopener">2026–2027 university lists by field</a>.</span></li>
           <li><span class="r-k">Admission</span><span class="r-v">You need an offer from a university that meets your track's rules, in a major on that year's approved list.</span></li>
           <li><span class="r-k">Study mode</span><span class="r-v">You must study full time and live in the country of study.</span></li>
           <li><span class="r-k">Preparatory year</span><span class="r-v">From 2025–26: at least 90% high school average and IELTS 5.5 (or equivalent).</span></li>
@@ -453,12 +526,13 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
         <h3>While you study in Australia <span class="ar" lang="ar" dir="rtl">أثناء الدراسة</span></h3>
         <ul class="rules">
           <li><span class="r-k">What is usually covered</span><span class="r-v">Tuition, health cover (OSHC) and a monthly allowance (see <a href="#allowance">the monthly allowance</a>). Your exact entitlements are in your scholarship decision.</span></li>
-          <li><span class="r-k">Financial guarantee letter</span><span class="r-v">Your university needs a letter from SACM confirming what it pays. At UNSW you upload it to the applicant portal when you accept your offer, and the university then invoices SACM directly.</span></li>
+          <li><span class="r-k">Financial guarantee letter</span><span class="r-v">Your university needs a letter from SACM confirming what it pays. Most universities ask you to upload it when you accept your offer, and then invoice SACM directly.</span></li>
           <li><span class="r-k">New letter for each change</span><span class="r-v">Moving from Foundation to a diploma, or from a diploma to a degree, or needing extra time, usually means a new guarantee letter. Request it early so your enrolment is not delayed.</span></li>
           <li><span class="r-k">Changing program or major</span><span class="r-v">Get SACM approval before you change. Only approved programs and majors are funded.</span></li>
           <li><span class="r-k">Results every term</span><span class="r-v">Upload your results to Safeer after each term and keep your academic progress up. Poor progress can stop your allowance or end the scholarship.</span></li>
           <li><span class="r-k">Dropped or failed courses</span><span class="r-v">You may have to pay for courses you withdraw from late or repeat. Ask SACM before you drop a course.</span></li>
           <li><span class="r-k">Keep your records</span><span class="r-v">Save every letter as a PDF: offer, CoE, enrolment status letter, credit transfer outcome and transcripts. SACM may ask for proof of your program and start date at each stage.</span></li>
+          <li><span class="r-k">Contact SACM</span><span class="r-v">The Saudi Arabian Cultural Mission is at 16 Watson Street, Turner ACT 2612 (Canberra), phone +61 2 6232 5978. Visit the <a href="https://au.moe.gov.sa/ar/Pages/default.aspx" rel="noopener">SACM Australia website</a>.</span></li>
         </ul>
       </div>
 
@@ -534,11 +608,11 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
         <ul>
           <li><label><input type="checkbox" id="a1"><span><span class="t">Get an Australian SIM card</span><span class="d">You need a local number for your bank, university and job applications.</span></span></label></li>
           <li><label><input type="checkbox" id="a2"><span><span class="t">Open a bank account</span><span class="d">Bring your passport and proof of address or enrolment.</span></span></label></li>
-          <li><label><input type="checkbox" id="a3"><span><span class="t">Sort out public transport</span><span class="d">Use an Opal card or tap on with a contactless bank card on trains, buses, light rail and ferries.</span></span></label></li>
+          <li><label><input type="checkbox" id="a3"><span><span class="t">Sort out public transport</span><span class="d">Get your <span data-u="transport">Opal card</span> for public transport in <span data-u="city">Sydney</span>, and check whether you can also tap on with a bank card.</span></span></label></li>
           <li><label><input type="checkbox" id="a4"><span><span class="t">Update your address with your university</span><span class="d">Student visa holders must keep their contact details up to date with their education provider.</span></span></label></li>
           <li><label><input type="checkbox" id="a5"><span><span class="t">Complete your SACM arrival steps</span><span class="d">Update your details in Safeer and send any documents SACM asks for, such as your enrolment letter.</span></span></label></li>
-          <li><label><input type="checkbox" id="a6"><span><span class="t">Go to orientation and join student life</span><span class="d">At UNSW College and UNSW, Arc runs clubs, events and volunteering. Joining is free and it is the fastest way to make friends.</span></span></label></li>
-          <li><label><input type="checkbox" id="a7"><span><span class="t">Find your food and prayer spots</span><span class="d">Ask your university about prayer rooms on campus. Suburbs such as Lakemba and Auburn are well known for halal food.</span></span></label></li>
+          <li><label><input type="checkbox" id="a6"><span><span class="t">Go to orientation and join student life</span><span class="d">At <span data-u="short">UNSW</span>, <span data-u="union">Arc @ UNSW</span> runs clubs, events and student support. Joining is free and it is the fastest way to make friends.</span></span></label></li>
+          <li><label><input type="checkbox" id="a7"><span><span class="t">Find your food and prayer spots</span><span class="d">Ask your university about prayer rooms on campus. <span data-u="food">Suburbs such as Lakemba and Auburn are well known for halal food.</span></span></span></label></li>
         </ul>
       </div>
     </section>
@@ -581,10 +655,10 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       </div>
 
       <div class="facts">
-        <div class="fact"><span class="k">Location</span><h3>Live near transport</h3><p>Check how long the trip to campus takes. For UNSW, suburbs on the light rail or bus routes such as Kensington, Kingsford and Randwick are popular with students.</p></div>
+        <div class="fact"><span class="k">Location</span><h3>Live near transport</h3><p>Check how long the trip to campus takes. Popular student areas near <span data-u="short">UNSW</span>: <span data-u="suburbs">Kensington, Kingsford, Randwick</span>.</p></div>
         <div class="fact"><span class="k">Safety</span><h3>Avoid rental scams</h3><p>Never pay a deposit for a room you have not seen, and never send money to someone who says they are overseas. If a deal looks too cheap, it usually is.</p></div>
-        <div class="fact"><span class="k">Bond</span><h3>Protect your bond</h3><p>For a lease through an agent, your bond should be lodged with NSW Fair Trading. Take dated photos of the room when you move in.</p></div>
-        <div class="fact"><span class="k">Free help</span><h3>Get a second opinion</h3><p>Not sure about a lease or a landlord? Arc's free legal service at UNSW gives advice on renting.</p></div>
+        <div class="fact"><span class="k">Bond</span><h3>Protect your bond</h3><p>For a lease through an agent, your bond should be lodged with <span data-u="bond">NSW Fair Trading</span>. Take dated photos of the room when you move in.</p></div>
+        <div class="fact"><span class="k">Free help</span><h3>Get a second opinion</h3><p>Not sure about a lease or a landlord? <span data-u="legal">Arc's free legal service gives students advice on renting and other problems.</span></p></div>
       </div>
     </section>
 
@@ -639,12 +713,15 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
         <a href="https://www.moe.gov.sa/en/knowledgecenter/eservices/Pages/ksp.aspx" rel="noopener"><span>Apply for the scholarship</span><small>Ministry of Education e-service (via Qubool)</small></a>
         <a href="https://safeer2.moe.gov.sa/Portal" rel="noopener"><span>Safeer portal</span><small>Manage your scholarship as a current student</small></a>
         <a href="https://www.moe.gov.sa/en/knowledgecenter/eservices/pages/joinscholarship.aspx" rel="noopener"><span>Join the scholarship</span><small>For self-funded students</small></a>
-        <a href="https://www.unsw.edu.au/study/international-students/sponsored-students" rel="noopener"><span>UNSW sponsored students</span><small>Guarantee letters and deadlines</small></a>
-        <a href="https://www.unswcollege.edu.au" rel="noopener"><span>UNSW College</span><small>Foundation, diploma and English programs</small></a>
-        <a href="https://www.arc.unsw.edu.au" rel="noopener"><span>Arc @ UNSW</span><small>Clubs, events, volunteering and support</small></a>
+        <a href="https://au.moe.gov.sa/ar/Pages/default.aspx" rel="noopener"><span>SACM Australia</span><small>Saudi Arabian Cultural Mission, Canberra</small></a>
+        <a href="https://ru.moe.gov.sa/Search" rel="noopener"><span>Recommended universities</span><small>Ministry of Education search</small></a>
+        <a href="https://sites.moe.gov.sa/scholarship-program/countries/australia/" rel="noopener"><span>Scholarship universities in Australia</span><small>Ministry of Education</small></a>
+        <a data-uni-only data-u-href="web" href="https://www.unsw.edu.au" rel="noopener"><span data-u="name">UNSW Sydney</span><small>University website</small></a>
+        <a data-uni-only data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener"><span data-u="college">UNSW College</span><small>Pathway college</small></a>
+        <a data-uni-only data-u-href="union-url" href="https://www.arc.unsw.edu.au" rel="noopener"><span data-u="union">Arc @ UNSW</span><small>Student association</small></a>
         <a href="https://www.fairwork.gov.au/find-help-for/visa-holders-and-migrants" rel="noopener"><span>Work rights for visa holders</span><small>Fair Work Ombudsman</small></a>
         <a href="https://www.ato.gov.au/individuals-and-families/tax-file-number" rel="noopener"><span>Tax File Number</span><small>Australian Taxation Office</small></a>
-        <a href="https://transportnsw.info" rel="noopener"><span>Sydney transport and Opal</span><small>Transport for NSW</small></a>
+        <a data-uni-only data-u-href="transport-url" href="https://transportnsw.info" rel="noopener"><span data-u="transport">Opal card</span><small>Public transport in <span data-u="city">Sydney</span></small></a>
       </div>
     </section>
   </main>
@@ -762,5 +839,6 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 })();
 </script>
 
+<script src="unis.js"></script>
 </body>
 </html>

@@ -4,6 +4,7 @@ A free, student-written guide for Saudi students who want to study in Australia.
 
 It covers:
 
+- **University picker:** choose from 10 universities (UNSW, Sydney, UTS, Melbourne, Monash, RMIT, Adelaide, UWA, Curtin, UQ) and the examples adapt to your campus and city. Share a link with `?uni=monash`, for example.
 - **Study options:** direct entry, Foundation Studies, Diploma, English courses, Master's and Pre-Masters
 - **The SACM scholarship:** the four tracks, conditions, what to do while you study, and degree equivalency
 - **Checklists:** before you fly, and your first two weeks in Sydney

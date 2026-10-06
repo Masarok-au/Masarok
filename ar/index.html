@@ -269,6 +269,55 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 .anim .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1)}
 .anim .reveal.in{opacity:1; transform:none}
 
+
+/* ---------- university picker ---------- */
+.picker-open, .picker-open body{overflow:hidden}
+.picker{position:fixed; inset:0; z-index:100; display:grid; place-items:center; padding:16px}
+.picker[hidden]{display:none}
+.pk-backdrop{position:absolute; inset:0; background:rgba(6,12,22,.72); backdrop-filter:blur(6px)}
+.pk-panel{position:relative; width:min(60rem, 100%); max-height:calc(100dvh - 32px); overflow:auto; background:var(--night); color:var(--night-ink);
+  border-radius:16px; box-shadow:0 30px 80px -20px rgba(0,0,0,.7); animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
+.pk-panel > .sadu{position:sticky; top:0; z-index:2}
+.pk-body{position:relative; padding:28px clamp(18px, 4vw, 40px) 32px; display:grid; gap:16px}
+.pk-body h2{font-size:clamp(1.7rem, 2.5vw + 1rem, 2.4rem); color:var(--night-ink)}
+.pk-body .eyebrow{color:var(--gold)}
+.pk-body .eyebrow::before{background:var(--gold)}
+.pk-sub{color:#C8D3E0; max-width:40rem}
+.pk-x{position:absolute; top:14px; inset-inline-end:14px; width:40px; height:40px; border-radius:50%; border:1px solid rgba(238,242,247,.25); background:transparent; color:var(--night-ink); font-size:1.5rem; line-height:1; cursor:pointer}
+.pk-x:hover{border-color:var(--gold); color:var(--gold)}
+.pk-group{display:grid; gap:8px}
+.pk-city{font-family:var(--f-mono); font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:var(--night-dim)}
+.pk-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(12.5rem, 1fr)); gap:10px}
+.uni-card{display:grid; gap:2px; text-align:start; padding:14px 16px; border-radius:10px; border:1px solid rgba(238,242,247,.16); background:rgba(255,255,255,.04);
+  color:var(--night-ink); font:inherit; cursor:pointer; transition:translate .2s ease, border-color .2s ease, background-color .2s ease}
+.uni-card:hover{translate:0 -3px; border-color:var(--gold); background:rgba(226,182,108,.08)}
+.uni-card:focus-visible{outline:3px solid var(--gold); outline-offset:2px}
+.uni-card[aria-pressed="true"]{border-color:var(--gold); background:rgba(226,182,108,.14)}
+.uc-short{font-family:var(--f-display); font-weight:800; font-size:1.25rem}
+.uc-name{font-size:.9rem; color:#C8D3E0}
+.uc-campus{font-size:.8rem; color:var(--night-dim)}
+.uni-all{text-align:center; font-weight:700; padding:13px 16px; border-style:dashed}
+.pk-note{font-size:.9rem; color:#C8D3E0; background:rgba(226,182,108,.08); border-inline-start:3px solid var(--gold); padding:10px 14px; border-radius:6px}
+.pk-note a, .pk-note b{color:var(--gold)}
+
+.uni-chip{display:inline-flex; align-items:center; gap:6px; border:1px solid var(--gold); background:rgba(226,182,108,.12); color:var(--night-ink);
+  border-radius:999px; padding:1px 12px; font:inherit; font-size:.93rem; cursor:pointer}
+.uni-chip span{color:var(--night-dim)}
+.uni-chip:hover{background:rgba(226,182,108,.25)}
+
+.glance{margin:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(15rem, 1fr)); gap:12px}
+.glance > div{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; display:grid; gap:4px; min-width:0}
+.glance dt{font-family:var(--f-mono); font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; color:var(--sand)}
+.glance dd{margin:0; color:var(--ink); overflow-wrap:anywhere}
+.glance dd small{display:block; color:var(--muted); font-size:.88rem}
+.table-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface)}
+#uni-table{width:100%; border-collapse:collapse; font-size:.95rem; min-width:38rem}
+#uni-table th, #uni-table td{padding:10px 14px; text-align:start; border-top:1px solid var(--line); vertical-align:top}
+#uni-table thead th{border-top:0; font-family:var(--f-mono); font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:500}
+.linkish{background:none; border:0; padding:0; font:inherit; font-weight:700; color:var(--green); cursor:pointer; text-align:start; text-decoration:underline; text-underline-offset:3px}
+.btn-outline{border-color:var(--line); color:var(--ink); background:var(--surface); justify-self:start; cursor:pointer; font-family:var(--f-body)}
+.btn-outline:hover{border-color:var(--sand)}
+
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{animation:none !important; transition:none !important}
   .anim .reveal{opacity:1; transform:none}
@@ -319,6 +368,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
       <a href="#housing">السكن</a>
       <a href="#money">المال والعمل</a>
       <a href="#links">روابط رسمية</a>
+      <button type="button" class="uni-chip" data-open-picker><span>الجامعة:</span> <b>UNSW</b></button>
       <a class="lang" href="../" lang="en" hreflang="en" dir="ltr">English</a>
     </nav>
     </header>
@@ -327,7 +377,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
       <p class="lede">دليل مجاني للطلاب السعوديين الراغبين في الدراسة في أستراليا. يشرح لك خيارات الدراسة، وطريقة عمل الابتعاث، وما تحتاج إلى ترتيبه قبل السفر، وأسابيعك الأولى في سيدني.</p>
       <p class="tagline" lang="en" dir="ltr">Your guide to studying in Australia</p>
       <div class="cta">
-        <a class="btn btn-primary" href="#options">قارن خيارات الدراسة</a>
+        <button type="button" class="btn btn-primary" data-open-picker>اختر جامعتك</button>
         <a class="btn btn-ghost" href="#sacm">دليل الابتعاث</a>
       </div>
       <div class="trust"><span>مجاني</span><span>بقلم طالب</span><span>مرتبط بالمصادر الرسمية</span></div>
@@ -345,10 +395,30 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
       </div>
     </div>
 
+    <section id="myuni" aria-labelledby="myuni-h">
+      <p class="eyebrow">جامعتك</p>
+      <h2 id="myuni-h"><span data-uni-only>لمحة عن <span data-u="name">جامعة نيو ساوث ويلز (UNSW)</span></span><span data-all-only hidden>لمحة عن الجامعات</span></h2>
+      <p class="note" data-u-note hidden></p>
+      <dl class="glance" data-uni-only>
+        <div><dt>المدينة والحرم</dt><dd><span data-u="city">سيدني</span> · <span data-u="campus">كنسينغتون (Kensington)</span></dd></div>
+        <div><dt>كلية المسار</dt><dd><a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener" dir="ltr"><span data-u="college">UNSW College</span></a><small>برامج التأسيسي أو الدبلوم أو اللغة</small></dd></div>
+        <div><dt>رابطة الطلاب</dt><dd><a data-u-href="union-url" href="https://www.arc.unsw.edu.au" rel="noopener" dir="ltr"><span data-u="union">Arc @ UNSW</span></a><small data-u="legal">الخدمة القانونية المجانية من Arc تقدم للطلاب استشارات في الإيجار ومشكلات أخرى.</small></dd></div>
+        <div><dt>أحياء الطلاب</dt><dd data-u="suburbs" dir="ltr">Kensington, Kingsford, Randwick</dd></div>
+        <div><dt>المواصلات</dt><dd><a data-u-href="transport-url" href="https://transportnsw.info" rel="noopener"><span data-u="transport">بطاقة أوبال (Opal)</span></a></dd></div>
+        <div><dt>مبالغ التأمين</dt><dd><a data-u-href="bond-url" href="https://www.fairtrading.nsw.gov.au" rel="noopener"><span data-u="bond">NSW Fair Trading</span></a></dd></div>
+      </dl>
+      <div data-all-only hidden>
+        <p class="intro">اختر جامعة لترى أمثلة خاصة بحرمها ومدينتها في الدليل كله.</p>
+        <div class="table-wrap"><table id="uni-table"><thead><tr><th scope="col">الجامعة</th><th scope="col">المدينة</th><th scope="col">كلية المسار</th><th scope="col">أحياء الطلاب</th></tr></thead><tbody></tbody></table></div>
+      </div>
+      <p class="note"><b>قائمة الجامعات المعتمدة للابتعاث قد تتغير كل عام.</b> الجامعة المعتمدة في عام قد لا تكون معتمدة في العام التالي، والحصول على قبول من جامعة لا يعني أنك مبتعث إليها. قبل أن تلتزم، تحقق من <a href="https://ru.moe.gov.sa/Search" rel="noopener">خدمة الاستعلام عن الجامعات الموصى بها</a>، و<a href="https://sites.moe.gov.sa/scholarship-program/countries/australia/" rel="noopener">صفحة أستراليا</a> في موقع الوزارة، و<a href="https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf" rel="noopener">الدليل الاسترشادي لقوائم الجامعات حسب المجالات 2026–2027</a>، وتأكد من الملحقية.</p>
+      <button type="button" class="btn btn-outline" data-open-picker>غيّر الجامعة</button>
+    </section>
+
     <section id="options" aria-labelledby="options-h">
       <p class="eyebrow">اختر طريقك</p>
       <h2 id="options-h">خيارات الدراسة</h2>
-      <p class="intro">لا يوجد طريق واحد صحيح. اختر الخيار الذي يناسب درجاتك ومستواك في اللغة الإنجليزية وأهدافك. الأمثلة هنا من جامعة UNSW وUNSW College، لكن أغلب الجامعات الأسترالية تقدم خيارات مشابهة.</p>
+      <p class="intro">لا يوجد طريق واحد صحيح. اختر الخيار الذي يناسب درجاتك ومستواك في اللغة الإنجليزية وأهدافك. الأمثلة هنا من <span data-u="short">UNSW</span> و<span data-u="college">UNSW College</span>، لكن أغلب الجامعات الأسترالية تقدم خيارات مشابهة.</p>
 
       <p class="group-label">بعد الثانوية</p>
       <div class="options">
@@ -421,7 +491,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
       </div>
 
       <p class="note"><b>مهم:</b> تبتعث الملحقية على برامج التأسيسي والدبلوم والبكالوريوس والماجستير والدكتوراه. <b>دورات اللغة الإنجليزية غير مشمولة</b>، وتدفع تكلفتها بنفسك.</p>
-      <p class="note">درجات القبول ومدة البرامج وشروط الانتقال تتغير كل عام وتختلف من برنامج لآخر. تحقق دائمًا من الشروط الحالية في الموقع الرسمي لـ <a href="https://www.unswcollege.edu.au" rel="noopener">UNSW College</a> ومواقع الجامعات قبل التقديم.</p>
+      <p class="note">درجات القبول ومدة البرامج وشروط الانتقال تتغير كل عام وتختلف من برنامج لآخر. تحقق دائمًا من الشروط الحالية في الموقع الرسمي لـ <a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener"><span data-u="college">UNSW College</span></a> وموقع جامعتك قبل التقديم.</p>
     </section>
 
     <section id="sacm" aria-labelledby="sacm-h">
@@ -459,6 +529,9 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
         <h3>قبل التقديم <span class="ar" lang="en" dir="ltr">Before you apply</span></h3>
         <ul class="rules">
           <li><span class="r-k">من يحق له التقديم</span><span class="r-v">المواطنون السعوديون حسنو السيرة والسلوك. لا يوجد حد عمر عام لأغلب المسارات.</span></li>
+          <li><span class="r-k">شروط القبول</span><span class="r-v">تشترط الوزارة قبولًا <b>غير مشروط</b> لدرجة البكالوريوس أو الماجستير أو الدكتوراه، بدراسة <b>منتظمة</b> في <b>المقر الرئيسي</b> للجامعة. البرامج التنفيذية غير مقبولة، والمؤهلات من خارج السعودية تحتاج إلى معادلة أولًا.</span></li>
+          <li><span class="r-k">المستندات المطلوبة</span><span class="r-v">الهوية الوطنية سارية (ذات الشريحة)، وجواز سفر ساري لمدة سنة على الأقل، والعنوان الوطني المسجل، ووثيقة التخرج والسجل الأكاديمي مصدقين، ومعادلة أي مؤهل أجنبي، ونتائج اختبار اللغة والاختبارات الأخرى.</span></li>
+          <li><span class="r-k">تحقق من الجامعة</span><span class="r-v">الجامعات والمجالات المعتمدة قد تتغير كل عام. استخدم <a href="https://ru.moe.gov.sa/Search" rel="noopener">خدمة الاستعلام عن الجامعات الموصى بها</a>، و<a href="https://sites.moe.gov.sa/scholarship-program/countries/australia/" rel="noopener">صفحة أستراليا</a>، و<a href="https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf" rel="noopener">الدليل الاسترشادي لقوائم الجامعات 2026–2027</a>.</span></li>
           <li><span class="r-k">القبول</span><span class="r-v">تحتاج إلى قبول من جامعة تحقق شروط مسارك، في تخصص ضمن القائمة المعتمدة لذلك العام.</span></li>
           <li><span class="r-k">نمط الدراسة</span><span class="r-v">يجب أن تدرس بانتظام كامل وأن تقيم في بلد الدراسة.</span></li>
           <li><span class="r-k">السنة التحضيرية</span><span class="r-v">ابتداءً من 2025–2026: معدل 90% على الأقل في الثانوية وآيلتس 5.5 (أو ما يعادله).</span></li>
@@ -475,12 +548,13 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
         <h3>أثناء الدراسة في أستراليا <span class="ar" lang="en" dir="ltr">While you study</span></h3>
         <ul class="rules">
           <li><span class="r-k">ما يُغطّى عادةً</span><span class="r-v">الرسوم الدراسية، والتأمين الصحي (OSHC)، ومكافأة شهرية (انظر <a href="#allowance">المكافأة الشهرية</a>). تجد تفاصيل مستحقاتك في قرار ابتعاثك.</span></li>
-          <li><span class="r-k">خطاب الضمان المالي</span><span class="r-v">تحتاج جامعتك إلى خطاب من الملحقية يؤكد ما تتكفل به. في UNSW ترفعه على بوابة المتقدمين عند قبول العرض، ثم ترسل الجامعة الفواتير إلى الملحقية مباشرة.</span></li>
+          <li><span class="r-k">خطاب الضمان المالي</span><span class="r-v">تحتاج جامعتك إلى خطاب من الملحقية يؤكد ما تتكفل به. أغلب الجامعات تطلب رفعه عند قبول العرض، ثم ترسل الفواتير إلى الملحقية مباشرة.</span></li>
           <li><span class="r-k">خطاب جديد مع كل تغيير</span><span class="r-v">الانتقال من التأسيسي إلى الدبلوم، أو من الدبلوم إلى البكالوريوس، أو الحاجة إلى وقت إضافي، يتطلب عادةً خطاب ضمان جديد. اطلبه مبكرًا حتى لا يتأخر تسجيلك.</span></li>
           <li><span class="r-k">تغيير البرنامج أو التخصص</span><span class="r-v">احصل على موافقة الملحقية قبل أي تغيير. البرامج والتخصصات المعتمدة فقط هي المشمولة.</span></li>
           <li><span class="r-k">النتائج كل فصل</span><span class="r-v">ارفع نتائجك على منصة سفير بعد كل فصل وحافظ على تقدمك الأكاديمي. ضعف التقدم قد يوقف المكافأة أو ينهي البعثة.</span></li>
           <li><span class="r-k">المواد المحذوفة أو الراسب فيها</span><span class="r-v">قد تتحمل تكلفة المواد التي تنسحب منها متأخرًا أو تعيدها. استشر الملحقية قبل حذف أي مادة.</span></li>
           <li><span class="r-k">احتفظ بمستنداتك</span><span class="r-v">احفظ كل خطاب بصيغة PDF: القبول، وخطاب تأكيد التسجيل (CoE)، وخطاب حالة التسجيل، ونتيجة معادلة الساعات، والسجل الأكاديمي. قد تطلب الملحقية إثبات برنامجك وتاريخ بدايته في كل مرحلة.</span></li>
+          <li><span class="r-k">التواصل مع الملحقية</span><span class="r-v">مقر الملحقية الثقافية السعودية: 16 Watson Street, Turner ACT 2612 (كانبرا)، هاتف <span dir="ltr">+61 2 6232 5978</span>. زر <a href="https://au.moe.gov.sa/ar/Pages/default.aspx" rel="noopener">موقع الملحقية في أستراليا</a>.</span></li>
         </ul>
       </div>
 
@@ -556,11 +630,11 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
         <ul>
           <li><label><input type="checkbox" id="a1"><span><span class="t">احصل على شريحة جوال أسترالية</span><span class="d">تحتاج إلى رقم محلي للبنك والجامعة وطلبات العمل.</span></span></label></li>
           <li><label><input type="checkbox" id="a2"><span><span class="t">افتح حسابًا بنكيًا</span><span class="d">أحضر جوازك وما يثبت عنوانك أو تسجيلك في الجامعة.</span></span></label></li>
-          <li><label><input type="checkbox" id="a3"><span><span class="t">رتّب المواصلات العامة</span><span class="d">استخدم بطاقة أوبال (Opal) أو ادفع ببطاقتك البنكية اللاتلامسية في القطارات والحافلات والقطار الخفيف والعبّارات.</span></span></label></li>
+          <li><label><input type="checkbox" id="a3"><span><span class="t">رتّب المواصلات العامة</span><span class="d">احصل على <span data-u="transport">بطاقة أوبال (Opal)</span> للمواصلات العامة في <span data-u="city">سيدني</span>، وتحقق إن كان بإمكانك الدفع بالبطاقة البنكية أيضًا.</span></span></label></li>
           <li><label><input type="checkbox" id="a4"><span><span class="t">حدّث عنوانك لدى جامعتك</span><span class="d">يجب على حاملي تأشيرة الطالب إبقاء بيانات التواصل محدثة لدى الجهة التعليمية.</span></span></label></li>
           <li><label><input type="checkbox" id="a5"><span><span class="t">أكمل إجراءات الوصول مع الملحقية</span><span class="d">حدّث بياناتك في منصة سفير وأرسل ما تطلبه الملحقية من مستندات، مثل خطاب التسجيل.</span></span></label></li>
-          <li><label><input type="checkbox" id="a6"><span><span class="t">احضر الأسبوع التعريفي وشارك في الحياة الطلابية</span><span class="d">في UNSW College وUNSW، تنظم Arc الأندية والفعاليات والتطوع. العضوية مجانية، وهي أسرع طريقة لتكوين صداقات.</span></span></label></li>
-          <li><label><input type="checkbox" id="a7"><span><span class="t">اعرف أماكن الطعام والصلاة</span><span class="d">اسأل جامعتك عن المصليات في الحرم الجامعي. أحياء مثل لاكمبا (Lakemba) وأوبرن (Auburn) معروفة بالمطاعم الحلال.</span></span></label></li>
+          <li><label><input type="checkbox" id="a6"><span><span class="t">احضر الأسبوع التعريفي وشارك في الحياة الطلابية</span><span class="d">تنظم <span data-u="union">Arc @ UNSW</span> الأندية والفعاليات ودعم الطلاب في <span data-u="short">UNSW</span>. المشاركة مجانية، وهي أسرع طريقة لتكوين صداقات.</span></span></label></li>
+          <li><label><input type="checkbox" id="a7"><span><span class="t">اعرف أماكن الطعام والصلاة</span><span class="d">اسأل جامعتك عن المصليات في الحرم الجامعي. <span data-u="food">أحياء مثل لاكمبا (Lakemba) وأوبرن (Auburn) معروفة بالمطاعم الحلال.</span></span></span></label></li>
         </ul>
       </div>
     </section>
@@ -603,10 +677,10 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
       </div>
 
       <div class="facts">
-        <div class="fact"><span class="k">الموقع</span><h3>اسكن قرب المواصلات</h3><p>تحقق من مدة الطريق إلى الجامعة. لطلاب UNSW، الأحياء الواقعة على خط القطار الخفيف أو الحافلات مثل كنسينغتون وكينغسفورد وراندويك مفضلة لدى الطلاب.</p></div>
+        <div class="fact"><span class="k">الموقع</span><h3>اسكن قرب المواصلات</h3><p>تحقق من مدة الطريق إلى الجامعة. من الأحياء المفضلة للطلاب قرب <span data-u="short">UNSW</span>: <span data-u="suburbs" dir="ltr">Kensington, Kingsford, Randwick</span>.</p></div>
         <div class="fact"><span class="k">الأمان</span><h3>احذر من الاحتيال</h3><p>لا تدفع عربونًا لغرفة لم ترها، ولا ترسل مالًا لشخص يقول إنه خارج أستراليا. إذا بدا العرض أرخص من اللازم، فغالبًا هو كذلك.</p></div>
-        <div class="fact"><span class="k">التأمين</span><h3>احمِ مبلغ التأمين</h3><p>في العقود عبر المكاتب العقارية، يجب إيداع مبلغ التأمين (Bond) لدى NSW Fair Trading. التقط صورًا مؤرخة للغرفة يوم انتقالك.</p></div>
-        <div class="fact"><span class="k">مساعدة مجانية</span><h3>خذ رأيًا ثانيًا</h3><p>غير متأكد من عقد أو مالك؟ الخدمة القانونية المجانية من Arc في UNSW تقدم استشارات في الإيجار.</p></div>
+        <div class="fact"><span class="k">التأمين</span><h3>احمِ مبلغ التأمين</h3><p>في العقود عبر المكاتب العقارية، يجب إيداع مبلغ التأمين (Bond) لدى <span data-u="bond">NSW Fair Trading</span>. التقط صورًا مؤرخة للغرفة يوم انتقالك.</p></div>
+        <div class="fact"><span class="k">مساعدة مجانية</span><h3>خذ رأيًا ثانيًا</h3><p>غير متأكد من عقد أو مالك؟ <span data-u="legal">الخدمة القانونية المجانية من Arc تقدم للطلاب استشارات في الإيجار ومشكلات أخرى.</span></p></div>
       </div>
     </section>
 
@@ -661,12 +735,15 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
         <a href="https://www.moe.gov.sa/ar/knowledgecenter/eservices/Pages/ksp.aspx" rel="noopener"><span>التقديم على الابتعاث</span><small>خدمة وزارة التعليم (عبر منصة قبول)</small></a>
         <a href="https://safeer2.moe.gov.sa/Portal" rel="noopener"><span>منصة سفير</span><small>متابعة البعثة للطلاب المبتعثين</small></a>
         <a href="https://www.moe.gov.sa/en/knowledgecenter/eservices/pages/joinscholarship.aspx" rel="noopener"><span>الإلحاق بالبعثة</span><small>للدارسين على حسابهم الخاص</small></a>
-        <a href="https://www.unsw.edu.au/study/international-students/sponsored-students" rel="noopener"><span>الطلاب المبتعثون في UNSW</span><small>خطابات الضمان والمواعيد</small></a>
-        <a href="https://www.unswcollege.edu.au" rel="noopener"><span>UNSW College</span><small>برامج التأسيسي والدبلوم واللغة</small></a>
-        <a href="https://www.arc.unsw.edu.au" rel="noopener"><span>Arc @ UNSW</span><small>الأندية والفعاليات والتطوع والدعم</small></a>
+        <a href="https://au.moe.gov.sa/ar/Pages/default.aspx" rel="noopener"><span>الملحقية الثقافية في أستراليا</span><small>كانبرا</small></a>
+        <a href="https://ru.moe.gov.sa/Search" rel="noopener"><span>الجامعات الموصى بها</span><small>خدمة الاستعلام من وزارة التعليم</small></a>
+        <a href="https://sites.moe.gov.sa/scholarship-program/countries/australia/" rel="noopener"><span>جامعات الابتعاث في أستراليا</span><small>وزارة التعليم</small></a>
+        <a data-uni-only data-u-href="web" href="https://www.unsw.edu.au" rel="noopener"><span data-u="name">جامعة نيو ساوث ويلز (UNSW)</span><small>موقع الجامعة</small></a>
+        <a data-uni-only data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener"><span data-u="college">UNSW College</span><small>كلية المسار</small></a>
+        <a data-uni-only data-u-href="union-url" href="https://www.arc.unsw.edu.au" rel="noopener"><span data-u="union">Arc @ UNSW</span><small>رابطة الطلاب</small></a>
         <a href="https://www.fairwork.gov.au/find-help-for/visa-holders-and-migrants" rel="noopener"><span>حقوق العمل لحاملي التأشيرات</span><small>Fair Work Ombudsman</small></a>
         <a href="https://www.ato.gov.au/individuals-and-families/tax-file-number" rel="noopener"><span>رقم الملف الضريبي</span><small>مكتب الضرائب الأسترالي</small></a>
-        <a href="https://transportnsw.info" rel="noopener"><span>مواصلات سيدني وبطاقة أوبال</span><small>Transport for NSW</small></a>
+        <a data-uni-only data-u-href="transport-url" href="https://transportnsw.info" rel="noopener"><span data-u="transport">بطاقة أوبال (Opal)</span><small>المواصلات العامة في <span data-u="city">سيدني</span></small></a>
       </div>
     </section>
   </main>
@@ -784,5 +861,6 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
 })();
 </script>
 
+<script src="../unis.js"></script>
 </body>
 </html>
