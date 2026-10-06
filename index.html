@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Masar Student Guide</title>
+<meta name="description" content="A free, student-written guide for Saudi students planning to study in Sydney: study options, the SACM scholarship, checklists and official links.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@500&display=swap">
+<style>
+/* Layout: a single reading column shaped like a journey — departure board hero, study options as parallel tickets, SACM scholarship guide, packing-list checklists, then the reference desk of official links. */
+:root{
+  --bg:#F3F6F2;
+  --surface:#FFFFFF;
+  --ink:#14231B;
+  --muted:#4E5F55;
+  --line:#D6DFD8;
+  --green:#0B6B3A;
+  --green-soft:#E1EEE5;
+  --sand:#9A6B1F;
+  --sand-soft:#F4EAD7;
+  --board:#10241A;
+  --board-ink:#E9F2EC;
+  --board-dim:#8FB09C;
+
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --f-ar:"IBM Plex Sans Arabic", "Geeza Pro", "Segoe UI", Tahoma, sans-serif;
+
+  --step-0:1.0625rem;
+  --step-1:1.25rem;
+  --step-2:1.6rem;
+  --step-3:clamp(2.1rem, 5vw + 1rem, 3.6rem);
+  --radius:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1512; --surface:#16201B; --ink:#E3ECE6; --muted:#A3B5AA; --line:#2A3831;
+    --green:#5BC08A; --green-soft:#1C3328; --sand:#E0B670; --sand-soft:#33291A;
+    --board:#0A110D; --board-ink:#E9F2EC; --board-dim:#7FA28D;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1512; --surface:#16201B; --ink:#E3ECE6; --muted:#A3B5AA; --line:#2A3831;
+  --green:#5BC08A; --green-soft:#1C3328; --sand:#E0B670; --sand-soft:#33291A;
+  --board:#0A110D; --board-ink:#E9F2EC; --board-dim:#7FA28D;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:var(--f-body); font-size:var(--step-0); line-height:1.65;
+  padding-inline:16px; padding-block:0 48px;
+}
+.wrap{max-width:46rem; margin-inline:auto}
+a{color:var(--green); text-underline-offset:3px}
+a:focus-visible, button:focus-visible, input:focus-visible{outline:3px solid var(--sand); outline-offset:2px; border-radius:4px}
+h1,h2,h3{font-family:var(--f-display); line-height:1.15; text-wrap:balance; margin:0}
+h2{font-size:var(--step-2); font-weight:700; letter-spacing:-.01em}
+h3{font-size:var(--step-1); font-weight:700}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono); font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+
+/* top bar */
+.top{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; padding-block:18px}
+.brand{font-family:var(--f-display); font-weight:800; font-size:1.2rem; color:var(--ink); text-decoration:none; display:flex; align-items:baseline; gap:10px}
+.brand .ar{font-family:var(--f-ar); font-weight:500; color:var(--green); font-size:1.05rem}
+.top nav{display:flex; gap:16px; flex-wrap:wrap; font-size:.95rem}
+.top nav a{color:var(--muted); text-decoration:none}
+.top nav a:hover{color:var(--green)}
+
+/* departure board hero */
+.board{
+  background:var(--board); color:var(--board-ink);
+  border-radius:14px; padding:28px 24px 26px; margin-top:6px;
+  display:grid; gap:22px;
+}
+.board-row{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:10px; font-family:var(--f-mono)}
+.board-row div{display:grid; gap:2px; min-width:0}
+.board-row span{font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--board-dim)}
+.board-row b{font-weight:500; font-size:1.05rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.board-row .status{color:#F2C46D}
+.board h1{font-size:var(--step-3); font-weight:800; letter-spacing:-.025em; color:var(--board-ink)}
+.board h1 em{font-style:normal; color:#7FD3A4}
+.board .lede{color:#C9D9CF; max-width:36rem; font-size:1.1rem}
+.board .tagline{font-family:var(--f-ar); color:var(--board-dim); font-size:1.05rem}
+.board .cta{display:flex; flex-wrap:wrap; gap:10px}
+.btn{display:inline-block; font-family:var(--f-body); font-weight:700; font-size:.98rem; padding:10px 16px; border-radius:8px; text-decoration:none; border:1.5px solid transparent}
+.btn-primary{background:#7FD3A4; color:#0A1F14}
+.btn-ghost{border-color:#3C5A49; color:var(--board-ink)}
+.btn:hover{filter:brightness(1.08)}
+
+section{padding-block:44px 0; display:grid; gap:18px}
+section > p.intro{color:var(--muted); max-width:40rem}
+
+/* author note */
+.author{display:grid; grid-template-columns:auto 1fr; gap:16px; align-items:start; padding:20px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); margin-top:22px}
+.avatar{width:52px; height:52px; border-radius:50%; background:var(--green-soft); color:var(--green); display:grid; place-items:center; font-family:var(--f-display); font-weight:800; font-size:1.3rem}
+.author p{color:var(--muted)}
+.author strong{color:var(--ink)}
+
+/* study options: parallel choices, not a sequence */
+.group-label{font-family:var(--f-mono); font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--green); margin-top:6px}
+.options{display:grid; grid-template-columns:repeat(auto-fit, minmax(17rem, 1fr)); gap:14px}
+.option{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px; display:grid; gap:10px; align-content:start; min-width:0}
+.option .ticket{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; font-family:var(--f-mono); font-size:.75rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding-bottom:10px; border-bottom:1px dashed var(--line)}
+.option .ticket b{font-weight:500; color:var(--sand)}
+.option p{color:var(--muted); font-size:.97rem}
+.option dl{margin:0; display:grid; gap:8px}
+.option dt{font-weight:700; font-size:.88rem; color:var(--ink)}
+.option dd{margin:0; color:var(--muted); font-size:.95rem}
+.option .sacm{background:var(--green-soft); border-radius:6px; padding:10px 12px; font-size:.92rem; color:var(--ink)}
+.option .sacm b{color:var(--green)}
+
+/* SACM section */
+.tracks{display:grid; grid-template-columns:repeat(auto-fit, minmax(15rem, 1fr)); gap:12px}
+.track{border:1px solid var(--line); border-radius:8px; padding:14px 16px; background:var(--surface); display:grid; gap:4px; align-content:start; min-width:0}
+.track .name{display:flex; justify-content:space-between; align-items:baseline; gap:8px; flex-wrap:wrap}
+.track .name .ar{font-family:var(--f-ar); color:var(--green); font-size:1rem}
+.track p{color:var(--muted); font-size:.93rem}
+.track .tag{font-family:var(--f-mono); font-size:.75rem; color:var(--sand)}
+.rules{list-style:none; margin:0; padding:0; display:grid; gap:0; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius)}
+.rules li{display:grid; grid-template-columns:minmax(0, 13rem) minmax(0, 1fr); gap:6px 20px; padding:14px 18px; border-top:1px solid var(--line)}
+.rules li:first-child{border-top:0}
+.rules .r-k{font-weight:700}
+.rules .r-v{color:var(--muted); font-size:.97rem}
+.phase{display:grid; gap:14px}
+.phase h3 .ar{font-family:var(--f-ar); font-weight:500; color:var(--green); font-size:1rem; margin-inline-start:8px}
+code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-soft); padding:1px 6px; border-radius:4px; overflow-wrap:anywhere}
+@media (max-width:560px){ .rules li{grid-template-columns:1fr} }
+
+.note{background:var(--sand-soft); border-left:3px solid var(--sand); padding:12px 16px; border-radius:6px; color:var(--ink); font-size:.97rem}
+
+/* checklists */
+.checklist{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:6px 0}
+.cl-head{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 18px 8px; flex-wrap:wrap}
+.progress{font-family:var(--f-mono); font-size:.85rem; color:var(--muted); font-variant-numeric:tabular-nums; display:flex; align-items:center; gap:10px}
+.bar{width:90px; height:6px; border-radius:3px; background:var(--line); overflow:hidden}
+.bar i{display:block; height:100%; width:0; background:var(--green); transition:width .25s ease}
+.checklist ul{list-style:none; margin:0; padding:0}
+.checklist li{border-top:1px solid var(--line)}
+.checklist label{display:grid; grid-template-columns:22px 1fr; gap:12px; padding:12px 18px; cursor:pointer; align-items:start}
+.checklist input{width:20px; height:20px; margin:3px 0 0; accent-color:var(--green)}
+.checklist .t{font-weight:700}
+.checklist .d{display:block; color:var(--muted); font-size:.95rem; font-weight:400}
+.checklist input:checked + span .t{text-decoration:line-through; text-decoration-color:var(--green); color:var(--muted)}
+.reset{background:none; border:0; color:var(--muted); font:inherit; font-size:.85rem; text-decoration:underline; cursor:pointer; padding:0}
+
+/* two-column facts */
+.facts{display:grid; grid-template-columns:repeat(auto-fit, minmax(15rem, 1fr)); gap:14px}
+.fact{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px; display:grid; gap:8px; align-content:start; min-width:0}
+.fact p{color:var(--muted); font-size:.97rem}
+.fact .k{font-family:var(--f-mono); font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; color:var(--green)}
+
+/* lessons */
+.lessons{counter-reset:none; display:grid; gap:14px; margin:0; padding:0; list-style:none}
+.lessons li{display:grid; gap:4px; padding-left:16px; border-left:2px solid var(--green)}
+.lessons li p{color:var(--muted)}
+
+/* links */
+.links{display:grid; grid-template-columns:repeat(auto-fit, minmax(14rem, 1fr)); gap:10px}
+.links a{display:grid; gap:2px; padding:14px 16px; border:1px solid var(--line); border-radius:8px; background:var(--surface); text-decoration:none; color:var(--ink); min-width:0}
+.links a:hover{border-color:var(--green)}
+.links a span{font-weight:700}
+.links a small{color:var(--muted); font-size:.85rem; overflow-wrap:anywhere}
+
+footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--line); display:grid; gap:10px; color:var(--muted); font-size:.92rem}
+footer .ar{font-family:var(--f-ar)}
+
+@media (max-width:560px){
+  .board{padding:22px 18px}
+  .board-row{grid-template-columns:repeat(2, minmax(0,1fr)); row-gap:14px}
+  .author{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){ .bar i{transition:none} }
+</style>
+
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#top">Masar <span class="ar" lang="ar" dir="rtl">مسار</span></a>
+    <nav aria-label="Sections">
+      <a href="#options">Study options</a>
+      <a href="#sacm">SACM scholarship</a>
+      <a href="#before">Before you fly</a>
+      <a href="#arrival">First weeks</a>
+      <a href="#money">Money &amp; work</a>
+      <a href="#links">Official links</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="board" role="region" aria-label="Introduction">
+      <div class="board-row" aria-hidden="true">
+        <div><span>From</span><b>RUH · JED · DMM</b></div>
+        <div><span>To</span><b>SYD</b></div>
+        <div><span>Sponsor</span><b>SACM</b></div>
+        <div><span>Status</span><b class="status">Planning</b></div>
+      </div>
+      <h1>From Saudi Arabia to a degree in <em>Sydney</em>.</h1>
+      <p class="lede">A free guide for Saudi students who want to study in Australia. It covers your study options, how the SACM scholarship works, what to sort out before you fly, and your first weeks in Sydney.</p>
+      <p class="tagline" lang="ar" dir="rtl">دليلك للدراسة في أستراليا</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#options">Compare study options</a>
+        <a class="btn btn-ghost" href="#sacm">SACM scholarship guide</a>
+      </div>
+    </div>
+
+    <div class="author">
+      <div class="avatar" aria-hidden="true">B</div>
+      <div>
+        <p><strong>Written by Bader</strong>, a Mining Engineering student at UNSW Sydney. I started with a Foundation year, completed the Diploma in Engineering at UNSW College, and then moved into the second year of my degree. This guide is what I wish I had on day one.</p>
+      </div>
+    </div>
+
+    <section id="options" aria-labelledby="options-h">
+      <p class="eyebrow">Choose your route</p>
+      <h2 id="options-h">Your study options</h2>
+      <p class="intro">There is no single right way in. Pick the option that matches your results, your English score and your goals. The examples use UNSW and UNSW College, but most Australian universities offer similar choices.</p>
+
+      <p class="group-label">After high school</p>
+      <div class="options">
+        <article class="option">
+          <div class="ticket"><span>Option</span><b>Direct entry</b></div>
+          <h3>Start the bachelor's degree</h3>
+          <p>Go straight into first year if your high school results and English score meet the university's entry requirements.</p>
+          <dl>
+            <div><dt>Suits you if</dt><dd>You have strong results and an English test score at the degree's level.</dd></div>
+            <div><dt>Length</dt><dd>The full degree, often 3 to 4 years (engineering honours is usually 4).</dd></div>
+          </dl>
+          <p class="sacm"><b>Scholarship note:</b> the university must meet your track's ranking rule (top 30 for Al-Ruwwad, top 200 for Imdad).</p>
+        </article>
+
+        <article class="option">
+          <div class="ticket"><span>Option</span><b>About 1 year</b></div>
+          <h3>Foundation Studies</h3>
+          <p>A preparatory year that bridges high school and university. You study subjects linked to your degree and learn how Australian study works, then enter first year.</p>
+          <dl>
+            <div><dt>Suits you if</dt><dd>Your high school certificate is not accepted for direct entry, or you want a softer start.</dd></div>
+            <div><dt>Leads to</dt><dd>First year of a bachelor's degree, if you meet the progression requirements.</dd></div>
+          </dl>
+          <p class="sacm"><b>Scholarship note:</b> from 2025–26, the Ministry asks for at least 90% in high school and IELTS 5.5 (or equivalent) to be sponsored for a preparatory year.</p>
+        </article>
+
+        <article class="option">
+          <div class="ticket"><span>Option</span><b>About 1 year</b></div>
+          <h3>Diploma</h3>
+          <p>Covers first-year university content in smaller classes with more support. If you meet the progression requirements, you enter the <b>second year</b> of a matching degree.</p>
+          <dl>
+            <div><dt>Suits you if</dt><dd>You already know your field, such as engineering or business, and want extra support in your first year.</dd></div>
+            <div><dt>Leads to</dt><dd>Second year of a linked degree, with credit transfer.</dd></div>
+          </dl>
+          <p class="sacm"><b>Scholarship note:</b> get SACM approval for the diploma and the degree it leads to before you accept the offer.</p>
+        </article>
+
+        <article class="option">
+          <div class="ticket"><span>Option</span><b>Weeks to months</b></div>
+          <h3>English course</h3>
+          <p>An academic English program that raises your score to the level your program needs. Some programs let you skip this with a high enough test score.</p>
+          <dl>
+            <div><dt>Suits you if</dt><dd>Your English score is below the entry level of your chosen program.</dd></div>
+            <div><dt>Can be combined with</dt><dd>Any option above, as a package offer.</dd></div>
+          </dl>
+          <p class="sacm"><b>Scholarship note:</b> the Ministry's FAQ says the scholarship does not include a separate English year in English-speaking countries. Check with SACM before you rely on it.</p>
+        </article>
+      </div>
+
+      <p class="group-label">After a bachelor's degree</p>
+      <div class="options">
+        <article class="option">
+          <div class="ticket"><span>Option</span><b>1 to 2 years</b></div>
+          <h3>Master's degree</h3>
+          <p>Coursework or research master's for graduates. Entry depends on your bachelor's GPA, field and English score.</p>
+          <dl>
+            <div><dt>Suits you if</dt><dd>You meet the GPA and English requirements of the master's program.</dd></div>
+          </dl>
+          <p class="sacm"><b>Scholarship note:</b> Al-Ruwwad, Imdad and Research &amp; Development all include master's study, each with its own ranking rule.</p>
+        </article>
+
+        <article class="option">
+          <div class="ticket"><span>Option</span><b>Short program</b></div>
+          <h3>Pre-Masters</h3>
+          <p>A preparation program for graduates who need to strengthen their academic skills or English before a master's degree.</p>
+          <dl>
+            <div><dt>Suits you if</dt><dd>You are close to the master's entry requirements but not there yet.</dd></div>
+          </dl>
+          <p class="sacm"><b>Scholarship note:</b> confirm with SACM that the pre-masters program is covered before you accept.</p>
+        </article>
+      </div>
+
+      <p class="note">Entry scores, program lengths and progression rules change each year and differ between programs. Always check the current rules on the official <a href="https://www.unswcollege.edu.au" rel="noopener">UNSW College</a> and university websites before you apply.</p>
+    </section>
+
+    <section id="sacm" aria-labelledby="sacm-h">
+      <p class="eyebrow">Scholarship guide</p>
+      <h2 id="sacm-h">The SACM scholarship, explained</h2>
+      <p class="intro">Most Saudi students in Australia study on the Custodian of the Two Holy Mosques Scholarship Program, run by the Ministry of Education. You apply through the Ministry, and once you are in Australia the Saudi Arabian Cultural Mission (SACM) in Canberra manages your scholarship.</p>
+
+      <div class="phase">
+        <h3>The four scholarship tracks <span class="ar" lang="ar" dir="rtl">مسارات الابتعاث</span></h3>
+        <div class="tracks">
+          <div class="track">
+            <div class="name"><b>Al-Ruwwad</b><span class="ar" lang="ar" dir="rtl">مسار الرواد</span></div>
+            <span class="tag">Top 30 universities · Bachelor's, Master's</span>
+            <p>For high school and university graduates who gain admission to one of the world's leading universities, in any field.</p>
+          </div>
+          <div class="track">
+            <div class="name"><b>Imdad</b><span class="ar" lang="ar" dir="rtl">مسار إمداد</span></div>
+            <span class="tag">Top 200 · Bachelor's, Master's</span>
+            <p>For fields the Saudi job market needs. The list of approved majors is set each year.</p>
+          </div>
+          <div class="track">
+            <div class="name"><b>Research &amp; Development</b><span class="ar" lang="ar" dir="rtl">مسار البحث والتطوير</span></div>
+            <span class="tag">Top 200 in the field · Master's, PhD</span>
+            <p>For graduate study in national research priority areas.</p>
+          </div>
+          <div class="track">
+            <div class="name"><b>Wa'id</b><span class="ar" lang="ar" dir="rtl">مسار واعد</span></div>
+            <span class="tag">Linked to a job · Diplomas to degrees</span>
+            <p>Training and study tied to employment with a Saudi company after you graduate. Australia is one of the listed countries.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <h3>Before you apply <span class="ar" lang="ar" dir="rtl">قبل التقديم</span></h3>
+        <ul class="rules">
+          <li><span class="r-k">Who can apply</span><span class="r-v">Saudi citizens of good conduct. There is no general age limit for most tracks.</span></li>
+          <li><span class="r-k">Admission</span><span class="r-v">You need an offer from a university that meets your track's rules, in a major on that year's approved list.</span></li>
+          <li><span class="r-k">Study mode</span><span class="r-v">You must study full time and live in the country of study.</span></li>
+          <li><span class="r-k">Preparatory year</span><span class="r-v">From 2025–26: at least 90% high school average and IELTS 5.5 (or equivalent).</span></li>
+          <li><span class="r-k">English year</span><span class="r-v">The Ministry's FAQ says a separate English year in English-speaking countries is not covered. Aim to meet the English requirement early.</span></li>
+          <li><span class="r-k">Aptitude tests</span><span class="r-v">The Ministry says applications do not require aptitude or achievement test scores, although some Wa'id programs ask for them.</span></li>
+          <li><span class="r-k">Where to apply</span><span class="r-v">The Safeer portal (منصة سفير). You can submit more than one offer, and selection is based on merit and available places.</span></li>
+          <li><span class="r-k">Already self-funded?</span><span class="r-v">You can apply to join the scholarship if you meet the general and track conditions. The Ministry also has a "join the scholarship" e-service with rules on university ranking, GPA and units already completed.</span></li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <h3>While you study in Australia <span class="ar" lang="ar" dir="rtl">أثناء الدراسة</span></h3>
+        <ul class="rules">
+          <li><span class="r-k">What is usually covered</span><span class="r-v">Tuition, health cover (OSHC) and a monthly allowance. Your exact entitlements are in your scholarship decision.</span></li>
+          <li><span class="r-k">Financial guarantee letter</span><span class="r-v">Your university needs a letter from SACM confirming what it pays. At UNSW you upload it to the applicant portal when you accept your offer, and the university then invoices SACM directly.</span></li>
+          <li><span class="r-k">New letter for each change</span><span class="r-v">Moving from Foundation to a diploma, or from a diploma to a degree, or needing extra time, usually means a new guarantee letter. Request it early so your enrolment is not delayed.</span></li>
+          <li><span class="r-k">Changing program or major</span><span class="r-v">Get SACM approval before you change. Only approved programs and majors are funded.</span></li>
+          <li><span class="r-k">Results every term</span><span class="r-v">Upload your results to Safeer after each term and keep your academic progress up. Poor progress can stop your allowance or end the scholarship.</span></li>
+          <li><span class="r-k">Dropped or failed courses</span><span class="r-v">You may have to pay for courses you withdraw from late or repeat. Ask SACM before you drop a course.</span></li>
+          <li><span class="r-k">Keep your records</span><span class="r-v">Save every letter as a PDF: offer, CoE, enrolment status letter, credit transfer outcome and transcripts. SACM may ask for proof of your program and start date at each stage.</span></li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <h3>After you graduate <span class="ar" lang="ar" dir="rtl">بعد التخرج</span></h3>
+        <ul class="rules">
+          <li><span class="r-k">Degree equivalency</span><span class="r-v">To use your degree in Saudi Arabia, apply for equivalency (معادلة الشهادة) with the Ministry of Education. Full-time study and living in Australia during your degree matter here, so keep your transcripts and travel records.</span></li>
+          <li><span class="r-k">Professional bodies</span><span class="r-v">Some careers have their own registration. For example, engineers register with the Saudi Council of Engineers.</span></li>
+        </ul>
+      </div>
+
+      <p class="note">Scholarship rules are updated often. This section summarises the Ministry of Education's published conditions as of October 2026. Always confirm with SACM and the <a href="https://sites.moe.gov.sa/scholarship-program/conditions/" rel="noopener">official conditions page</a> before you make a decision.</p>
+    </section>
+
+    <section id="before" aria-labelledby="before-h">
+      <p class="eyebrow">Packing list</p>
+      <h2 id="before-h">Before you fly</h2>
+      <p class="intro">Tick items off as you go. Your progress stays saved in this browser.</p>
+
+      <div class="checklist" data-list="before">
+        <div class="cl-head">
+          <h3>Paperwork and planning</h3>
+          <div class="progress"><span class="count">0 / 7</span><span class="bar"><i></i></span></div>
+        </div>
+        <ul>
+          <li><label><input type="checkbox" id="b1"><span><span class="t">Accept your offer and receive your CoE</span><span class="d">The Confirmation of Enrolment is the document you need for your visa application.</span></span></label></li>
+          <li><label><input type="checkbox" id="b2"><span><span class="t">Arrange Overseas Student Health Cover (OSHC)</span><span class="d">Health cover is a condition of the student visa. Your university can often arrange it for you.</span></span></label></li>
+          <li><label><input type="checkbox" id="b3"><span><span class="t">Apply for the Student visa (subclass 500)</span><span class="d">Apply online through the Department of Home Affairs. Read your visa conditions once it is granted.</span></span></label></li>
+          <li><label><input type="checkbox" id="b4"><span><span class="t">Get your SACM financial guarantee letter</span><span class="d">Request it through Safeer and upload it to your university's portal when you accept your offer. See the <a href="#sacm">SACM guide</a>.</span></span></label></li>
+          <li><label><input type="checkbox" id="b5"><span><span class="t">Book a place to stay for your first weeks</span><span class="d">Short-term housing gives you time to inspect a long-term room in person before signing anything.</span></span></label></li>
+          <li><label><input type="checkbox" id="b6"><span><span class="t">Make copies of key documents</span><span class="d">Passport, visa grant, CoE, offer letter, transcripts and sponsor letters. Keep digital copies too.</span></span></label></li>
+          <li><label><input type="checkbox" id="b7"><span><span class="t">Check your orientation date</span><span class="d">Plan to land a few days early so you are rested for orientation and enrolment.</span></span></label></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="arrival" aria-labelledby="arrival-h">
+      <p class="eyebrow">Landed in SYD</p>
+      <h2 id="arrival-h">Your first two weeks in Sydney</h2>
+
+      <div class="checklist" data-list="arrival">
+        <div class="cl-head">
+          <h3>Settling in</h3>
+          <div class="progress"><span class="count">0 / 7</span><span class="bar"><i></i></span></div>
+        </div>
+        <ul>
+          <li><label><input type="checkbox" id="a1"><span><span class="t">Get an Australian SIM card</span><span class="d">You need a local number for your bank, university and job applications.</span></span></label></li>
+          <li><label><input type="checkbox" id="a2"><span><span class="t">Open a bank account</span><span class="d">Bring your passport and proof of address or enrolment.</span></span></label></li>
+          <li><label><input type="checkbox" id="a3"><span><span class="t">Sort out public transport</span><span class="d">Use an Opal card or tap on with a contactless bank card on trains, buses, light rail and ferries.</span></span></label></li>
+          <li><label><input type="checkbox" id="a4"><span><span class="t">Update your address with your university</span><span class="d">Student visa holders must keep their contact details up to date with their education provider.</span></span></label></li>
+          <li><label><input type="checkbox" id="a5"><span><span class="t">Complete your SACM arrival steps</span><span class="d">Update your details in Safeer and send any documents SACM asks for, such as your enrolment letter.</span></span></label></li>
+          <li><label><input type="checkbox" id="a6"><span><span class="t">Go to orientation and join student life</span><span class="d">At UNSW College and UNSW, Arc runs clubs, events and volunteering. Joining is free and it is the fastest way to make friends.</span></span></label></li>
+          <li><label><input type="checkbox" id="a7"><span><span class="t">Find your food and prayer spots</span><span class="d">Ask your university about prayer rooms on campus. Suburbs such as Lakemba and Auburn are well known for halal food.</span></span></label></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="money" aria-labelledby="money-h">
+      <p class="eyebrow">Practical matters</p>
+      <h2 id="money-h">Money and work</h2>
+      <div class="facts">
+        <div class="fact">
+          <span class="k">Work limits</span>
+          <h3>Know your visa rules</h3>
+          <p>Student visa holders have a limit on work hours during study periods, currently 48 hours per fortnight. Rules can change, so check Home Affairs. Sponsored students should also check their sponsor's rules on part-time work.</p>
+        </div>
+        <div class="fact">
+          <span class="k">Pay</span>
+          <h3>Know your rights</h3>
+          <p>International students have the same workplace rights as everyone else in Australia, including minimum wage. The Fair Work Ombudsman explains your rights for free.</p>
+        </div>
+        <div class="fact">
+          <span class="k">Tax</span>
+          <h3>Get a Tax File Number</h3>
+          <p>If you start working, apply for a Tax File Number (TFN) online through the Australian Taxation Office. It is free.</p>
+        </div>
+        <div class="fact">
+          <span class="k">Budget</span>
+          <h3>Plan for rent first</h3>
+          <p>Rent is usually the biggest cost in Sydney. Look at rooms close to a train or bus line, and never pay a bond before you have seen the room and a written agreement.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="lessons" aria-labelledby="lessons-h">
+      <p class="eyebrow">From experience</p>
+      <h2 id="lessons-h">What I learned on the way</h2>
+      <ul class="lessons">
+        <li><h3>Keep every official letter</h3><p>When you move from Foundation to a diploma, or from a diploma to a degree, your sponsor may ask for proof of your new program, your start date, your credit transfer outcome and an enrolment letter. Save each one as a PDF the day you receive it.</p></li>
+        <li><h3>Ask about your credit transfer early</h3><p>Your credit outcome decides which courses you take in your first term at university. Knowing it early helps you plan a full study load.</p></li>
+        <li><h3>Your English improves fastest outside class</h3><p>Clubs, volunteering and part-time work give you daily practice. Do not wait until you feel confident to join.</p></li>
+        <li><h3>Use the free support</h3><p>Universities and student organisations offer free help with study skills, wellbeing and legal questions such as renting. Use it before a small problem becomes a big one.</p></li>
+      </ul>
+    </section>
+
+    <section id="links" aria-labelledby="links-h">
+      <p class="eyebrow">Reference desk</p>
+      <h2 id="links-h">Official links</h2>
+      <p class="intro">Rules change. These official sites have the current information.</p>
+      <div class="links">
+        <a href="https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500" rel="noopener"><span>Student visa (subclass 500)</span><small>Department of Home Affairs</small></a>
+        <a href="https://www.studyaustralia.gov.au/en/plan-your-move/your-guide-to-visas/student-visa-subclass-500" rel="noopener"><span>Visa guide for students</span><small>Study Australia</small></a>
+        <a href="https://privatehealth.gov.au/health_insurance/overseas/overseas_student_health_cover.htm" rel="noopener"><span>Overseas Student Health Cover</span><small>privatehealth.gov.au</small></a>
+        <a href="https://sites.moe.gov.sa/scholarship-program/" rel="noopener"><span>Scholarship program</span><small>Ministry of Education (tracks and news)</small></a>
+        <a href="https://sites.moe.gov.sa/scholarship-program/conditions/" rel="noopener"><span>Scholarship conditions</span><small>Ministry of Education</small></a>
+        <a href="https://safeer2.moe.gov.sa/Portal" rel="noopener"><span>Safeer portal</span><small>Apply and manage your scholarship</small></a>
+        <a href="https://www.moe.gov.sa/en/knowledgecenter/eservices/pages/joinscholarship.aspx" rel="noopener"><span>Join the scholarship</span><small>For self-funded students</small></a>
+        <a href="https://www.unsw.edu.au/study/international-students/sponsored-students" rel="noopener"><span>UNSW sponsored students</span><small>Guarantee letters and deadlines</small></a>
+        <a href="https://www.unswcollege.edu.au" rel="noopener"><span>UNSW College</span><small>Foundation, diploma and English programs</small></a>
+        <a href="https://www.arc.unsw.edu.au" rel="noopener"><span>Arc @ UNSW</span><small>Clubs, events, volunteering and support</small></a>
+        <a href="https://www.fairwork.gov.au/find-help-for/visa-holders-and-migrants" rel="noopener"><span>Work rights for visa holders</span><small>Fair Work Ombudsman</small></a>
+        <a href="https://www.ato.gov.au/individuals-and-families/tax-file-number" rel="noopener"><span>Tax File Number</span><small>Australian Taxation Office</small></a>
+        <a href="https://transportnsw.info" rel="noopener"><span>Sydney transport and Opal</span><small>Transport for NSW</small></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>This guide shares one student's experience. It is not official advice from any university, government or sponsor. Always confirm details with the official sources above.</p>
+    <p>Last updated October 2026 · Made by Bader · <span class="ar" lang="ar" dir="rtl">بالتوفيق</span></p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var KEY = "masar-checklist-v1";
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e) { saved = {}; }
+
+  function save(){
+    try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e) {}
+  }
+
+  document.querySelectorAll(".checklist").forEach(function(list){
+    var boxes = list.querySelectorAll('input[type="checkbox"]');
+    var count = list.querySelector(".count");
+    var fill = list.querySelector(".bar i");
+
+    function update(){
+      var done = 0;
+      boxes.forEach(function(b){ if (b.checked) done++; });
+      count.textContent = done + " / " + boxes.length;
+      fill.style.width = Math.round(done / boxes.length * 100) + "%";
+    }
+
+    boxes.forEach(function(b){
+      if (saved[b.id]) b.checked = true;
+      b.addEventListener("change", function(){
+        saved[b.id] = b.checked;
+        save();
+        update();
+      });
+    });
+    update();
+  });
+})();
+</script>
+
+</body>
+</html>
