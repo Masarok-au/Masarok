@@ -1,4 +1,4 @@
-# Masar · مسار
+# Masarok · مسارُك
 
 A free, student-written guide for Saudi students who want to study in Australia.
 
@@ -10,7 +10,7 @@ It covers:
 - **Money and work:** visa work limits, pay rights, tax and rent
 - **Official links:** Home Affairs, the Ministry of Education, Safeer, UNSW and more
 
-**Live site:** https://bader-almasri.github.io/Masar/
+**Live site:** https://masarok-au.github.io/Masarok/
 
 ## Why this exists
 
