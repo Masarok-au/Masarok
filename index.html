@@ -140,6 +140,28 @@ section > p.intro{color:var(--muted); max-width:40rem}
 .phase h3 .ar{font-family:var(--f-ar); font-weight:500; color:var(--green); font-size:1rem; margin-inline-start:8px}
 code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-soft); padding:1px 6px; border-radius:4px; overflow-wrap:anywhere}
 @media (max-width:560px){ .rules li{grid-template-columns:1fr} }
+/* allowance + budget */
+.allowance{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.3fr); gap:0; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
+.amount{background:var(--night); color:var(--night-ink); padding:24px; display:grid; gap:6px; align-content:center}
+.amount .k{font-family:var(--f-mono); font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--night-dim)}
+.amount .fig{font-family:var(--f-display); font-weight:800; font-size:clamp(2.4rem, 5vw + 1rem, 3.4rem); line-height:1; color:var(--gold); font-variant-numeric:tabular-nums}
+.amount .per{color:#C8D3E0; font-size:.95rem}
+.budget{padding:20px 22px; display:grid; gap:12px; min-width:0}
+.budget h3{font-size:1.1rem}
+.budget .hint{color:var(--muted); font-size:.9rem}
+.brow{display:grid; grid-template-columns:minmax(0,1fr) 7.5rem; gap:12px; align-items:center}
+.brow label{font-size:.95rem}
+.brow label small{display:block; color:var(--muted); font-size:.8rem}
+.money-in{display:flex; align-items:center; border:1px solid var(--line); border-radius:6px; background:var(--bg); padding-inline:8px}
+.money-in span{color:var(--muted); font-size:.9rem}
+.money-in input{width:100%; border:0; background:transparent; color:var(--ink); font:inherit; padding:7px 4px; font-variant-numeric:tabular-nums; text-align:right; min-width:0}
+.totals{border-top:1px solid var(--line); padding-top:12px; display:grid; gap:6px; font-variant-numeric:tabular-nums}
+.totals div{display:flex; justify-content:space-between; gap:12px}
+.totals .left b{font-size:1.15rem}
+.totals .left.ok b{color:var(--green)}
+.totals .left.low b{color:#C0392B}
+@media (max-width:640px){ .allowance{grid-template-columns:1fr} }
+
 
 .note{background:var(--sand-soft); border-left:3px solid var(--sand); padding:12px 16px; border-radius:6px; color:var(--ink); font-size:.97rem}
 
@@ -203,8 +225,10 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       <nav aria-label="Sections">
       <a href="#options">Study options</a>
       <a href="#sacm">SACM scholarship</a>
+      <a href="#allowance">Allowance</a>
       <a href="#before">Before you fly</a>
       <a href="#arrival">First weeks</a>
+      <a href="#housing">Housing</a>
       <a href="#money">Money &amp; work</a>
       <a href="#links">Official links</a>
     </nav>
@@ -358,7 +382,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       <div class="phase">
         <h3>While you study in Australia <span class="ar" lang="ar" dir="rtl">أثناء الدراسة</span></h3>
         <ul class="rules">
-          <li><span class="r-k">What is usually covered</span><span class="r-v">Tuition, health cover (OSHC) and a monthly allowance. Your exact entitlements are in your scholarship decision.</span></li>
+          <li><span class="r-k">What is usually covered</span><span class="r-v">Tuition, health cover (OSHC) and a monthly allowance (see <a href="#allowance">the monthly allowance</a>). Your exact entitlements are in your scholarship decision.</span></li>
           <li><span class="r-k">Financial guarantee letter</span><span class="r-v">Your university needs a letter from SACM confirming what it pays. At UNSW you upload it to the applicant portal when you accept your offer, and the university then invoices SACM directly.</span></li>
           <li><span class="r-k">New letter for each change</span><span class="r-v">Moving from Foundation to a diploma, or from a diploma to a degree, or needing extra time, usually means a new guarantee letter. Request it early so your enrolment is not delayed.</span></li>
           <li><span class="r-k">Changing program or major</span><span class="r-v">Get SACM approval before you change. Only approved programs and majors are funded.</span></li>
@@ -379,6 +403,33 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       <p class="note">Scholarship rules are updated often. This section summarises the Ministry of Education's published conditions as of October 2026. Always confirm with SACM and the <a href="https://sites.moe.gov.sa/scholarship-program/conditions/" rel="noopener">official conditions page</a> before you make a decision.</p>
     </section>
 
+    <section id="allowance" aria-labelledby="allowance-h">
+      <p class="eyebrow">Your monthly money</p>
+      <h2 id="allowance-h">The SACM monthly allowance</h2>
+      <p class="intro">On top of tuition and health cover, SACM pays scholarship students a monthly allowance for living costs such as rent, food and transport.</p>
+
+      <div class="allowance">
+        <div class="amount">
+          <span class="k">Monthly allowance</span>
+          <span class="fig">A$2,699</span>
+          <span class="per">per month for a single student in Australia</span>
+        </div>
+        <div class="budget">
+          <h3>Plan your month</h3>
+          <p class="hint">Rent in Sydney is quoted per week. Enter your own numbers to see what is left each month. The figures below are only examples.</p>
+          <div class="brow"><label for="rent">Rent <small>per week</small></label><div class="money-in"><span>$</span><input id="rent" type="number" inputmode="decimal" min="0" step="10" value="400"></div></div>
+          <div class="brow"><label for="food">Groceries <small>per week</small></label><div class="money-in"><span>$</span><input id="food" type="number" inputmode="decimal" min="0" step="5" value="100"></div></div>
+          <div class="brow"><label for="travel">Transport <small>per week</small></label><div class="money-in"><span>$</span><input id="travel" type="number" inputmode="decimal" min="0" step="5" value="40"></div></div>
+          <div class="brow"><label for="bills">Phone and bills <small>per month</small></label><div class="money-in"><span>$</span><input id="bills" type="number" inputmode="decimal" min="0" step="5" value="80"></div></div>
+          <div class="totals" aria-live="polite">
+            <div><span>Spending per month</span><b id="spend">$0</b></div>
+            <div class="left" id="leftrow"><span>Left from A$2,699</span><b id="left">$0</b></div>
+          </div>
+        </div>
+      </div>
+      <p class="note">This amount is what I receive as a single student in 2026. Students with family members may receive a different amount, and SACM can change allowances. Check your own scholarship decision or ask SACM.</p>
+    </section>
+
     <section id="before" aria-labelledby="before-h">
       <p class="eyebrow">Packing list</p>
       <h2 id="before-h">Before you fly</h2>
@@ -394,7 +445,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
           <li><label><input type="checkbox" id="b2"><span><span class="t">Arrange Overseas Student Health Cover (OSHC)</span><span class="d">Health cover is a condition of the student visa. Your university can often arrange it for you.</span></span></label></li>
           <li><label><input type="checkbox" id="b3"><span><span class="t">Apply for the Student visa (subclass 500)</span><span class="d">Apply online through the Department of Home Affairs. Read your visa conditions once it is granted.</span></span></label></li>
           <li><label><input type="checkbox" id="b4"><span><span class="t">Get your SACM financial guarantee letter</span><span class="d">Request it through Safeer and upload it to your university's portal when you accept your offer. See the <a href="#sacm">SACM guide</a>.</span></span></label></li>
-          <li><label><input type="checkbox" id="b5"><span><span class="t">Book a place to stay for your first weeks</span><span class="d">Short-term housing gives you time to inspect a long-term room in person before signing anything.</span></span></label></li>
+          <li><label><input type="checkbox" id="b5"><span><span class="t">Book about 2 weeks of short-term housing</span><span class="d">An Airbnb near campus gives you time to find a long-term room in person. See <a href="#housing">Finding a place</a>.</span></span></label></li>
           <li><label><input type="checkbox" id="b6"><span><span class="t">Make copies of key documents</span><span class="d">Passport, visa grant, CoE, offer letter, transcripts and sponsor letters. Keep digital copies too.</span></span></label></li>
           <li><label><input type="checkbox" id="b7"><span><span class="t">Check your orientation date</span><span class="d">Plan to land a few days early so you are rested for orientation and enrolment.</span></span></label></li>
         </ul>
@@ -422,6 +473,51 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       </div>
     </section>
 
+    <section id="housing" aria-labelledby="housing-h">
+      <p class="eyebrow">A place to live</p>
+      <h2 id="housing-h">Finding a place in Sydney</h2>
+      <p class="intro">My advice: do not sign a long rental from overseas. Book a short stay first, then find your real home once you can see it in person.</p>
+
+      <ul class="rules">
+        <li><span class="r-k">Before you fly</span><span class="r-v">Book about <b>2 weeks in an Airbnb</b> (or similar short stay) near your campus. It gives you a safe base while you look.</span></li>
+        <li><span class="r-k">When you arrive</span><span class="r-v">Start searching straight away. Message several places, book inspections, and visit rooms in person before you pay anything.</span></li>
+        <li><span class="r-k">Before 2 weeks end</span><span class="r-v">Choose a place, confirm the move-in date in writing, and move before your short stay finishes. Extend the Airbnb a few days if you need more time.</span></li>
+      </ul>
+
+      <div class="options">
+        <article class="option">
+          <div class="ticket"><span>Room in a shared home</span><b>Fast and flexible</b></div>
+          <h3>Flatmates</h3>
+          <p>Rooms in shared houses and apartments. You usually deal directly with the people living there.</p>
+          <dl>
+            <div><dt>Lease and application</dt><dd>Usually <b>no lease to sign and no formal rental application</b>. You can often move in within days.</dd></div>
+            <div><dt>Best for</dt><dd>Your first place in Sydney, and students who want to share costs.</dd></div>
+            <div><dt>Watch out for</dt><dd>Still ask for a simple written agreement that states the rent, bond, bills and notice period.</dd></div>
+          </dl>
+          <p class="sacm"><a href="https://flatmates.com.au" rel="noopener">flatmates.com.au</a></p>
+        </article>
+
+        <article class="option">
+          <div class="ticket"><span>Your own apartment or studio</span><b>More paperwork</b></div>
+          <h3>Domain and realestate.com.au</h3>
+          <p>Whole apartments, studios and houses, usually managed by a real estate agent.</p>
+          <dl>
+            <div><dt>Lease and application</dt><dd>You must <b>submit a rental application</b> with ID and proof you can pay rent. If you are accepted, you sign a lease, often for 6 or 12 months.</dd></div>
+            <div><dt>Best for</dt><dd>Students who want their own space, or who move with family.</dd></div>
+            <div><dt>Watch out for</dt><dd>Applications are competitive. Inspect first, and read the lease carefully before you sign.</dd></div>
+          </dl>
+          <p class="sacm"><a href="https://www.domain.com.au" rel="noopener">domain.com.au</a> · <a href="https://www.realestate.com.au" rel="noopener">realestate.com.au</a></p>
+        </article>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><span class="k">Location</span><h3>Live near transport</h3><p>Check how long the trip to campus takes. For UNSW, suburbs on the light rail or bus routes such as Kensington, Kingsford and Randwick are popular with students.</p></div>
+        <div class="fact"><span class="k">Safety</span><h3>Avoid rental scams</h3><p>Never pay a deposit for a room you have not seen, and never send money to someone who says they are overseas. If a deal looks too cheap, it usually is.</p></div>
+        <div class="fact"><span class="k">Bond</span><h3>Protect your bond</h3><p>For a lease through an agent, your bond should be lodged with NSW Fair Trading. Take dated photos of the room when you move in.</p></div>
+        <div class="fact"><span class="k">Free help</span><h3>Get a second opinion</h3><p>Not sure about a lease or a landlord? Arc's free legal service at UNSW gives advice on renting.</p></div>
+      </div>
+    </section>
+
     <section id="money" aria-labelledby="money-h">
       <p class="eyebrow">Practical matters</p>
       <h2 id="money-h">Money and work</h2>
@@ -444,7 +540,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
         <div class="fact">
           <span class="k">Budget</span>
           <h3>Plan for rent first</h3>
-          <p>Rent is usually the biggest cost in Sydney. Look at rooms close to a train or bus line, and never pay a bond before you have seen the room and a written agreement.</p>
+          <p>Rent is usually the biggest cost in Sydney. Use the <a href="#allowance">budget planner</a> to see how much of your allowance it takes, and read <a href="#housing">Finding a place</a>.</p>
         </div>
       </div>
     </section>
@@ -523,6 +619,23 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
     });
     update();
   });
+
+  // budget planner
+  var ids = ["rent","food","travel","bills"];
+  var ALLOW = 2699;
+  function num(id){ var v = parseFloat(document.getElementById(id).value); return isFinite(v) && v > 0 ? v : 0; }
+  function money(v){ return (v < 0 ? "-$" : "$") + Math.abs(Math.round(v)).toLocaleString("en-AU"); }
+  function calc(){
+    var weekly = num("rent") + num("food") + num("travel");
+    var spend = weekly * 52 / 12 + num("bills");
+    var left = ALLOW - spend;
+    document.getElementById("spend").textContent = money(spend);
+    document.getElementById("left").textContent = money(left);
+    var row = document.getElementById("leftrow");
+    row.className = "left " + (left >= 0 ? "ok" : "low");
+  }
+  ids.forEach(function(id){ var el = document.getElementById(id); if (el) el.addEventListener("input", calc); });
+  if (document.getElementById("rent")) calc();
 })();
 </script>
 
