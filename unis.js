@@ -428,10 +428,104 @@
     document.documentElement.classList.remove("picker-open");
     ["city", "uni", "level"].forEach(function (k) { if (!state[k]) { state[k] = "all"; put(k, "all"); } });
     apply();
-    if (done) {
-      var target = document.getElementById("myuni");
-      if (target) setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 60);
-    } else if (lastFocus && lastFocus.focus) lastFocus.focus();
+    if (done) flyHome();
+    else if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  // ---------- flight transition: a small plane carries the visitor to the top ----------
+  var PLANE_SVG =
+    '<svg viewBox="0 0 160 60" width="132" height="50" aria-hidden="true">' +
+      '<path d="M78 25 L93 9 L101 9 L93 25 Z" fill="#C9D2CB"/>' +
+      '<path d="M14 26 L4 3 L20 3 L37 24 Z" fill="#0B6B3A"/>' +
+      '<path d="M9 11 L19 11 L26 19 L13 19 Z" fill="#E2B66C"/>' +
+      '<path d="M10 32 C10 26 22 24 40 24 L132 24 C146 24 156 28 158 32 C156 36 146 38 132 38 L40 38 C22 38 10 36 10 32 Z" fill="#F7F9F7"/>' +
+      '<path d="M22 33 L141 33 L147 35.2 L22 35.2 Z" fill="#0B6B3A"/>' +
+      '<path d="M22 36 L144 36 L146 36.8 L22 36.8 Z" fill="#E2B66C"/>' +
+      '<path d="M144 27.5 C149 28 153 29.5 155 31 L145 31 Z" fill="#1E3A5F"/>' +
+      '<g fill="#1E3A5F">' + (function () { var s = ""; for (var x = 48; x <= 134; x += 6) s += '<circle cx="' + x + '" cy="29" r="1.4"/>'; return s; })() + '</g>' +
+      '<path d="M14 32 L2 41 L12 41 L27 34 Z" fill="#0A5A31"/>' +
+      '<path d="M70 34 L98 56 L110 56 L95 34 Z" fill="#DCE3DD"/>' +
+      '<ellipse cx="90" cy="45.5" rx="9.5" ry="4" fill="#EEF2EF" stroke="#B8C2BA" stroke-width=".8"/>' +
+    '</svg>';
+
+  function injectFlightCss() {
+    if (document.getElementById("flight-css")) return;
+    var st = document.createElement("style");
+    st.id = "flight-css";
+    st.textContent =
+      ".flight{position:fixed; inset:0; z-index:120; pointer-events:none; overflow:hidden}" +
+      ".flight-veil{position:absolute; inset:0; background:radial-gradient(120% 90% at 70% 10%, #173252, #0B1626 70%); opacity:0; transition:opacity .35s ease}" +
+      ".flight-trail{position:absolute; inset:0; width:100%; height:100%}" +
+      ".flight-plane{position:absolute; left:0; top:0; will-change:transform; filter:drop-shadow(0 8px 14px rgba(0,0,0,.35))}" +
+      ".flight-plane.rtl svg{transform:scaleX(-1)}" +
+      ".flight-label{position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); color:#E2B66C; font-family:var(--f-mono, monospace); letter-spacing:.14em; text-transform:uppercase; font-size:.85rem; opacity:0; transition:opacity .4s ease; white-space:nowrap}" +
+      "html[lang=ar] .flight-label{letter-spacing:0; font-family:var(--f-body, sans-serif); font-size:1rem}";
+    document.head.appendChild(st);
+  }
+
+  function replayHero() {
+    document.querySelectorAll(".hero-copy > *").forEach(function (el) {
+      el.style.animation = "none";
+      void el.offsetWidth;
+      el.style.animation = "";
+    });
+  }
+
+  function flyHome() {
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) { window.scrollTo(0, 0); return; }
+    injectFlightCss();
+
+    var rtl = document.documentElement.dir === "rtl";
+    var W = window.innerWidth, H = window.innerHeight;
+    var fly = document.createElement("div");
+    fly.className = "flight";
+    var label = lang === "ar" ? "رحلتك تبدأ الآن" : "Your journey starts now";
+    fly.innerHTML =
+      '<div class="flight-veil"></div>' +
+      '<svg class="flight-trail" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none"><path fill="none" stroke="#E2B66C" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/></svg>' +
+      '<p class="flight-label">' + label + '</p>' +
+      '<div class="flight-plane' + (rtl ? " rtl" : "") + '">' + PLANE_SVG + '</div>';
+    document.body.appendChild(fly);
+
+    var veil = fly.querySelector(".flight-veil"), trail = fly.querySelector(".flight-trail path"),
+        plane = fly.querySelector(".flight-plane"), lbl = fly.querySelector(".flight-label");
+
+    // quadratic curve across the screen (mirrored for Arabic)
+    var p0 = { x: -0.12 * W, y: 0.78 * H }, p1 = { x: 0.5 * W, y: 0.02 * H }, p2 = { x: 1.12 * W, y: 0.34 * H };
+    if (rtl) { p0.x = W - p0.x; p1.x = W - p1.x; p2.x = W - p2.x; }
+    function pt(t) {
+      var a = (1 - t) * (1 - t), b = 2 * (1 - t) * t, c = t * t;
+      return { x: a * p0.x + b * p1.x + c * p2.x, y: a * p0.y + b * p1.y + c * p2.y };
+    }
+    function tan(t) {
+      return { x: 2 * (1 - t) * (p1.x - p0.x) + 2 * t * (p2.x - p1.x), y: 2 * (1 - t) * (p1.y - p0.y) + 2 * t * (p2.y - p1.y) };
+    }
+    trail.setAttribute("d", "M" + p0.x + " " + p0.y + " Q" + p1.x + " " + p1.y + " " + p2.x + " " + p2.y);
+
+    requestAnimationFrame(function () { veil.style.opacity = "0.92"; lbl.style.opacity = "1"; });
+
+    var DUR = 2300, t0 = null, jumped = false, revealed = false;
+    function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+    function frame(now) {
+      if (t0 === null) t0 = now;
+      var k = Math.min(1, (now - t0) / DUR), e = ease(k);
+      var p = pt(e), d = tan(e);
+      var ang = Math.atan2(d.y, d.x) * 180 / Math.PI;
+      if (rtl) ang = ang - 180;
+      plane.style.transform = "translate(" + (p.x - 66) + "px," + (p.y - 25) + "px) rotate(" + ang + "deg)";
+      // show the dotted trail only behind the plane, fading out at the end
+      trail.parentNode.style.clipPath = rtl
+        ? "inset(0 0 0 " + Math.max(0, p.x) + "px)"
+        : "inset(0 " + Math.max(0, W - p.x) + "px 0 0)";
+      trail.style.opacity = String(0.85 * (1 - Math.max(0, (k - 0.75) / 0.25)));
+
+      if (!jumped && k > 0.18) { jumped = true; window.scrollTo(0, 0); replayHero(); }
+      if (!revealed && k > 0.6) { revealed = true; veil.style.opacity = "0"; lbl.style.opacity = "0"; }
+      if (k < 1) requestAnimationFrame(frame);
+      else { fly.style.transition = "opacity .3s ease"; fly.style.opacity = "0"; setTimeout(function () { fly.remove(); }, 320); }
+    }
+    requestAnimationFrame(frame);
   }
 
   function init() {
