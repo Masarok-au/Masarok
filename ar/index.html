@@ -21,16 +21,18 @@
 <style>
 /* Layout: full-bleed night-sky hero where Najd dunes meet Sydney Harbour under the Southern Cross, Al Sadu woven bands as dividers, then a calm reading column of guide sections. */
 :root{
-  --bg:#F3F4F1;
-  --surface:#FFFFFF;
-  --ink:#18212C;
-  --muted:#56606C;
-  --line:#DCDFE2;
-  --green:#0B6B3A;
-  --green-soft:#E3EFE7;
-  --sand:#9A6A22;
-  --sand-soft:#F5EBDA;
-  --harbour:#1F4E86;
+  /* the whole site sits under the night sky */
+  --bg:#0B1626;
+  --surface:rgba(16,34,60,.82);
+  --ink:#E8EDF3;
+  --muted:#AEBBCB;
+  --line:rgba(238,242,247,.14);
+  --green:#6CCB98;
+  --green-soft:rgba(91,192,138,.14);
+  --sand:#E2B66C;
+  --sand-soft:rgba(226,182,108,.11);
+  --harbour:#86AEE0;
+  color-scheme:dark;
 
   /* the hero and footer are always night scenes */
   --night:#0B1626;
@@ -51,22 +53,10 @@
   --radius:10px;
   --sadu:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='18' viewBox='0 0 48 18'%3E%3Crect width='48' height='18' fill='%232A1612'/%3E%3Crect width='48' height='2' fill='%23C99A5B'/%3E%3Crect y='16' width='48' height='2' fill='%23C99A5B'/%3E%3Cpath d='M0 2h8l-4 5zM8 2h8l-4 5zM16 2h8l-4 5zM24 2h8l-4 5zM32 2h8l-4 5zM40 2h8l-4 5zM0 16h8l-4-5zM8 16h8l-4-5zM16 16h8l-4-5zM24 16h8l-4-5zM32 16h8l-4-5zM40 16h8l-4-5z' fill='%239C2A22'/%3E%3Cpath d='M24 5l4 4-4 4-4-4z' fill='%23F3EBDD'/%3E%3Cpath d='M8 7.5l1.5 1.5L8 10.5 6.5 9zM40 7.5l1.5 1.5-1.5 1.5L38.5 9z' fill='%23C99A5B'/%3E%3C/svg%3E");
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0F141B; --surface:#161D27; --ink:#E6EAF0; --muted:#A3AEBB; --line:#27313D;
-    --green:#5BC08A; --green-soft:#1B3127; --sand:#E1B56E; --sand-soft:#33291A; --harbour:#86AEE0;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0F141B; --surface:#161D27; --ink:#E6EAF0; --muted:#A3AEBB; --line:#27313D;
-  --green:#5BC08A; --green-soft:#1B3127; --sand:#E1B56E; --sand-soft:#33291A; --harbour:#86AEE0;
-  color-scheme:dark;
-}
-
 *{box-sizing:border-box}
+html{background:var(--night)}
 body{
-  background:var(--bg); color:var(--ink);
+  background:transparent; color:var(--ink);
   font-family:var(--f-body); font-size:var(--step-0); line-height:1.65;
 }
 .wrap{max-width:50rem; margin-inline:auto; padding-inline:16px}
@@ -80,12 +70,14 @@ p{margin:0}
 .eyebrow::before{content:""; width:9px; height:9px; background:var(--sand); transform:rotate(45deg); flex:none}
 
 /* hero: night sky, Southern Cross, dunes meeting the harbour */
-.hero{position:relative; overflow:hidden; color:var(--night-ink);
-  background:radial-gradient(110% 90% at 85% 0%, var(--night-2) 0%, var(--night) 65%);
-  padding-inline:16px}
+/* the night sky is fixed behind the whole page; the hero only adds the Southern Cross and the skyline */
+body::before{content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:radial-gradient(110% 80% at 85% 0%, var(--night-2) 0%, var(--night) 62%)}
+[dir="rtl"] body::before{background:radial-gradient(110% 80% at 15% 0%, var(--night-2) 0%, var(--night) 62%)}
+.hero{position:relative; overflow:hidden; color:var(--night-ink); background:transparent; padding-inline:16px}
 .hero-inner{position:relative; z-index:2; max-width:62rem; margin-inline:auto}
 .sky, .cross, .scene{position:absolute; pointer-events:none}
-.sky{inset:0; width:100%; height:100%; z-index:0}
+.hero .sky{position:fixed; inset:0; width:100%; height:100%; z-index:-1}
 .cross{top:72px; right:max(16px, calc(50% - 31rem)); width:150px; height:150px; z-index:1}
 .scene{left:0; bottom:18px; width:100%; height:200px; z-index:1}
 .sadu{height:18px; background:var(--sadu) repeat-x left center; background-size:auto 18px}
@@ -156,7 +148,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 @media (max-width:560px){ .rules li{grid-template-columns:1fr} }
 /* allowance + budget */
 .allowance{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.3fr); gap:0; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
-.amount{background:var(--night); color:var(--night-ink); padding:24px; display:grid; gap:6px; align-content:center}
+.amount{background:rgba(6,12,22,.55); color:var(--night-ink); border-inline-end:1px solid var(--line); padding:24px; display:grid; gap:6px; align-content:center}
 .amount .k{font-family:var(--f-mono); font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--night-dim)}
 .amount .fig{font-family:var(--f-display); font-weight:800; font-size:clamp(2.4rem, 5vw + 1rem, 3.4rem); line-height:1; color:var(--gold); font-variant-numeric:tabular-nums}
 .amount .per{color:#C8D3E0; font-size:.95rem}
@@ -173,7 +165,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 .totals div{display:flex; justify-content:space-between; gap:12px}
 .totals .left b{font-size:1.15rem}
 .totals .left.ok b{color:var(--green)}
-.totals .left.low b{color:#C0392B}
+.totals .left.low b{color:#FF8E7E}
 @media (max-width:640px){ .allowance{grid-template-columns:1fr} }
 
 
@@ -212,7 +204,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 .links a span{font-weight:700}
 .links a small{color:var(--muted); font-size:.85rem; overflow-wrap:anywhere}
 
-.site-foot{margin-top:72px; background:var(--night); color:var(--night-dim); font-size:.92rem}
+.site-foot{margin-top:72px; background:rgba(6,12,22,.6); color:var(--night-dim); font-size:.92rem}
 .site-foot .wrap{display:grid; gap:10px; padding-block:28px 40px}
 .site-foot b{color:var(--night-ink)}
 .site-foot .ar{font-family:var(--f-ar); color:var(--gold)}
@@ -250,7 +242,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 .ripples{animation:ripple 6s ease-in-out infinite}
 .landmark .glow{transform-box:fill-box; transform-origin:center; animation:glow 5s ease-in-out infinite}
 .sadu{animation:sadu 60s linear infinite}
-.shoot{position:absolute; z-index:1; top:16%; left:62%; width:130px; height:1.5px; border-radius:2px; pointer-events:none;
+.shoot{position:fixed; z-index:-1; top:16%; left:62%; width:130px; height:1.5px; border-radius:2px; pointer-events:none;
   background:linear-gradient(90deg, rgba(255,243,214,.95), rgba(255,243,214,0)); opacity:0; animation:shoot 13s ease-out 3s infinite}
 
 .hero-copy > *{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
@@ -272,7 +264,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 .btn{transition:translate .2s ease, box-shadow .2s ease, filter .2s}
 .btn:hover{translate:0 -2px; box-shadow:0 10px 22px -12px rgba(0,0,0,.55)}
 .option, .fact, .track, .links a, .checklist, .allowance{transition:translate .25s ease, box-shadow .25s ease, border-color .25s ease}
-.option:hover, .fact:hover, .track:hover, .links a:hover{translate:0 -4px; box-shadow:0 14px 28px -18px rgba(11,22,38,.35); border-color:color-mix(in srgb, var(--sand) 45%, var(--line))}
+.option:hover, .fact:hover, .track:hover, .links a:hover{translate:0 -4px; box-shadow:0 16px 30px -16px rgba(0,0,0,.6); border-color:color-mix(in srgb, var(--sand) 45%, var(--line))}
 .checklist input:checked{animation:pop .25s ease}
 
 /* scroll reveal (only when JS turns it on) */
