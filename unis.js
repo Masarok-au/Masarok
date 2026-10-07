@@ -303,6 +303,7 @@
     try { history.replaceState(null, "", location.pathname + qs + location.hash); } catch (e) {}
 
     renderTable();
+    try { document.dispatchEvent(new CustomEvent("masarok:change")); } catch (e) {}
   }
 
   function renderTable() {
@@ -540,6 +541,12 @@
     }
     requestAnimationFrame(frame);
   }
+
+  // small API for journey.js
+  window.Masarok = {
+    values: function () { var r = values(); return { v: r.v, hasUni: !!r.u, level: state.level }; },
+    openPicker: function (atStep) { openDialog(atStep); }
+  };
 
   function init() {
     var p = {};

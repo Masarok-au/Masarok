@@ -116,6 +116,7 @@ p{margin:0}
 .btn:hover{filter:brightness(1.08)}
 
 section{padding-block:56px 0; display:grid; gap:18px}
+section > *{min-width:0} /* lets wide tables scroll inside their box on phones */
 section > p.intro{color:var(--muted); max-width:40rem}
 
 /* author note */
@@ -353,6 +354,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 </style>
 
 <style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<link rel="stylesheet" href="journey.css">
 </head>
 <body>
 <div class="read-bar" aria-hidden="true"></div>
@@ -931,5 +933,6 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 </script>
 
 <script src="unis.js"></script>
+<script src="journey.js"></script>
 </body>
 </html>

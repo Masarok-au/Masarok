@@ -116,6 +116,7 @@ p{margin:0}
 .btn:hover{filter:brightness(1.08)}
 
 section{padding-block:56px 0; display:grid; gap:18px}
+section > *{min-width:0} /* lets wide tables scroll inside their box on phones */
 section > p.intro{color:var(--muted); max-width:40rem}
 
 /* author note */
@@ -375,6 +376,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
 .money-in input{text-align:left}
 .amount .fig{justify-self:start}
 </style>
+<link rel="stylesheet" href="../journey.css">
 </head>
 <body>
 <div class="read-bar" aria-hidden="true"></div>
@@ -953,5 +955,6 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
 </script>
 
 <script src="../unis.js"></script>
+<script src="../journey.js"></script>
 </body>
 </html>

@@ -1,0 +1,221 @@
+/* Masarok guided journey: banner, ladder character, floating button and the locked staircase.
+   Shared by the English and Arabic pages. Uses the colour and font tokens defined in each page. */
+
+/* ---------- banner under the hero ---------- */
+.jr-banner{position:relative; overflow:hidden; color:var(--night-ink); padding-inline:16px; padding-block:0; display:block; gap:0;
+  background:linear-gradient(180deg, #0E1D33 0%, #142B49 100%);
+  border-bottom:1px solid rgba(226,182,108,.35)}
+.jr-banner-in{max-width:62rem; margin-inline:auto; display:grid; grid-template-columns:150px minmax(0, 1fr) auto;
+  grid-template-areas:"stage copy cta"; align-items:center; gap:10px 28px; min-height:184px}
+.jr-stage{grid-area:stage; position:relative; align-self:stretch; min-height:184px; --jr-hop:66px}
+.jr-stage::before{content:""; position:absolute; bottom:-40px; inset-inline-start:40px; width:220px; height:220px; border-radius:50%;
+  background:radial-gradient(circle, rgba(226,182,108,.26), rgba(226,182,108,0) 65%); animation:jrBreathe 4.5s ease-in-out infinite}
+.jr-ladder{position:absolute; top:0; bottom:0; inset-inline-start:12px; width:46px; height:100%}
+.jr-actor{position:absolute; bottom:12px; inset-inline-start:3px; width:64px; height:112px}
+.jr-actor .jr-fig{width:100%; height:100%; overflow:visible}
+.jr-actor.is-landed{transform:translate(var(--jr-hop), 0)}
+[dir="rtl"] .jr-stage{--jr-hop:-66px}
+.jr-copy{grid-area:copy; display:grid; gap:6px; padding-block:22px}
+.jr-copy h2{font-size:clamp(1.3rem, 1.1vw + 1rem, 1.7rem); color:var(--night-ink); letter-spacing:-.01em}
+.jr-copy p{color:#C8D3E0; max-width:36rem}
+.jr-cta{grid-area:cta; display:inline-flex; align-items:center; gap:10px; cursor:pointer; white-space:nowrap;
+  animation:jrPulse 2.6s ease-out infinite}
+.jr-arrow{width:16px; height:16px; flex:none}
+[dir="rtl"] .jr-arrow{scale:-1 1}
+
+@media (max-width:720px){
+  .jr-banner-in{grid-template-columns:104px minmax(0, 1fr); grid-template-areas:"stage copy" "stage cta"; gap:6px 14px; min-height:220px}
+  .jr-stage{min-height:220px; --jr-hop:46px}
+  [dir="rtl"] .jr-stage{--jr-hop:-46px}
+  .jr-ladder{width:38px; inset-inline-start:6px}
+  .jr-actor{width:50px; height:88px; inset-inline-start:0}
+  .jr-stage::before{width:160px; height:160px; inset-inline-start:10px}
+  .jr-copy{padding-block:22px 4px}
+  .jr-copy p{font-size:.95rem}
+  .jr-cta{justify-self:start; margin-bottom:22px; white-space:normal}
+}
+
+/* ---------- the character ---------- */
+.jr-fig{display:block; overflow:visible}
+[dir="rtl"] .jr-fig{scale:-1 1}
+.jr-arm{transform-box:view-box; transition:transform .35s ease}
+.jr-feet ellipse{transform-box:fill-box; transform-origin:center}
+.is-climbing .jr-arm-l{animation:jrClimbL .77s ease-in-out infinite}
+.is-climbing .jr-arm-r{animation:jrClimbR .77s ease-in-out infinite}
+.is-climbing .jr-foot-l{animation:jrFoot .77s ease-in-out infinite}
+.is-climbing .jr-foot-r{animation:jrFoot .77s ease-in-out -.385s infinite}
+.is-waving .jr-arm-r{animation:jrWave .45s ease-in-out infinite alternate}
+.is-pointing .jr-arm-r{transform:rotate(-84deg); animation:jrPoint 1.8s ease-in-out .4s infinite}
+.is-cheering .jr-arm-l{transform:rotate(150deg); animation:jrCheerL .6s ease-in-out infinite alternate}
+.is-cheering .jr-arm-r{transform:rotate(-150deg); animation:jrCheerR .6s ease-in-out infinite alternate}
+.is-cheering{animation:jrBob .6s ease-in-out infinite alternate}
+.is-walking{animation:jrBob .23s ease-in-out infinite alternate}
+
+@keyframes jrClimbL{0%,100%{transform:rotate(158deg)}50%{transform:rotate(190deg)}}
+@keyframes jrClimbR{0%,100%{transform:rotate(-190deg)}50%{transform:rotate(-158deg)}}
+@keyframes jrFoot{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes jrWave{from{transform:rotate(-155deg)}to{transform:rotate(-118deg)}}
+@keyframes jrPoint{0%,100%{transform:rotate(-84deg)}50%{transform:rotate(-76deg)}}
+@keyframes jrCheerL{from{transform:rotate(140deg)}to{transform:rotate(165deg)}}
+@keyframes jrCheerR{from{transform:rotate(-140deg)}to{transform:rotate(-165deg)}}
+@keyframes jrBob{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+@keyframes jrBreathe{0%,100%{opacity:.55; transform:scale(.92)}50%{opacity:1; transform:scale(1.06)}}
+@keyframes jrPulse{0%{box-shadow:0 0 0 0 rgba(226,182,108,.55)}70%{box-shadow:0 0 0 14px rgba(226,182,108,0)}100%{box-shadow:0 0 0 0 rgba(226,182,108,0)}}
+@keyframes jrGlow{0%,100%{box-shadow:0 0 0 0 rgba(226,182,108,.0), 0 0 14px rgba(226,182,108,.35)}50%{box-shadow:0 0 0 4px rgba(226,182,108,.18), 0 0 22px rgba(226,182,108,.55)}}
+@keyframes jrNudge{0%,100%{translate:0}25%{translate:-4px}75%{translate:4px}}
+
+/* ---------- floating corner button ---------- */
+.jr-fab{position:fixed; z-index:60; bottom:max(16px, env(safe-area-inset-bottom)); inset-inline-end:16px;
+  display:flex; align-items:center; gap:10px; padding-block:6px; padding-inline:6px 18px; max-width:calc(100vw - 32px);
+  border-radius:999px; border:1.5px solid var(--gold); background:var(--night); color:var(--night-ink);
+  font:inherit; cursor:pointer; text-align:start; box-shadow:0 14px 30px -12px rgba(0,0,0,.55);
+  opacity:0; translate:0 24px; pointer-events:none; visibility:hidden;
+  transition:opacity .3s ease, translate .3s ease, visibility 0s linear .3s, background-color .2s}
+.jr-fab.is-shown{opacity:1; translate:0 0; pointer-events:auto; visibility:visible; transition:opacity .3s ease, translate .3s ease, visibility 0s, background-color .2s}
+.jr-fab:hover{background:#173252}
+.jr-fab:focus-visible{outline:3px solid var(--gold); outline-offset:3px}
+.jr-fab-face{flex:none; width:42px; height:42px; border-radius:50%; background:#173252; display:grid; place-items:center; overflow:hidden; border:1px solid rgba(226,182,108,.5)}
+.jr-head{width:36px; height:36px; translate:0 3px}
+.jr-fab-txt{display:grid; line-height:1.25}
+.jr-fab-txt b{font-size:.95rem}
+.jr-fab-txt small{color:var(--gold); font-family:var(--f-mono); font-size:.74rem}
+.jr-fab-short{display:none}
+.jr-open .jr-fab, .picker-open .jr-fab{opacity:0; pointer-events:none; visibility:hidden}
+@media (max-width:560px){
+  .jr-fab{padding-inline:5px 14px; inset-inline-end:12px; bottom:max(12px, env(safe-area-inset-bottom))}
+  .jr-fab-long{display:none}
+  .jr-fab-short{display:block}
+}
+
+/* ---------- journey panel ---------- */
+.jr-open, .jr-open body{overflow:hidden}
+.jr-panel{position:fixed; inset:0; z-index:110; display:grid; place-items:center; padding:16px}
+.jr-backdrop{position:absolute; inset:0; background:rgba(6,12,22,.72); backdrop-filter:blur(6px)}
+.jr-sheet{position:relative; width:min(56rem, 100%); max-height:calc(100dvh - 32px); overflow:auto; overscroll-behavior:contain;
+  background:var(--night); color:var(--night-ink); border-radius:16px; box-shadow:0 30px 80px -20px rgba(0,0,0,.7);
+  animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
+.jr-sheet > .sadu{position:sticky; top:0; z-index:3}
+.jr-x{position:absolute; top:30px; inset-inline-end:14px; z-index:4; width:40px; height:40px; border-radius:50%; border:1px solid rgba(238,242,247,.25);
+  background:var(--night); color:var(--night-ink); font-size:1.5rem; line-height:1; cursor:pointer}
+.jr-x:hover{border-color:var(--gold); color:var(--gold)}
+.jr-body{padding:26px clamp(18px, 4vw, 36px) 26px; display:grid; gap:16px}
+.jr-body .eyebrow{color:var(--gold); padding-inline-end:48px}
+.jr-body .eyebrow::before{background:var(--gold)}
+.jr-body h2{font-size:clamp(1.55rem, 2.2vw + 1rem, 2.2rem); color:var(--night-ink); outline:none}
+.jr-sub{color:#C8D3E0; max-width:40rem; margin-top:-6px}
+@media (max-width:560px){
+  .jr-panel{padding:0}
+  .jr-sheet{max-height:100dvh; height:100dvh; border-radius:0}
+}
+
+.jr-choices{display:grid; grid-template-columns:repeat(auto-fit, minmax(13rem, 1fr)); gap:10px}
+.jr-choices-2{grid-template-columns:repeat(2, minmax(0, 1fr))}
+@media (max-width:560px){ .jr-choices-2{grid-template-columns:1fr} }
+.jr-choice{display:grid; gap:2px; text-align:start; padding:16px 18px; border-radius:12px; border:1px solid rgba(238,242,247,.16); background:rgba(255,255,255,.04);
+  color:var(--night-ink); font:inherit; cursor:pointer; transition:translate .2s ease, border-color .2s ease, background-color .2s ease}
+.jr-choice b{font-family:var(--f-display); font-weight:800; font-size:1.15rem}
+.jr-choice span{font-size:.9rem; color:#C8D3E0}
+.jr-choice:hover{translate:0 -3px; border-color:var(--gold); background:rgba(226,182,108,.08)}
+.jr-choice[aria-pressed="true"]{border-color:var(--gold); background:rgba(226,182,108,.14)}
+.jr-choice:focus-visible{outline:3px solid var(--gold); outline-offset:2px}
+
+.jr-textbtn{justify-self:start; background:none; border:0; padding:4px 0; font:inherit; font-size:.92rem; color:var(--night-dim); cursor:pointer; text-decoration:underline; text-underline-offset:3px}
+.jr-textbtn:hover{color:var(--gold)}
+.jr-meta{display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 16px; color:var(--night-dim); font-size:.92rem; margin-top:-6px}
+.jr-meta > span{color:#C8D3E0}
+.jr-welcome{background:rgba(226,182,108,.1); border-inline-start:3px solid var(--gold); padding:10px 14px; border-radius:6px; color:var(--night-ink)}
+
+/* tick what you've done */
+.jr-ticks{list-style:none; margin:0; padding:0; border:1px solid rgba(238,242,247,.14); border-radius:12px; overflow:hidden}
+.jr-ticks li + li{border-top:1px solid rgba(238,242,247,.1)}
+.jr-ticks label{display:grid; grid-template-columns:22px 1fr; gap:12px; align-items:start; padding:12px 16px; cursor:pointer}
+.jr-ticks input{width:20px; height:20px; margin:2px 0 0; accent-color:var(--gold)}
+.jr-ticks b{color:var(--gold); font-family:var(--f-mono); margin-inline-end:4px}
+.jr-opt{font-style:normal; font-family:var(--f-mono); font-size:.72rem; color:var(--night-dim); border:1px solid rgba(238,242,247,.25); border-radius:999px; padding:0 8px; white-space:nowrap}
+
+/* ---------- the staircase ---------- */
+.jr-stairs-wrap{position:relative; height:236px; border-radius:14px; overflow:hidden;
+  background:radial-gradient(90% 120% at 100% 0%, #1B3A60 0%, #10213A 60%); border:1px solid rgba(238,242,247,.12)}
+[dir="rtl"] .jr-stairs-wrap{background:radial-gradient(90% 120% at 0% 0%, #1B3A60 0%, #10213A 60%)}
+.jr-progress{position:absolute; top:12px; inset-inline-start:16px; z-index:2; display:flex; align-items:center; gap:10px;
+  font-family:var(--f-mono); font-size:.8rem; color:#C8D3E0; font-variant-numeric:tabular-nums}
+.jr-progress i{display:block; width:90px; height:6px; border-radius:3px; background:rgba(238,242,247,.15); overflow:hidden}
+.jr-progress i b{display:block; height:100%; background:var(--gold); transition:width .5s ease}
+.jr-stairs, .jr-climber{position:absolute; inset:14px 14px 0 14px}
+.jr-stairs{list-style:none; margin:0; padding:0; display:flex; align-items:flex-end; gap:4px}
+.jr-step{flex:1 1 0; min-width:0; height:var(--h); display:flex}
+.jr-step button{width:100%; height:100%; display:flex; flex-direction:column; align-items:center; gap:3px; padding:7px 0 0;
+  border-radius:8px 8px 0 0; border:1px solid rgba(238,242,247,.14); border-bottom:0; font:inherit; cursor:pointer;
+  font-family:var(--f-mono); font-weight:500; font-size:.85rem; font-variant-numeric:tabular-nums; transition:filter .2s ease, translate .2s ease}
+.jr-step button:hover{filter:brightness(1.12)}
+.jr-step button:focus-visible{outline:3px solid #fff; outline-offset:2px}
+.jr-ic svg{width:14px; height:14px; display:block}
+.jr-step.is-done button{background:#0B6B3A; border-color:#159052; color:#EAF6EE}
+.jr-step.is-skip button{background:rgba(255,255,255,.07); border:1px dashed rgba(226,182,108,.6); border-bottom:0; color:#E8D3A8}
+.jr-step.is-open button{background:var(--gold); border-color:var(--gold); color:#1A1206; font-weight:700; animation:jrGlow 2.4s ease-in-out infinite}
+.jr-step.is-locked button{background:rgba(255,255,255,.05); color:var(--night-dim); opacity:.6; cursor:not-allowed}
+.jr-step.is-viewing:not(.is-open) button{outline:2px solid #fff; outline-offset:-2px}
+.jr-step .is-nudge, .jr-path .is-nudge{animation:jrNudge .3s ease}
+.jr-climber{pointer-events:none}
+.jr-climber .jr-fig{position:absolute; width:40px; height:70px; bottom:var(--y, 16%); inset-inline-start:calc(var(--x, 5%) - 20px);
+  transition:inset-inline-start .7s cubic-bezier(.4,.1,.3,1), bottom .7s cubic-bezier(.4,.1,.3,1)}
+@media (max-width:560px){
+  .jr-stairs-wrap{height:210px}
+  .jr-stairs, .jr-climber{inset:12px 10px 0 10px}
+  .jr-stairs{gap:3px}
+  .jr-step button{font-size:.72rem; padding-top:5px; border-radius:6px 6px 0 0}
+  .jr-ic svg{width:11px; height:11px}
+  .jr-climber .jr-fig{width:32px; height:56px; inset-inline-start:calc(var(--x, 5%) - 16px)}
+  .jr-progress i{width:60px}
+}
+
+/* ---------- the step card ---------- */
+.jr-card{display:grid; gap:14px; padding:20px clamp(16px, 3vw, 24px); border-radius:14px; background:rgba(255,255,255,.04); border:1px solid rgba(238,242,247,.16); scroll-margin:60px}
+.jr-card.is-next{border-color:rgba(226,182,108,.7); background:linear-gradient(180deg, rgba(226,182,108,.1), rgba(226,182,108,.02))}
+.jr-kicker{font-family:var(--f-mono); font-size:.76rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); display:flex; flex-wrap:wrap; align-items:center; gap:4px 6px}
+.jr-tag{border:1px solid rgba(238,242,247,.3); border-radius:999px; padding:0 8px; color:var(--night-ink); letter-spacing:.04em}
+.jr-tag.is-done{border-color:#159052; background:#0B6B3A; color:#EAF6EE}
+.jr-card h3{font-size:clamp(1.25rem, 1vw + 1rem, 1.5rem); color:var(--night-ink); outline:none}
+.jr-card h4{font-family:var(--f-mono); font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; color:var(--night-dim); margin:0 0 6px; font-weight:500}
+.jr-cols{display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1.35fr); gap:16px 28px}
+.jr-cols p{color:#C8D3E0}
+.jr-cols ul{margin:0; padding-inline-start:1.15em; display:grid; gap:6px; color:#C8D3E0}
+.jr-cols li::marker{color:var(--gold)}
+@media (max-width:640px){ .jr-cols{grid-template-columns:1fr} }
+.jr-links{display:flex; flex-wrap:wrap; gap:8px}
+.jr-links a{display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:999px; border:1px solid rgba(226,182,108,.45);
+  color:var(--night-ink); text-decoration:none; font-size:.9rem; background:rgba(226,182,108,.06)}
+.jr-links a:hover{border-color:var(--gold); color:var(--gold)}
+.jr-ext{font-size:.8em; color:var(--gold)}
+.jr-actions{display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px}
+.jr-actions .btn{display:inline-flex; align-items:center; gap:8px; cursor:pointer; font-family:var(--f-body)}
+.jr-actions .btn svg{width:16px; height:16px}
+.jr-btn-ghost{border-color:rgba(238,242,247,.35); color:var(--night-ink); background:transparent}
+.jr-finished{border-color:#159052; background:linear-gradient(180deg, rgba(11,107,58,.25), rgba(11,107,58,.05))}
+.jr-finished p{color:#C8D3E0}
+
+/* ---------- the whole path ---------- */
+.jr-path{border:1px solid rgba(238,242,247,.14); border-radius:12px}
+.jr-path summary{cursor:pointer; padding:12px 16px; font-weight:700; color:var(--night-ink)}
+.jr-path summary:hover{color:var(--gold)}
+.jr-path ol{list-style:none; margin:0; padding:0 8px 8px}
+.jr-path li button{width:100%; display:flex; align-items:center; gap:12px; padding:8px; border:0; border-radius:8px; background:none; color:var(--night-ink); font:inherit; font-size:.95rem; text-align:start; cursor:pointer}
+.jr-path li button:hover{background:rgba(255,255,255,.05)}
+.jr-path li.is-locked button{color:var(--night-dim); cursor:not-allowed}
+.jr-dot{flex:none; width:26px; height:26px; border-radius:50%; display:grid; place-items:center; font-family:var(--f-mono); font-size:.78rem; border:1px solid rgba(238,242,247,.25)}
+.jr-dot svg{width:13px; height:13px}
+.jr-path li.is-done .jr-dot{background:#0B6B3A; border-color:#159052; color:#EAF6EE}
+.jr-path li.is-open .jr-dot{background:var(--gold); border-color:var(--gold); color:#1A1206}
+.jr-path li.is-skip .jr-dot{border-style:dashed; color:#E8D3A8}
+
+.jr-foot{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:6px 16px; color:var(--night-dim); font-size:.85rem}
+.jr-live{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
+
+/* Arabic: no uppercase or wide tracking */
+html[lang="ar"] .jr-kicker, html[lang="ar"] .jr-card h4{letter-spacing:0; text-transform:none; font-size:.85rem}
+
+@media (prefers-reduced-motion: reduce){
+  .jr-stage::before, .jr-cta, .jr-step.is-open button, .jr-fig, .jr-arm, .jr-feet ellipse{animation:none !important}
+  .jr-climber .jr-fig, .jr-fab, .jr-progress i b{transition:none !important}
+  .jr-sheet{animation:none}
+}
