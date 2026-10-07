@@ -454,7 +454,7 @@
     st.id = "flight-css";
     st.textContent =
       ".flight{position:fixed; inset:0; z-index:120; pointer-events:none; overflow:hidden}" +
-      ".flight-veil{position:absolute; inset:0; background:radial-gradient(120% 90% at 70% 10%, #173252, #0B1626 70%); opacity:0; transition:opacity .35s ease}" +
+      ".flight-veil{position:absolute; inset:0; background:radial-gradient(120% 90% at 70% 10%, #173252, #0B1626 70%); opacity:0; transition:opacity .5s ease}" +
       ".flight-trail{position:absolute; inset:0; width:100%; height:100%}" +
       ".flight-plane{position:absolute; left:0; top:0; will-change:transform; filter:drop-shadow(0 8px 14px rgba(0,0,0,.35))}" +
       ".flight-plane.rtl svg{transform:scaleX(-1)}" +
@@ -505,7 +505,7 @@
 
     requestAnimationFrame(function () { veil.style.opacity = "0.92"; lbl.style.opacity = "1"; });
 
-    var DUR = 2300, t0 = null, jumped = false, revealed = false;
+    var DUR = 3200, t0 = null, jumped = false, revealed = false;
     function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
     function frame(now) {
       if (t0 === null) t0 = now;
