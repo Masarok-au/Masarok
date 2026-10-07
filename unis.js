@@ -76,6 +76,10 @@
       transport: { en: "CapMetro pass", ar: "اشتراك CapMetro", url: "https://www.capmetro.org" },
       bond: { en: "Texas renters' rights", ar: "حقوق المستأجرين في تكساس", url: "https://www.texasattorneygeneral.gov/consumer-protection/home-real-estate-and-travel/renters-rights" },
       tap: { en: "Ask your university whether your student ID covers bus travel.", ar: "اسأل جامعتك إن كانت بطاقتك الجامعية تغطي ركوب الحافلات." } },
+    madison: { cc: "us", en: "Madison", ar: "ماديسون",
+      transport: { en: "Madison Metro", ar: "حافلات Madison Metro", url: "https://www.cityofmadison.com/metro" },
+      bond: { en: "Wisconsin's landlord–tenant guide", ar: "دليل الإيجار في ويسكونسن", url: "https://datcp.wi.gov/Pages/Publications/LandlordTenantGuide.aspx" },
+      tap: { en: "UW–Madison students who pay the transportation fee can get a student bus pass for Madison Metro. Pick it up at UW Transportation Services with your Wiscard.", ar: "يمكن لطلاب جامعة ويسكونسن–ماديسون الذين يدفعون رسوم المواصلات الحصول على اشتراك الحافلات للطلاب. استلمه من مكتب المواصلات في الجامعة ببطاقتك الجامعية Wiscard." } },
     // ---------- UK ----------
     london: { cc: "uk", en: "London", ar: "لندن",
       transport: { en: "Oyster card", ar: "بطاقة Oyster", url: "https://tfl.gov.uk" },
@@ -287,6 +291,10 @@
       name: { en: "The University of Texas at Austin", ar: "جامعة تكساس في أوستن" }, campus: { en: "Austin", ar: "أوستن" },
       web: "https://www.utexas.edu", union: { name: "Texas Global International Student and Scholar Services", url: "https://global.utexas.edu/isss" },
       suburbs: "West Campus, Hyde Park, North Loop" },
+    { id: "uwmadison", city: "madison", short: "UW–Madison",
+      name: { en: "University of Wisconsin–Madison", ar: "جامعة ويسكونسن–ماديسون" }, campus: { en: "Madison", ar: "ماديسون" },
+      web: "https://www.wisc.edu", union: { name: "UW–Madison International Student Services", url: "https://iss.wisc.edu" },
+      suburbs: "Downtown, Regent, Vilas, Eagle Heights" },
     // ---------- UK ----------
     { id: "imperial", city: "london", short: "Imperial",
       name: { en: "Imperial College London", ar: "إمبريال كوليدج لندن" }, campus: { en: "South Kensington", ar: "ساوث كنسينغتون" },
