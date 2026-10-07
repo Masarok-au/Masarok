@@ -40,6 +40,12 @@
       en: "Perth", ar: "بيرث",
       transport: { en: "SmartRider card", ar: "بطاقة SmartRider", url: "https://www.transperth.wa.gov.au" },
       bond: { en: "the Bond Administrator (Consumer Protection WA)", ar: "إدارة التأمينات (Consumer Protection WA)", url: "https://www.commerce.wa.gov.au/consumer-protection" }
+    },
+    canberra: {
+      tap: { en: "You can also tap on with a contactless bank card, or use the QR code in the Transport Canberra app.", ar: "يمكنك أيضًا الدفع بالبطاقة البنكية اللاتلامسية، أو استخدام رمز QR في تطبيق Transport Canberra." },
+      en: "Canberra", ar: "كانبرا",
+      transport: { en: "MyWay+ card", ar: "بطاقة MyWay+", url: "https://www.transport.act.gov.au" },
+      bond: { en: "the ACT Revenue Office", ar: "مكتب الإيرادات في ACT (ACT Revenue Office)", url: "https://www.revenue.act.gov.au/rental-bonds" }
     }
   };
 
@@ -95,6 +101,26 @@
       legal: { en: "Ask RUSU about free legal and tenancy advice for students.", ar: "اسأل RUSU عن الاستشارات القانونية واستشارات الإيجار المجانية للطلاب." },
       suburbs: "Melbourne CBD, Carlton, North Melbourne",
       entry: { en: "RMIT does not accept the Saudi General Secondary certificate for direct bachelor's entry, so you need a pathway such as Foundation Studies.", ar: "لا تقبل RMIT شهادة الثانوية العامة السعودية للقبول المباشر في البكالوريوس، لذلك تحتاج إلى برنامج مسار مثل الفاونديشن." } },
+    { id: "deakin", city: "melbourne", short: "Deakin",
+      name: { en: "Deakin University", ar: "جامعة ديكن" },
+      campus: { en: "Burwood", ar: "بيروود (Burwood)" },
+      note: { en: "Deakin also has campuses in Geelong and Warrnambool. This guide uses the Melbourne Burwood campus, where Deakin College is based.", ar: "لجامعة ديكن أيضًا حرم في جيلونغ (Geelong) ووارنامبول (Warrnambool). يعتمد هذا الدليل حرم ملبورن بيروود، حيث تقع Deakin College." },
+      web: "https://www.deakin.edu.au",
+      college: { name: "Deakin College", url: "https://www.deakincollege.edu.au" },
+      union: { name: "Deakin University Student Association (DUSA)", url: "https://www.dusa.org.au" },
+      legal: { en: "The Deakin Student Legal Service (DUSA) gives students free legal advice, including on bonds, leases and repairs.", ar: "تقدم الخدمة القانونية للطلاب في DUSA استشارات قانونية مجانية، منها مبالغ التأمين وعقود الإيجار والإصلاحات." },
+      suburbs: "Burwood, Box Hill, Ashwood, Glen Iris",
+      entry: { en: "Deakin College's 2025 Middle East guide lists the Saudi General Secondary certificate for the Foundation Program, and an extra year of study after it for direct diploma entry. Both ask for IELTS 5.5. Check the current rules on Deakin College's website.", ar: "يذكر دليل Deakin College للشرق الأوسط لعام 2025 قبول شهادة الثانوية العامة السعودية في برنامج الفاونديشن، وسنة دراسة إضافية بعدها للقبول المباشر في الدبلوم، ويطلب الاثنان IELTS 5.5. تحقق من الشروط الحالية في موقع Deakin College." } },
+    { id: "anu", city: "canberra", short: "ANU",
+      name: { en: "The Australian National University", ar: "الجامعة الوطنية الأسترالية (ANU)" },
+      campus: { en: "Acton", ar: "أكتون (Acton)" },
+      note: { en: "ANU no longer has its own pathway college (ANU College closed in 2022). It accepts Foundation programs from other universities, such as UNSW, Sydney, Monash, Melbourne and UQ, and its English program is run with the University of Canberra College. The SACM office is also in Canberra.", ar: "لم تعد لدى ANU كلية مسار خاصة بها (أُغلقت ANU College في 2022). وهي تقبل برامج الفاونديشن من جامعات أخرى مثل UNSW وسيدني وموناش وملبورن وكوينزلاند، وبرنامج اللغة لديها يُقدَّم بالشراكة مع University of Canberra College. ومقر الملحقية الثقافية السعودية في كانبرا أيضًا." },
+      web: "https://www.anu.edu.au",
+      college: { name: { en: "a Foundation program ANU accepts", ar: "برنامج فاونديشن تقبله ANU" }, url: "https://study.anu.edu.au/apply/international-applications/indicative-entry-requirement/foundation-studies-programs" },
+      union: { name: "ANU Students' Association (ANUSA)", url: "https://anusa.com.au" },
+      legal: { en: "The ANUSA Legal Service gives ANU students free legal advice, including on tenancy and visas.", ar: "تقدم الخدمة القانونية في ANUSA لطلاب ANU استشارات قانونية مجانية، منها الإيجار والتأشيرات." },
+      suburbs: "Acton (on campus), Braddon, Turner, O'Connor, Dickson",
+      entry: { en: "ANU's undergraduate entry page does not list the Saudi General Secondary certificate, so most Saudi students enter after a recognised Foundation program. Check with ANU before you apply.", ar: "لا تذكر صفحة القبول في ANU شهادة الثانوية العامة السعودية، لذلك يدخل أغلب الطلاب السعوديين بعد برنامج فاونديشن معترف به. تحقق من ANU قبل التقديم." } },
     { id: "adelaide", city: "adelaide", short: "Adelaide Uni",
       name: { en: "Adelaide University", ar: "جامعة أديلايد" },
       campus: { en: "City campuses (North Terrace)", ar: "حرم وسط المدينة (North Terrace)" },
@@ -130,7 +156,7 @@
       suburbs: "St Lucia, Toowong, Taringa, Indooroopilly" }
   ];
 
-  var CITY_ORDER = ["sydney", "melbourne", "brisbane", "adelaide", "perth"];
+  var CITY_ORDER = ["sydney", "melbourne", "brisbane", "canberra", "adelaide", "perth"];
 
   var GENERIC = {
     en: {
@@ -219,6 +245,7 @@
   var lang = (document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en";
   var K = { city: "masarok-city", uni: "masarok-uni", level: "masarok-level" };
 
+  function cname(u) { var n = u.college.name; return typeof n === "object" ? n[lang] : n; }
   function byId(id) { for (var i = 0; i < UNIS.length; i++) if (UNIS[i].id === id) return UNIS[i]; return null; }
   function get(k) { try { return localStorage.getItem(K[k]); } catch (e) { return null; } }
   function put(k, v) { try { localStorage.setItem(K[k], v); } catch (e) {} }
@@ -245,7 +272,7 @@
     }
     if (u) {
       v.short = u.short; v.name = u.name[lang]; v.campus = u.campus[lang];
-      v.college = u.college.name; v.union = u.union.name; v.legal = u.legal[lang]; v.suburbs = u.suburbs;
+      v.college = cname(u); v.union = u.union.name; v.legal = u.legal[lang]; v.suburbs = u.suburbs;
       v.entry = u.entry ? u.entry[lang] : "";
       v["college-url"] = u.college.url; v["union-url"] = u.union.url; v.web = u.web;
     }
@@ -317,7 +344,7 @@
       var c = CITIES[u.city];
       return "<tr><th scope=\"row\"><button type=\"button\" class=\"linkish\" data-pick=\"" + u.id + "\">" + esc(u.name[lang]) + "</button></th>" +
         "<td>" + esc(c[lang]) + "</td>" +
-        "<td><a href=\"" + esc(u.college.url) + "\" rel=\"noopener\">" + esc(u.college.name) + "</a></td>" +
+        "<td><a href=\"" + esc(u.college.url) + "\" rel=\"noopener\">" + esc(cname(u)) + "</a></td>" +
         "<td>" + esc(u.suburbs) + "</td></tr>";
     }).join("");
   }
