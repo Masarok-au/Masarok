@@ -11,7 +11,7 @@ It covers:
 - **Money and work:** visa work limits, pay rights, tax and rent
 - **Official links:** Home Affairs, the Ministry of Education, Safeer, UNSW and more
 
-**Live site:** https://masarok-au.github.io/Masarok/
+**Live site:** https://masarok.org/
 
 ## Why this exists
 
