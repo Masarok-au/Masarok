@@ -3,7 +3,7 @@
   "use strict";
 
   var CITIES = {
-    sydney: {
+    sydney: { cc: "au",
       tap: { en: "You can also tap on with a contactless bank card.", ar: "يمكنك أيضًا الدفع بالبطاقة البنكية اللاتلامسية." },
       en: "Sydney", ar: "سيدني",
       transport: { en: "Opal card", ar: "بطاقة أوبال (Opal)", url: "https://transportnsw.info" },
@@ -13,7 +13,7 @@
         ar: "أحياء مثل لاكمبا (Lakemba) وأوبرن (Auburn) معروفة بالمطاعم الحلال."
       }
     },
-    melbourne: {
+    melbourne: { cc: "au",
       tap: { en: "Since mid-2026, full-fare passengers can also tap on with a contactless bank card.", ar: "منذ منتصف 2026 يمكن لركاب التذكرة الكاملة الدفع بالبطاقة البنكية اللاتلامسية أيضًا." },
       en: "Melbourne", ar: "ملبورن",
       transport: { en: "myki card", ar: "بطاقة مايكي (myki)", url: "https://www.ptv.vic.gov.au" },
@@ -23,30 +23,117 @@
         ar: "شارع Sydney Road في برنزويك وكوبرغ معروف بالمطاعم الحلال والعربية."
       }
     },
-    brisbane: {
+    brisbane: { cc: "au",
       tap: { en: "You can also tap on with a contactless bank card, and a new Translink card is replacing the go card during 2026.", ar: "يمكنك أيضًا الدفع بالبطاقة البنكية اللاتلامسية، وتحل بطاقة Translink الجديدة محل go card خلال 2026." },
       en: "Brisbane", ar: "بريزبن",
       transport: { en: "go card", ar: "بطاقة go card", url: "https://translink.com.au" },
       bond: { en: "the Residential Tenancies Authority (RTA)", ar: "هيئة الإيجارات السكنية (RTA)", url: "https://www.rta.qld.gov.au" }
     },
-    adelaide: {
+    adelaide: { cc: "au",
       tap: { en: "You can also tap on with a contactless bank card at the regular fare.", ar: "يمكنك أيضًا الدفع بالبطاقة البنكية اللاتلامسية بسعر التذكرة العادية." },
       en: "Adelaide", ar: "أديلايد",
       transport: { en: "metroCARD", ar: "بطاقة metroCARD", url: "https://www.adelaidemetro.com.au" },
       bond: { en: "Consumer and Business Services (CBS)", ar: "Consumer and Business Services (CBS)", url: "https://www.cbs.sa.gov.au" }
     },
-    perth: {
+    perth: { cc: "au",
       tap: { en: "You can also tap on with a contactless bank card at the standard fare.", ar: "يمكنك أيضًا الدفع بالبطاقة البنكية اللاتلامسية بالسعر العادي." },
       en: "Perth", ar: "بيرث",
       transport: { en: "SmartRider card", ar: "بطاقة SmartRider", url: "https://www.transperth.wa.gov.au" },
       bond: { en: "the Bond Administrator (Consumer Protection WA)", ar: "إدارة التأمينات (Consumer Protection WA)", url: "https://www.commerce.wa.gov.au/consumer-protection" }
     },
-    canberra: {
+    canberra: { cc: "au",
       tap: { en: "You can also tap on with a contactless bank card, or use the QR code in the Transport Canberra app.", ar: "يمكنك أيضًا الدفع بالبطاقة البنكية اللاتلامسية، أو استخدام رمز QR في تطبيق Transport Canberra." },
       en: "Canberra", ar: "كانبرا",
       transport: { en: "MyWay+ card", ar: "بطاقة MyWay+", url: "https://www.transport.act.gov.au" },
       bond: { en: "the ACT Revenue Office", ar: "مكتب الإيرادات في ACT (ACT Revenue Office)", url: "https://www.revenue.act.gov.au/rental-bonds" }
-    }
+    },
+    // ---------- USA ----------
+    boston: { cc: "us", en: "Boston", ar: "بوسطن",
+      transport: { en: "CharlieCard", ar: "بطاقة CharlieCard", url: "https://www.mbta.com" },
+      bond: { en: "Massachusetts deposit rules", ar: "أنظمة التأمين في ماساتشوستس", url: "https://www.mass.gov/info-details/security-deposits-and-last-months-rent" },
+      tap: { en: "You can also tap a contactless bank card or phone on MBTA buses and trains.", ar: "يمكنك أيضًا الدفع بالبطاقة البنكية اللاتلامسية أو الجوال في حافلات وقطارات MBTA." } },
+    newyork: { cc: "us", en: "New York", ar: "نيويورك",
+      transport: { en: "OMNY", ar: "نظام OMNY", url: "https://omny.info" },
+      bond: { en: "New York tenants' rights", ar: "حقوق المستأجرين في نيويورك", url: "https://ag.ny.gov/resources/individuals/tenants-homeowners/tenants" },
+      tap: { en: "With OMNY you tap a contactless bank card or phone on the subway and buses.", ar: "مع OMNY تدفع بالبطاقة البنكية اللاتلامسية أو الجوال في المترو والحافلات." } },
+    losangeles: { cc: "us", en: "Los Angeles", ar: "لوس أنجلوس",
+      transport: { en: "TAP card", ar: "بطاقة TAP", url: "https://www.taptogo.net" },
+      bond: { en: "California's deposit guide", ar: "دليل التأمين في كاليفورنيا", url: "https://selfhelp.courts.ca.gov/guide-security-deposits" },
+      tap: { en: "Many students in LA rely on campus shuttles and buses, so check what your university offers.", ar: "يعتمد كثير من الطلاب في لوس أنجلوس على حافلات الجامعة والحافلات العامة، فاسأل جامعتك عما تقدمه." } },
+    bayarea: { cc: "us", en: "the San Francisco Bay Area", ar: "منطقة خليج سان فرانسيسكو",
+      transport: { en: "Clipper card", ar: "بطاقة Clipper", url: "https://www.clippercard.com" },
+      bond: { en: "California's deposit guide", ar: "دليل التأمين في كاليفورنيا", url: "https://selfhelp.courts.ca.gov/guide-security-deposits" },
+      tap: { en: "Ask your university about free or discounted transit passes for students.", ar: "اسأل جامعتك عن اشتراكات المواصلات المجانية أو المخفضة للطلاب." } },
+    pittsburgh: { cc: "us", en: "Pittsburgh", ar: "بيتسبرغ",
+      transport: { en: "ConnectCard", ar: "بطاقة ConnectCard", url: "https://www.rideprt.org" },
+      bond: { en: "Pennsylvania's tenant guide", ar: "دليل المستأجر في بنسلفانيا", url: "https://www.attorneygeneral.gov/wp-content/uploads/2025/03/ConsumerTenant-Landlord-Guide.pdf" },
+      tap: { en: "Ask your university whether your student ID covers bus travel.", ar: "اسأل جامعتك إن كانت بطاقتك الجامعية تغطي ركوب الحافلات." } },
+    seattle: { cc: "us", en: "Seattle", ar: "سياتل",
+      transport: { en: "ORCA card", ar: "بطاقة ORCA", url: "https://myorca.com" },
+      bond: { en: "Washington's landlord–tenant guide", ar: "دليل الإيجار في ولاية واشنطن", url: "https://www.atg.wa.gov/landlord-tenant" },
+      tap: { en: "Ask your university about the student transit pass.", ar: "اسأل جامعتك عن اشتراك المواصلات للطلاب." } },
+    austin: { cc: "us", en: "Austin", ar: "أوستن",
+      transport: { en: "CapMetro pass", ar: "اشتراك CapMetro", url: "https://www.capmetro.org" },
+      bond: { en: "Texas renters' rights", ar: "حقوق المستأجرين في تكساس", url: "https://www.texasattorneygeneral.gov/consumer-protection/home-real-estate-and-travel/renters-rights" },
+      tap: { en: "Ask your university whether your student ID covers bus travel.", ar: "اسأل جامعتك إن كانت بطاقتك الجامعية تغطي ركوب الحافلات." } },
+    // ---------- UK ----------
+    london: { cc: "uk", en: "London", ar: "لندن",
+      transport: { en: "Oyster card", ar: "بطاقة Oyster", url: "https://tfl.gov.uk" },
+      bond: { en: "a government-approved deposit protection scheme", ar: "نظام حكومي معتمد لحماية التأمين", url: "https://www.gov.uk/tenancy-deposit-protection" },
+      tap: { en: "You can also tap in with a contactless bank card or phone. A Student Oyster photocard gives 30% off travelcards and bus passes.", ar: "يمكنك أيضًا الدفع بالبطاقة البنكية اللاتلامسية أو الجوال، وبطاقة Student Oyster تمنحك خصم 30% على الاشتراكات." },
+      food: { en: "Edgware Road and Whitechapel are well known for halal food. Ask your university's Islamic Society about prayer rooms.", ar: "شارع Edgware Road ومنطقة Whitechapel معروفان بالمطاعم الحلال. واسأل الجمعية الإسلامية في جامعتك عن أماكن الصلاة." } },
+    manchester: { cc: "uk", en: "Manchester", ar: "مانشستر",
+      transport: { en: "Bee Network", ar: "شبكة Bee Network", url: "https://tfgm.com" },
+      bond: { en: "a government-approved deposit protection scheme", ar: "نظام حكومي معتمد لحماية التأمين", url: "https://www.gov.uk/tenancy-deposit-protection" },
+      tap: { en: "You can tap a contactless bank card or phone on Bee Network buses and Metrolink trams.", ar: "يمكنك الدفع بالبطاقة البنكية اللاتلامسية أو الجوال في حافلات Bee Network وترام Metrolink." },
+      food: { en: "Rusholme's Wilmslow Road, the 'Curry Mile', is well known for halal food, close to the university.", ar: "شارع Wilmslow Road في Rusholme («Curry Mile») معروف بالمطاعم الحلال وقريب من الجامعة." } },
+    edinburgh: { cc: "uk", en: "Edinburgh", ar: "إدنبرة",
+      transport: { en: "Lothian Buses", ar: "حافلات Lothian", url: "https://www.lothianbuses.com" },
+      bond: { en: "Scotland's tenancy deposit schemes", ar: "أنظمة حماية التأمين في اسكتلندا", url: "https://www.mygov.scot/tenancy-deposits-tenants" },
+      tap: { en: "You can tap a contactless bank card or phone on Lothian buses and trams.", ar: "يمكنك الدفع بالبطاقة البنكية اللاتلامسية أو الجوال في حافلات Lothian والترام." } },
+    birmingham: { cc: "uk", en: "Birmingham", ar: "برمنغهام",
+      transport: { en: "Swift card", ar: "بطاقة Swift", url: "https://www.tfwm.org.uk" },
+      bond: { en: "a government-approved deposit protection scheme", ar: "نظام حكومي معتمد لحماية التأمين", url: "https://www.gov.uk/tenancy-deposit-protection" },
+      tap: { en: "You can tap a contactless bank card or phone on most buses and trams.", ar: "يمكنك الدفع بالبطاقة البنكية اللاتلامسية أو الجوال في أغلب الحافلات والترام." } },
+    leeds: { cc: "uk", en: "Leeds", ar: "ليدز",
+      transport: { en: "MCard", ar: "بطاقة MCard", url: "https://www.wymetro.com" },
+      bond: { en: "a government-approved deposit protection scheme", ar: "نظام حكومي معتمد لحماية التأمين", url: "https://www.gov.uk/tenancy-deposit-protection" },
+      tap: { en: "You can tap a contactless bank card or phone on most buses.", ar: "يمكنك الدفع بالبطاقة البنكية اللاتلامسية أو الجوال في أغلب الحافلات." } },
+    // ---------- Canada ----------
+    toronto: { cc: "ca", en: "Toronto", ar: "تورنتو",
+      transport: { en: "PRESTO card", ar: "بطاقة PRESTO", url: "https://www.prestocard.ca" },
+      bond: { en: "Ontario's Landlord and Tenant Board", ar: "مجلس المالك والمستأجر في أونتاريو", url: "https://tribunalsontario.ca/ltb/" },
+      tap: { en: "The TTC also takes contactless credit and debit cards and phones.", ar: "تقبل مواصلات TTC أيضًا البطاقات البنكية اللاتلامسية والجوال." } },
+    vancouver: { cc: "ca", en: "Vancouver", ar: "فانكوفر",
+      transport: { en: "Compass card", ar: "بطاقة Compass", url: "https://www.compasscard.ca" },
+      bond: { en: "BC's Residential Tenancy Branch", ar: "مكتب الإيجارات السكنية في بريتش كولومبيا", url: "https://www2.gov.bc.ca/gov/content/housing-tenancy/residential-tenancies" },
+      tap: { en: "You can also tap a contactless credit card or phone. Ask about the student U-Pass.", ar: "يمكنك أيضًا الدفع بالبطاقة الائتمانية اللاتلامسية أو الجوال. واسأل عن اشتراك الطلاب U-Pass." } },
+    montreal: { cc: "ca", en: "Montreal", ar: "مونتريال",
+      transport: { en: "OPUS card", ar: "بطاقة OPUS", url: "https://www.stm.info" },
+      bond: { en: "Quebec's Tribunal administratif du logement", ar: "محكمة الإسكان في كيبيك (TAL)", url: "https://www.tal.gouv.qc.ca" },
+      tap: { en: "Ask about the reduced student fare on an OPUS card with your photo.", ar: "اسأل عن تعرفة الطلاب المخفضة ببطاقة OPUS تحمل صورتك." } },
+    waterloo: { cc: "ca", en: "Waterloo", ar: "واترلو",
+      transport: { en: "GRT EasyGO card", ar: "بطاقة GRT EasyGO", url: "https://www.grt.ca" },
+      bond: { en: "Ontario's Landlord and Tenant Board", ar: "مجلس المالك والمستأجر في أونتاريو", url: "https://tribunalsontario.ca/ltb/" },
+      tap: { en: "Ask your university whether a term transit pass is included in your fees.", ar: "اسأل جامعتك إن كان اشتراك المواصلات الفصلي مشمولًا في الرسوم." } },
+    // ---------- Germany ----------
+    munich: { cc: "de", en: "Munich", ar: "ميونخ",
+      transport: { en: "semester ticket (MVV)", ar: "تذكرة الفصل (MVV)", url: "https://www.mvv-muenchen.de" },
+      bond: { en: "a tenants' association (Mieterverein)", ar: "جمعية المستأجرين (Mieterverein)", url: "https://www.mieterbund.de" } },
+    berlin: { cc: "de", en: "Berlin", ar: "برلين",
+      transport: { en: "semester ticket (BVG)", ar: "تذكرة الفصل (BVG)", url: "https://www.bvg.de" },
+      bond: { en: "a tenants' association (Mieterverein)", ar: "جمعية المستأجرين (Mieterverein)", url: "https://www.mieterbund.de" },
+      food: { en: "Neukölln and Sonnenallee are well known for halal and Arab food.", ar: "حي Neukölln وشارع Sonnenallee معروفان بالمطاعم الحلال والعربية." } },
+    aachen: { cc: "de", en: "Aachen", ar: "آخن",
+      transport: { en: "semester ticket (AVV)", ar: "تذكرة الفصل (AVV)", url: "https://avv.de" },
+      bond: { en: "a tenants' association (Mieterverein)", ar: "جمعية المستأجرين (Mieterverein)", url: "https://www.mieterbund.de" } },
+    karlsruhe: { cc: "de", en: "Karlsruhe", ar: "كارلسروه",
+      transport: { en: "semester ticket (KVV)", ar: "تذكرة الفصل (KVV)", url: "https://www.kvv.de" },
+      bond: { en: "a tenants' association (Mieterverein)", ar: "جمعية المستأجرين (Mieterverein)", url: "https://www.mieterbund.de" } },
+    // ---------- Singapore ----------
+    singapore: { cc: "sg", en: "Singapore", ar: "سنغافورة",
+      transport: { en: "EZ-Link or SimplyGo card", ar: "بطاقة EZ-Link أو SimplyGo", url: "https://www.simplygo.com.sg" },
+      bond: { en: "the Council for Estate Agencies", ar: "مجلس الوكالات العقارية", url: "https://www.cea.gov.sg" } }
   };
 
   var UNIS = [
@@ -153,10 +240,144 @@
       college: { name: "UQ College", url: "https://uqcollege.uq.edu.au" },
       union: { name: "UQ Union (UQU)", url: "https://www.uqu.com.au" },
       legal: { en: "Ask UQ Union about free legal advice for students.", ar: "اسأل UQ Union عن الاستشارات القانونية المجانية للطلاب." },
-      suburbs: "St Lucia, Toowong, Taringa, Indooroopilly" }
+      suburbs: "St Lucia, Toowong, Taringa, Indooroopilly" },
+    // ---------- USA ----------
+    { id: "mit", city: "boston", short: "MIT",
+      name: { en: "Massachusetts Institute of Technology", ar: "معهد ماساتشوستس للتقنية (MIT)" }, campus: { en: "Cambridge, MA", ar: "كامبريدج، ماساتشوستس" },
+      web: "https://www.mit.edu", union: { name: "MIT International Students Office", url: "https://iso.mit.edu" },
+      suburbs: "Cambridge, Somerville, Allston", note: { en: "MIT is on the Ministry's Al-Ruwwad top 30 list.", ar: "معهد MIT ضمن قائمة الرواد لأفضل 30 جامعة." } },
+    { id: "harvard", city: "boston", short: "Harvard",
+      name: { en: "Harvard University", ar: "جامعة هارفارد" }, campus: { en: "Cambridge, MA", ar: "كامبريدج، ماساتشوستس" },
+      web: "https://www.harvard.edu", union: { name: "Harvard International Office", url: "https://hio.harvard.edu" },
+      suburbs: "Cambridge, Somerville, Allston", note: { en: "Harvard is on the Ministry's Al-Ruwwad top 30 list.", ar: "جامعة هارفارد ضمن قائمة الرواد لأفضل 30 جامعة." } },
+    { id: "bu", city: "boston", short: "BU",
+      name: { en: "Boston University", ar: "جامعة بوسطن" }, campus: { en: "Charles River Campus", ar: "حرم Charles River" },
+      web: "https://www.bu.edu", college: { name: "BU CELOP (English programs)", url: "https://www.bu.edu/celop/" },
+      union: { name: "BU International Students & Scholars Office", url: "https://www.bu.edu/isso/" },
+      suburbs: "Allston, Brighton, Brookline" },
+    { id: "columbia", city: "newyork", short: "Columbia",
+      name: { en: "Columbia University", ar: "جامعة كولومبيا" }, campus: { en: "Morningside Heights", ar: "مورنينغسايد هايتس" },
+      web: "https://www.columbia.edu", union: { name: "Columbia International Students and Scholars Office", url: "https://isso.columbia.edu" },
+      suburbs: "Morningside Heights, Harlem, Upper West Side", note: { en: "Columbia is on the Ministry's Al-Ruwwad top 30 list.", ar: "جامعة كولومبيا ضمن قائمة الرواد لأفضل 30 جامعة." } },
+    { id: "ucla", city: "losangeles", short: "UCLA",
+      name: { en: "University of California, Los Angeles", ar: "جامعة كاليفورنيا في لوس أنجلوس (UCLA)" }, campus: { en: "Westwood", ar: "ويستوود" },
+      web: "https://www.ucla.edu", union: { name: "UCLA Dashew Center for International Students", url: "https://www.internationalcenter.ucla.edu" },
+      suburbs: "Westwood, Palms, Sawtelle", note: { en: "UCLA is on the Ministry's Al-Ruwwad top 30 list.", ar: "جامعة UCLA ضمن قائمة الرواد لأفضل 30 جامعة." } },
+    { id: "usc", city: "losangeles", short: "USC",
+      name: { en: "University of Southern California", ar: "جامعة جنوب كاليفورنيا (USC)" }, campus: { en: "University Park", ar: "يونيفرسيتي بارك" },
+      web: "https://www.usc.edu", union: { name: "USC Office of International Services", url: "https://ois.usc.edu" },
+      suburbs: "University Park, West Adams, Koreatown" },
+    { id: "stanford", city: "bayarea", short: "Stanford",
+      name: { en: "Stanford University", ar: "جامعة ستانفورد" }, campus: { en: "Stanford, CA", ar: "ستانفورد، كاليفورنيا" },
+      web: "https://www.stanford.edu", union: { name: "Bechtel International Center", url: "https://bechtel.stanford.edu" },
+      suburbs: "Palo Alto, Menlo Park, Mountain View", note: { en: "Stanford is on the Ministry's Al-Ruwwad top 30 list.", ar: "جامعة ستانفورد ضمن قائمة الرواد لأفضل 30 جامعة." } },
+    { id: "berkeley", city: "bayarea", short: "UC Berkeley",
+      name: { en: "University of California, Berkeley", ar: "جامعة كاليفورنيا في بيركلي" }, campus: { en: "Berkeley", ar: "بيركلي" },
+      web: "https://www.berkeley.edu", union: { name: "Berkeley International Office", url: "https://internationaloffice.berkeley.edu" },
+      suburbs: "Berkeley, Albany, North Oakland", note: { en: "UC Berkeley is on the Ministry's Al-Ruwwad top 30 list.", ar: "جامعة بيركلي ضمن قائمة الرواد لأفضل 30 جامعة." } },
+    { id: "cmu", city: "pittsburgh", short: "CMU",
+      name: { en: "Carnegie Mellon University", ar: "جامعة كارنيغي ميلون" }, campus: { en: "Pittsburgh", ar: "بيتسبرغ" },
+      web: "https://www.cmu.edu", union: { name: "CMU Office of International Education", url: "https://www.cmu.edu/oie/" },
+      suburbs: "Oakland, Shadyside, Squirrel Hill", note: { en: "Carnegie Mellon is on the Ministry's Al-Ruwwad top 30 list.", ar: "جامعة كارنيغي ميلون ضمن قائمة الرواد لأفضل 30 جامعة." } },
+    { id: "uw", city: "seattle", short: "UW",
+      name: { en: "University of Washington", ar: "جامعة واشنطن" }, campus: { en: "Seattle", ar: "سياتل" },
+      web: "https://www.washington.edu", union: { name: "UW International Student Services", url: "https://iss.washington.edu" },
+      suburbs: "University District, Wallingford, Ravenna", note: { en: "The University of Washington is on the Ministry's Al-Ruwwad top 30 list.", ar: "جامعة واشنطن ضمن قائمة الرواد لأفضل 30 جامعة." } },
+    { id: "utaustin", city: "austin", short: "UT Austin",
+      name: { en: "The University of Texas at Austin", ar: "جامعة تكساس في أوستن" }, campus: { en: "Austin", ar: "أوستن" },
+      web: "https://www.utexas.edu", union: { name: "Texas Global International Student and Scholar Services", url: "https://global.utexas.edu/isss" },
+      suburbs: "West Campus, Hyde Park, North Loop" },
+    // ---------- UK ----------
+    { id: "imperial", city: "london", short: "Imperial",
+      name: { en: "Imperial College London", ar: "إمبريال كوليدج لندن" }, campus: { en: "South Kensington", ar: "ساوث كنسينغتون" },
+      web: "https://www.imperial.ac.uk", union: { name: "Imperial College Union", url: "https://www.imperialcollegeunion.org" },
+      suburbs: "South Kensington, Earl's Court, Hammersmith", note: { en: "Imperial is on the Ministry's Al-Ruwwad top 30 list.", ar: "إمبريال كوليدج ضمن قائمة الرواد لأفضل 30 جامعة." } },
+    { id: "ucl", city: "london", short: "UCL",
+      name: { en: "University College London", ar: "كلية لندن الجامعية (UCL)" }, campus: { en: "Bloomsbury", ar: "بلومزبري" },
+      web: "https://www.ucl.ac.uk", college: { name: "UCL Undergraduate Preparatory Certificate (UPC)", url: "https://www.ucl.ac.uk/upc" },
+      union: { name: "Students' Union UCL", url: "https://studentsunionucl.org" },
+      suburbs: "Bloomsbury, King's Cross, Camden", note: { en: "UCL is on the Ministry's Al-Ruwwad top 30 list.", ar: "جامعة UCL ضمن قائمة الرواد لأفضل 30 جامعة." } },
+    { id: "kcl", city: "london", short: "King's",
+      name: { en: "King's College London", ar: "كينغز كوليدج لندن" }, campus: { en: "Strand", ar: "ستراند" },
+      web: "https://www.kcl.ac.uk", college: { name: "King's International Foundation", url: "https://www.kcl.ac.uk/international-foundation/pathways" },
+      union: { name: "King's College London Students' Union (KCLSU)", url: "https://www.kclsu.org" },
+      suburbs: "Waterloo, Elephant and Castle, Southwark" },
+    { id: "manchester", city: "manchester", short: "Manchester",
+      name: { en: "The University of Manchester", ar: "جامعة مانشستر" }, campus: { en: "Oxford Road", ar: "أكسفورد رود" },
+      web: "https://www.manchester.ac.uk", union: { name: "University of Manchester Students' Union", url: "https://manchesterstudentsunion.com" },
+      suburbs: "Fallowfield, Victoria Park, Rusholme, Withington" },
+    { id: "edinburgh", city: "edinburgh", short: "Edinburgh",
+      name: { en: "The University of Edinburgh", ar: "جامعة إدنبرة" }, campus: { en: "Central Area", ar: "الحرم المركزي" },
+      web: "https://www.ed.ac.uk", union: { name: "Edinburgh University Students' Association", url: "https://www.eusa.ed.ac.uk" },
+      suburbs: "Marchmont, Newington, Bruntsfield" },
+    { id: "birmingham", city: "birmingham", short: "Birmingham",
+      name: { en: "University of Birmingham", ar: "جامعة برمنغهام" }, campus: { en: "Edgbaston", ar: "إدجباستون" },
+      web: "https://www.birmingham.ac.uk", college: { name: "Birmingham International Academy", url: "https://www.birmingham.ac.uk/international/bia" },
+      union: { name: "Guild of Students", url: "https://www.guildofstudents.com" },
+      suburbs: "Selly Oak, Edgbaston, Harborne" },
+    { id: "leeds", city: "leeds", short: "Leeds",
+      name: { en: "University of Leeds", ar: "جامعة ليدز" }, campus: { en: "Leeds city campus", ar: "حرم وسط ليدز" },
+      web: "https://www.leeds.ac.uk", college: { name: "Leeds International Foundation Year", url: "https://www.leeds.ac.uk/ify" },
+      union: { name: "Leeds University Union", url: "https://www.luu.org.uk" },
+      suburbs: "Headingley, Hyde Park, Woodhouse" },
+    // ---------- Canada ----------
+    { id: "uoft", city: "toronto", short: "U of T",
+      name: { en: "University of Toronto", ar: "جامعة تورنتو" }, campus: { en: "St. George", ar: "سانت جورج" },
+      web: "https://www.utoronto.ca", union: { name: "Centre for International Experience", url: "https://internationalexperience.utoronto.ca" },
+      suburbs: "The Annex, Harbord Village, Kensington Market", note: { en: "The University of Toronto is on the Ministry's Al-Ruwwad top 30 list.", ar: "جامعة تورنتو ضمن قائمة الرواد لأفضل 30 جامعة." } },
+    { id: "ubc", city: "vancouver", short: "UBC",
+      name: { en: "The University of British Columbia", ar: "جامعة بريتش كولومبيا (UBC)" }, campus: { en: "Vancouver (Point Grey)", ar: "فانكوفر (Point Grey)" },
+      web: "https://www.ubc.ca", college: { name: "UBC Vantage College", url: "https://vantagecollege.ubc.ca" },
+      union: { name: "UBC International Student Guide", url: "https://students.ubc.ca/international-student-guide/" },
+      suburbs: "Point Grey, Kitsilano, Dunbar" },
+    { id: "mcgill", city: "montreal", short: "McGill",
+      name: { en: "McGill University", ar: "جامعة ماكغيل" }, campus: { en: "Downtown Montreal", ar: "وسط مونتريال" },
+      web: "https://www.mcgill.ca", union: { name: "McGill International Student Services", url: "https://www.mcgill.ca/internationalstudents/" },
+      suburbs: "Milton-Parc, the Plateau, Côte-des-Neiges", note: { en: "McGill is in Quebec, so you need a Quebec Acceptance Certificate (CAQ) before the study permit.", ar: "تقع جامعة ماكغيل في كيبيك، فتحتاج شهادة القبول من كيبيك (CAQ) قبل تصريح الدراسة." } },
+    { id: "waterloo", city: "waterloo", short: "Waterloo",
+      name: { en: "University of Waterloo", ar: "جامعة واترلو" }, campus: { en: "Waterloo", ar: "واترلو" },
+      web: "https://uwaterloo.ca", union: { name: "Waterloo international student resources", url: "https://uwaterloo.ca/international-students/" },
+      suburbs: "Northdale, Uptown Waterloo, Lakeshore" },
+    // ---------- Germany ----------
+    { id: "tum", city: "munich", short: "TUM",
+      name: { en: "Technical University of Munich", ar: "جامعة ميونخ التقنية (TUM)" }, campus: { en: "Munich and Garching", ar: "ميونخ وغارشينغ" },
+      web: "https://www.tum.de/en/", union: { name: "TUM International Office", url: "https://www.tum.de/en/" },
+      suburbs: "Maxvorstadt, Schwabing, Garching", note: { en: "TUM charges non-EU students tuition: €2,000 to €3,000 a semester for a bachelor's and €4,000 to €6,000 for a master's, depending on the program.", ar: "تفرض TUM رسومًا على الطلاب من خارج الاتحاد الأوروبي: من 2,000 إلى 3,000 يورو للفصل في البكالوريوس، ومن 4,000 إلى 6,000 في الماجستير حسب البرنامج." } },
+    { id: "lmu", city: "munich", short: "LMU",
+      name: { en: "LMU Munich", ar: "جامعة لودفيغ ماكسيميليان في ميونخ (LMU)" }, campus: { en: "Munich", ar: "ميونخ" },
+      web: "https://www.lmu.de/en/", union: { name: "LMU International Office", url: "https://www.lmu.de/en/" },
+      suburbs: "Maxvorstadt, Schwabing, Neuhausen" },
+    { id: "tuberlin", city: "berlin", short: "TU Berlin",
+      name: { en: "Technische Universität Berlin", ar: "جامعة برلين التقنية" }, campus: { en: "Charlottenburg", ar: "شارلوتنبورغ" },
+      web: "https://www.tu.berlin/en/", union: { name: "TU Berlin International Office", url: "https://www.tu.berlin/en/" },
+      suburbs: "Charlottenburg, Moabit, Wedding" },
+    { id: "rwth", city: "aachen", short: "RWTH",
+      name: { en: "RWTH Aachen University", ar: "جامعة آخن التقنية (RWTH)" }, campus: { en: "Aachen", ar: "آخن" },
+      web: "https://www.rwth-aachen.de", union: { name: "RWTH International Office", url: "https://www.rwth-aachen.de" },
+      suburbs: "Aachen city centre, Ponttor, Burtscheid" },
+    { id: "kit", city: "karlsruhe", short: "KIT",
+      name: { en: "Karlsruhe Institute of Technology", ar: "معهد كارلسروه للتقنية (KIT)" }, campus: { en: "Karlsruhe", ar: "كارلسروه" },
+      web: "https://www.kit.edu", college: { name: "Studienkolleg at KIT", url: "https://www.stk.kit.edu" },
+      union: { name: "KIT International Students Office", url: "https://www.kit.edu" },
+      suburbs: "Oststadt, Innenstadt-Ost, Durlach", note: { en: "Universities in Baden-Württemberg, including KIT, charge non-EU students €1,500 a semester.", ar: "تفرض جامعات بادن-فورتمبيرغ، ومنها KIT، رسومًا قدرها 1,500 يورو للفصل على الطلاب من خارج الاتحاد الأوروبي." } },
+    // ---------- Singapore ----------
+    { id: "nus", city: "singapore", short: "NUS",
+      name: { en: "National University of Singapore", ar: "جامعة سنغافورة الوطنية (NUS)" }, campus: { en: "Kent Ridge", ar: "كنت ريدج" },
+      web: "https://www.nus.edu.sg", union: { name: "NUS Office of Student Affairs", url: "https://osa.nus.edu.sg" },
+      suburbs: "Clementi, Dover, Buona Vista", note: { en: "NUS is on the Ministry's Al-Ruwwad top 30 list.", ar: "جامعة NUS ضمن قائمة الرواد لأفضل 30 جامعة." } },
+    { id: "ntu", city: "singapore", short: "NTU",
+      name: { en: "Nanyang Technological University", ar: "جامعة نانيانغ التقنية (NTU)" }, campus: { en: "Jurong West", ar: "جورونغ ويست" },
+      web: "https://www.ntu.edu.sg", union: { name: "NTU student services", url: "https://www.ntu.edu.sg" },
+      suburbs: "Jurong West, Boon Lay, Pioneer" },
+    { id: "smu", city: "singapore", short: "SMU",
+      name: { en: "Singapore Management University", ar: "جامعة سنغافورة للإدارة (SMU)" }, campus: { en: "City campus (Bras Basah)", ar: "حرم وسط المدينة (Bras Basah)" },
+      web: "https://www.smu.edu.sg", union: { name: "SMU student life", url: "https://www.smu.edu.sg" },
+      suburbs: "Bugis, Bras Basah, Little India" }
   ];
 
-  var CITY_ORDER = ["sydney", "melbourne", "brisbane", "canberra", "adelaide", "perth"];
+  var CITY_ORDER = ["sydney", "melbourne", "brisbane", "canberra", "adelaide", "perth"].concat(Object.keys(CITIES).filter(function (k) { return CITIES[k].cc !== "au"; }));
+  var MC = window.MasarokCountry || { order: ["au"], data: {}, apply: function () {}, generic: function () { return null; }, name: function () { return ""; } };
+  var COUNTRY_ORDER = MC.order;
 
   var GENERIC = {
     en: {
@@ -166,7 +387,7 @@
       suburbs: "suburbs close to campus or on a direct bus or train line",
       transport: "city's transport card", bond: "your state's bond authority",
       food: "Ask the Muslim Students Association at your university about halal food and prayer spots nearby.",
-      tap: "Most Australian cities also let you tap on with a contactless bank card.",
+      tap: "Many cities also let you tap on with a contactless bank card.",
       chip: "All universities", change: "Choose university"
     },
     ar: {
@@ -176,7 +397,7 @@
       suburbs: "الأحياء القريبة من الجامعة أو الواقعة على خط حافلات أو قطار مباشر",
       transport: "بطاقة المواصلات في مدينتك", bond: "الجهة المسؤولة عن مبالغ التأمين في ولايتك",
       food: "اسأل جمعية الطلاب المسلمين في جامعتك عن المطاعم الحلال والمصليات القريبة.",
-      tap: "تتيح أغلب المدن الأسترالية أيضًا الدفع بالبطاقة البنكية اللاتلامسية.",
+      tap: "تتيح مدن كثيرة أيضًا الدفع بالبطاقة البنكية اللاتلامسية.",
       chip: "كل الجامعات", change: "اختر جامعتك"
     }
   };
@@ -185,21 +406,23 @@
 
   var T = {
     en: {
-      steps: ["City", "University", "Degree"],
-      stepOf: "Step {n} of 3",
-      titles: ["Which city are you looking at?", "Which university?", "What will you study?"],
+      steps: ["Country", "City", "University", "Degree"],
+      stepOf: "Step {n} of 4",
+      titles: ["Where do you want to study?", "Which city are you looking at?", "Which university?", "What will you study?"],
       subs: [
-        "Choose a city to see its universities first. You can still pick a university anywhere in Australia.",
+        "The guide will show the visa steps, living costs, housing and work rules for that country.",
+        "Choose a city to see its universities first. You can still pick any university in the country.",
         "The guide will show examples for your campus and city: suburbs, transport, student support and more.",
         "The guide will show the study options and scholarship rules for your level."
       ],
+      countryAll: "Not sure yet",
       cityAll: "Not sure yet",
       uniAll: "Not sure yet? Show all universities",
       levelAll: "Show everything",
       inCity: "In {city}",
       otherCities: "Other cities",
       back: "Back",
-      note: "<b>Important:</b> the universities SACM sponsors can change each year. Being accepted by a university is not the same as being sponsored to study there. Check the current list on the Ministry's <a href=\"https://ru.moe.gov.sa/Search\" rel=\"noopener\">recommended universities search</a> or with SACM before you commit.",
+      note: "<b>Important:</b> the universities SACM sponsors can change each year. Being accepted by a university is not the same as being sponsored to study there. Check the current list on the Ministry's <a href=\"https://ru.moe.gov.sa/Search\" rel=\"noopener\">recommended universities search</a> or with your cultural mission before you commit.",
       close: "Close",
       campus: "Main campus",
       levels: {
@@ -213,21 +436,23 @@
       showAll: "Show everything"
     },
     ar: {
-      steps: ["المدينة", "الجامعة", "المرحلة"],
-      stepOf: "الخطوة {n} من 3",
-      titles: ["أي مدينة تفكر فيها؟", "أي جامعة؟", "ماذا ستدرس؟"],
+      steps: ["الدولة", "المدينة", "الجامعة", "المرحلة"],
+      stepOf: "الخطوة {n} من 4",
+      titles: ["أين تريد أن تدرس؟", "أي مدينة تفكر فيها؟", "أي جامعة؟", "ماذا ستدرس؟"],
       subs: [
-        "اختر مدينة لتظهر جامعاتها أولًا. يمكنك مع ذلك اختيار أي جامعة في أستراليا.",
+        "سيعرض لك الدليل خطوات التأشيرة وتكاليف المعيشة والسكن وأنظمة العمل في تلك الدولة.",
+        "اختر مدينة لتظهر جامعاتها أولًا. يمكنك مع ذلك اختيار أي جامعة في الدولة.",
         "سيعرض لك الدليل أمثلة خاصة بحرمك الجامعي ومدينتك: الأحياء، والمواصلات، ودعم الطلاب، وغيرها.",
         "سيعرض لك الدليل خيارات الدراسة وأنظمة الابتعاث الخاصة بمرحلتك."
       ],
+      countryAll: "لم أقرر بعد",
       cityAll: "لم أقرر بعد",
       uniAll: "لم تقرر بعد؟ اعرض كل الجامعات",
       levelAll: "اعرض كل شيء",
       inCity: "في {city}",
       otherCities: "مدن أخرى",
       back: "رجوع",
-      note: "<b>مهم:</b> الجامعات التي تبتعث عليها الملحقية قد تتغير كل عام. الحصول على قبول من جامعة لا يعني أنك مبتعث إليها. تحقق من القائمة الحالية عبر <a href=\"https://ru.moe.gov.sa/Search\" rel=\"noopener\">خدمة الاستعلام عن الجامعات الموصى بها</a> أو من الملحقية قبل أن تلتزم.",
+      note: "<b>مهم:</b> الجامعات التي تبتعث عليها الوزارة قد تتغير كل عام. الحصول على قبول من جامعة لا يعني أنك مبتعث إليها. تحقق من القائمة الحالية عبر <a href=\"https://ru.moe.gov.sa/Search\" rel=\"noopener\">خدمة الاستعلام عن الجامعات الموصى بها</a> أو من الملحقية الثقافية قبل أن تلتزم.",
       close: "إغلاق",
       campus: "الحرم الرئيسي",
       levels: {
@@ -243,7 +468,7 @@
   };
 
   var lang = (document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en";
-  var K = { city: "masarok-city", uni: "masarok-uni", level: "masarok-level" };
+  var K = { country: "masarok-country", city: "masarok-city", uni: "masarok-uni", level: "masarok-level" };
 
   function cname(u) { var n = u.college.name; return typeof n === "object" ? n[lang] : n; }
   function byId(id) { for (var i = 0; i < UNIS.length; i++) if (UNIS[i].id === id) return UNIS[i]; return null; }
@@ -251,32 +476,48 @@
   function put(k, v) { try { localStorage.setItem(K[k], v); } catch (e) {} }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]; }); }
   function fmt(s, o) { return s.replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); }
+  function ccOfCity(ck) { return CITIES[ck] ? CITIES[ck].cc : null; }
+  function citiesOf(cc) { return CITY_ORDER.filter(function (ck) { return !cc || CITIES[ck].cc === cc; }); }
 
+  function validCountry(v) { return v === "all" || COUNTRY_ORDER.indexOf(v) > -1; }
   function validCity(v) { return v === "all" || CITIES.hasOwnProperty(v); }
   function validUni(v) { return v === "all" || !!byId(v); }
   function validLevel(v) { return v === "all" || LEVELS.indexOf(v) > -1; }
 
-  var state = { city: null, uni: null, level: null };
+  var state = { country: null, city: null, uni: null, level: null };
+
+  function currentCountry() {
+    var u = state.uni && state.uni !== "all" ? byId(state.uni) : null;
+    if (u) return ccOfCity(u.city);
+    if (state.city && state.city !== "all") return ccOfCity(state.city);
+    return state.country && state.country !== "all" ? state.country : null;
+  }
 
   function values() {
-    var g = GENERIC[lang];
+    var cc = currentCountry();
+    var g = Object.assign({}, GENERIC[lang], cc && cc !== "au" ? (MC.generic(cc) || {}) : {});
     var u = state.uni && state.uni !== "all" ? byId(state.uni) : null;
     var ck = u ? u.city : (state.city && state.city !== "all" ? state.city : null);
     var c = ck ? CITIES[ck] : null;
     var v = { tap: g.tap, entry: "", short: g.short, name: g.name, city: g.city, campus: g.campus, college: g.college, union: g.union, legal: g.legal, suburbs: g.suburbs, transport: g.transport, bond: g.bond, food: g.food };
+    if (!c && cc) {
+      var countryName = MC.name(cc);
+      if (countryName) v.city = countryName;
+    }
     if (c) {
       v.city = c[lang]; v.transport = c.transport[lang]; v.bond = c.bond[lang];
       v.food = c.food ? c.food[lang] : g.food;
-      v.tap = c.tap[lang];
+      v.tap = c.tap ? c.tap[lang] : g.tap;
       v["transport-url"] = c.transport.url; v["bond-url"] = c.bond.url;
     }
     if (u) {
       v.short = u.short; v.name = u.name[lang]; v.campus = u.campus[lang];
-      v.college = cname(u); v.union = u.union.name; v.legal = u.legal[lang]; v.suburbs = u.suburbs;
+      v.college = u.college ? cname(u) : g.college; v.union = u.union.name; v.legal = u.legal ? u.legal[lang] : g.legal; v.suburbs = u.suburbs;
       v.entry = u.entry ? u.entry[lang] : "";
-      v["college-url"] = u.college.url; v["union-url"] = u.union.url; v.web = u.web;
+      v["college-url"] = u.college ? u.college.url : null; v["union-url"] = u.union.url; v.web = u.web;
     }
-    return { v: v, u: u, c: c };
+    v._hasUni = !!u; v._hasCity = !!c; v.cc = cc;
+    return { v: v, u: u, c: c, cc: cc };
   }
 
   function apply() {
@@ -285,15 +526,23 @@
     document.documentElement.setAttribute("data-uni", u ? u.id : "all");
     document.documentElement.setAttribute("data-level", level || "all");
 
+    // country-specific sections first, so the filters below also reach them
+    MC.apply({ cc: r.cc, v: v });
+
     document.querySelectorAll("[data-u]").forEach(function (el) {
       var k = el.getAttribute("data-u");
       if (v[k] != null) el.textContent = v[k];
     });
     document.querySelectorAll("[data-u-href]").forEach(function (el) {
       var k = el.getAttribute("data-u-href");
+      if (!el.hasAttribute("data-href-orig")) el.setAttribute("data-href-orig", el.getAttribute("href") || "");
+      // keep Australia's defaults; elsewhere, a value we don't have becomes plain text instead of a wrong link
       if (v[k]) el.setAttribute("href", v[k]);
+      else if (r.cc && r.cc !== "au") el.removeAttribute("href");
+      else el.setAttribute("href", el.getAttribute("data-href-orig"));
+      if (el.hasAttribute("data-uni-only")) el.hidden = !u || !v[k];
     });
-    document.querySelectorAll("[data-uni-only]").forEach(function (el) { el.hidden = !u; });
+    document.querySelectorAll("[data-uni-only]:not([data-u-href])").forEach(function (el) { el.hidden = !u; });
     document.querySelectorAll("[data-all-only]").forEach(function (el) { el.hidden = !!u; });
     document.querySelectorAll("[data-city-only]").forEach(function (el) { el.hidden = !r.c; });
 
@@ -314,13 +563,14 @@
 
     var chip = document.querySelector(".uni-chip b");
     if (chip) {
-      var parts = [u ? u.short : (r.c ? r.c[lang] : GENERIC[lang].chip)];
+      var parts = [u ? u.short : (r.c ? r.c[lang] : (r.cc ? MC.name(r.cc) : GENERIC[lang].chip))];
       if (level) parts.push(T[lang].chipLevels[level]);
       chip.textContent = parts.join(" · ");
     }
 
     // shareable links
     var q = [];
+    if (r.cc && !u && !(state.city && state.city !== "all")) q.push("country=" + r.cc);
     if (state.city && state.city !== "all" && !u) q.push("city=" + state.city);
     if (u) q.push("uni=" + u.id);
     if (level) q.push("level=" + level);
@@ -336,20 +586,22 @@
   function renderTable() {
     var tbody = document.querySelector("#uni-table tbody");
     if (!tbody) return;
+    var cc = currentCountry();
     var ck = state.city && state.city !== "all" ? state.city : null;
-    var list = UNIS.slice().sort(function (a, b) {
+    var list = UNIS.filter(function (u) { return !cc || ccOfCity(u.city) === cc; }).sort(function (a, b) {
       return (ck ? (a.city === ck ? 0 : 1) - (b.city === ck ? 0 : 1) : 0) || CITY_ORDER.indexOf(a.city) - CITY_ORDER.indexOf(b.city);
     });
     tbody.innerHTML = list.map(function (u) {
       var c = CITIES[u.city];
+      var where = c[lang] + (cc ? "" : " · " + MC.name(c.cc));
       return "<tr><th scope=\"row\"><button type=\"button\" class=\"linkish\" data-pick=\"" + u.id + "\">" + esc(u.name[lang]) + "</button></th>" +
-        "<td>" + esc(c[lang]) + "</td>" +
-        "<td><a href=\"" + esc(u.college.url) + "\" rel=\"noopener\">" + esc(cname(u)) + "</a></td>" +
+        "<td>" + esc(where) + "</td>" +
+        "<td>" + (u.college ? "<a href=\"" + esc(u.college.url) + "\" rel=\"noopener\">" + esc(cname(u)) + "</a>" : "–") + "</td>" +
         "<td>" + esc(u.suburbs) + "</td></tr>";
     }).join("");
   }
 
-  // ---------- three-step picker dialog ----------
+  // ---------- four-step picker dialog ----------
   var dlg, body, lastFocus, step = 0;
 
   function uniCard(u) {
@@ -361,22 +613,35 @@
   }
 
   function stepHtml(n) {
-    var t = T[lang], h = "";
+    var t = T[lang], h = "", cc = currentCountry();
     if (n === 0) {
-      h += "<div class=\"pk-grid\">" + CITY_ORDER.map(function (ck) {
-        var names = UNIS.filter(function (u) { return u.city === ck; }).map(function (u) { return u.short; }).join(" · ");
-        return "<button type=\"button\" class=\"uni-card\" data-kind=\"city\" data-id=\"" + ck + "\" aria-pressed=\"" + (state.city === ck) + "\">" +
-          "<span class=\"uc-short\">" + esc(CITIES[ck][lang]) + "</span><span class=\"uc-campus\" dir=\"ltr\">" + esc(names) + "</span></button>";
+      h += "<div class=\"pk-grid\">" + COUNTRY_ORDER.map(function (k) {
+        var names = citiesOf(k).map(function (ck) { return CITIES[ck][lang]; }).join(" · ");
+        return "<button type=\"button\" class=\"uni-card\" data-kind=\"country\" data-id=\"" + k + "\" aria-pressed=\"" + (cc === k) + "\">" +
+          "<span class=\"uc-short\">" + esc(MC.name(k)) + "</span><span class=\"uc-campus\">" + esc(names) + "</span></button>";
       }).join("") + "</div>" +
-      "<button type=\"button\" class=\"uni-card uni-all\" data-kind=\"city\" data-id=\"all\" aria-pressed=\"" + (state.city === "all") + "\">" + esc(t.cityAll) + "</button>";
+      "<button type=\"button\" class=\"uni-card uni-all\" data-kind=\"country\" data-id=\"all\" aria-pressed=\"" + (state.country === "all") + "\">" + esc(t.countryAll) + "</button>";
     } else if (n === 1) {
+      var groups = cc ? [cc] : COUNTRY_ORDER;
+      h += groups.map(function (g) {
+        return (cc ? "" : "<p class=\"pk-city\">" + esc(MC.name(g)) + "</p>") + "<div class=\"pk-grid\">" + citiesOf(g).map(function (ck) {
+          var names = UNIS.filter(function (u) { return u.city === ck; }).map(function (u) { return u.short; }).join(" · ");
+          return "<button type=\"button\" class=\"uni-card\" data-kind=\"city\" data-id=\"" + ck + "\" aria-pressed=\"" + (state.city === ck) + "\">" +
+            "<span class=\"uc-short\">" + esc(CITIES[ck][lang]) + "</span><span class=\"uc-campus\" dir=\"ltr\">" + esc(names) + "</span></button>";
+        }).join("") + "</div>";
+      }).join("") +
+      "<button type=\"button\" class=\"uni-card uni-all\" data-kind=\"city\" data-id=\"all\" aria-pressed=\"" + (state.city === "all") + "\">" + esc(t.cityAll) + "</button>";
+    } else if (n === 2) {
       var ck = state.city && state.city !== "all" ? state.city : null;
-      var order = ck ? [ck].concat(CITY_ORDER.filter(function (c) { return c !== ck; })) : CITY_ORDER;
+      var pool = citiesOf(cc);
+      var order = ck ? [ck].concat(pool.filter(function (c) { return c !== ck; })) : pool;
       h += order.map(function (c, i) {
-        var label = ck && i === 0 ? fmt(t.inCity, { city: CITIES[c][lang] }) : CITIES[c][lang];
+        var label = ck && i === 0 ? fmt(t.inCity, { city: CITIES[c][lang] }) : CITIES[c][lang] + (cc ? "" : " · " + MC.name(CITIES[c].cc));
         var pre = ck && i === 1 ? "<p class=\"pk-divider\">" + esc(t.otherCities) + "</p>" : "";
+        var unis = UNIS.filter(function (u) { return u.city === c; });
+        if (!unis.length) return "";
         return pre + "<div class=\"pk-group" + (ck && i > 0 ? " pk-dim" : "") + "\"><p class=\"pk-city\">" + esc(label) + "</p><div class=\"pk-grid\">" +
-          UNIS.filter(function (u) { return u.city === c; }).map(uniCard).join("") + "</div></div>";
+          unis.map(uniCard).join("") + "</div></div>";
       }).join("") +
       "<button type=\"button\" class=\"uni-card uni-all\" data-kind=\"uni\" data-id=\"all\" aria-pressed=\"" + (state.uni === "all") + "\">" + esc(t.uniAll) + "</button>";
     } else {
@@ -402,7 +667,7 @@
       "<p class=\"pk-sub\">" + esc(t.subs[step]) + "</p>" +
       stepHtml(step) +
       (step > 0 ? "<button type=\"button\" class=\"pk-back\" data-step=\"" + (step - 1) + "\">" + (lang === "ar" ? "&rarr; " : "&larr; ") + esc(t.back) + "</button>" : "") +
-      (step === 1 ? "<p class=\"pk-note\">" + t.note + "</p>" : "");
+      (step === 2 ? "<p class=\"pk-note\">" + t.note + "</p>" : "");
     var panel = dlg.querySelector(".pk-panel");
     if (panel) panel.scrollTop = 0;
     var first = body.querySelector(".uni-card[aria-pressed=\"true\"]") || body.querySelector(".uni-card");
@@ -436,20 +701,30 @@
     });
   }
 
+  function setCountry(id) {
+    state.country = validCountry(id) ? id : "all";
+    var cc = state.country !== "all" ? state.country : null;
+    if (cc && state.city && state.city !== "all" && ccOfCity(state.city) !== cc) state.city = null;
+    if (cc && state.uni && state.uni !== "all" && ccOfCity(byId(state.uni).city) !== cc) state.uni = null;
+    put("country", state.country);
+  }
+
   function pick(kind, id) {
-    if (kind === "city") {
+    if (kind === "country") {
+      setCountry(id); apply(); step = 1; render();
+    } else if (kind === "city") {
       state.city = validCity(id) ? id : "all";
+      if (state.city !== "all") { state.country = ccOfCity(state.city); put("country", state.country); }
       if (state.uni && state.uni !== "all" && state.city !== "all" && byId(state.uni).city !== state.city) state.uni = null;
-      put("city", state.city); apply(); step = 1; render();
+      put("city", state.city); apply(); step = 2; render();
     } else if (kind === "uni") {
       state.uni = validUni(id) ? id : "all";
-      if (state.uni !== "all") state.city = byId(state.uni).city;
-      put("uni", state.uni); put("city", state.city || "all"); apply(); step = 2; render();
+      if (state.uni !== "all") { state.city = byId(state.uni).city; state.country = ccOfCity(state.city); put("country", state.country); }
+      put("uni", state.uni); put("city", state.city || "all"); apply(); step = 3; render();
     } else {
       state.level = validLevel(id) ? id : "all";
       put("level", state.level);
-      if (!state.uni) { state.uni = "all"; put("uni", "all"); }
-      if (!state.city) { state.city = "all"; put("city", "all"); }
+      ["country", "city", "uni"].forEach(function (k) { if (!state[k]) { state[k] = "all"; put(k, "all"); } });
       apply(); closeDialog(true);
     }
   }
@@ -467,7 +742,7 @@
     if (!dlg || dlg.hidden) return;
     dlg.hidden = true;
     document.documentElement.classList.remove("picker-open");
-    ["city", "uni", "level"].forEach(function (k) { if (!state[k]) { state[k] = "all"; put(k, "all"); } });
+    ["country", "city", "uni", "level"].forEach(function (k) { if (!state[k]) { state[k] = "all"; put(k, "all"); } });
     apply();
     if (done) flyHome();
     else if (lastFocus && lastFocus.focus) lastFocus.focus();
@@ -571,28 +846,35 @@
 
   // small API for journey.js
   window.Masarok = {
-    values: function () { var r = values(); return { v: r.v, hasUni: !!r.u, level: state.level }; },
+    values: function () { var r = values(); return { v: r.v, hasUni: !!r.u, level: state.level, cc: r.cc }; },
     openPicker: function (atStep) { openDialog(atStep); }
   };
 
   function init() {
     var p = {};
-    try { var sp = new URL(location.href).searchParams; p = { city: sp.get("city"), uni: sp.get("uni"), level: sp.get("level") }; } catch (e) {}
-    var fromUrl = !!(p.city || p.uni || p.level);
-    state.uni = p.uni && validUni(p.uni) ? p.uni : (fromUrl ? null : (validUni(get("uni")) ? get("uni") : null));
-    state.city = p.city && validCity(p.city) ? p.city : (fromUrl ? null : (validCity(get("city")) ? get("city") : null));
-    state.level = p.level && validLevel(p.level) ? p.level : (fromUrl ? null : (validLevel(get("level")) ? get("level") : null));
+    try { var sp = new URL(location.href).searchParams; p = { country: sp.get("country"), city: sp.get("city"), uni: sp.get("uni"), level: sp.get("level") }; } catch (e) {}
+    var fromUrl = !!(p.country || p.city || p.uni || p.level);
+    function load(k, valid) { return p[k] && valid(p[k]) ? p[k] : (fromUrl ? null : (valid(get(k)) ? get(k) : null)); }
+    state.uni = load("uni", validUni);
+    state.city = load("city", validCity);
+    state.country = load("country", validCountry);
+    state.level = load("level", validLevel);
     if (state.uni && state.uni !== "all") state.city = byId(state.uni).city;
-    if (fromUrl) ["city", "uni", "level"].forEach(function (k) { if (state[k]) put(k, state[k]); });
-    var nothing = !state.city && !state.uni && !state.level;
-    if (!nothing) ["city", "uni", "level"].forEach(function (k) { if (!state[k]) state[k] = "all"; });
+    if (state.city && state.city !== "all") state.country = ccOfCity(state.city);
+    // visitors from before countries existed had only Australian choices
+    if (!state.country && (state.city || state.uni)) state.country = state.city && state.city !== "all" ? ccOfCity(state.city) : "au";
+    if (fromUrl) ["country", "city", "uni", "level"].forEach(function (k) { if (state[k]) put(k, state[k]); });
+    var nothing = !state.country && !state.city && !state.uni && !state.level;
+    if (!nothing) ["country", "city", "uni", "level"].forEach(function (k) { if (!state[k]) state[k] = "all"; });
     apply();
 
     document.addEventListener("click", function (e) {
       var b = e.target.closest("[data-open-picker]");
       if (b) { e.preventDefault(); openDialog(+(b.getAttribute("data-open-picker") || 0)); return; }
       var pk = e.target.closest("[data-pick]");
-      if (pk) { e.preventDefault(); state.uni = pk.getAttribute("data-pick"); state.city = byId(state.uni).city; put("uni", state.uni); put("city", state.city); apply(); document.getElementById("myuni").scrollIntoView({ behavior: "smooth" }); return; }
+      if (pk) { e.preventDefault(); state.uni = pk.getAttribute("data-pick"); state.city = byId(state.uni).city; state.country = ccOfCity(state.city); put("uni", state.uni); put("city", state.city); put("country", state.country); apply(); document.getElementById("myuni").scrollIntoView({ behavior: "smooth" }); return; }
+      var pc = e.target.closest("[data-pick-country]");
+      if (pc) { e.preventDefault(); setCountry(pc.getAttribute("data-pick-country")); apply(); var o = document.getElementById("options"); if (o) o.scrollIntoView({ behavior: "smooth" }); return; }
       var la = e.target.closest("[data-level-all]");
       if (la) { e.preventDefault(); state.level = "all"; put("level", "all"); apply(); }
     });

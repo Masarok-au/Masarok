@@ -380,7 +380,9 @@
     return ids.length; // finished
   }
   function countDone(lv) { var n = 0; stepsFor(lv).forEach(function (id) { if (isDone(lv, id)) n++; }); return n; }
-  function title(id, V) { return fmt(S[id][lang].t, V); }
+  function MCj(id) { var M = window.MasarokCountry, cc = pick().cc; return M && cc && cc !== "au" ? M.journey(cc, id) : null; }
+  function content(id) { var ov = MCj(id); return ov ? ov[lang] : S[id][lang]; }
+  function title(id, V) { return fmt(content(id).t, V); }
 
   // ---------- the character (flat SVG, drawn in the site's style) ----------
   function figure(cls) {
@@ -635,11 +637,12 @@
     var lv = level(), ids = stepsFor(lv), V = vars(lv), v = V._v, n = ids.length;
     var cur = currentIndex(lv), show = viewing === null ? Math.min(cur, n - 1) : viewing;
     var finished = cur >= n;
-    var meta = v.short && v.short !== (lang === "ar" ? "جامعتك" : "your university") && pick().hasUni
-      ? fmt(t.meta, { uni: esc(v.short), city: esc(v.city) }) : esc(t.metaAll);
+    var cn = window.MasarokCountry && pick().cc ? window.MasarokCountry.name(pick().cc) : "";
+    var meta = pick().hasUni ? fmt(t.meta, { uni: esc(v.short), city: esc(v.city) }) : esc(cn ? (lang === "ar" ? "لأي جامعة في " + cn : "For any university in " + cn) : t.metaAll);
     var d = countDone(lv);
 
-    var h = eyebrow + '<h2 id="jr-title">' + esc(t.pathTitle[lv]) + '</h2>' +
+    var pf = lv === "foundation" && window.MasarokCountry && pick().cc ? window.MasarokCountry.pathF(pick().cc) : null;
+    var h = eyebrow + '<h2 id="jr-title">' + esc(pf || t.pathTitle[lv]) + '</h2>' +
       '<div class="jr-meta"><span>' + meta + '</span>' +
       '<button type="button" class="jr-textbtn" data-go="level">' + esc(t.changeLevel) + '</button>' +
       '<button type="button" class="jr-textbtn" data-change-uni>' + esc(t.changeUni) + '</button></div>';
@@ -693,14 +696,14 @@
   }
 
   function cardHtml(lv, i, V, cur) {
-    var ids = stepsFor(lv), id = ids[i], s = S[id], c = s[lang], n = ids.length;
+    var ids = stepsFor(lv), id = ids[i], s = S[id], ov = MCj(id), c = ov ? ov[lang] : s[lang], n = ids.length;
     var state = isDone(lv, id) ? (doneMap(lv)[id] === "skip" ? "skip" : "done") : "open";
     var kicker = (i === cur ? esc(t.nextStep) + ' · ' : "") + esc(fmt(t.stepN, { n: num(i + 1), total: num(n) })) +
       (state === "done" ? ' · <span class="jr-tag is-done">' + esc(t.done) + '</span>' : state === "skip" ? ' · <span class="jr-tag">' + esc(t.skipped) + '</span>' : "") +
       (s.optional ? ' · <span class="jr-tag">' + esc(t.optional) + '</span>' : "");
     var what = c.what.map(function (w) { return '<li>' + fmt(w, V) + '</li>'; }).join("");
-    if (s.extra && s.extra[lv]) what += '<li>' + esc(s.extra[lv][lang]) + '</li>';
-    var links = s.links.map(function (k) { return linkHtml(k, V); }).join("");
+    if (!ov && s.extra && s.extra[lv] && (lv !== "phd" || id !== "visa" || !pick().cc || pick().cc === "au")) what += '<li>' + esc(s.extra[lv][lang]) + '</li>';
+    var links = ov && ov.links ? ov.links.map(function (l) { return '<a href="' + esc(l[2]) + '" rel="noopener" target="_blank">' + esc(lang === "ar" ? l[1] : l[0]) + '<span class="jr-ext" aria-hidden="true">↗</span></a>'; }).join("") : s.links.map(function (k) { return linkHtml(k, V); }).join("");
     var actions = state === "open"
       ? '<button type="button" class="btn btn-primary" data-done="' + id + '">' + ICON.tick + esc(t.markDone) + '</button>' +
         (s.optional ? '<button type="button" class="btn jr-btn-ghost" data-skip="' + id + '">' + esc(t.skip) + '</button>' : "")
@@ -759,7 +762,7 @@
       st.level = lv; st.started = true; save(); viewing = null; screen = "main"; refresh(); render(true); return;
     }
     if ((el = e.target.closest("[data-go]"))) { screen = el.getAttribute("data-go"); if (screen === "level") tmp.level = level(); render(true); return; }
-    if (e.target.closest("[data-change-uni]")) { close(); if (window.Masarok && window.Masarok.openPicker) window.Masarok.openPicker(1); return; }
+    if (e.target.closest("[data-change-uni]")) { close(); if (window.Masarok && window.Masarok.openPicker) window.Masarok.openPicker(2); return; }
     if ((el = e.target.closest("[data-step]"))) {
       var i = +el.getAttribute("data-step"), lv2 = level(), cur = currentIndex(lv2);
       if (el.getAttribute("aria-disabled") === "true") {
