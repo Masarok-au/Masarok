@@ -4,7 +4,7 @@
   "use strict";
 
   // Paste the Google Form link here. While it is empty, nothing is shown.
-  var FORM_URL = "";
+  var FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdVGMftz6scJBj8c-EaS6RiCKUwoXW71xYNwpxmqZ7jpOsHQQ/viewform";
 
   var FIRST_MS = 15000;   // first visit of the plane, 15 seconds after the page opens
   var STAY_MS = 60000;    // how long the banner stays on screen
