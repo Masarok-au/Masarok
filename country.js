@@ -66,6 +66,7 @@
         text: ["There is no single US government figure. Your university's I-20 shows its own estimate of living costs for a year. Costs vary a lot: New York, Boston and the San Francisco Bay Area cost far more than smaller college towns.",
           "لا يوجد رقم حكومي موحد في أمريكا. يظهر في نموذج I-20 تقدير جامعتك لتكاليف المعيشة لسنة. والتكاليف تختلف كثيرًا: نيويورك وبوسطن ومنطقة سان فرانسيسكو أغلى بكثير من المدن الجامعية الصغيرة."],
         src: { l: ["EducationUSA", "EducationUSA"], u: "https://educationusa.state.gov" },
+        allowance: 1736,
         ex: { rent: 1500, food: 450, travel: 80, bills: 120 }
       },
       before: [
@@ -691,7 +692,9 @@
     sacmNote: ["<b>Important:</b> SACM sponsors Foundation, Diploma, Bachelor's, Master's and PhD programs. <b>English courses are not sponsored</b>, so you pay for them yourself.", "<b>مهم:</b> تبتعث الملحقية على برامج الفاونديشن والدبلوم والبكالوريوس والماجستير والدكتوراه. <b>دورات اللغة غير مشمولة</b>، فتدفع تكلفتها بنفسك."],
     checkNote: ["Entry scores, program lengths and progression rules change each year and differ between programs. Always check the current rules on your university's official website before you apply.", "درجات القبول ومدد البرامج وشروط الانتقال تتغير كل عام وتختلف بين البرامج. تحقق دائمًا من الأنظمة الحالية في موقع جامعتك الرسمي قبل التقديم."],
     allowIntro: ["SACM pays scholarship students a monthly allowance on top of tuition and health cover. The amount is set in Saudi riyals in your scholarship decision and paid in local currency, so it changes with the exchange rate.", "تصرف الملحقية للمبتعث مكافأة شهرية إضافة إلى الرسوم والتأمين الصحي. ويُحدد مبلغها بالريال في قرار الابتعاث ويُصرف بالعملة المحلية، فيتغير مع سعر الصرف."],
-    official: ["Official living costs", "تكاليف المعيشة الرسمية"], source: ["Source", "المصدر"],
+    official: ["Official living costs", "تكاليف المعيشة الرسمية"],
+    monthly: ["Monthly allowance", "المكافأة الشهرية"], single: ["per month for a single student", "شهريًا للطالب الأعزب"],
+    knownNote: ["This is the 2026 amount for a single student. Students with family members may receive a different amount, and SACM can change allowances. Check your own scholarship decision or ask your cultural mission.", "هذا مبلغ عام 2026 للطالب الأعزب. وقد يختلف المبلغ لمن معه مرافقون، ويمكن أن تعدّل الملحقية المكافآت. راجع قرار ابتعاثك أو اسأل الملحقية الثقافية."], source: ["Source", "المصدر"],
     plan: ["Plan your month", "خطط لشهرك"],
     planHint: ["Enter your own numbers to see what is left each month. The starting values are only examples.", "أدخل أرقامك لترى ما يتبقى كل شهر. القيم الأولية أمثلة فقط."],
     yourAllowance: ["Your monthly allowance", "مكافأتك الشهرية"], fromDecision: ["from your scholarship decision", "من قرار الابتعاث"],
@@ -763,19 +766,21 @@
         (d.options.extra ? '<p class="note">' + T(d.options.extra) + '</p>' : "") +
         '<p class="note">' + T(UI.sacmNote) + '</p><p class="note">' + esc(T(UI.checkNote)) + '</p>';
     } else if (key === "allowance") {
-      var ex = d.costs.ex, cur = d.cur;
+      var ex = d.costs.ex, cur = d.cur, known = d.costs.allowance || 0;
       function row(id, label, val) {
         return '<div class="brow"><label for="g-' + id + '">' + esc(T(label)) + ' <small>' + esc(T(UI.perMonth)) + '</small></label><div class="money-in"><span>' + esc(cur) + '</span><input id="g-' + id + '" data-g="' + id + '" type="number" inputmode="decimal" min="0" step="10" value="' + val + '"></div></div>';
       }
       h = head("allowance", v) + '<p class="intro">' + esc(T(UI.allowIntro)) + '</p>' +
-        '<div class="allowance"><div class="amount"><span class="k">' + esc(T(UI.official)) + '</span><span class="per">' + esc(T(d.costs.text)) + '</span>' +
+        '<div class="allowance"><div class="amount">' +
+        (known ? '<span class="k">' + esc(T(UI.monthly)) + '</span><span class="fig">' + esc(money(known, cur)) + '</span><span class="per">' + esc(T(UI.single)) + ' ' + esc(T(d.inPlace)) + '</span><span class="k" style="margin-top:18px">' + esc(T(UI.official)) + '</span>' : '<span class="k">' + esc(T(UI.official)) + '</span>') +
+        '<span class="per">' + esc(T(d.costs.text)) + '</span>' +
         (d.costs.src ? '<span class="per"><a href="' + esc(d.costs.src.u) + '" rel="noopener" style="color:var(--gold)">' + esc(T(UI.source)) + ': ' + esc(T(d.costs.src.l)) + '</a></span>' : "") + '</div>' +
         '<div class="budget"><h3>' + esc(T(UI.plan)) + '</h3><p class="hint">' + esc(T(UI.planHint)) + '</p>' +
-        '<div class="brow"><label for="g-allow">' + esc(T(UI.yourAllowance)) + ' <small>' + esc(T(UI.fromDecision)) + '</small></label><div class="money-in"><span>' + esc(cur) + '</span><input id="g-allow" data-g="allow" type="number" inputmode="decimal" min="0" step="10" value=""></div></div>' +
+        '<div class="brow"><label for="g-allow">' + esc(T(UI.yourAllowance)) + ' <small>' + esc(T(UI.fromDecision)) + '</small></label><div class="money-in"><span>' + esc(cur) + '</span><input id="g-allow" data-g="allow" type="number" inputmode="decimal" min="0" step="10" value="' + (known || "") + '"></div></div>' +
         row("rent", UI.rent, ex.rent) + row("food", UI.food, ex.food) + row("travel", UI.travel, ex.travel) + row("bills", UI.bills, ex.bills) +
         '<div class="totals" aria-live="polite"><div><span>' + esc(T(UI.spend)) + '</span><b data-g-out="spend">0</b></div><div class="left" data-g-out="leftrow"><span>' + esc(T(UI.left)) + '</span><b data-g-out="left">–</b></div></div>' +
         (d.costs.exNote ? '<p class="hint">' + esc(T(d.costs.exNote)) + '</p>' : "") +
-        '</div></div><p class="note">' + esc(T(UI.allowNote)) + '</p>';
+        '</div></div><p class="note">' + esc(T(known ? UI.knownNote : UI.allowNote)) + '</p>';
     } else if (key === "before") {
       h = head("before", v) + '<p class="intro">' + esc(T(UI.tickIntro)) + '</p>' + checklist("before", d.before, cc, UI.paperwork, v);
     } else if (key === "arrival") {
