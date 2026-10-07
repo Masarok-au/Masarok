@@ -4,6 +4,7 @@
 
   var CITIES = {
     sydney: {
+      tap: { en: "You can also tap on with a contactless bank card.", ar: "يمكنك أيضًا الدفع بالبطاقة البنكية اللاتلامسية." },
       en: "Sydney", ar: "سيدني",
       transport: { en: "Opal card", ar: "بطاقة أوبال (Opal)", url: "https://transportnsw.info" },
       bond: { en: "NSW Fair Trading", ar: "NSW Fair Trading", url: "https://www.fairtrading.nsw.gov.au" },
@@ -13,6 +14,7 @@
       }
     },
     melbourne: {
+      tap: { en: "Since mid-2026, full-fare passengers can also tap on with a contactless bank card.", ar: "منذ منتصف 2026 يمكن لركاب التذكرة الكاملة الدفع بالبطاقة البنكية اللاتلامسية أيضًا." },
       en: "Melbourne", ar: "ملبورن",
       transport: { en: "myki card", ar: "بطاقة مايكي (myki)", url: "https://www.ptv.vic.gov.au" },
       bond: { en: "the Residential Tenancies Bond Authority (RTBA)", ar: "هيئة سندات الإيجار (RTBA)", url: "https://rentalbonds.vic.gov.au" },
@@ -22,16 +24,19 @@
       }
     },
     brisbane: {
+      tap: { en: "You can also tap on with a contactless bank card, and a new Translink card is replacing the go card during 2026.", ar: "يمكنك أيضًا الدفع بالبطاقة البنكية اللاتلامسية، وتحل بطاقة Translink الجديدة محل go card خلال 2026." },
       en: "Brisbane", ar: "بريزبن",
       transport: { en: "go card", ar: "بطاقة go card", url: "https://translink.com.au" },
       bond: { en: "the Residential Tenancies Authority (RTA)", ar: "هيئة الإيجارات السكنية (RTA)", url: "https://www.rta.qld.gov.au" }
     },
     adelaide: {
+      tap: { en: "You can also tap on with a contactless bank card at the regular fare.", ar: "يمكنك أيضًا الدفع بالبطاقة البنكية اللاتلامسية بسعر التذكرة العادية." },
       en: "Adelaide", ar: "أديلايد",
       transport: { en: "metroCARD", ar: "بطاقة metroCARD", url: "https://www.adelaidemetro.com.au" },
       bond: { en: "Consumer and Business Services (CBS)", ar: "Consumer and Business Services (CBS)", url: "https://www.cbs.sa.gov.au" }
     },
     perth: {
+      tap: { en: "You can also tap on with a contactless bank card at the standard fare.", ar: "يمكنك أيضًا الدفع بالبطاقة البنكية اللاتلامسية بالسعر العادي." },
       en: "Perth", ar: "بيرث",
       transport: { en: "SmartRider card", ar: "بطاقة SmartRider", url: "https://www.transperth.wa.gov.au" },
       bond: { en: "the Bond Administrator (Consumer Protection WA)", ar: "إدارة التأمينات (Consumer Protection WA)", url: "https://www.commerce.wa.gov.au/consumer-protection" }
@@ -70,15 +75,17 @@
       college: { name: "Trinity College Foundation Studies", url: "https://www.trinity.unimelb.edu.au" },
       union: { name: "UMSU (University of Melbourne Student Union)", url: "https://umsu.unimelb.edu.au" },
       legal: { en: "The UMSU Legal Service gives students free legal advice.", ar: "الخدمة القانونية في UMSU تقدم للطلاب استشارات قانونية مجانية." },
-      suburbs: "Carlton, Parkville, Brunswick" },
+      suburbs: "Carlton, Parkville, Brunswick",
+      entry: { en: "Study completed in Saudi Arabia does not exempt you from an English test.", ar: "الدراسة في السعودية لا تعفيك من اختبار اللغة الإنجليزية." } },
     { id: "monash", city: "melbourne", short: "Monash",
       name: { en: "Monash University", ar: "جامعة موناش" },
       campus: { en: "Clayton", ar: "كلايتون (Clayton)" },
       web: "https://www.monash.edu",
       college: { name: "Monash College", url: "https://www.monashcollege.edu.au" },
       union: { name: "Monash Student Association (MSA)", url: "https://msa.monash.edu" },
-      legal: { en: "Ask the MSA about free legal and tenancy advice for students.", ar: "اسأل MSA عن الاستشارات القانونية واستشارات الإيجار المجانية للطلاب." },
-      suburbs: "Clayton, Oakleigh, Notting Hill, Glen Waverley" },
+      legal: { en: "Free legal advice is available through Monash Law Clinics. The MSA offers non-legal advocacy and support.", ar: "تتوفر الاستشارات القانونية المجانية عبر Monash Law Clinics، وتقدم MSA دعمًا ومناصرة غير قانونية." },
+      suburbs: "Clayton, Oakleigh, Notting Hill, Glen Waverley",
+      entry: { en: "Monash College Foundation Year accepts the Saudi General Secondary certificate with 70% (Standard) or 65% (Extended).", ar: "تقبل سنة الفاونديشن في Monash College شهادة الثانوية العامة السعودية بنسبة 70% (العادي) أو 65% (الممتد)." } },
     { id: "rmit", city: "melbourne", short: "RMIT",
       name: { en: "RMIT University", ar: "جامعة RMIT" },
       campus: { en: "Melbourne City campus", ar: "حرم المدينة في ملبورن" },
@@ -86,7 +93,8 @@
       college: { name: "RMIT University Pathways (RMIT UP)", url: "https://www.rmit.edu.au/up" },
       union: { name: "RMIT University Student Union (RUSU)", url: "https://rusu.rmit.edu.au" },
       legal: { en: "Ask RUSU about free legal and tenancy advice for students.", ar: "اسأل RUSU عن الاستشارات القانونية واستشارات الإيجار المجانية للطلاب." },
-      suburbs: "Melbourne CBD, Carlton, North Melbourne" },
+      suburbs: "Melbourne CBD, Carlton, North Melbourne",
+      entry: { en: "RMIT does not accept the Saudi General Secondary certificate for direct bachelor's entry, so you need a pathway such as Foundation Studies.", ar: "لا تقبل RMIT شهادة الثانوية العامة السعودية للقبول المباشر في البكالوريوس، لذلك تحتاج إلى برنامج مسار مثل الفاونديشن." } },
     { id: "adelaide", city: "adelaide", short: "Adelaide Uni",
       name: { en: "Adelaide University", ar: "جامعة أديلايد" },
       campus: { en: "City campuses (North Terrace)", ar: "حرم وسط المدينة (North Terrace)" },
@@ -94,7 +102,7 @@
       web: "https://www.adelaide.edu.au",
       college: { name: "Kaplan International College Adelaide", url: "https://www.kaplancollegeadelaide.edu.au" },
       union: { name: "Adelaide University Student Association (AUSA)", url: "https://www.ausaadelaide.com.au" },
-      legal: { en: "Ask AUSA about free legal and tenancy advice for students.", ar: "اسأل AUSA عن الاستشارات القانونية واستشارات الإيجار المجانية للطلاب." },
+      legal: { en: "AUSA offers advocacy and welfare support through Student Care. Ask them where to get free legal advice.", ar: "تقدم AUSA المناصرة والدعم عبر Student Care. اسألهم عن جهات الاستشارة القانونية المجانية." },
       suburbs: "Adelaide CBD, North Adelaide, Kent Town" },
     { id: "uwa", city: "perth", short: "UWA",
       name: { en: "The University of Western Australia", ar: "جامعة غرب أستراليا (UWA)" },
@@ -102,7 +110,7 @@
       web: "https://www.uwa.edu.au",
       college: { name: "UWA College", url: "https://www.uwa.edu.au/study/how-to-apply/pathways-and-eligibility/entry-pathways/international-student-pathways" },
       union: { name: "UWA Student Guild", url: "https://www.uwastudentguild.com" },
-      legal: { en: "Ask the UWA Student Guild about free legal and tenancy advice for students.", ar: "اسأل UWA Student Guild عن الاستشارات القانونية واستشارات الإيجار المجانية للطلاب." },
+      legal: { en: "The UWA Student Guild does not give legal advice itself, but it refers students to free legal centres.", ar: "لا تقدم UWA Student Guild استشارات قانونية بنفسها، لكنها توجه الطلاب إلى مراكز قانونية مجانية." },
       suburbs: "Crawley, Nedlands, Subiaco, Shenton Park" },
     { id: "curtin", city: "perth", short: "Curtin",
       name: { en: "Curtin University", ar: "جامعة كيرتن" },
@@ -132,6 +140,7 @@
       suburbs: "suburbs close to campus or on a direct bus or train line",
       transport: "city's transport card", bond: "your state's bond authority",
       food: "Ask the Muslim Students Association at your university about halal food and prayer spots nearby.",
+      tap: "Most Australian cities also let you tap on with a contactless bank card.",
       chip: "All universities", change: "Choose university"
     },
     ar: {
@@ -141,6 +150,7 @@
       suburbs: "الأحياء القريبة من الجامعة أو الواقعة على خط حافلات أو قطار مباشر",
       transport: "بطاقة المواصلات في مدينتك", bond: "الجهة المسؤولة عن مبالغ التأمين في ولايتك",
       food: "اسأل جمعية الطلاب المسلمين في جامعتك عن المطاعم الحلال والمصليات القريبة.",
+      tap: "تتيح أغلب المدن الأسترالية أيضًا الدفع بالبطاقة البنكية اللاتلامسية.",
       chip: "كل الجامعات", change: "اختر جامعتك"
     }
   };
@@ -226,15 +236,17 @@
     var u = state.uni && state.uni !== "all" ? byId(state.uni) : null;
     var ck = u ? u.city : (state.city && state.city !== "all" ? state.city : null);
     var c = ck ? CITIES[ck] : null;
-    var v = { short: g.short, name: g.name, city: g.city, campus: g.campus, college: g.college, union: g.union, legal: g.legal, suburbs: g.suburbs, transport: g.transport, bond: g.bond, food: g.food };
+    var v = { tap: g.tap, entry: "", short: g.short, name: g.name, city: g.city, campus: g.campus, college: g.college, union: g.union, legal: g.legal, suburbs: g.suburbs, transport: g.transport, bond: g.bond, food: g.food };
     if (c) {
       v.city = c[lang]; v.transport = c.transport[lang]; v.bond = c.bond[lang];
       v.food = c.food ? c.food[lang] : g.food;
+      v.tap = c.tap[lang];
       v["transport-url"] = c.transport.url; v["bond-url"] = c.bond.url;
     }
     if (u) {
       v.short = u.short; v.name = u.name[lang]; v.campus = u.campus[lang];
       v.college = u.college.name; v.union = u.union.name; v.legal = u.legal[lang]; v.suburbs = u.suburbs;
+      v.entry = u.entry ? u.entry[lang] : "";
       v["college-url"] = u.college.url; v["union-url"] = u.union.url; v.web = u.web;
     }
     return { v: v, u: u, c: c };
@@ -269,6 +281,7 @@
       if (level) el.querySelector("span").innerHTML = fmt(T[lang].showing, { level: esc(T[lang].levels[level][0]) });
     });
 
+    document.querySelectorAll("[data-u-entry]").forEach(function (el) { el.hidden = !v.entry; });
     var note = document.querySelector("[data-u-note]");
     if (note) { note.hidden = !(u && u.note); if (u && u.note) note.textContent = u.note[lang]; }
 
