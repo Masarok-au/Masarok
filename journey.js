@@ -1082,7 +1082,8 @@
     taskCount: function (lv, id) { return taskList(lv, id, vars(lv)).length; },
     taskDone: function (lv, id) { var tm = taskMap(lv, id), n = 0; tm.forEach(function (x) { if (x) n++; }); return n; },
     title: function (id) { return stripTags(title(id, vars(level()))); },
-    open: function () { open(); }, isOpen: function () { return !!(panel && !panel.hidden); }
+    open: function () { open(); }, isOpen: function () { return !!(panel && !panel.hidden); },
+    figure: figure, onMain: function () { return screen === "main"; }
   };
 
   // ---------- start ----------
