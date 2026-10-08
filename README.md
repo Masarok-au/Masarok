@@ -43,3 +43,9 @@ Masarok is also a Progressive Web App: visitors can install it to their home scr
 - `sw.js`: offline support. Pages and scripts load from the network first and fall back to the saved copy offline, so updates show straight away
 - `app.js`: registers the service worker and shows the install button (with Add to Home Screen steps on iPhone)
 - `icons/`: app icons (`icon.svg` is the source)
+
+## Deadlines and reminders
+
+`deadlines.js` holds the application deadlines for every university in the guide, plus the application systems (UCAS, the UC application, uni-assist and so on) and the Saudi scholarship windows. Dates were checked against official pages on 8 October 2026; entries marked as expected (`c: 0`) follow the usual yearly date and should be re-checked each cycle.
+
+Students tick the deadlines they want and add them to their phone's calendar (an `.ics` file with alerts 2 weeks, 3 days and 1 day before), or to Google Calendar. Their picks are saved in the browser, and the site shows a reminder when a saved deadline is within 14 days.

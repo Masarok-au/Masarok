@@ -875,7 +875,8 @@
   // small API for journey.js
   window.Masarok = {
     values: function () { var r = values(); return { v: r.v, hasUni: !!r.u, level: state.level, cc: r.cc }; },
-    openPicker: function (atStep) { openDialog(atStep); }
+    openPicker: function (atStep) { openDialog(atStep); },
+    uniNames: function () { var o = {}; UNIS.forEach(function (u) { o[u.id] = u.name[lang]; }); return o; }
   };
 
   function init() {
