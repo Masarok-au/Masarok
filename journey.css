@@ -262,3 +262,17 @@ html[lang="ar"] .jr-kicker, html[lang="ar"] .jr-card h4{letter-spacing:0; text-t
 .jr-plan-chips span{font-size:.82rem; color:var(--night-ink); background:rgba(255,255,255,.06); border:1px solid rgba(238,242,247,.14); border-radius:12px; padding:3px 10px}
 .jr-banner.is-plan .jr-copy h2{font-size:clamp(1.05rem, .6vw + .95rem, 1.25rem); color:var(--gold); font-family:var(--f-mono); letter-spacing:.04em}
 .jr-banner.is-plan .jr-copy > p{font-family:var(--f-display); font-weight:800; font-size:clamp(1.25rem, 1vw + 1rem, 1.6rem); color:var(--night-ink)}
+
+/* ---------- keep sheets clear of the status bar, notch and home bar (installed app, iPhone and iPad) ---------- */
+.jr-panel, .picker{
+  --sat:env(safe-area-inset-top, 0px); --sab:env(safe-area-inset-bottom, 0px);
+  --sal:env(safe-area-inset-left, 0px); --sar:env(safe-area-inset-right, 0px);
+  padding:calc(16px + var(--sat)) calc(16px + var(--sar)) calc(16px + var(--sab)) calc(16px + var(--sal))}
+.jr-sheet, .pk-panel{box-sizing:border-box; max-height:calc(100dvh - 32px - var(--sat) - var(--sab))}
+@media (max-width:560px){
+  /* full screen on phones: a dark band fills the status-bar area, the decoration and close button sit just below it */
+  .jr-panel, .picker{padding:0}
+  .jr-sheet, .pk-panel{height:100dvh; max-height:100dvh; border-radius:0; border-top:var(--sat) solid var(--night); padding-bottom:var(--sab); padding-inline:var(--sal) var(--sar)}
+  .jr-x{top:26px}
+  .pk-x{top:26px}
+}
