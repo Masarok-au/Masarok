@@ -55,7 +55,7 @@
       b.type = "button"; b.className = "app-chip"; b.innerHTML = icon + "<span>" + T.install + "</span>";
       nav.insertBefore(b, lang || null); chips.push(b);
     }
-    var foot = document.querySelector(".site-foot .wrap");
+    var foot = document.querySelector(".site-foot .foot-acts") || document.querySelector(".site-foot .wrap");
     if (foot) {
       var f = document.createElement("button");
       f.type = "button"; f.className = "app-foot"; f.innerHTML = icon + "<span>" + T.installFoot + "</span>";

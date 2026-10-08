@@ -219,11 +219,29 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
 .site-foot .wrap{display:grid; gap:10px; padding-block:28px 40px}
 .site-foot b{color:var(--night-ink)}
 .site-foot .ar{font-family:var(--f-ar); color:var(--gold)}
-.socials{display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px; padding-bottom:6px}
-.socials .lbl{color:var(--night-ink); font-weight:700; margin-inline-end:4px}
-.socials a{display:inline-flex; align-items:baseline; gap:6px; padding:6px 14px; border:1px solid rgba(238,242,247,.25); border-radius:999px; color:var(--night-ink); text-decoration:none; font-size:.9rem}
-.socials a small{color:var(--night-dim); font-size:.82rem}
-.socials a:hover{border-color:var(--gold); color:var(--gold)}
+.contact{display:grid; gap:16px; padding:20px; border:1px solid rgba(226,182,108,.28); border-radius:16px; background:linear-gradient(135deg, rgba(226,182,108,.07), rgba(255,255,255,.02))}
+.contact-head{display:grid; gap:4px}
+.contact-head h2{font-size:1.2rem; color:var(--night-ink); margin:0}
+.contact-head p{margin:0; color:var(--night-dim); font-size:.92rem}
+.socials{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:10px}
+.soc{display:flex; align-items:center; gap:12px; min-width:0; padding:12px 14px; border:1px solid rgba(238,242,247,.16); border-radius:12px; background:rgba(6,12,22,.45); color:var(--night-ink); text-decoration:none; transition:border-color .2s ease, background-color .2s ease, translate .2s ease}
+.soc:hover{border-color:var(--gold); background:rgba(226,182,108,.08); translate:0 -2px}
+.soc:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
+.soc-ic{flex:none; width:40px; height:40px; border-radius:50%; display:grid; place-items:center; background:rgba(226,182,108,.12); color:var(--gold)}
+.soc-ic svg{width:20px; height:20px}
+.soc-tx{display:grid; gap:1px; min-width:0}
+.soc-tx b{font-size:.95rem}
+.soc-tx small{color:var(--night-dim); font-size:.84rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:start}
+[dir="rtl"] .soc-tx small{text-align:right}
+.soc-go{margin-inline-start:auto; color:var(--night-dim); font-size:.9rem}
+[dir="rtl"] .soc-go{scale:-1 1}
+.soc:hover .soc-go{color:var(--gold)}
+.foot-acts{display:flex; flex-wrap:wrap; gap:8px 10px}
+.foot-acts:empty{display:none}
+.foot-acts .app-foot{margin-inline-start:0}
+.site-foot .foot-note{display:grid; gap:8px; margin-top:4px; padding-top:16px; border-top:1px solid rgba(238,242,247,.1)}
+.site-foot .foot-note p{margin:0}
+@media (max-width:720px){ .socials{grid-template-columns:1fr; gap:8px} .contact{padding:16px} .soc{padding:10px 12px} .soc-ic{width:36px; height:36px} .site-foot .wrap{padding-bottom:104px} }
 
 
 @media (max-width:560px){
@@ -857,13 +875,34 @@ html[data-no-f] [data-needs-f], html[data-no-f] .col-f{display:none !important}
 <footer class="site-foot">
   <div class="sadu" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="socials">
-      <span class="lbl">Connect with me</span>
-      <a href="https://t.me/badersm18" rel="noopener" dir="ltr">Telegram <small>@badersm18</small></a>
-      <a href="https://www.linkedin.com/in/bader-almasri-270652332" rel="noopener" dir="ltr">LinkedIn <small>Bader Almasri</small></a>
-    </div>
+    <section class="contact" aria-labelledby="contact-h">
+      <div class="contact-head">
+        <h2 id="contact-h">Connect with me</h2>
+        <p>Questions about studying abroad or this guide? Send me a message on any of these.</p>
+      </div>
+      <div class="socials">
+        <a class="soc is-tt" href="https://www.tiktok.com/@badersm18" rel="noopener" target="_blank">
+          <span class="soc-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13 2.5h3.1a4.6 4.6 0 0 0 4.4 4.1v3.2a7.6 7.6 0 0 1-4.3-1.4v6.7a6.2 6.2 0 1 1-6.2-6.2c.3 0 .6 0 .9.1v3.3a3 3 0 1 0 2.1 2.8z"/></svg></span>
+          <span class="soc-tx"><b>TikTok</b><small dir="ltr">@badersm18</small></span>
+          <span class="soc-go" aria-hidden="true">↗</span>
+        </a>
+        <a class="soc is-tg" href="https://t.me/badersm18" rel="noopener" target="_blank">
+          <span class="soc-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.4 3.6 2.9 10.8c-1 .4-1 1.7 0 2l4.6 1.4 1.8 5.6c.3.8 1.2 1 1.8.5l2.6-2.4 4.7 3.5c.7.5 1.6.1 1.8-.7L23.1 5c.2-1-.8-1.8-1.7-1.4zm-3.6 4.2-7.4 6.9-.3 3.2-1.4-4.4 9.1-5.7z"/></svg></span>
+          <span class="soc-tx"><b>Telegram</b><small dir="ltr">@badersm18</small></span>
+          <span class="soc-go" aria-hidden="true">↗</span>
+        </a>
+        <a class="soc is-li" href="https://www.linkedin.com/in/bader-almasri-270652332" rel="noopener" target="_blank">
+          <span class="soc-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7.6 10.4v6.4M11.2 16.8v-6.4M11.2 13.2c0-1.7 1-2.9 2.6-2.9s2.6 1.1 2.6 2.9v3.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="7.6" cy="7.4" r="1.2" fill="currentColor"/></svg></span>
+          <span class="soc-tx"><b>LinkedIn</b><small dir="ltr">Bader Almasri</small></span>
+          <span class="soc-go" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+    <div class="foot-acts"></div>
+    <div class="foot-note">
     <p>This guide shares one student's experience. It is not official advice from any university, government or sponsor. Always confirm details with the official sources above.</p>
     <p><b>Masarok</b> · Last updated October 2026 · Made by Bader · <span class="ar" lang="ar" dir="rtl">بالتوفيق</span></p>
+    </div>
   </div>
 </footer>
 

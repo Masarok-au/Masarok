@@ -88,7 +88,7 @@
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
   // a permanent link in the footer, for anyone who closed the banner
-  var foot = document.querySelector(".site-foot .wrap");
+  var foot = document.querySelector(".site-foot .foot-acts") || document.querySelector(".site-foot .wrap");
   if (foot) {
     var a = document.createElement("a");
     a.className = "fb-foot"; a.href = FORM_URL; a.target = "_blank"; a.rel = "noopener";
