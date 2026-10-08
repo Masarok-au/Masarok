@@ -649,6 +649,7 @@
   }
   function updateBanner() {
     if (!banner) return;
+    setTimeout(function () { emit("masarok:journey-banner", {}); }, 0);
     var b = bannerText();
     banner.querySelector("h2").textContent = b.h;
     banner.querySelector(".jr-copy p").textContent = b.p;
@@ -826,6 +827,7 @@
       h = renderMain(eyebrow);
     }
     body.innerHTML = h;
+    emit("masarok:journey-render", { screen: screen });
     if (focus) panel.querySelector(".jr-sheet").scrollTop = 0;
     if (screen === "main") placeClimber();
     if (focus) {
@@ -1015,7 +1017,9 @@
       var lv3 = level(), id = el.getAttribute("data-done") || el.getAttribute("data-skip");
       doneMap(lv3)[id] = el.hasAttribute("data-skip") ? "skip" : "done";
       st.welcome = false; save(); viewing = null; refresh();
+      var dl3 = dlFor(id);
       render(false);
+      emit("masarok:journey", { type: "step", id: id, lv: lv3, skip: el.hasAttribute("data-skip"), early: !!(dl3 && DLT[id] !== "start" && dl3.days >= 30) });
       var nc = currentIndex(lv3);
       if (nc < stepsFor(lv3).length) say(fmt(t.unlocked, { n: num(nc + 1) }));
       else say(t.finishedT);
@@ -1042,10 +1046,13 @@
     list.forEach(function (x, j) { if (tm[j]) d++; });
     var tn = cb.closest(".jr-card").querySelector(".jr-tn"); if (tn) tn.textContent = fmt(t.tasksN, { d: num(d), n: num(list.length) });
     save(); refresh();
+    emit("masarok:journey", { type: "task", id: id, lv: lv, on: cb.checked, el: cb });
     if (d === list.length && !isDone(lv, id)) {
+      var dlA = dlFor(id);
       doneMap(lv)[id] = "done"; st.welcome = false; save(); viewing = null; refresh();
       setTimeout(function () {
         render(false);
+        emit("masarok:journey", { type: "step", id: id, lv: lv, early: !!(dlA && DLT[id] !== "start" && dlA.days >= 30) });
         var nc = currentIndex(lv);
         say(t.allTasks + (nc < stepsFor(lv).length ? " " + fmt(t.unlocked, { n: num(nc + 1) }) : ""));
         focusCard(true);
@@ -1067,6 +1074,16 @@
   }
 
   function refresh() { updateBanner(); updateFab(); }
+  function emit(name, detail) { try { document.dispatchEvent(new CustomEvent(name, { detail: detail })); } catch (e) {} }
+
+  // ---------- for game.js (points and badges) ----------
+  window.MasarokJourney = {
+    state: function () { return st; }, level: level, steps: stepsFor, isDone: isDone, current: currentIndex,
+    taskCount: function (lv, id) { return taskList(lv, id, vars(lv)).length; },
+    taskDone: function (lv, id) { var tm = taskMap(lv, id), n = 0; tm.forEach(function (x) { if (x) n++; }); return n; },
+    title: function (id) { return stripTags(title(id, vars(level()))); },
+    open: function () { open(); }, isOpen: function () { return !!(panel && !panel.hidden); }
+  };
 
   // ---------- start ----------
   function init() {
