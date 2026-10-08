@@ -299,13 +299,16 @@
 
   var sec;
   function render() {
-    sec = document.getElementById("deadlines");
-    if (!sec) return;
+    var host = document.getElementById("deadlines");
+    if (!host) return;
+    // render into an inner box, so the section's own header (added by sections.js) stays
+    sec = host.querySelector(":scope > .dl-wrap");
+    if (!sec) { sec = document.createElement("div"); sec.className = "dl-wrap"; host.appendChild(sec); }
     var r = vals(), v = r.v || {}, cc = r.cc, lv = document.documentElement.getAttribute("data-level");
     var sel = getSel();
     var head = '<p class="eyebrow">' + esc(T(UI.eyebrow)) + '</p><h2 id="deadlines-h">' + esc(T(UI.title)) + "</h2>";
-    if (!cc) { sec.hidden = true; sec.innerHTML = ""; return; }
-    sec.hidden = false;
+    if (!cc) { host.hidden = true; sec.innerHTML = ""; return; }
+    host.hidden = false;
     var MC = window.MasarokCountry, inPlace = MC && MC.data[cc] ? T(MC.data[cc].inPlace) : "";
     var uni = document.documentElement.getAttribute("data-uni");
     var hasUni = uni && uni !== "all";
