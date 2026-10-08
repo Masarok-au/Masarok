@@ -403,13 +403,13 @@ html[data-no-f] [data-needs-f], html[data-no-f] .col-f{display:none !important}
       <p class="level-banner" data-level-banner hidden><span></span> <button type="button" class="linkish" data-level-all>Show everything</button></p>
       <p class="note" data-u-note hidden></p>
       <dl class="glance" data-uni-only>
-        <div><dt>City and campus</dt><dd><span data-u="city">Sydney</span> · <span data-u="campus">Kensington</span></dd></div>
-        <div data-needs-f><dt data-c-label="college">Pathway college</dt><dd><a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener"><span data-u="college">UNSW College</span></a><small data-c="collegeSub">Foundation, diploma or English programs</small></dd></div>
-        <div><dt data-c-label="union">Student association</dt><dd><a data-u-href="union-url" href="https://www.arc.unsw.edu.au" rel="noopener"><span data-u="union">Arc @ UNSW</span></a><small data-u="legal">Arc's free legal service gives students advice on renting and other problems.</small></dd></div>
-        <div><dt>Student suburbs</dt><dd data-u="suburbs">Kensington, Kingsford, Randwick</dd></div>
+        <div data-flip="g:city"><dt>City and campus</dt><dd><span data-u="city">Sydney</span> · <span data-u="campus">Kensington</span></dd></div>
+        <div data-flip="g:college" data-needs-f><dt data-c-label="college">Pathway college</dt><dd><a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener"><span data-u="college">UNSW College</span></a><small data-c="collegeSub">Foundation, diploma or English programs</small></dd></div>
+        <div data-flip="g:union"><dt data-c-label="union">Student association</dt><dd><a data-u-href="union-url" href="https://www.arc.unsw.edu.au" rel="noopener"><span data-u="union">Arc @ UNSW</span></a><small data-u="legal">Arc's free legal service gives students advice on renting and other problems.</small></dd></div>
+        <div data-flip="g:suburbs"><dt>Student suburbs</dt><dd data-u="suburbs">Kensington, Kingsford, Randwick</dd></div>
         <div data-u-entry hidden><dt>Entry for Saudi students</dt><dd data-u="entry"></dd></div>
-        <div><dt>Transport</dt><dd><a data-u-href="transport-url" href="https://transportnsw.info" rel="noopener"><span data-u="transport">Opal card</span></a></dd></div>
-        <div><dt data-c-label="bond">Rental bonds</dt><dd><a data-u-href="bond-url" href="https://www.fairtrading.nsw.gov.au" rel="noopener"><span data-u="bond">NSW Fair Trading</span></a></dd></div>
+        <div data-flip="g:transport"><dt>Transport</dt><dd><a data-u-href="transport-url" href="https://transportnsw.info" rel="noopener"><span data-u="transport">Opal card</span></a></dd></div>
+        <div data-flip="g:bond"><dt data-c-label="bond">Rental bonds</dt><dd><a data-u-href="bond-url" href="https://www.fairtrading.nsw.gov.au" rel="noopener"><span data-u="bond">NSW Fair Trading</span></a></dd></div>
       </dl>
       <div data-all-only hidden>
         <p class="intro">Choose a university to see examples for its campus and city across the whole guide.</p>
@@ -428,7 +428,7 @@ html[data-no-f] [data-needs-f], html[data-no-f] .col-f{display:none !important}
 
       <p class="group-label" data-level="foundation bachelor">After high school</p>
       <div class="options" data-level="foundation bachelor">
-        <article class="option" data-level="bachelor">
+        <article class="option" data-flip="au:bachelor" data-level="bachelor">
           <div class="ticket"><span>Option</span><b>Direct entry</b></div>
           <h3>Start the bachelor's degree</h3>
           <p>Go straight into first year if your high school results and English score meet the university's entry requirements.</p>
@@ -439,7 +439,7 @@ html[data-no-f] [data-needs-f], html[data-no-f] .col-f{display:none !important}
           <p class="sacm"><b>Scholarship note:</b> the university must meet your track's ranking rule (top 30 for Al-Ruwwad, top 200 for Imdad).</p>
         </article>
 
-        <article class="option" data-level="foundation">
+        <article class="option" data-flip="au:foundation" data-level="foundation">
           <div class="ticket"><span>Option</span><b>About 1 year</b></div>
           <h3>Foundation Studies</h3>
           <p>A preparatory year that bridges high school and university. You study subjects linked to your degree and learn how Australian study works, then enter first year.</p>
@@ -450,7 +450,7 @@ html[data-no-f] [data-needs-f], html[data-no-f] .col-f{display:none !important}
           <p class="sacm"><b>Scholarship note:</b> from 2025–26, the Ministry asks for at least 90% in high school and IELTS 5.5 (or equivalent) to be sponsored for a preparatory year.</p>
         </article>
 
-        <article class="option" data-level="foundation bachelor">
+        <article class="option" data-flip="au:diploma" data-level="foundation bachelor">
           <div class="ticket"><span>Option</span><b>About 1 year</b></div>
           <h3>Diploma</h3>
           <p>Covers first-year university content in smaller classes with more support. If you meet the progression requirements, you enter the <b>second year</b> of a matching degree.</p>
@@ -461,7 +461,7 @@ html[data-no-f] [data-needs-f], html[data-no-f] .col-f{display:none !important}
           <p class="sacm"><b>Scholarship note:</b> get SACM approval for the diploma and the degree it leads to before you accept the offer.</p>
         </article>
 
-        <article class="option">
+        <article class="option" data-flip="au:english">
           <div class="ticket"><span>Option</span><b>Weeks to months</b></div>
           <h3>English course</h3>
           <p>An academic English program that raises your score to the level your program needs. Some programs let you skip this with a high enough test score.</p>
@@ -475,7 +475,7 @@ html[data-no-f] [data-needs-f], html[data-no-f] .col-f{display:none !important}
 
       <p class="group-label" data-level="master phd">After a bachelor's degree</p>
       <div class="options" data-level="master phd">
-        <article class="option" data-level="master">
+        <article class="option" data-flip="au:master" data-level="master">
           <div class="ticket"><span>Option</span><b>1 to 2 years</b></div>
           <h3>Master's degree</h3>
           <p>Coursework or research master's for graduates. Entry depends on your bachelor's GPA, field and English score.</p>
@@ -485,7 +485,7 @@ html[data-no-f] [data-needs-f], html[data-no-f] .col-f{display:none !important}
           <p class="sacm"><b>Scholarship note:</b> Al-Ruwwad (top 30) and Imdad (top 200) both include master's study. See <a href="#postgrad">Master's, pre-master's and PhD</a>.</p>
         </article>
 
-        <article class="option" data-level="master">
+        <article class="option" data-flip="au:premaster" data-level="master">
           <div class="ticket"><span>Option</span><b>Short program</b></div>
           <h3>Pre-master's</h3>
           <p>A preparation program for graduates who need to strengthen their academic skills or English before a master's degree.</p>
@@ -495,7 +495,7 @@ html[data-no-f] [data-needs-f], html[data-no-f] .col-f{display:none !important}
           <p class="sacm"><b>Scholarship note:</b> pre-master's is not on the list of programs SACM sponsors, so expect to pay for it yourself unless SACM confirms otherwise.</p>
         </article>
 
-        <article class="option" data-level="phd">
+        <article class="option" data-flip="au:phd" data-level="phd">
           <div class="ticket"><span>Option</span><b>3 to 4 years</b></div>
           <h3>PhD</h3>
           <p>A research degree. You write a thesis on your own research, guided by a supervisor.</p>
@@ -573,22 +573,22 @@ html[data-no-f] [data-needs-f], html[data-no-f] .col-f{display:none !important}
         <h3>The four main scholarship tracks <span class="ar" lang="ar" dir="rtl">مسارات الابتعاث</span></h3>
         <p class="intro">The Ministry's application service also lists the Excellence (التميز) and Health Agreements (الاتفاقيات الصحية) tracks.</p>
         <div class="tracks">
-          <div class="track">
+          <div class="track" data-flip="t:ruwwad">
             <div class="name"><b>Al-Ruwwad</b><span class="ar" lang="ar" dir="rtl">مسار الرواد</span></div>
             <span class="tag">Top 30 universities · Bachelor's, Master's</span>
             <p>For high school and university graduates who gain admission to one of the world's leading universities, in any field.</p>
           </div>
-          <div class="track">
+          <div class="track" data-flip="t:imdad">
             <div class="name"><b>Imdad</b><span class="ar" lang="ar" dir="rtl">مسار إمداد</span></div>
             <span class="tag">Top 200 · Bachelor's, Master's</span>
             <p>For fields the Saudi job market needs. The list of approved majors is set each year.</p>
           </div>
-          <div class="track">
+          <div class="track" data-flip="t:rd">
             <div class="name"><b>Research &amp; Development</b><span class="ar" lang="ar" dir="rtl">مسار البحث والتطوير</span></div>
             <span class="tag">Top 200 in the field · PhD only</span>
             <p>For PhD study in national research priority areas.</p>
           </div>
-          <div class="track">
+          <div class="track" data-flip="t:waid">
             <div class="name"><b>Wa'id</b><span class="ar" lang="ar" dir="rtl">مسار واعد</span></div>
             <span class="tag">Linked to a job · Diplomas to degrees</span>
             <p>Training and study tied to employment with a Saudi company after you graduate.<span data-cc="au"> Australia is one of the listed countries.</span></p>
@@ -958,5 +958,6 @@ html[data-no-f] [data-needs-f], html[data-no-f] .col-f{display:none !important}
 <script src="unis.js"></script>
 <script src="journey.js"></script>
 <script src="feedback.js"></script>
+<script src="flip.js"></script>
 </body>
 </html>

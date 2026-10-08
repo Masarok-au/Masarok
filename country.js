@@ -739,7 +739,8 @@
   function optionCard(c, v) {
     var dl = (c.dl || []).map(function (r) { return '<div><dt>' + esc(T(r[0])) + '</dt><dd>' + fill(T(r[1]), v) + '</dd></div>'; }).join("");
     var sites = c.sites ? '<p class="sacm">' + c.sites.map(function (s) { return '<a href="' + esc(s[1]) + '" rel="noopener">' + esc(s[0]) + '</a>'; }).join(" · ") + '</p>' : "";
-    return '<article class="option"' + (c.lv ? ' data-level="' + c.lv + '"' : "") + '><div class="ticket"><span>' + esc(T(UI.option)) + '</span><b>' + esc(T(c.b)) + '</b></div>' +
+    var fk = v && v.cc ? ' data-flip="' + v.cc + ":" + c.h[0].toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + '"' : "";
+    return '<article class="option"' + fk + (c.lv ? ' data-level="' + c.lv + '"' : "") + '><div class="ticket"><span>' + esc(T(UI.option)) + '</span><b>' + esc(T(c.b)) + '</b></div>' +
       '<h3>' + esc(T(c.h)) + '</h3><p>' + fill(T(c.p), v) + '</p>' + (dl ? '<dl>' + dl + '</dl>' : "") +
       (c.n ? '<p class="sacm"><b>' + esc(T(UI.note)) + '</b> ' + fill(T(c.n), v) + '</p>' : "") + sites + '</article>';
   }

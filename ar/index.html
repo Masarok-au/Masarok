@@ -425,13 +425,13 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
       <p class="level-banner" data-level-banner hidden><span></span> <button type="button" class="linkish" data-level-all>اعرض كل شيء</button></p>
       <p class="note" data-u-note hidden></p>
       <dl class="glance" data-uni-only>
-        <div><dt>المدينة والحرم</dt><dd><span data-u="city">سيدني</span> · <span data-u="campus">كنسينغتون (Kensington)</span></dd></div>
-        <div data-needs-f><dt data-c-label="college">كلية المسار</dt><dd><a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener" dir="ltr"><span data-u="college">UNSW College</span></a><small data-c="collegeSub">برامج الفاونديشن أو الدبلوم أو اللغة</small></dd></div>
-        <div><dt data-c-label="union">رابطة الطلاب</dt><dd><a data-u-href="union-url" href="https://www.arc.unsw.edu.au" rel="noopener" dir="ltr"><span data-u="union">Arc @ UNSW</span></a><small data-u="legal">الخدمة القانونية المجانية من Arc تقدم للطلاب استشارات في الإيجار ومشكلات أخرى.</small></dd></div>
-        <div><dt>أحياء الطلاب</dt><dd data-u="suburbs" dir="ltr">Kensington, Kingsford, Randwick</dd></div>
+        <div data-flip="g:city"><dt>المدينة والحرم</dt><dd><span data-u="city">سيدني</span> · <span data-u="campus">كنسينغتون (Kensington)</span></dd></div>
+        <div data-flip="g:college" data-needs-f><dt data-c-label="college">كلية المسار</dt><dd><a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener" dir="ltr"><span data-u="college">UNSW College</span></a><small data-c="collegeSub">برامج الفاونديشن أو الدبلوم أو اللغة</small></dd></div>
+        <div data-flip="g:union"><dt data-c-label="union">رابطة الطلاب</dt><dd><a data-u-href="union-url" href="https://www.arc.unsw.edu.au" rel="noopener" dir="ltr"><span data-u="union">Arc @ UNSW</span></a><small data-u="legal">الخدمة القانونية المجانية من Arc تقدم للطلاب استشارات في الإيجار ومشكلات أخرى.</small></dd></div>
+        <div data-flip="g:suburbs"><dt>أحياء الطلاب</dt><dd data-u="suburbs" dir="ltr">Kensington, Kingsford, Randwick</dd></div>
         <div data-u-entry hidden><dt>القبول للطلاب السعوديين</dt><dd data-u="entry"></dd></div>
-        <div><dt>المواصلات</dt><dd><a data-u-href="transport-url" href="https://transportnsw.info" rel="noopener"><span data-u="transport">بطاقة أوبال (Opal)</span></a></dd></div>
-        <div><dt data-c-label="bond">مبالغ التأمين</dt><dd><a data-u-href="bond-url" href="https://www.fairtrading.nsw.gov.au" rel="noopener"><span data-u="bond">NSW Fair Trading</span></a></dd></div>
+        <div data-flip="g:transport"><dt>المواصلات</dt><dd><a data-u-href="transport-url" href="https://transportnsw.info" rel="noopener"><span data-u="transport">بطاقة أوبال (Opal)</span></a></dd></div>
+        <div data-flip="g:bond"><dt data-c-label="bond">مبالغ التأمين</dt><dd><a data-u-href="bond-url" href="https://www.fairtrading.nsw.gov.au" rel="noopener"><span data-u="bond">NSW Fair Trading</span></a></dd></div>
       </dl>
       <div data-all-only hidden>
         <p class="intro">اختر جامعة لترى أمثلة خاصة بحرمها ومدينتها في الدليل كله.</p>
@@ -450,7 +450,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
 
       <p class="group-label" data-level="foundation bachelor">بعد الثانوية</p>
       <div class="options" data-level="foundation bachelor">
-        <article class="option" data-level="bachelor">
+        <article class="option" data-flip="au:bachelor" data-level="bachelor">
           <div class="ticket"><span>خيار</span><b>قبول مباشر</b></div>
           <h3>البدء في البكالوريوس مباشرة</h3>
           <p>تدخل السنة الأولى مباشرة إذا كانت درجاتك في الثانوية ودرجة اختبار اللغة تحقق شروط القبول في الجامعة.</p>
@@ -461,7 +461,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
           <p class="sacm"><b>ملاحظة الابتعاث:</b> يجب أن تحقق الجامعة شرط التصنيف في مسارك (أفضل 30 جامعة لمسار الرواد، وأفضل 200 لمسار إمداد).</p>
         </article>
 
-        <article class="option" data-level="foundation">
+        <article class="option" data-flip="au:foundation" data-level="foundation">
           <div class="ticket"><span>خيار</span><b>سنة تقريبًا</b></div>
           <h3>سنة الفاونديشن (Foundation)</h3>
           <p>سنة تحضيرية تربط بين الثانوية والجامعة. تدرس مواد مرتبطة بتخصصك وتتعرف على أسلوب الدراسة في أستراليا، ثم تدخل السنة الأولى.</p>
@@ -472,7 +472,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
           <p class="sacm"><b>ملاحظة الابتعاث:</b> ابتداءً من العام 2025–2026، تشترط الوزارة نسبة 90% على الأقل في الثانوية وآيلتس 5.5 (أو ما يعادله) للابتعاث على السنة التحضيرية.</p>
         </article>
 
-        <article class="option" data-level="foundation bachelor">
+        <article class="option" data-flip="au:diploma" data-level="foundation bachelor">
           <div class="ticket"><span>خيار</span><b>سنة تقريبًا</b></div>
           <h3>الدبلوم (Diploma)</h3>
           <p>يغطي محتوى السنة الجامعية الأولى في فصول أصغر ومع دعم أكبر. إذا حققت متطلبات الانتقال، تدخل <b>السنة الثانية</b> من البكالوريوس المرتبط به.</p>
@@ -483,7 +483,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
           <p class="sacm"><b>ملاحظة الابتعاث:</b> احصل على موافقة الملحقية على الدبلوم والبكالوريوس الذي يؤدي إليه قبل قبول العرض.</p>
         </article>
 
-        <article class="option">
+        <article class="option" data-flip="au:english">
           <div class="ticket"><span>خيار</span><b>أسابيع إلى أشهر</b></div>
           <h3>دورة اللغة الإنجليزية</h3>
           <p>برنامج إنجليزي أكاديمي يرفع درجتك إلى المستوى الذي يتطلبه برنامجك. بعض البرامج تعفيك منه إذا كانت درجة اختبارك كافية.</p>
@@ -497,7 +497,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
 
       <p class="group-label" data-level="master phd">بعد البكالوريوس</p>
       <div class="options" data-level="master phd">
-        <article class="option" data-level="master">
+        <article class="option" data-flip="au:master" data-level="master">
           <div class="ticket"><span>خيار</span><b>سنة إلى سنتين</b></div>
           <h3>الماجستير</h3>
           <p>ماجستير بالمقررات أو بالبحث للخريجين. يعتمد القبول على معدلك في البكالوريوس وتخصصك ودرجة اللغة.</p>
@@ -507,7 +507,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
           <p class="sacm"><b>ملاحظة الابتعاث:</b> مسار الرواد (أفضل 30) ومسار إمداد (أفضل 200) يشملان الماجستير. انظر <a href="#postgrad">الماجستير وما قبل الماجستير والدكتوراه</a>.</p>
         </article>
 
-        <article class="option" data-level="master">
+        <article class="option" data-flip="au:premaster" data-level="master">
           <div class="ticket"><span>خيار</span><b>برنامج قصير</b></div>
           <h3>برنامج ما قبل الماجستير (Pre-Masters)</h3>
           <p>برنامج تحضيري للخريجين الذين يحتاجون إلى تقوية مهاراتهم الأكاديمية أو لغتهم قبل الماجستير.</p>
@@ -517,7 +517,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
           <p class="sacm"><b>ملاحظة الابتعاث:</b> برنامج ما قبل الماجستير ليس ضمن البرامج التي تبتعث عليها الملحقية، لذلك توقع أن تدفع تكلفته بنفسك ما لم تؤكد الملحقية غير ذلك.</p>
         </article>
 
-        <article class="option" data-level="phd">
+        <article class="option" data-flip="au:phd" data-level="phd">
           <div class="ticket"><span>خيار</span><b>3 إلى 4 سنوات</b></div>
           <h3>الدكتوراه</h3>
           <p>درجة بحثية. تكتب أطروحة عن بحثك الخاص بإشراف مشرف أكاديمي.</p>
@@ -595,22 +595,22 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
         <h3>مسارات الابتعاث الرئيسية الأربعة <span class="ar" lang="en" dir="ltr">Scholarship tracks</span></h3>
         <p class="intro">وتذكر خدمة التقديم في موقع الوزارة أيضًا مسار التميز ومسار الاتفاقيات الصحية.</p>
         <div class="tracks">
-          <div class="track">
+          <div class="track" data-flip="t:ruwwad">
             <div class="name"><b>مسار الرواد</b><span class="ar" lang="en" dir="ltr">Al-Ruwwad</span></div>
             <span class="tag">أفضل 30 جامعة · بكالوريوس، ماجستير</span>
             <p>لخريجي الثانوية والجامعة الذين يحصلون على قبول في إحدى أفضل جامعات العالم، في أي تخصص.</p>
           </div>
-          <div class="track">
+          <div class="track" data-flip="t:imdad">
             <div class="name"><b>مسار إمداد</b><span class="ar" lang="en" dir="ltr">Imdad</span></div>
             <span class="tag">أفضل 200 · بكالوريوس، ماجستير</span>
             <p>للتخصصات التي يحتاجها سوق العمل السعودي. تُحدَّد قائمة التخصصات المعتمدة كل عام.</p>
           </div>
-          <div class="track">
+          <div class="track" data-flip="t:rd">
             <div class="name"><b>مسار البحث والتطوير</b><span class="ar" lang="en" dir="ltr">Research &amp; Development</span></div>
             <span class="tag">أفضل 200 في التخصص · الدكتوراه فقط</span>
             <p>لدراسة الدكتوراه في مجالات الأولويات البحثية الوطنية.</p>
           </div>
-          <div class="track">
+          <div class="track" data-flip="t:waid">
             <div class="name"><b>مسار واعد</b><span class="ar" lang="en" dir="ltr">Wa'id</span></div>
             <span class="tag">مرتبط بوظيفة · من الدبلوم إلى الدرجات العلمية</span>
             <p>تدريب ودراسة مرتبطان بالعمل لدى شركة سعودية بعد التخرج.<span data-cc="au"> أستراليا من الدول المدرجة.</span></p>
@@ -980,5 +980,6 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
 <script src="../unis.js"></script>
 <script src="../journey.js"></script>
 <script src="../feedback.js"></script>
+<script src="../flip.js"></script>
 </body>
 </html>
