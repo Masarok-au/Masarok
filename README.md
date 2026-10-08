@@ -34,3 +34,12 @@ This guide shares one student's experience. It is not official advice from any u
 ## Licence
 
 See [LICENSE](LICENSE).
+
+## Installable app
+
+Masarok is also a Progressive Web App: visitors can install it to their home screen ("Install app" in the menu, or Share → Add to Home Screen on iPhone) and it keeps working offline.
+
+- `manifest.webmanifest` and `ar/manifest.webmanifest`: app name, icons and shortcuts (English and Arabic)
+- `sw.js`: offline support. Pages and scripts load from the network first and fall back to the saved copy offline, so updates show straight away
+- `app.js`: registers the service worker and shows the install button (with Add to Home Screen steps on iPhone)
+- `icons/`: app icons (`icon.svg` is the source)

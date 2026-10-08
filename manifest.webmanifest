@@ -1,0 +1,27 @@
+{
+  "id": "/",
+  "name": "Masarok — مسارُك",
+  "short_name": "Masarok",
+  "description": "A free guide for Saudi students planning to study abroad: study options, the scholarship, living costs and your first weeks.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": "/?source=app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B1626",
+  "theme_color": "#0B1626",
+  "categories": ["education", "travel"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Guide me step by step", "short_name": "Journey", "url": "/?source=app#journey", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Scholarship guide", "short_name": "Scholarship", "url": "/?source=app#sacm", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "العربية", "short_name": "العربية", "url": "/ar/?source=app", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

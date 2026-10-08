@@ -1,0 +1,27 @@
+{
+  "id": "/ar/",
+  "name": "مسارُك — Masarok",
+  "short_name": "مسارُك",
+  "description": "دليل مجاني للطلاب السعوديين الراغبين في الدراسة في الخارج: خيارات الدراسة والابتعاث وتكاليف المعيشة وأسابيعك الأولى.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/ar/?source=app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B1626",
+  "theme_color": "#0B1626",
+  "categories": ["education", "travel"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "أرشدني خطوة بخطوة", "short_name": "رحلتك", "url": "/ar/?source=app#journey", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "دليل الابتعاث", "short_name": "الابتعاث", "url": "/ar/?source=app#sacm", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "English", "short_name": "English", "url": "/?source=app", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}
