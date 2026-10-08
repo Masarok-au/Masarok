@@ -285,10 +285,12 @@ html[lang="ar"] .jr-kicker, html[lang="ar"] .jr-card h4{letter-spacing:0; text-t
 .jr-run{width:100%; height:100%; overflow:visible; display:block}
 .jr-run *{transform-box:view-box}
 .jr-run-body{animation:jrBob .22s ease-in-out infinite alternate}
-.jr-leg-a{transform-origin:17px 31px; animation:jrLegA .44s linear infinite}
-.jr-leg-b{transform-origin:17px 31px; animation:jrLegB .44s linear infinite}
+.jr-leg-a{transform-origin:17px 30px; animation:jrLegA .44s linear infinite}
+.jr-leg-b{transform-origin:17px 30px; animation:jrLegB .44s linear infinite}
 .jr-arm-a{transform-origin:17px 18.5px; animation:jrLegB .44s linear infinite}
 .jr-arm-b{transform-origin:17px 18.5px; animation:jrLegA .44s linear infinite}
+.jr-hem{transform-origin:17px 16px; animation:jrHem .22s ease-in-out infinite alternate}
+@keyframes jrHem{from{transform:skewX(-3deg)} to{transform:skewX(3deg)}}
 .jr-tail{transform-origin:20px 9px; animation:jrTail .26s ease-in-out infinite alternate}
 @keyframes jrAcross{from{left:100%} to{left:-40px}}
 @keyframes jrBob{from{transform:translateY(0)} to{transform:translateY(-1.6px)}}
@@ -299,5 +301,5 @@ html[lang="ar"] .jr-kicker, html[lang="ar"] .jr-card h4{letter-spacing:0; text-t
 @media (max-width:560px){ .jr-x{top:62px} }
 @media (prefers-reduced-motion: reduce){
   .jr-runner{animation:none; left:auto; right:24px}
-  .jr-run-body, .jr-leg-a, .jr-leg-b, .jr-arm-a, .jr-arm-b, .jr-tail{animation:none}
+  .jr-run-body, .jr-leg-a, .jr-leg-b, .jr-arm-a, .jr-arm-b, .jr-tail, .jr-hem{animation:none}
 }

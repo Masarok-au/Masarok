@@ -576,8 +576,8 @@
   function runner() {
     var skin = "#C08A5A", thobe = "#F6F3EC", edge = "#D9D2C2";
     function leg(cls) {
-      return '<g class="' + cls + '"><line x1="17" y1="31" x2="15" y2="44" stroke="' + edge + '" stroke-width="3.2" stroke-linecap="round"/>' +
-        '<ellipse cx="13.6" cy="45" rx="3" ry="1.4" fill="#5A3C1E"/></g>';
+      return '<g class="' + cls + '"><line x1="17" y1="30" x2="15.2" y2="44.6" stroke="' + edge + '" stroke-width="3" stroke-linecap="round"/>' +
+        '<ellipse cx="13.8" cy="45.6" rx="3" ry="1.4" fill="#5A3C1E"/></g>';
     }
     function arm(cls) {
       return '<g class="' + cls + '"><line x1="17" y1="18.5" x2="13" y2="27" stroke="' + edge + '" stroke-width="3.4" stroke-linecap="round"/>' +
@@ -586,14 +586,15 @@
     }
     return '<svg class="jr-run" viewBox="0 0 40 48" focusable="false">' +
       '<g transform="rotate(-9 17 44)"><g class="jr-run-body">' +
-        leg("jr-leg-b") + arm("jr-arm-b") +
+        leg("jr-leg-b") + leg("jr-leg-a") + arm("jr-arm-b") +
         // backpack on his back
         '<rect x="20.5" y="16.5" width="7.5" height="11" rx="2.4" fill="#173252"/>' +
         '<line x1="22" y1="18" x2="22" y2="25" stroke="#E2B66C" stroke-width="1.1" stroke-linecap="round"/>' +
         // thobe, leaning forward
-        '<path d="M13.2 15.5 Q17 14.4 20.8 15.6 L23.6 33 Q17.5 34.6 10.8 33 Z" fill="' + thobe + '" stroke="' + edge + '" stroke-width=".8"/>' +
+        '<path class="jr-hem" d="M13.2 15.5 Q17 14.4 20.8 15.6 L25.4 41.4 Q17.4 43.2 8.8 41.4 Z" fill="' + thobe + '" stroke="' + edge + '" stroke-width=".8"/>' +
+        '<line x1="17" y1="16" x2="17" y2="23" stroke="' + edge + '" stroke-width=".7"/>' +
         '<line x1="20.8" y1="16.2" x2="21.6" y2="22" stroke="#173252" stroke-width="1.6" stroke-linecap="round"/>' +
-        leg("jr-leg-a") + arm("jr-arm-a") +
+        arm("jr-arm-a") +
         // head: face, shemagh with a tail flying behind, agal
         '<path class="jr-tail" d="M19.5 7.5 Q25 9 27.5 15.5 Q24 13.5 20.5 13.8 Z" fill="#C8102E"/>' +
         '<circle cx="15" cy="9.4" r="5" fill="' + skin + '"/>' +
