@@ -118,6 +118,14 @@
       ar: { t: "تحقق أن الجامعة ضمن قائمة مسارك",
         why: "مسار الرواد يشترط جامعة من أفضل 30، ومسار إمداد جامعة من أفضل 200 في تخصص يحتاجه سوق العمل. والقائمة تختلف من تخصص لآخر.",
         what: ["افتح قوائم 2026–2027 وابحث عن تخصصك.", "تأكد أن {uni} مدرجة في هذا التخصص.", "لم نجد أي جامعة أسترالية في قائمة مسار الرواد في دليل 2026–2027، لذلك تحقق من مسار إمداد أيضًا."] },
+      nonAu: {
+        en: { t: "Check the university is on your track's list",
+          why: "Al-Ruwwad needs a top 30 university, and Imdad a top 200 university in a field the job market needs. The list is different for each field.",
+          what: ["Open the 2026–2027 list and find your field.", "Check that {uni} is listed for that field.", "If it is on the Al-Ruwwad list, check whether you meet that track's rules. If not, check Imdad."] },
+        ar: { t: "تحقق أن الجامعة ضمن قائمة مسارك",
+          why: "مسار الرواد يشترط جامعة من أفضل 30، ومسار إمداد جامعة من أفضل 200 في تخصص يحتاجه سوق العمل. والقائمة تختلف من تخصص لآخر.",
+          what: ["افتح قوائم 2026–2027 وابحث عن تخصصك.", "تأكد أن {uni} مدرجة في هذا التخصص.", "إن كانت ضمن قائمة الرواد فتحقق من شروط هذا المسار، وإلا فتحقق من مسار إمداد."] }
+      },
       links: ["lists", "ruSearch"] },
 
     englishPg: {
@@ -163,6 +171,22 @@
       ar: { t: "ابحث عن مشرف واكتب مقترحك البحثي",
         why: "الدكتوراه في أستراليا درجة بحثية، وأغلب الجامعات تتوقع موافقة مشرف على العمل معك قبل التقديم.",
         what: ["ابحث عن أكاديميين في {uni} يعملون في مجالك.", "اكتب مقترحًا بحثيًا قصيرًا في صفحتين تقريبًا.", "راسل عددًا منهم بمقترحك وسيرتك الذاتية، واسألهم إن كانوا يستطيعون الإشراف عليك."] },
+      nonAu: {
+        en: { t: "Find a supervisor and write a proposal",
+          why: "PhDs in this country are research degrees. Most universities expect a supervisor to agree to work with you before you apply.",
+          what: ["Look for academics at {uni} who work in your area.", "Write a short research proposal, about 2 pages.", "Email a few of them with your proposal and CV, and ask whether they can supervise you."] },
+        ar: { t: "ابحث عن مشرف واكتب مقترحك البحثي",
+          why: "الدكتوراه في هذه الدولة درجة بحثية، وأغلب الجامعات تتوقع موافقة مشرف على العمل معك قبل التقديم.",
+          what: ["ابحث عن أكاديميين في {uni} يعملون في مجالك.", "اكتب مقترحًا بحثيًا قصيرًا في صفحتين تقريبًا.", "راسل عددًا منهم بمقترحك وسيرتك الذاتية، واسألهم إن كانوا يستطيعون الإشراف عليك."] }
+      },
+      program: {
+        en: { t: "Find professors and apply to a PhD program",
+          why: "Here you apply to a PhD program, which usually starts with coursework before your research. Contacting professors first still helps your application.",
+          what: ["Look for professors at {uni} who work in your area.", "Email a few of them with a short note about your interests and your CV.", "Check the program's deadline. In the USA and Canada it is often in December or January, and in Singapore it depends on the intake."] },
+        ar: { t: "ابحث عن أساتذة وقدّم على برنامج الدكتوراه",
+          why: "هنا تقدّم على برنامج دكتوراه يبدأ عادةً بمواد دراسية قبل البحث. والتواصل مع الأساتذة مسبقًا يقوّي طلبك.",
+          what: ["ابحث عن أساتذة في {uni} يعملون في مجالك.", "راسل عددًا منهم برسالة قصيرة عن اهتماماتك وسيرتك الذاتية.", "تحقق من موعد التقديم على البرنامج. ففي أمريكا وكندا يكون غالبًا في ديسمبر أو يناير، وفي سنغافورة يعتمد على موعد بدء الدراسة."] }
+      },
       links: ["uniWeb", "postgrad"] },
 
     uniCheckPhd: {
@@ -381,7 +405,21 @@
   }
   function countDone(lv) { var n = 0; stepsFor(lv).forEach(function (id) { if (isDone(lv, id)) n++; }); return n; }
   function MCj(id) { var M = window.MasarokCountry, cc = pick().cc; return M && cc && cc !== "au" ? M.journey(cc, id) : null; }
-  function content(id) { var ov = MCj(id); return ov ? ov[lang] : S[id][lang]; }
+  function content(id) {
+    var ov = MCj(id); if (ov) return ov[lang];
+    var cc = pick().cc, s = S[id];
+    if (cc && cc !== "au") {
+      if (s.program && (cc === "us" || cc === "ca" || cc === "sg")) return s.program[lang];
+      if (s.nonAu) return s.nonAu[lang];
+    }
+    return s[lang];
+  }
+  // "Welcome to Australia" becomes the chosen country
+  function welcome(str) {
+    var M = window.MasarokCountry, cc = pick().cc, d = M && cc && cc !== "au" && M.data[cc];
+    if (!d) return str;
+    return lang === "ar" ? str.replace("في أستراليا", d.inPlace[1]) : str.replace("to Australia", "to " + d.name[0]);
+  }
   function title(id, V) { return fmt(content(id).t, V); }
 
   // ---------- the character (flat SVG, drawn in the site's style) ----------
@@ -447,7 +485,7 @@
     var lv = level();
     if (st.started && lv) {
       var ids = stepsFor(lv), i = currentIndex(lv), V = vars(lv);
-      if (i >= ids.length) return { h: t.bDoneTitle, p: t.bDoneSub, c: t.bDoneCta };
+      if (i >= ids.length) return { h: t.bDoneTitle, p: welcome(t.bDoneSub), c: t.bDoneCta };
       return { h: fmt(t.bBackTitle, { n: num(i + 1), total: num(ids.length) }), p: fmt(t.bBackSub, { title: title(ids[i], V) }), c: t.bBackCta };
     }
     return { h: t.bTitle, p: t.bSub, c: t.bCta };
@@ -669,7 +707,7 @@
     // the next-step card
     if (finished && viewing === null) {
       h += '<article class="jr-card jr-finished"><p class="jr-kicker">' + esc(fmt(t.progress, { d: num(d), total: num(n) })) + '</p>' +
-        '<h3>' + esc(t.finishedT) + '</h3><p>' + esc(t.finishedB) + '</p>' +
+        '<h3>' + esc(t.finishedT) + '</h3><p>' + esc(welcome(t.finishedB)) + '</p>' +
         '<div class="jr-links">' + linkHtml("lessons", V) + '</div></article>';
     } else {
       h += cardHtml(lv, show, V, cur);
