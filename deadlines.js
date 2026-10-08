@@ -166,9 +166,9 @@
     selectAll: ["Select all", "اختر الكل"],
     today: ["Today", "اليوم"],
     tomorrow: ["Tomorrow", "غدًا"],
-    inDays: ["In {n} days", "بعد {n} يومًا"],
-    openNow: ["Open now · closes in {n} days", "مفتوح الآن · يُغلق بعد {n} يومًا"],
-    opensIn: ["Opens in {n} days", "يُفتح بعد {n} يومًا"],
+    inDays: ["In {n}", "بعد {n}"],
+    openNow: ["Open now · closes in {n}", "مفتوح الآن · يُغلق بعد {n}"],
+    opensIn: ["Opens in {n}", "يُفتح بعد {n}"],
     starts: ["Starts", "تبدأ"],
     closes: ["closes", "يُغلق"],
     opens: ["opens", "يُفتح"],
@@ -180,6 +180,12 @@
     yourUni: ["{uni}", "{uni}"],
     calSummary: ["Masarok", "مسارُك"]
   };
+  // "12 days" / Arabic counted noun: يومين، 3–10 أيام، 11+ يومًا
+  function days(n) {
+    if (!AR) return n + (n === 1 ? " day" : " days");
+    if (n === 1) return "يوم واحد"; if (n === 2) return "يومين";
+    return n + (n >= 3 && n <= 10 ? " أيام" : " يومًا");
+  }
   function fmt(s, o) { return T(s).replace(/\{(\w+)\}/g, function (m, k) { return o[k] != null ? o[k] : m; }); }
 
   function parse(d) { var p = d.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
@@ -262,13 +268,13 @@
     if (x.k === "info" || !x.d) return "";
     if (x.k === "win") {
       var o = daysTo(x.d), c = daysTo(x.e);
-      if (o > 0) return fmt(UI.opensIn, { n: o });
-      return c === 0 ? T(UI.today) : c === 1 ? T(UI.tomorrow) : fmt(UI.openNow, { n: c });
+      if (o > 0) return fmt(UI.opensIn, { n: days(o) });
+      return c === 0 ? T(UI.today) : c === 1 ? T(UI.tomorrow) : fmt(UI.openNow, { n: days(c) });
     }
     var n = daysTo(x.d);
     if (n === 0) return T(UI.today);
     if (n === 1) return T(UI.tomorrow);
-    return (x.k === "start" ? T(UI.starts) + " · " : "") + fmt(UI.inDays, { n: n });
+    return (x.k === "start" ? T(UI.starts) + " · " : "") + fmt(UI.inDays, { n: days(n) });
   }
   function dateBox(x) {
     if (x.k === "info" || !x.d) return '<div class="dl-date dl-info" aria-hidden="true">i</div>';
@@ -356,7 +362,7 @@
     if (!soon.length) return;
     var o = soon[0], stamp = o.x.id + ":" + new Date().toDateString();
     try { if (localStorage.getItem(TK) === stamp) return; } catch (e) {}
-    var w = o.n === 0 ? T(UI.today) : o.n === 1 ? T(UI.tomorrow) : fmt(UI.inDays, { n: o.n }).toLowerCase();
+    var w = o.n === 0 ? T(UI.today) : o.n === 1 ? T(UI.tomorrow) : fmt(UI.inDays, { n: days(o.n) }).toLowerCase();
     var el = document.createElement("div");
     el.className = "dl-toast"; el.setAttribute("role", "status");
     el.innerHTML = '<span aria-hidden="true">⏰</span><p>' + esc(fmt(UI.toast, { when: w, t: T(o.x.t) })) + " <small>(" + esc(nice(o.d)) + ')</small></p><a href="#deadlines">' + esc(T(UI.toastSee)) + '</a><button type="button" aria-label="×">×</button>';
@@ -420,7 +426,41 @@
   });
   document.addEventListener("masarok:change", function () { setTimeout(render, 0); });
 
-  window.MasarokDeadlines = { data: D, ics: ics, render: render };
+  // for the journey: the next deadline that matters for a step
+  // type "apply" = university/application deadlines, "sa" = scholarship, "start" = when study starts
+  function next(type) {
+    var r = vals(), cc = r.cc, lv = document.documentElement.getAttribute("data-level");
+    var uni = document.documentElement.getAttribute("data-uni");
+    if (!cc) return null;
+    var pool;
+    if (type === "sa") pool = D.filter(function (x) { return x.cc === "sa"; });
+    else if (type === "start") pool = D.filter(function (x) { return x.k === "start" && (x.u === uni || (!x.u && x.cc === cc)); });
+    else {
+      pool = D.filter(function (x) { return x.k !== "start" && x.u && x.u === uni; });
+      if (!pool.filter(function (x) { return x.d && levelOk(x, lv) && upcoming(x); }).length) pool = D.filter(function (x) { return x.k !== "start" && x.cc === cc && !x.u; });
+    }
+    var NARROW = ["ucas-oct", "ubc-isp", "usc-early"];
+    pool = pool.filter(function (x) { return x.d && x.k !== "info" && levelOk(x, lv) && upcoming(x); });
+    var wide = pool.filter(function (x) { return NARROW.indexOf(x.id) < 0; });
+    if (wide.length) pool = wide;
+    pool = pool
+      .sort(function (a, b) { return parse(lastDay(a)) - parse(lastDay(b)); });
+    var x = pool[0]; if (!x) return null;
+    var d = x.k === "win" ? (daysTo(x.d) > 0 ? x.d : x.e) : x.d;
+    return { id: x.id, title: T(x.t), date: nice(d), days: daysTo(d), when: when(x), src: x.src, expected: !x.c, saved: getSel().indexOf(x.id) > -1 };
+  }
+  function toggle(id, on) {
+    var sel = getSel(), i = sel.indexOf(id);
+    if (on == null) on = i < 0;
+    if (on && i < 0) sel.push(id);
+    if (!on && i > -1) sel.splice(i, 1);
+    setSel(sel);
+    document.querySelectorAll('input[data-dl="' + id + '"]').forEach(function (o) { o.checked = on; });
+    updateBar();
+    return on;
+  }
+
+  window.MasarokDeadlines = { data: D, ics: ics, render: render, next: next, toggle: toggle };
 
   function init() { render(); setTimeout(toast, 1200); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();

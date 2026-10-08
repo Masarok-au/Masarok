@@ -297,6 +297,45 @@
     phd: { en: "the Research & Development track", ar: "مسار البحث والتطوير" }
   };
 
+  // rough time each step usually takes
+  var EST = {
+    fieldRoute: ["About 1–2 weeks", "نحو أسبوع إلى أسبوعين"],
+    englishF: ["1–3 months, results included", "من شهر إلى 3 أشهر مع النتائج"],
+    englishB: ["1–3 months, results included", "من شهر إلى 3 أشهر مع النتائج"],
+    englishPg: ["1–3 months, results included", "من شهر إلى 3 أشهر مع النتائج"],
+    rulesF: ["About 1 day", "نحو يوم واحد"],
+    offerF: ["About 2–6 weeks", "نحو أسبوعين إلى 6 أسابيع"],
+    fieldUni: ["About 2–4 weeks", "نحو أسبوعين إلى 4 أسابيع"],
+    sat: ["About 2–3 months", "نحو شهرين إلى 3 أشهر"],
+    offer: ["About 4–8 weeks for a decision", "نحو 4 إلى 8 أسابيع حتى يصدر القرار"],
+    courseType: ["About 1 week", "نحو أسبوع"],
+    uniCheckPg: ["About 1–2 days", "نحو يوم أو يومين"],
+    uniCheckPhd: ["About 1–2 days", "نحو يوم أو يومين"],
+    premaster: ["About 1 week to decide", "نحو أسبوع لاتخاذ القرار"],
+    docs: ["About 2–4 weeks", "نحو أسبوعين إلى 4 أسابيع"],
+    researchArea: ["About 2–4 weeks", "نحو أسبوعين إلى 4 أسابيع"],
+    supervisor: ["Often 1–3 months", "غالبًا من شهر إلى 3 أشهر"],
+    qubool: ["The window is usually open for about 3 months", "فترة التقديم مفتوحة عادةً نحو 3 أشهر"],
+    safeer: ["About 1–3 weeks", "نحو أسبوع إلى 3 أسابيع"],
+    visa: ["About 3–8 weeks", "نحو 3 إلى 8 أسابيع"],
+    housing: ["About 2–6 weeks", "نحو أسبوعين إلى 6 أسابيع"],
+    arrive: ["Your first 2 weeks", "أسبوعاك الأولان"],
+    progressF: ["Through your foundation year", "طوال سنة الفاونديشن"]
+  };
+  // which real date matters for each step (see deadlines.js)
+  var DLT = { fieldRoute: "apply", englishF: "apply", rulesF: "apply", offerF: "apply", fieldUni: "apply", englishB: "apply", sat: "apply", offer: "apply",
+    courseType: "apply", uniCheckPg: "apply", englishPg: "apply", premaster: "apply", docs: "apply", researchArea: "apply", supervisor: "apply", uniCheckPhd: "apply",
+    qubool: "sa", safeer: "start", visa: "start", housing: "start", arrive: "start" };
+
+  // the personal questions, and which steps each answer completes
+  var PROF = {
+    offer: ["none", "cond", "uncond"], eng: ["none", "booked", "score"], sch: ["none", "applied", "nominated", "self"], start: ["soon", "year", "later", "unsure"]
+  };
+  var PICK_STEPS = ["fieldRoute", "rulesF", "fieldUni", "courseType", "uniCheckPg", "docs", "researchArea", "supervisor", "uniCheckPhd"];
+  var ENG_STEPS = ["englishF", "englishB", "englishPg"];
+  var OPT_STEPS = ["sat", "premaster"];
+  var OFFER_STEPS = ["offerF", "offer"];
+
   // ---------- interface text ----------
   var T = {
     en: {
@@ -333,7 +372,19 @@
       finishedB: "You've done every step on your path. Welcome to Australia, and good luck with your studies.",
       startOver: "Start over", startOverSure: "Tap again to clear your progress",
       saved: "Your progress is saved on this device only.",
-      stepLabel: "Step {n}: {title}. {state}"
+      stepLabel: "Step {n}: {title}. {state}",
+      pT: "A few quick questions", pSub: "Your answers skip the steps you've already done and tailor your plan. You can change them any time.",
+      pQ: { offer: "Do you have an offer from a university?", eng: "Your language test (IELTS, TOEFL…)?", sch: "Your scholarship?", start: "When do you want to start?" },
+      pA: { offer: { none: "Not yet", cond: "Conditional offer", uncond: "Unconditional offer" },
+        eng: { none: "Not taken yet", booked: "Booked", score: "I have my score" },
+        sch: { none: "Haven't applied yet", applied: "Applied on Qubool", nominated: "Nominated, or I have my decision", self: "Self-funded for now" },
+        start: { soon: "Within 6 months", year: "In 6–12 months", later: "More than a year away", unsure: "Not sure yet" } },
+      pGo: "Build my plan", pSkip: "Skip for now", pEdit: "Edit my answers",
+      tasks: "Small tasks", tasksN: "{d} of {n} done", allTasks: "All small tasks done. Step complete, nice work!",
+      takes: "Usually takes", nextDl: "Next deadline", startsOn: "Your studies start", remind: "Remind me", reminded: "Reminder on", allDl: "All deadlines", expected: "expected",
+      tight: "Starting within 6 months is tight. Focus on the deadlines below, and ask your university early about late applications.",
+      selfNote: "You're self-funded for now: once you've studied for a while, you can apply to join the scholarship (windows: 1 Oct–30 Nov and 1 May–30 Jun).",
+      plan: "Your plan", planStep: "Step {n} of {total}", planTask: "Next small task:", planCta: "Continue my plan"
     },
     ar: {
       bTitle: "تشعر بالضياع؟ ابدأ رحلتك خطوة بخطوة.",
@@ -369,7 +420,19 @@
       finishedB: "أنجزت كل خطوات مسارك. أهلًا بك في أستراليا، وبالتوفيق في دراستك.",
       startOver: "ابدأ من جديد", startOverSure: "اضغط مرة أخرى لمسح تقدمك",
       saved: "تقدمك محفوظ على هذا الجهاز فقط.",
-      stepLabel: "الخطوة {n}: {title}. {state}"
+      stepLabel: "الخطوة {n}: {title}. {state}",
+      pT: "أسئلة سريعة", pSub: "إجاباتك تتخطى الخطوات التي أنجزتها وتخصص خطتك، ويمكنك تغييرها متى شئت.",
+      pQ: { offer: "هل لديك قبول من جامعة؟", eng: "اختبار اللغة (IELTS أو TOEFL…)؟", sch: "وضع البعثة؟", start: "متى تريد أن تبدأ؟" },
+      pA: { offer: { none: "ليس بعد", cond: "قبول مشروط", uncond: "قبول غير مشروط" },
+        eng: { none: "لم أختبر بعد", booked: "حجزت موعدًا", score: "لدي النتيجة" },
+        sch: { none: "لم أقدّم بعد", applied: "قدّمت عبر منصة قبول", nominated: "رُشحت أو صدر قرار ابتعاثي", self: "أدرس على حسابي حاليًا" },
+        start: { soon: "خلال 6 أشهر", year: "خلال 6 إلى 12 شهرًا", later: "بعد أكثر من سنة", unsure: "لم أحدد بعد" } },
+      pGo: "ابنِ خطتي", pSkip: "تخطَّ الآن", pEdit: "عدّل إجاباتي",
+      tasks: "مهام صغيرة", tasksN: "أنجزت {d} من {n}", allTasks: "أنجزت كل المهام الصغيرة. اكتملت الخطوة، أحسنت!",
+      takes: "يستغرق عادةً", nextDl: "الموعد القادم", startsOn: "تبدأ دراستك", remind: "ذكّرني", reminded: "التذكير مفعّل", allDl: "كل المواعيد", expected: "متوقع",
+      tight: "البدء خلال 6 أشهر وقت ضيق. ركّز على المواعيد أدناه، واسأل جامعتك مبكرًا عن التقديم المتأخر.",
+      selfNote: "أنت تدرس على حسابك حاليًا: بعد فترة من الدراسة يمكنك التقديم على الإلحاق بالبعثة (الفترات: 1 أكتوبر–30 نوفمبر و1 مايو–30 يونيو).",
+      plan: "خطتك", planStep: "الخطوة {n} من {total}", planTask: "المهمة الصغيرة التالية:", planCta: "أكمل خطتي"
     }
   };
   var t = T[lang];
@@ -416,6 +479,33 @@
     var ids = stepsFor(lv);
     for (var i = 0; i < ids.length; i++) if (!isDone(lv, ids[i])) return i;
     return ids.length; // finished
+  }
+  function taskMap(lv, id) { if (!st.tasks) st.tasks = {}; if (!st.tasks[lv]) st.tasks[lv] = {}; if (!st.tasks[lv][id]) st.tasks[lv][id] = []; return st.tasks[lv][id]; }
+  function taskList(lv, id, V) {
+    var s = S[id], ov = MCj(id), c = content(id);
+    var list = c.what.map(function (w) { return fmt(w, V); });
+    if (!ov && s.extra && s.extra[lv] && (lv !== "phd" || id !== "visa" || !pick().cc || pick().cc === "au")) list.push(esc(s.extra[lv][lang]));
+    return list;
+  }
+  function applyProfile(lv, p) {
+    var m = doneMap(lv), ids = stepsFor(lv);
+    function mark(list, val) { list.forEach(function (id) { if (ids.indexOf(id) > -1 && !m[id]) m[id] = val || "done"; }); }
+    if (p.eng === "score" || p.offer === "uncond") mark(ENG_STEPS);
+    if (p.offer === "cond" || p.offer === "uncond") { mark(PICK_STEPS); mark(OPT_STEPS, "skip"); }
+    if (p.offer === "uncond") mark(OFFER_STEPS);
+    if (p.sch === "nominated") mark(["qubool"]);
+    if (p.sch === "self") mark(["qubool"], "skip");
+  }
+  function stripTags(h) { var d = document.createElement("div"); d.innerHTML = h; return d.textContent; }
+  function nextTask(lv) {
+    var ids = stepsFor(lv), i = currentIndex(lv); if (i >= ids.length) return "";
+    var V = vars(lv), list = taskList(lv, ids[i], V), tm = taskMap(lv, ids[i]);
+    for (var k = 0; k < list.length; k++) if (!tm[k]) return stripTags(list[k]);
+    return "";
+  }
+  function dlFor(id) {
+    var M = window.MasarokDeadlines, ty = DLT[id];
+    return M && ty && M.next ? M.next(ty) : null;
   }
   function countDone(lv) { var n = 0; stepsFor(lv).forEach(function (id) { if (isDone(lv, id)) n++; }); return n; }
   function MCj(id) { var M = window.MasarokCountry, cc = pick().cc; return M && cc && cc !== "au" ? M.journey(cc, id) : null; }
@@ -504,7 +594,7 @@
     if (st.started && lv) {
       var ids = stepsFor(lv), i = currentIndex(lv), V = vars(lv);
       if (i >= ids.length) return { h: t.bDoneTitle, p: welcome(t.bDoneSub), c: t.bDoneCta };
-      return { h: fmt(t.bBackTitle, { n: num(i + 1), total: num(ids.length) }), p: fmt(t.bBackSub, { title: title(ids[i], V) }), c: t.bBackCta };
+      return { h: t.plan + " · " + fmt(t.planStep, { n: num(i + 1), total: num(ids.length) }), p: stripTags(title(ids[i], V)), c: t.planCta };
     }
     return { h: t.bTitle, p: t.bSub, c: t.bCta };
   }
@@ -518,7 +608,7 @@
     banner.innerHTML =
       '<div class="jr-banner-in">' +
         '<div class="jr-stage" aria-hidden="true">' + ladder() + '<div class="jr-actor">' + figure() + '</div></div>' +
-        '<div class="jr-copy"><h2 id="jr-banner-h"></h2><p></p></div>' +
+        '<div class="jr-copy"><h2 id="jr-banner-h"></h2><p></p><div class="jr-plan" hidden></div></div>' +
         '<button type="button" class="btn btn-primary jr-cta" data-journey-open><span></span>' + ICON.arrow + '</button>' +
       '</div>';
     hero.parentNode.insertBefore(banner, hero.nextSibling);
@@ -530,6 +620,17 @@
     banner.querySelector("h2").textContent = b.h;
     banner.querySelector(".jr-copy p").textContent = b.p;
     banner.querySelector(".jr-cta span").textContent = b.c;
+    // the plan card: progress, the next small task, time and the next real date
+    var plan = banner.querySelector(".jr-plan"), lv = level();
+    var ids = lv ? stepsFor(lv) : [], i = lv ? currentIndex(lv) : 0;
+    banner.classList.toggle("is-plan", !!(st.started && lv && i < ids.length));
+    if (!(st.started && lv && i < ids.length)) { plan.hidden = true; plan.innerHTML = ""; return; }
+    var d = countDone(lv), task = nextTask(lv), est = EST[ids[i]] ? EST[ids[i]][lang === "ar" ? 1 : 0] : "", dl = dlFor(ids[i]);
+    plan.hidden = false;
+    plan.innerHTML = '<div class="jr-plan-bar"><i style="width:' + Math.round(d / ids.length * 100) + '%"></i></div>' +
+      (task ? '<p class="jr-plan-task"><span>' + esc(t.planTask) + '</span> ' + esc(task) + '</p>' : "") +
+      '<div class="jr-plan-chips">' + (est ? '<span>⏱ ' + esc(est) + '</span>' : "") +
+      (dl ? '<span>⏰ ' + esc((DLT[ids[i]] === "start" ? t.startsOn : t.nextDl) + ": " + dl.title) + ' · ' + esc(dl.date) + '</span>' : "") + '</div>';
   }
 
   // climb down the ladder, hop off, wave, then point at the button
@@ -621,6 +722,7 @@
     document.body.appendChild(panel);
     live = panel.querySelector(".jr-live");
     panel.addEventListener("click", onPanelClick);
+    panel.addEventListener("change", onTask);
     panel.addEventListener("keydown", function (e) {
       if (e.key === "Escape") { e.preventDefault(); close(); }
       if (e.key === "Tab") trap(e);
@@ -668,6 +770,16 @@
       h = eyebrow + '<h2 id="jr-title">' + esc(t.q2) + '</h2><p class="jr-sub">' + esc(t.q2sub) + '</p>' +
         '<div class="jr-choices jr-choices-2">' + LEVELS.filter(function (k) { return k !== "foundation" || offersF(); }).map(function (k) { var M = window.MasarokCountry, fl = k === "foundation" && M && M.fLabel && M.fLabel(pick().cc); return choiceCard("level", k, fl || t.levels[k], cur === k); }).join("") + '</div>' +
         '<button type="button" class="jr-textbtn" data-go="' + (st.started ? "main" : "stage") + '">' + esc(t.back) + '</button>';
+    } else if (screen === "profile") {
+      var p = tmp.prof || (tmp.prof = Object.assign({}, st.profile || {}));
+      h = eyebrow + '<h2 id="jr-title">' + esc(t.pT) + '</h2><p class="jr-sub">' + esc(t.pSub) + '</p>' +
+        '<div class="jr-prof">' + ["offer", "eng", "sch", "start"].map(function (q) {
+          return '<fieldset><legend>' + esc(t.pQ[q]) + '</legend><div class="jr-chips">' + PROF[q].map(function (a) {
+            return '<button type="button" class="jr-chip" data-prof="' + q + ':' + a + '" aria-pressed="' + (p[q] === a) + '">' + esc(t.pA[q][a]) + '</button>';
+          }).join("") + '</div></fieldset>';
+        }).join("") + '</div>' +
+        '<div class="jr-actions"><button type="button" class="btn btn-primary" data-prof-go>' + esc(t.pGo) + ICON.arrow + '</button>' +
+        '<button type="button" class="jr-textbtn" data-prof-skip>' + esc(st.started ? t.back : t.pSkip) + '</button></div>';
     } else if (screen === "applied") {
       var lv0 = tmp.level, V0 = vars(lv0);
       h = eyebrow + '<h2 id="jr-title">' + esc(t.q3) + '</h2><p class="jr-sub">' + esc(t.q3sub) + '</p>' +
@@ -701,7 +813,9 @@
     var h = eyebrow + '<h2 id="jr-title">' + esc(pf || t.pathTitle[lv]) + '</h2>' +
       '<div class="jr-meta"><span>' + meta + '</span>' +
       '<button type="button" class="jr-textbtn" data-go="level">' + esc(t.changeLevel) + '</button>' +
-      '<button type="button" class="jr-textbtn" data-change-uni>' + esc(t.changeUni) + '</button></div>';
+      '<button type="button" class="jr-textbtn" data-change-uni>' + esc(t.changeUni) + '</button>' +
+      '<button type="button" class="jr-textbtn" data-go="profile">' + esc(t.pEdit) + '</button></div>';
+    if (st.profile && st.profile.start === "soon" && !finished && n - cur >= 5) h += '<p class="jr-welcome jr-warn">' + esc(t.tight) + '</p>';
 
     if (st.welcome && !finished) h += '<p class="jr-welcome">' + esc(fmt(t.welcome, { n: num(cur + 1) })) + '</p>';
     else if (st.stage === "dream" && cur === 0) h += '<p class="jr-welcome">' + esc(t.dreamNote) + '</p>';
@@ -757,8 +871,19 @@
     var kicker = (i === cur ? esc(t.nextStep) + ' · ' : "") + esc(fmt(t.stepN, { n: num(i + 1), total: num(n) })) +
       (state === "done" ? ' · <span class="jr-tag is-done">' + esc(t.done) + '</span>' : state === "skip" ? ' · <span class="jr-tag">' + esc(t.skipped) + '</span>' : "") +
       (s.optional ? ' · <span class="jr-tag">' + esc(t.optional) + '</span>' : "");
-    var what = c.what.map(function (w) { return '<li>' + fmt(w, V) + '</li>'; }).join("");
-    if (!ov && s.extra && s.extra[lv] && (lv !== "phd" || id !== "visa" || !pick().cc || pick().cc === "au")) what += '<li>' + esc(s.extra[lv][lang]) + '</li>';
+    var list = taskList(lv, id, V), tm = taskMap(lv, id), doneAll = state !== "open";
+    var td = 0; list.forEach(function (x, k) { if (doneAll || tm[k]) td++; });
+    var what = list.map(function (w, k) {
+      var on = doneAll || !!tm[k];
+      return '<li class="' + (on ? "is-on" : "") + '"><label><input type="checkbox" data-task="' + id + ':' + k + '"' + (on ? " checked" : "") + (doneAll ? " disabled" : "") + '><span>' + w + '</span></label></li>';
+    }).join("");
+    var est = EST[id] ? EST[id][lang === "ar" ? 1 : 0] : "";
+    var dl = state === "open" ? dlFor(id) : null;
+    var facts = (est ? '<div class="jr-fact"><span>' + esc(t.takes) + '</span><b>' + esc(est) + '</b></div>' : "") +
+      (dl ? '<div class="jr-fact jr-fact-dl"><span>' + esc(DLT[id] === "start" ? t.startsOn : t.nextDl) + '</span><b>' + esc(dl.title) + '</b>' +
+        '<small>' + esc(dl.date) + ' · ' + esc(dl.when) + (dl.expected ? ' · ' + esc(t.expected) : "") + '</small>' +
+        (DLT[id] !== "start" ? '<div class="jr-dl-acts"><button type="button" class="jr-textbtn" data-remind="' + dl.id + '" aria-pressed="' + dl.saved + '">' + esc(dl.saved ? "✓ " + t.reminded : t.remind) + '</button><a href="#deadlines" data-jr-anchor>' + esc(t.allDl) + '</a></div>' : "") + '</div>' : "");
+    var note = (id === "qubool" && st.profile && st.profile.sch === "self") ? '<p class="jr-welcome">' + esc(t.selfNote) + '</p>' : "";
     var links = ov && ov.links ? ov.links.map(function (l) { return '<a href="' + esc(l[2]) + '" rel="noopener" target="_blank">' + esc(lang === "ar" ? l[1] : l[0]) + '<span class="jr-ext" aria-hidden="true">↗</span></a>'; }).join("") : s.links.map(function (k) { return linkHtml(k, V); }).join("");
     var actions = state === "open"
       ? '<button type="button" class="btn btn-primary" data-done="' + id + '">' + ICON.tick + esc(t.markDone) + '</button>' +
@@ -768,7 +893,8 @@
       '<p class="jr-kicker">' + kicker + '</p>' +
       '<h3 id="jr-card-h" tabindex="-1">' + title(id, V) + '</h3>' +
       '<div class="jr-cols"><div><h4>' + esc(t.why) + '</h4><p>' + fmt(c.why, V) + '</p></div>' +
-      '<div><h4>' + esc(t.what) + '</h4><ul>' + what + '</ul></div></div>' +
+      '<div><h4>' + esc(t.tasks) + ' <span class="jr-tn">' + esc(fmt(t.tasksN, { d: num(td), n: num(list.length) })) + '</span></h4><ul class="jr-tasks">' + what + '</ul></div></div>' +
+      (facts ? '<div class="jr-facts">' + facts + '</div>' : "") + note +
       (links ? '<div class="jr-links-wrap"><h4>' + esc(t.links) + '</h4><div class="jr-links">' + links + '</div></div>' : "") +
       '<div class="jr-actions">' + actions + '</div></article>';
   }
@@ -817,7 +943,28 @@
       panel.querySelectorAll(".jr-ticks input").forEach(function (b) { if (b.checked) m[b.value] = S[b.value].optional ? (m[b.value] || "done") : "done"; else delete m[b.value]; });
       st.level = lv; st.started = true; save(); viewing = null; screen = "main"; refresh(); render(true); return;
     }
-    if ((el = e.target.closest("[data-go]"))) { screen = el.getAttribute("data-go"); if (screen === "level") tmp.level = level(); render(true); return; }
+    if ((el = e.target.closest("[data-prof]"))) {
+      var qa = el.getAttribute("data-prof").split(":"); tmp.prof = tmp.prof || {};
+      tmp.prof[qa[0]] = tmp.prof[qa[0]] === qa[1] ? undefined : qa[1];
+      el.parentNode.querySelectorAll(".jr-chip").forEach(function (b) { b.setAttribute("aria-pressed", String(b === el && tmp.prof[qa[0]] === qa[1])); });
+      return;
+    }
+    if (e.target.closest("[data-prof-go]") || e.target.closest("[data-prof-skip]")) {
+      var go = !!e.target.closest("[data-prof-go]"), lvp = st.level || level();
+      if (go) { st.profile = Object.assign({}, tmp.prof || {}); applyProfile(lvp, st.profile); }
+      else if (!st.profile) st.profile = {};
+      tmp.level = lvp; save();
+      if (st.started) { screen = "main"; viewing = null; refresh(); render(true); return; }
+      if (st.stage === "applying") { screen = "applied"; render(true); return; }
+      st.started = true; save(); viewing = null; screen = "main"; refresh(); render(true); return;
+    }
+    if ((el = e.target.closest("[data-remind]"))) {
+      var M = window.MasarokDeadlines; if (!M) return;
+      var on = M.toggle(el.getAttribute("data-remind"));
+      el.setAttribute("aria-pressed", String(on)); el.textContent = on ? "✓ " + t.reminded : t.remind;
+      return;
+    }
+    if ((el = e.target.closest("[data-go]"))) { screen = el.getAttribute("data-go"); if (screen === "level") tmp.level = level(); if (screen === "profile") tmp.prof = Object.assign({}, st.profile || {}); render(true); return; }
     if (e.target.closest("[data-change-uni]")) { close(); if (window.Masarok && window.Masarok.openPicker) window.Masarok.openPicker(2); return; }
     if ((el = e.target.closest("[data-step]"))) {
       var i = +el.getAttribute("data-step"), lv2 = level(), cur = currentIndex(lv2);
@@ -852,8 +999,29 @@
     }
     if ((el = e.target.closest("a[data-jr-anchor]"))) { close(); return; } // let the page scroll to the section
   }
+  function onTask(e) {
+    var cb = e.target.closest && e.target.closest("input[data-task]");
+    if (!cb) return;
+    var pr = cb.getAttribute("data-task").split(":"), id = pr[0], k = +pr[1], lv = level();
+    var tm = taskMap(lv, id); tm[k] = cb.checked ? 1 : 0;
+    cb.closest("li").classList.toggle("is-on", cb.checked);
+    var V = vars(lv), list = taskList(lv, id, V), d = 0;
+    list.forEach(function (x, j) { if (tm[j]) d++; });
+    var tn = cb.closest(".jr-card").querySelector(".jr-tn"); if (tn) tn.textContent = fmt(t.tasksN, { d: num(d), n: num(list.length) });
+    save(); refresh();
+    if (d === list.length && !isDone(lv, id)) {
+      doneMap(lv)[id] = "done"; st.welcome = false; save(); viewing = null; refresh();
+      setTimeout(function () {
+        render(false);
+        var nc = currentIndex(lv);
+        say(t.allTasks + (nc < stepsFor(lv).length ? " " + fmt(t.unlocked, { n: num(nc + 1) }) : ""));
+        focusCard(true);
+      }, 450);
+    }
+  }
   function chooseLevel(lv) {
     tmp.level = lv; st.level = lv;
+    if (!st.profile) { save(); tmp.prof = {}; tmp.after = true; screen = "profile"; render(true); return; }
     if (st.stage === "applying" && !st.started) { screen = "applied"; render(true); return; }
     st.started = true; save(); viewing = null; screen = "main"; refresh(); render(true);
   }

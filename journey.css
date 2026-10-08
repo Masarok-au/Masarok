@@ -219,3 +219,46 @@ html[lang="ar"] .jr-kicker, html[lang="ar"] .jr-card h4{letter-spacing:0; text-t
   .jr-climber .jr-fig, .jr-fab, .jr-progress i b{transition:none !important}
   .jr-sheet{animation:none}
 }
+
+/* ---------- personal questions ---------- */
+.jr-prof{display:grid; gap:16px}
+.jr-prof fieldset{border:0; margin:0; padding:0; display:grid; gap:8px}
+.jr-prof legend{font-weight:700; color:var(--night-ink); margin-bottom:8px; padding:0}
+.jr-chips{display:flex; flex-wrap:wrap; gap:8px}
+.jr-chip{font:inherit; font-size:.93rem; color:var(--night-ink); background:rgba(255,255,255,.04); border:1px solid rgba(238,242,247,.18); border-radius:999px; padding:8px 14px; cursor:pointer; transition:background .2s ease, border-color .2s ease}
+.jr-chip:hover{border-color:var(--gold)}
+.jr-chip[aria-pressed="true"]{background:rgba(226,182,108,.18); border-color:var(--gold); color:#fff}
+.jr-chip[aria-pressed="true"]::before{content:"✓ "; color:var(--gold)}
+.jr-chip:focus-visible{outline:3px solid var(--gold); outline-offset:2px}
+.jr-warn{border-color:rgba(226,182,108,.6) !important}
+
+/* ---------- small tasks ---------- */
+.jr-tn{font-family:var(--f-mono); letter-spacing:0; text-transform:none; color:var(--gold); margin-inline-start:6px}
+.jr-cols ul.jr-tasks{list-style:none; padding:0; gap:6px}
+.jr-tasks label{display:grid; grid-template-columns:20px 1fr; gap:10px; align-items:start; cursor:pointer; padding:6px 8px; border-radius:8px; transition:background .2s ease}
+.jr-tasks label:hover{background:rgba(255,255,255,.04)}
+.jr-tasks input{width:18px; height:18px; margin:3px 0 0; accent-color:var(--gold); cursor:pointer}
+.jr-tasks li.is-on span{color:var(--night-dim); text-decoration:line-through; text-decoration-color:rgba(226,182,108,.6)}
+
+/* ---------- time and deadline ---------- */
+.jr-facts{display:grid; grid-template-columns:repeat(auto-fit, minmax(14rem, 1fr)); gap:10px}
+.jr-fact{display:grid; gap:2px; align-content:start; padding:12px 14px; border-radius:12px; border:1px solid rgba(238,242,247,.14); background:rgba(255,255,255,.03)}
+.jr-fact span{font-family:var(--f-mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--night-dim)}
+.jr-fact b{color:var(--night-ink); font-weight:600}
+.jr-fact small{color:var(--gold)}
+.jr-fact-dl{border-color:rgba(226,182,108,.45)}
+.jr-dl-acts{display:flex; gap:14px; align-items:center; margin-top:4px; font-size:.9rem}
+.jr-dl-acts a{color:var(--green)}
+.jr-dl-acts .jr-textbtn[aria-pressed="true"]{color:var(--green); text-decoration:none}
+
+/* ---------- plan card in the banner ---------- */
+.jr-plan{display:grid; gap:8px; margin-top:6px; max-width:36rem}
+.jr-plan[hidden]{display:none}
+.jr-plan-bar{height:8px; border-radius:999px; background:rgba(238,242,247,.12); overflow:hidden}
+.jr-plan-bar i{display:block; height:100%; background:linear-gradient(90deg, var(--gold), #F3D49A); border-radius:999px}
+.jr-plan-task{color:#C8D3E0; font-size:.95rem}
+.jr-plan-task span{color:var(--gold); font-weight:700}
+.jr-plan-chips{display:flex; flex-wrap:wrap; gap:6px 8px}
+.jr-plan-chips span{font-size:.82rem; color:var(--night-ink); background:rgba(255,255,255,.06); border:1px solid rgba(238,242,247,.14); border-radius:12px; padding:3px 10px}
+.jr-banner.is-plan .jr-copy h2{font-size:clamp(1.05rem, .6vw + .95rem, 1.25rem); color:var(--gold); font-family:var(--f-mono); letter-spacing:.04em}
+.jr-banner.is-plan .jr-copy > p{font-family:var(--f-display); font-weight:800; font-size:clamp(1.25rem, 1vw + 1rem, 1.6rem); color:var(--night-ink)}

@@ -1,7 +1,7 @@
 /* Masarok service worker: makes the guide work offline and installable.
    Pages: network first (so updates show straight away), falling back to the saved copy.
    Scripts, styles and icons: network first too, so a new page never runs old scripts. Fonts: saved copy first. */
-var VERSION = "masarok-v3";
+var VERSION = "masarok-v4";
 var CORE = [
   "/", "/index.html", "/ar/", "/ar/index.html",
   "/country.js", "/unis.js", "/journey.js", "/journey.css", "/feedback.js", "/flip.js", "/campus.js", "/deadlines.js", "/sections.js", "/app.js",
