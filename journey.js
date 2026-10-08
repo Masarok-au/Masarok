@@ -572,6 +572,38 @@
       '<circle cx="28.6" cy="22.6" r="1.25" fill="#14140F"/><circle cx="35.4" cy="22.6" r="1.25" fill="#14140F"/>' +
       '<path d="M28.6 26.8 Q32 29.6 35.4 26.8" fill="none" stroke="#14140F" stroke-width="1.25" stroke-linecap="round"/></svg>';
   }
+  // a little student running along the top of the guide (side view, facing left)
+  function runner() {
+    var skin = "#C08A5A", thobe = "#F6F3EC", edge = "#D9D2C2";
+    function leg(cls) {
+      return '<g class="' + cls + '"><line x1="17" y1="31" x2="15" y2="44" stroke="' + edge + '" stroke-width="3.2" stroke-linecap="round"/>' +
+        '<ellipse cx="13.6" cy="45" rx="3" ry="1.4" fill="#5A3C1E"/></g>';
+    }
+    function arm(cls) {
+      return '<g class="' + cls + '"><line x1="17" y1="18.5" x2="13" y2="27" stroke="' + edge + '" stroke-width="3.4" stroke-linecap="round"/>' +
+        '<line x1="17" y1="18.5" x2="13" y2="27" stroke="' + thobe + '" stroke-width="2.4" stroke-linecap="round"/>' +
+        '<circle cx="12.6" cy="28" r="1.6" fill="' + skin + '"/></g>';
+    }
+    return '<svg class="jr-run" viewBox="0 0 40 48" focusable="false">' +
+      '<g transform="rotate(-9 17 44)"><g class="jr-run-body">' +
+        leg("jr-leg-b") + arm("jr-arm-b") +
+        // backpack on his back
+        '<rect x="20.5" y="16.5" width="7.5" height="11" rx="2.4" fill="#173252"/>' +
+        '<line x1="22" y1="18" x2="22" y2="25" stroke="#E2B66C" stroke-width="1.1" stroke-linecap="round"/>' +
+        // thobe, leaning forward
+        '<path d="M13.2 15.5 Q17 14.4 20.8 15.6 L23.6 33 Q17.5 34.6 10.8 33 Z" fill="' + thobe + '" stroke="' + edge + '" stroke-width=".8"/>' +
+        '<line x1="20.8" y1="16.2" x2="21.6" y2="22" stroke="#173252" stroke-width="1.6" stroke-linecap="round"/>' +
+        leg("jr-leg-a") + arm("jr-arm-a") +
+        // head: face, shemagh with a tail flying behind, agal
+        '<path class="jr-tail" d="M19.5 7.5 Q25 9 27.5 15.5 Q24 13.5 20.5 13.8 Z" fill="#C8102E"/>' +
+        '<circle cx="15" cy="9.4" r="5" fill="' + skin + '"/>' +
+        '<path d="M9.6 9.2 Q10.2 3.2 15.8 3 Q20.9 3.3 21.5 9 L21.6 14.8 Q19.2 12.6 17.6 11.8 Q16.2 8.6 9.6 9.2 Z" fill="#C8102E"/>' +
+        '<path d="M11 8 Q15.5 5.2 20.4 8" fill="none" stroke="#fff" stroke-width=".7" stroke-dasharray="1.2 1.4" opacity=".85"/>' +
+        '<ellipse cx="15.6" cy="6.4" rx="5.6" ry="1.35" fill="none" stroke="#14140F" stroke-width="1.6" transform="rotate(-10 15.6 6.4)"/>' +
+        '<circle cx="12.2" cy="10.4" r=".85" fill="#14140F"/>' +
+        '<path d="M10.9 12.6 Q12 13.3 13.1 12.9" fill="none" stroke="#14140F" stroke-width=".75" stroke-linecap="round"/>' +
+      '</g></g></svg>';
+  }
   function ladder() {
     var rungs = "";
     for (var y = 16; y < 300; y += 24) rungs += '<line x1="6" y1="' + y + '" x2="44" y2="' + y + '"/>';
@@ -714,7 +746,7 @@
     panel.innerHTML =
       '<div class="jr-backdrop" data-journey-close></div>' +
       '<div class="jr-sheet" role="dialog" aria-modal="true" aria-labelledby="jr-title">' +
-        '<div class="sadu" aria-hidden="true"></div>' +
+        '<div class="jr-track" aria-hidden="true"><div class="jr-lane"><span class="jr-runner">' + runner() + '</span></div><div class="sadu"></div></div>' +
         '<button type="button" class="jr-x" data-journey-close aria-label="' + esc(t.close) + '">×</button>' +
         '<div class="jr-body"></div>' +
         '<p class="jr-live" aria-live="polite"></p>' +
