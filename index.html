@@ -345,6 +345,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
   .anim .reveal{opacity:1; transform:none}
   .shoot{display:none}
 }
+html[data-no-f] [data-needs-f], html[data-no-f] .col-f{display:none !important}
 </style>
 
 <style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
@@ -403,7 +404,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       <p class="note" data-u-note hidden></p>
       <dl class="glance" data-uni-only>
         <div><dt>City and campus</dt><dd><span data-u="city">Sydney</span> · <span data-u="campus">Kensington</span></dd></div>
-        <div><dt data-c-label="college">Pathway college</dt><dd><a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener"><span data-u="college">UNSW College</span></a><small>Foundation, diploma or English programs</small></dd></div>
+        <div data-needs-f><dt data-c-label="college">Pathway college</dt><dd><a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener"><span data-u="college">UNSW College</span></a><small data-c="collegeSub">Foundation, diploma or English programs</small></dd></div>
         <div><dt data-c-label="union">Student association</dt><dd><a data-u-href="union-url" href="https://www.arc.unsw.edu.au" rel="noopener"><span data-u="union">Arc @ UNSW</span></a><small data-u="legal">Arc's free legal service gives students advice on renting and other problems.</small></dd></div>
         <div><dt>Student suburbs</dt><dd data-u="suburbs">Kensington, Kingsford, Randwick</dd></div>
         <div data-u-entry hidden><dt>Entry for Saudi students</dt><dd data-u="entry"></dd></div>
@@ -412,7 +413,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       </dl>
       <div data-all-only hidden>
         <p class="intro">Choose a university to see examples for its campus and city across the whole guide.</p>
-        <div class="table-wrap"><table id="uni-table"><thead><tr><th scope="col">University</th><th scope="col">City</th><th scope="col">Pathway college</th><th scope="col">Student suburbs</th></tr></thead><tbody></tbody></table></div>
+        <div class="table-wrap"><table id="uni-table"><thead><tr><th scope="col">University</th><th scope="col">City</th><th class="col-f" scope="col">Pathway college</th><th scope="col">Student suburbs</th></tr></thead><tbody></tbody></table></div>
       </div>
       <p class="note"><b>SACM sponsorship can change each year.</b> A university that is approved one year may not be approved the next, and being accepted by a university is not the same as being sponsored to study there. Your university must appear on the Ministry's <a href="https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf" rel="noopener">2026–2027 university lists</a> for your track and field (for example, not every university is on the engineering list). Check the lists and confirm with SACM before you commit.</p>
       <button type="button" class="btn btn-outline" data-open-picker="0">Change your choices</button>
@@ -606,7 +607,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
           <li><span class="r-k">Admission</span><span class="r-v">You need an offer from a university that meets your track's rules, in a major on that year's approved list.</span></li>
           <li><span class="r-k">Study mode</span><span class="r-v">You must study full time and live in the country of study.</span></li>
           <li data-level="foundation"><span class="r-k">Preparatory year</span><span class="r-v">From 2025–26: at least 90% high school average and IELTS 5.5 (or equivalent).</span></li>
-          <li><span class="r-k">What SACM sponsors</span><span class="r-v">Foundation, Diploma, Bachelor's, Master's and PhD programs.</span></li>
+          <li><span class="r-k">What SACM sponsors</span><span class="r-v"><span data-c="sponsors">Foundation, Diploma, Bachelor's, Master's and PhD programs.</span></span></li>
           <li><span class="r-k">English courses</span><span class="r-v"><b>Not sponsored.</b> English language courses are at your own cost, so aim to meet the English requirement before you start your program.</span></li>
           <li><span class="r-k">Aptitude tests</span><span class="r-v">The Ministry says applications do not require aptitude or achievement test scores, although some Wa'id programs ask for them.</span></li>
           <li><span class="r-k">Where to apply</span><span class="r-v">New applicants on <b>every track</b> apply through the National Unified Admission Platform, <a href="https://www.uap.sa/#scholarship" rel="noopener"><b>Qubool</b> (uap.sa)</a>, signing in with Nafath. After you are nominated, you manage your scholarship on <b>Safeer</b> (منصة سفير), for example your financial guarantee and scholarship decision. Selection is based on merit and available places.</span></li>
@@ -620,7 +621,8 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
         <ul class="rules">
           <li><span class="r-k">What is usually covered</span><span class="r-v">Tuition, health cover <span data-c="health">(OSHC)</span> and a monthly allowance (see <a href="#allowance">the monthly allowance</a>). Your exact entitlements are in your scholarship decision.</span></li>
           <li><span class="r-k">Financial guarantee letter</span><span class="r-v">Your university needs a letter from <span data-c="missionShort">SACM</span> confirming what it pays. Most universities ask you to upload it when you accept your offer, and then invoice <span data-c="missionShort">SACM</span> directly.</span></li>
-          <li><span class="r-k">New letter for each change</span><span class="r-v">Moving from Foundation to a diploma, or from a diploma to a degree, or needing extra time, usually means a new guarantee letter. Request it early so your enrolment is not delayed.</span></li>
+          <li data-cc="au"><span class="r-k">New letter for each change</span><span class="r-v">Moving from Foundation to a diploma, or from a diploma to a degree, or needing extra time, usually means a new guarantee letter. Request it early so your enrolment is not delayed.</span></li>
+          <li data-cc-not="au" hidden><span class="r-k">New letter for each change</span><span class="r-v">Moving to a new program or level, or needing extra time, usually means a new guarantee letter. Request it early so your enrolment is not delayed.</span></li>
           <li><span class="r-k">Changing program or major</span><span class="r-v">Get approval from <span data-c="missionShort">SACM</span> before you change. Only approved programs and majors are funded.</span></li>
           <li><span class="r-k">Results every term</span><span class="r-v">Upload your results to Safeer after each term and keep your academic progress up. Poor progress can stop your allowance or end the scholarship.</span></li>
           <li><span class="r-k">Dropped or failed courses</span><span class="r-v">You may have to pay for courses you withdraw from late or repeat. Ask <span data-c="missionShort">SACM</span> before you drop a course.</span></li>
@@ -802,7 +804,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
       <p class="eyebrow">From experience</p>
       <h2 id="lessons-h">What I learned on the way</h2>
       <ul class="lessons">
-        <li><h3>Keep every official letter</h3><p>When you move from Foundation to a diploma, or from a diploma to a degree, your sponsor may ask for proof of your new program, your start date, your credit transfer outcome and an enrolment letter. Save each one as a PDF the day you receive it.</p></li>
+        <li><h3>Keep every official letter</h3><p><span data-c="moveLine">When you move from Foundation to a diploma, or from a diploma to a degree,</span> your sponsor may ask for proof of your new program, your start date, your credit transfer outcome and an enrolment letter. Save each one as a PDF the day you receive it.</p></li>
         <li><h3>Ask about your credit transfer early</h3><p>Your credit outcome decides which courses you take in your first term at university. Knowing it early helps you plan a full study load.</p></li>
         <li><h3>Your English improves fastest outside class</h3><p>Clubs, volunteering and part-time work give you daily practice. Do not wait until you feel confident to join.</p></li>
         <li><h3>Use the free support</h3><p>Universities and student organisations offer free help with study skills, wellbeing and legal questions such as renting. Use it before a small problem becomes a big one.</p></li>

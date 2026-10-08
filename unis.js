@@ -545,6 +545,8 @@
   }
 
   function apply() {
+    // countries without a foundation year: foundation becomes bachelor's
+    if (state.level === "foundation" && !MC.offersF(currentCountry())) { state.level = "bachelor"; put("level", "bachelor"); }
     var r = values(), v = r.v, u = r.u;
     var level = state.level && state.level !== "all" ? state.level : null;
     document.documentElement.setAttribute("data-uni", u ? u.id : "all");
@@ -578,7 +580,7 @@
     });
     document.querySelectorAll("[data-level-banner]").forEach(function (el) {
       el.hidden = !level;
-      if (level) el.querySelector("span").innerHTML = fmt(T[lang].showing, { level: esc(T[lang].levels[level][0]) });
+      if (level) el.querySelector("span").innerHTML = fmt(T[lang].showing, { level: esc(((level === "foundation" && MC.fLabel(currentCountry())) || T[lang].levels[level])[0]) });
     });
 
     document.querySelectorAll("[data-u-entry]").forEach(function (el) { el.hidden = !v.entry; });
@@ -620,7 +622,7 @@
       var where = c[lang] + (cc ? "" : " · " + MC.name(c.cc));
       return "<tr><th scope=\"row\"><button type=\"button\" class=\"linkish\" data-pick=\"" + u.id + "\">" + esc(u.name[lang]) + "</button></th>" +
         "<td>" + esc(where) + "</td>" +
-        "<td>" + (u.college ? "<a href=\"" + esc(u.college.url) + "\" rel=\"noopener\">" + esc(cname(u)) + "</a>" : "–") + "</td>" +
+        "<td class=\"col-f\">" + (u.college ? "<a href=\"" + esc(u.college.url) + "\" rel=\"noopener\">" + esc(cname(u)) + "</a>" : "–") + "</td>" +
         "<td>" + esc(u.suburbs) + "</td></tr>";
     }).join("");
   }
@@ -669,9 +671,11 @@
       }).join("") +
       "<button type=\"button\" class=\"uni-card uni-all\" data-kind=\"uni\" data-id=\"all\" aria-pressed=\"" + (state.uni === "all") + "\">" + esc(t.uniAll) + "</button>";
     } else {
-      h += "<div class=\"pk-grid pk-levels\">" + LEVELS.map(function (l) {
+      var lcc = currentCountry();
+      h += "<div class=\"pk-grid pk-levels\">" + LEVELS.filter(function (l) { return l !== "foundation" || MC.offersF(lcc); }).map(function (l) {
+        var lb = (l === "foundation" && MC.fLabel(lcc)) || t.levels[l];
         return "<button type=\"button\" class=\"uni-card\" data-kind=\"level\" data-id=\"" + l + "\" aria-pressed=\"" + (state.level === l) + "\">" +
-          "<span class=\"uc-short\">" + esc(t.levels[l][0]) + "</span><span class=\"uc-name\">" + esc(t.levels[l][1]) + "</span></button>";
+          "<span class=\"uc-short\">" + esc(lb[0]) + "</span><span class=\"uc-name\">" + esc(lb[1]) + "</span></button>";
       }).join("") + "</div>" +
       "<button type=\"button\" class=\"uni-card uni-all\" data-kind=\"level\" data-id=\"all\" aria-pressed=\"" + (state.level === "all") + "\">" + esc(t.levelAll) + "</button>";
     }

@@ -55,6 +55,14 @@
       ar: { t: "حقق درجة اللغة الإنجليزية المطلوبة",
         why: "تشترط الوزارة IELTS 5.5 على الأقل (أو ما يعادله) للابتعاث على السنة التحضيرية، والملحقية لا تبتعث على دورات اللغة.",
         what: ["احجز اختبار IELTS أو اختبارًا آخر تقبله {college}.", "تحقق من الدرجة المطلوبة لبرنامجك في موقع {college}. القبول في الدبلوم يحتاج غالبًا إلى درجة أعلى من الفاونديشن.", "إذا كانت درجتك أقل، أعد الاختبار قبل التقديم حتى لا تدفع تكلفة دورة لغة بنفسك."] },
+      nonAu: {
+        en: { t: "Reach your English score",
+          why: "The Ministry asks for at least IELTS 5.5 (or equivalent) to sponsor a preparatory year, and SACM does not pay for English courses.",
+          what: ["Book IELTS, or another test that {college} accepts.", "Check the score your program needs on {college}'s website.", "If you are below the score, retake the test before you apply, so you don't pay for an English course yourself."] },
+        ar: { t: "حقق درجة اللغة الإنجليزية المطلوبة",
+          why: "تشترط الوزارة IELTS 5.5 على الأقل (أو ما يعادله) للابتعاث على السنة التحضيرية، والملحقية لا تبتعث على دورات اللغة.",
+          what: ["احجز اختبار IELTS أو اختبارًا آخر تقبله {college}.", "تحقق من الدرجة المطلوبة لبرنامجك في موقع {college}.", "إذا كانت درجتك أقل، أعد الاختبار قبل التقديم حتى لا تدفع تكلفة دورة لغة بنفسك."] }
+      },
       links: ["ielts", "college"] },
 
     rulesF: {
@@ -100,6 +108,11 @@
       ar: { t: "اختبار SAT، إذا طلبته جامعتك",
         why: "بعض الجامعات لا تقبل شهادة الثانوية السعودية وحدها للقبول المباشر، وقد تطلب نتائج إضافية مثل اختبار SAT.",
         what: ["تحقق من شروط القبول في {uni} للطلاب السعوديين.", "لا تقدّم اختبار SAT إلا إذا طلبته {uni}. وإن لم تطلبه فتخطَّ هذه الخطوة.", "إذا لم يناسبك القبول المباشر، فالفاونديشن أو الدبلوم طريق معتاد للدخول."] },
+      byCc: {
+        uk: { last: ["If direct entry doesn't work for you, a Foundation year is a normal way in.", "إذا لم يناسبك القبول المباشر، فسنة الفاونديشن طريق معتاد للدخول."] },
+        de: { last: ["If your certificate doesn't give you direct entry, you usually need a Studienkolleg first.", "إذا لم تمنحك شهادتك القبول المباشر، فتحتاج عادةً إلى الكلية التحضيرية (Studienkolleg) أولًا."] },
+        other: { last: ["If direct entry doesn't work for you, ask {uni} which other routes it accepts.", "إذا لم يناسبك القبول المباشر، فاسأل {uni} عن الطرق الأخرى التي تقبلها."] }
+      },
       links: ["sat", "uniWeb", "options"] },
 
     courseType: {
@@ -383,7 +396,8 @@
     return v;
   }
   function pickerLevel() { var l = pick().level; return LEVELS.indexOf(l) > -1 ? l : null; }
-  function level() { return st.level || pickerLevel(); }
+  function offersF() { var M = window.MasarokCountry, cc = pick().cc; return !M || !M.offersF || M.offersF(cc); }
+  function level() { var l = st.level || pickerLevel(); return l === "foundation" && !offersF() ? "bachelor" : l; }
 
   function vars(lv) {
     var r = pick(), v = r.v || {};
@@ -411,6 +425,10 @@
     if (cc && cc !== "au") {
       if (s.program && (cc === "us" || cc === "ca" || cc === "sg")) return s.program[lang];
       if (s.nonAu) return s.nonAu[lang];
+      if (s.byCc) {
+        var b = s.byCc[cc] || s.byCc.other, base = s[lang];
+        return { t: base.t, why: base.why, what: base.what.slice(0, -1).concat(b.last[lang === "ar" ? 1 : 0]) };
+      }
     }
     return s[lang];
   }
@@ -648,7 +666,7 @@
     } else if (screen === "level") {
       var cur = tmp.level || level();
       h = eyebrow + '<h2 id="jr-title">' + esc(t.q2) + '</h2><p class="jr-sub">' + esc(t.q2sub) + '</p>' +
-        '<div class="jr-choices jr-choices-2">' + LEVELS.map(function (k) { return choiceCard("level", k, t.levels[k], cur === k); }).join("") + '</div>' +
+        '<div class="jr-choices jr-choices-2">' + LEVELS.filter(function (k) { return k !== "foundation" || offersF(); }).map(function (k) { var M = window.MasarokCountry, fl = k === "foundation" && M && M.fLabel && M.fLabel(pick().cc); return choiceCard("level", k, fl || t.levels[k], cur === k); }).join("") + '</div>' +
         '<button type="button" class="jr-textbtn" data-go="' + (st.started ? "main" : "stage") + '">' + esc(t.back) + '</button>';
     } else if (screen === "applied") {
       var lv0 = tmp.level, V0 = vars(lv0);

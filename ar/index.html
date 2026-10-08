@@ -345,6 +345,7 @@ code.inline{font-family:var(--f-mono); font-size:.9em; background:var(--green-so
   .anim .reveal{opacity:1; transform:none}
   .shoot{display:none}
 }
+html[data-no-f] [data-needs-f], html[data-no-f] .col-f{display:none !important}
 </style>
 
 <style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
@@ -425,7 +426,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
       <p class="note" data-u-note hidden></p>
       <dl class="glance" data-uni-only>
         <div><dt>المدينة والحرم</dt><dd><span data-u="city">سيدني</span> · <span data-u="campus">كنسينغتون (Kensington)</span></dd></div>
-        <div><dt data-c-label="college">كلية المسار</dt><dd><a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener" dir="ltr"><span data-u="college">UNSW College</span></a><small>برامج الفاونديشن أو الدبلوم أو اللغة</small></dd></div>
+        <div data-needs-f><dt data-c-label="college">كلية المسار</dt><dd><a data-u-href="college-url" href="https://www.unswcollege.edu.au" rel="noopener" dir="ltr"><span data-u="college">UNSW College</span></a><small data-c="collegeSub">برامج الفاونديشن أو الدبلوم أو اللغة</small></dd></div>
         <div><dt data-c-label="union">رابطة الطلاب</dt><dd><a data-u-href="union-url" href="https://www.arc.unsw.edu.au" rel="noopener" dir="ltr"><span data-u="union">Arc @ UNSW</span></a><small data-u="legal">الخدمة القانونية المجانية من Arc تقدم للطلاب استشارات في الإيجار ومشكلات أخرى.</small></dd></div>
         <div><dt>أحياء الطلاب</dt><dd data-u="suburbs" dir="ltr">Kensington, Kingsford, Randwick</dd></div>
         <div data-u-entry hidden><dt>القبول للطلاب السعوديين</dt><dd data-u="entry"></dd></div>
@@ -434,7 +435,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
       </dl>
       <div data-all-only hidden>
         <p class="intro">اختر جامعة لترى أمثلة خاصة بحرمها ومدينتها في الدليل كله.</p>
-        <div class="table-wrap"><table id="uni-table"><thead><tr><th scope="col">الجامعة</th><th scope="col">المدينة</th><th scope="col">كلية المسار</th><th scope="col">أحياء الطلاب</th></tr></thead><tbody></tbody></table></div>
+        <div class="table-wrap"><table id="uni-table"><thead><tr><th scope="col">الجامعة</th><th scope="col">المدينة</th><th class="col-f" scope="col">كلية المسار</th><th scope="col">أحياء الطلاب</th></tr></thead><tbody></tbody></table></div>
       </div>
       <p class="note"><b>قائمة الجامعات المعتمدة للابتعاث قد تتغير كل عام.</b> الجامعة المعتمدة في عام قد لا تكون معتمدة في العام التالي، والحصول على قبول من جامعة لا يعني أنك مبتعث إليها. يجب أن تكون جامعتك ضمن <a href="https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf" rel="noopener">قوائم الجامعات 2026–2027</a> الخاصة بمسارك وتخصصك (فليست كل الجامعات مثلًا في قائمة الهندسة). تحقق من القوائم وتأكد من الملحقية قبل أن تلتزم.</p>
       <button type="button" class="btn btn-outline" data-open-picker="0">غيّر اختياراتك</button>
@@ -628,7 +629,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
           <li><span class="r-k">القبول</span><span class="r-v">تحتاج إلى قبول من جامعة تحقق شروط مسارك، في تخصص ضمن القائمة المعتمدة لذلك العام.</span></li>
           <li><span class="r-k">نمط الدراسة</span><span class="r-v">يجب أن تدرس بانتظام كامل وأن تقيم في بلد الدراسة.</span></li>
           <li data-level="foundation"><span class="r-k">السنة التحضيرية</span><span class="r-v">ابتداءً من 2025–2026: معدل 90% على الأقل في الثانوية وآيلتس 5.5 (أو ما يعادله).</span></li>
-          <li><span class="r-k">ما تبتعث عليه الملحقية</span><span class="r-v">برامج الفاونديشن والدبلوم والبكالوريوس والماجستير والدكتوراه.</span></li>
+          <li><span class="r-k">ما تبتعث عليه الملحقية</span><span class="r-v"><span data-c="sponsors">برامج الفاونديشن والدبلوم والبكالوريوس والماجستير والدكتوراه.</span></span></li>
           <li><span class="r-k">دورات اللغة</span><span class="r-v"><b>غير مشمولة.</b> دورات اللغة الإنجليزية على حسابك الخاص، لذلك احرص على تحقيق شرط اللغة قبل بدء برنامجك.</span></li>
           <li><span class="r-k">اختبارات القدرات</span><span class="r-v">تذكر الوزارة أن التقديم لا يتطلب درجات اختبار القدرات أو التحصيلي، مع أن بعض برامج مسار واعد تطلبها.</span></li>
           <li><span class="r-k">أين تقدم</span><span class="r-v">يقدم المتقدمون الجدد في <b>جميع المسارات</b> عبر المنصة الوطنية للقبول الموحد <a href="https://www.uap.sa/#scholarship" rel="noopener"><b>قبول</b> (uap.sa)</a> بتسجيل الدخول من خلال النفاذ الوطني. وبعد الترشيح تتابع بعثتك عبر <b>منصة سفير</b>، مثل خطاب الضمان المالي وقرار الابتعاث. والمفاضلة تكون حسب الجدارة والمقاعد المتاحة.</span></li>
@@ -642,7 +643,8 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
         <ul class="rules">
           <li><span class="r-k">ما يُغطّى عادةً</span><span class="r-v">الرسوم الدراسية، والتأمين الصحي <span data-c="health">(OSHC)</span>، ومكافأة شهرية (انظر <a href="#allowance">المكافأة الشهرية</a>). تجد تفاصيل مستحقاتك في قرار ابتعاثك.</span></li>
           <li><span class="r-k">خطاب الضمان المالي</span><span class="r-v">تحتاج جامعتك إلى خطاب من <span data-c="missionShort">الملحقية</span> يؤكد ما تتكفل به. أغلب الجامعات تطلب رفعه عند قبول العرض، ثم ترسل الفواتير إلى <span data-c="missionShort">الملحقية</span> مباشرة.</span></li>
-          <li><span class="r-k">خطاب جديد مع كل تغيير</span><span class="r-v">الانتقال من الفاونديشن إلى الدبلوم، أو من الدبلوم إلى البكالوريوس، أو الحاجة إلى وقت إضافي، يتطلب عادةً خطاب ضمان جديد. اطلبه مبكرًا حتى لا يتأخر تسجيلك.</span></li>
+          <li data-cc="au"><span class="r-k">خطاب جديد مع كل تغيير</span><span class="r-v">الانتقال من الفاونديشن إلى الدبلوم، أو من الدبلوم إلى البكالوريوس، أو الحاجة إلى وقت إضافي، يتطلب عادةً خطاب ضمان جديد. اطلبه مبكرًا حتى لا يتأخر تسجيلك.</span></li>
+          <li data-cc-not="au" hidden><span class="r-k">خطاب جديد مع كل تغيير</span><span class="r-v">الانتقال إلى برنامج أو مرحلة جديدة، أو الحاجة إلى وقت إضافي، يتطلب عادةً خطاب ضمان جديد. اطلبه مبكرًا حتى لا يتأخر تسجيلك.</span></li>
           <li><span class="r-k">تغيير البرنامج أو التخصص</span><span class="r-v">احصل على موافقة <span data-c="missionShort">الملحقية</span> قبل أي تغيير. البرامج والتخصصات المعتمدة فقط هي المشمولة.</span></li>
           <li><span class="r-k">النتائج كل فصل</span><span class="r-v">ارفع نتائجك على منصة سفير بعد كل فصل وحافظ على تقدمك الأكاديمي. ضعف التقدم قد يوقف المكافأة أو ينهي البعثة.</span></li>
           <li><span class="r-k">المواد المحذوفة أو الراسب فيها</span><span class="r-v">قد تتحمل تكلفة المواد التي تنسحب منها متأخرًا أو تعيدها. استشر <span data-c="missionShort">الملحقية</span> قبل حذف أي مادة.</span></li>
@@ -824,7 +826,7 @@ h1,h2,h3{line-height:1.45; letter-spacing:0}
       <p class="eyebrow">من التجربة</p>
       <h2 id="lessons-h">ما تعلمته في الطريق</h2>
       <ul class="lessons">
-        <li><h3>احتفظ بكل خطاب رسمي</h3><p>عند انتقالك من الفاونديشن إلى الدبلوم، أو من الدبلوم إلى البكالوريوس، قد تطلب جهتك الراعية إثبات برنامجك الجديد وتاريخ بدايته ونتيجة معادلة الساعات وخطاب التسجيل. احفظ كل خطاب بصيغة PDF في يوم استلامه.</p></li>
+        <li><h3>احتفظ بكل خطاب رسمي</h3><p><span data-c="moveLine">عند انتقالك من الفاونديشن إلى الدبلوم، أو من الدبلوم إلى البكالوريوس،</span> قد تطلب جهتك الراعية إثبات برنامجك الجديد وتاريخ بدايته ونتيجة معادلة الساعات وخطاب التسجيل. احفظ كل خطاب بصيغة PDF في يوم استلامه.</p></li>
         <li><h3>اسأل عن معادلة الساعات مبكرًا</h3><p>نتيجة المعادلة تحدد المواد التي تدرسها في فصلك الأول بالجامعة. معرفتها مبكرًا تساعدك على التخطيط لعبء دراسي كامل.</p></li>
         <li><h3>لغتك تتحسن أسرع خارج الفصل</h3><p>الأندية والتطوع والعمل الجزئي تمنحك تدريبًا يوميًا. لا تنتظر حتى تشعر بالثقة لتشارك.</p></li>
         <li><h3>استفد من الدعم المجاني</h3><p>تقدم الجامعات والمنظمات الطلابية مساعدة مجانية في مهارات الدراسة والصحة النفسية والأسئلة القانونية مثل الإيجار. استفد منها قبل أن تكبر المشكلة الصغيرة.</p></li>

@@ -24,6 +24,7 @@
 
     // ------------------------------------------------------------------ USA
     us: {
+      noF: true,
       pathF: ["Your path to a pathway program", "طريقك إلى برنامج المسار"],
       name: ["the USA", "أمريكا"], inPlace: ["in the USA", "في أمريكا"], short: ["USA", "أمريكا"],
       cur: "US$",
@@ -46,10 +47,6 @@
             p: ["Most US universities accept the Saudi secondary certificate with an English score such as TOEFL or IELTS. Many also look at your essays and activities, and some ask for the SAT or ACT.", "تقبل أغلب الجامعات الأمريكية شهادة الثانوية السعودية مع درجة اختبار لغة مثل TOEFL أو IELTS. وتنظر كثير منها أيضًا إلى المقالات والأنشطة، وبعضها يطلب SAT أو ACT."],
             dl: [[["Length", "المدة"], ["Usually 4 years", "عادةً 4 سنوات"]], [["Apply through", "التقديم عبر"], ["The Common App or the university's own form", "منصة Common App أو نموذج الجامعة"]]],
             n: ["the university must be on the Ministry's list for your track and field (top 30 for Al-Ruwwad, top 200 for Imdad).", "يجب أن تكون الجامعة ضمن قائمة الوزارة لمسارك وتخصصك (أفضل 30 لمسار الرواد، وأفضل 200 لمسار إمداد)."] },
-          { lv: "foundation bachelor", b: ["About 1 year", "سنة تقريبًا"], h: ["Pathway program", "برنامج المسار"],
-            p: ["Some universities work with pathway providers that combine English support with first-year credit. If you reach the required grades, you continue into the second year.", "تتعاون بعض الجامعات مع جهات تقدم برامج مسار تجمع بين دعم اللغة ومواد السنة الأولى. وإذا حققت الدرجات المطلوبة تنتقل إلى السنة الثانية."],
-            dl: [[["Suits you if", "يناسبك إذا"], ["Your grades or English are close to, but below, direct entry.", "كانت درجاتك أو لغتك قريبة من شروط القبول المباشر لكن أقل منها."]]],
-            n: ["get SACM's approval for the pathway program and the degree it leads to before you accept.", "احصل على موافقة الملحقية على برنامج المسار والبكالوريوس الذي يؤدي إليه قبل قبول العرض."] },
           { lv: "", b: ["Weeks to months", "أسابيع إلى أشهر"], h: ["English language program", "برنامج اللغة الإنجليزية"],
             p: ["Many universities run intensive English programs and offer conditional admission: you start the degree once your English reaches their level.", "تقدم جامعات كثيرة برامج لغة مكثفة وقبولًا مشروطًا، فتبدأ الدراسة بعد أن تصل لغتك إلى مستواها."],
             dl: [[["Suits you if", "يناسبك إذا"], ["Your English score is below the university's level.", "كانت درجة اللغة أقل من مستوى الجامعة."]]],
@@ -144,6 +141,7 @@
       lede: ["A free guide for Saudi students who want to study in the UK. It covers your study options, how the scholarship works, what to sort out before you fly, and your first weeks.",
         "دليل مجاني للطلاب السعوديين الراغبين في الدراسة في بريطانيا. يشرح لك خيارات الدراسة، وطريقة عمل الابتعاث، وما تحتاج إلى ترتيبه قبل السفر، وأسابيعك الأولى."],
       mission: { name: ["the Saudi Cultural Bureau in London", "الملحقية الثقافية السعودية في لندن"], where: ["London (it also covers Ireland)", "لندن (وتشمل أيضًا إيرلندا)"], url: "https://sites.moe.gov.sa/cm/uk/" },
+      collegeSub: ["Foundation or English programs", "برامج الفاونديشن أو اللغة"],
       labels: { college: ["Foundation year", "سنة الفاونديشن"], union: ["Students' union", "اتحاد الطلاب"], bond: ["Deposit protection", "حماية مبلغ التأمين"] },
       generic: {
         en: { college: "the university's foundation year", union: "your students' union", legal: "Most students' unions run a free advice centre for housing and money problems. Ask yours.", transport: "local travel card", bond: "a government-approved deposit protection scheme", food: "Ask your university's Islamic Society (ISoc) about halal food and prayer rooms.", tap: "You can also tap in with a contactless bank card or phone on most city transport." },
@@ -254,6 +252,7 @@
 
     // ------------------------------------------------------------------ Canada
     ca: {
+      noF: true,
       pathF: ["Your path to a pathway program", "طريقك إلى برنامج المسار"],
       name: ["Canada", "كندا"], inPlace: ["in Canada", "في كندا"], short: ["Canada", "كندا"],
       cur: "CA$",
@@ -276,10 +275,6 @@
             p: ["Most bachelor's degrees take 4 years. Each university lists the grades and English score it needs for the Saudi certificate.", "يستغرق البكالوريوس عادةً 4 سنوات، وتذكر كل جامعة المعدل ودرجة اللغة المطلوبين لشهادة الثانوية السعودية."],
             dl: [[["Apply through", "التقديم عبر"], ["The university, or OUAC for Ontario universities", "الجامعة، أو منصة OUAC لجامعات أونتاريو"]]],
             n: ["the university must be on the Ministry's list for your track and field.", "يجب أن تكون الجامعة ضمن قائمة الوزارة لمسارك وتخصصك."] },
-          { lv: "foundation bachelor", b: ["About 1 year", "سنة تقريبًا"], h: ["Pathway first year", "سنة أولى بمسار داعم"],
-            p: ["Some universities offer a first year with extra English support, such as UBC's Vantage College, leading to second year.", "تقدم بعض الجامعات سنة أولى مع دعم إضافي في اللغة، مثل Vantage College في UBC، تؤدي إلى السنة الثانية."],
-            dl: [[["Suits you if", "يناسبك إذا"], ["Your grades are strong but your English is below direct entry.", "كان معدلك قويًا ولغتك أقل من شرط القبول المباشر."]]],
-            n: ["get SACM approval for the pathway and the degree it leads to before you accept.", "احصل على موافقة الملحقية على المسار والبكالوريوس الذي يؤدي إليه قبل قبول العرض."] },
           { lv: "", b: ["Weeks to months", "أسابيع إلى أشهر"], h: ["English language program", "برنامج اللغة الإنجليزية"],
             p: ["University English programs can lead to conditional admission once you reach their level.", "برامج اللغة في الجامعات قد تؤدي إلى قبول مشروط عند بلوغ مستواها."],
             dl: [[["Suits you if", "يناسبك إذا"], ["Your English score is below the university's level.", "كانت درجة اللغة أقل من مستوى الجامعة."]]],
@@ -368,6 +363,7 @@
 
     // ------------------------------------------------------------------ Germany
     de: {
+      noF: true,
       pathF: ["Your path to a Studienkolleg", "طريقك إلى الكلية التحضيرية (Studienkolleg)"],
       name: ["Germany", "ألمانيا"], inPlace: ["in Germany", "في ألمانيا"], short: ["Germany", "ألمانيا"],
       cur: "€",
@@ -386,7 +382,7 @@
         intro: ["The Saudi secondary certificate does not usually give direct entry to a German bachelor's. Most applicants first complete a Studienkolleg. Many master's degrees are taught in English.",
           "شهادة الثانوية السعودية لا تمنح عادةً قبولًا مباشرًا في البكالوريوس بألمانيا، فيبدأ أغلب المتقدمين بكلية تحضيرية (Studienkolleg). وكثير من برامج الماجستير تُدرّس بالإنجليزية."],
         cards: [
-          { lv: "foundation", b: ["About 1 year", "سنة تقريبًا"], h: ["Studienkolleg", "الكلية التحضيرية (Studienkolleg)"],
+          { lv: "bachelor", b: ["Usually needed first", "مطلوبة غالبًا أولًا"], h: ["Studienkolleg", "الكلية التحضيرية (Studienkolleg)"],
             p: ["A one-year preparatory course that ends with the Feststellungsprüfung exam. It is mostly taught in German, so you usually need about B1 to B2 German to get in.", "دورة تحضيرية لمدة سنة تنتهي باختبار Feststellungsprüfung، وأغلبها بالألمانية، فتحتاج عادةً مستوى B1 إلى B2 في الألمانية للقبول."],
             dl: [[["Other route", "طريق آخر"], ["Applicants with one or two years of university study may qualify differently. Check uni-assist and anabin.", "قد يختلف الوضع لمن أكمل سنة أو سنتين في الجامعة. تحقق عبر uni-assist وanabin."]]],
             n: ["confirm with the cultural mission that your Studienkolleg is covered before you enrol.", "تأكد من الملحقية أن الكلية التحضيرية مشمولة قبل التسجيل."] },
@@ -487,6 +483,7 @@
 
     // ------------------------------------------------------------------ Singapore
     sg: {
+      noF: true,
       pathF: ["Your path to a bachelor's degree", "طريقك إلى البكالوريوس"],
       name: ["Singapore", "سنغافورة"], inPlace: ["in Singapore", "في سنغافورة"], short: ["Singapore", "سنغافورة"],
       cur: "S$",
@@ -699,6 +696,8 @@
   var UI = {
     option: ["Option", "خيار"], note: ["Scholarship note:", "ملاحظة الابتعاث:"],
     afterHS: ["After high school", "بعد الثانوية"], afterBA: ["After a bachelor's degree", "بعد البكالوريوس"],
+    sacmNoteNoF: ["<b>Important:</b> SACM sponsors Bachelor's, Master's and PhD programs. <b>English courses are not sponsored</b>, so you pay for them yourself.", "<b>مهم:</b> تبتعث الملحقية على برامج البكالوريوس والماجستير والدكتوراه. <b>دورات اللغة غير مشمولة</b>، فتدفع تكلفتها بنفسك."],
+    sacmNoteUK: ["<b>Important:</b> SACM sponsors Foundation, Bachelor's, Master's and PhD programs. <b>English courses are not sponsored</b>, so you pay for them yourself.", "<b>مهم:</b> تبتعث الملحقية على برامج الفاونديشن والبكالوريوس والماجستير والدكتوراه. <b>دورات اللغة غير مشمولة</b>، فتدفع تكلفتها بنفسك."],
     sacmNote: ["<b>Important:</b> SACM sponsors Foundation, Diploma, Bachelor's, Master's and PhD programs. <b>English courses are not sponsored</b>, so you pay for them yourself.", "<b>مهم:</b> تبتعث الملحقية على برامج الفاونديشن والدبلوم والبكالوريوس والماجستير والدكتوراه. <b>دورات اللغة غير مشمولة</b>، فتدفع تكلفتها بنفسك."],
     checkNote: ["Entry scores, program lengths and progression rules change each year and differ between programs. Always check the current rules on your university's official website before you apply.", "درجات القبول ومدد البرامج وشروط الانتقال تتغير كل عام وتختلف بين البرامج. تحقق دائمًا من الأنظمة الحالية في موقع جامعتك الرسمي قبل التقديم."],
     allowIntro: ["SACM pays scholarship students a monthly allowance on top of tuition and health cover. The amount is set in Saudi riyals in your scholarship decision and paid in local currency, so it changes with the exchange rate.", "تصرف الملحقية للمبتعث مكافأة شهرية إضافة إلى الرسوم والتأمين الصحي. ويُحدد مبلغها بالريال في قرار الابتعاث ويُصرف بالعملة المحلية، فيتغير مع سعر الصرف."],
@@ -774,7 +773,7 @@
         '<p class="group-label" data-level="foundation bachelor">' + esc(T(UI.afterHS)) + '</p><div class="options" data-level="foundation bachelor">' + ug.map(function (c) { return optionCard(c, v); }).join("") + '</div>' +
         '<p class="group-label" data-level="master phd">' + esc(T(UI.afterBA)) + '</p><div class="options" data-level="master phd">' + pg.map(function (c) { return optionCard(c, v); }).join("") + '</div>' +
         (d.options.extra ? '<p class="note">' + T(d.options.extra) + '</p>' : "") +
-        '<p class="note">' + T(UI.sacmNote) + '</p><p class="note">' + esc(T(UI.checkNote)) + '</p>';
+        '<p class="note">' + (d.noF ? T(UI.sacmNoteNoF) : cc === "uk" ? T(UI.sacmNoteUK) : T(UI.sacmNote)) + '</p><p class="note">' + esc(T(UI.checkNote)) + '</p>';
     } else if (key === "allowance") {
       var ex = d.costs.ex, cur = d.cur, known = d.costs.allowance || 0;
       function row(id, label, val) {
@@ -832,6 +831,7 @@
     root.setAttribute("data-country", cc || "all");
     var d = cc && C[cc] ? C[cc] : null;
     var isAu = cc === "au";
+    if (d && d.noF) root.setAttribute("data-no-f", ""); else root.removeAttribute("data-no-f");
     v = Object.assign({}, v);
     v["in"] = d ? T(d.inPlace) : (lang === "ar" ? "في الخارج" : "abroad");
     v.cityIn = v._hasCity ? (lang === "ar" ? "في " : "in ") + v.city : v["in"];
@@ -849,7 +849,12 @@
       where: d && d.mission.where ? T(d.mission.where) : "",
       health: d && d.health ? T(d.health) : "",
       enrolDoc: d && d.enrolDoc ? T(d.enrolDoc) : (lang === "ar" ? "خطاب تأكيد التسجيل" : "enrolment confirmation"),
-      missionShort: d && d.missionShort ? T(d.missionShort) : (lang === "ar" ? "الملحقية" : "your cultural mission")
+      missionShort: d && d.missionShort ? T(d.missionShort) : (lang === "ar" ? "الملحقية" : "your cultural mission"),
+      collegeSub: d && d.collegeSub ? T(d.collegeSub) : null,
+      sponsors: lang === "ar" ? (d && d.noF ? "برامج البكالوريوس والماجستير والدكتوراه." : cc === "uk" ? "برامج الفاونديشن والبكالوريوس والماجستير والدكتوراه." : null)
+        : (d && d.noF ? "Bachelor's, Master's and PhD programs." : cc === "uk" ? "Foundation, Bachelor's, Master's and PhD programs." : null),
+      moveLine: lang === "ar" ? (cc === "uk" ? "عند انتقالك من الفاونديشن إلى البكالوريوس،" : d ? "عند انتقالك إلى برنامج أو مرحلة جديدة،" : null)
+        : (cc === "uk" ? "When you move from Foundation to your degree," : d ? "When you move to a new program or level," : null)
     };
     document.querySelectorAll("[data-c]").forEach(function (el) {
       var k = el.getAttribute("data-c");
@@ -954,6 +959,9 @@
     order: ORDER, data: C, lang: lang, T: T,
     apply: apply,
     name: function (cc) { return C[cc] ? T(C[cc].short) : ""; },
+    // only Australia and the UK have a foundation year; only Australia has the diploma pathway
+    offersF: function (cc) { return !(cc && C[cc] && C[cc].noF); },
+    fLabel: function (cc) { return cc === "uk" ? (lang === "ar" ? ["الفاونديشن", "سنة فاونديشن قبل البكالوريوس"] : ["Foundation", "A foundation year before your bachelor's degree"]) : null; },
     pathF: function (cc) { var d = C[cc]; return d && d.pathF ? T(d.pathF) : null; },
     journey: function (cc, id) { var d = C[cc]; return d && d.journey && d.journey[id] ? d.journey[id] : null; },
     generic: function (cc) { var d = C[cc]; return d && d.generic ? d.generic[lang] : null; },
