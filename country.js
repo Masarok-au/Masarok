@@ -38,7 +38,6 @@
       enrolDoc: ["I-20", "نموذج I-20"],
       health: ["(provided by SACM)", "(توفره الملحقية)"],
       missionShort: ["SACM", "الملحقية"],
-      postStudy: { t: ["Optional Practical Training (OPT) lets F-1 students work for up to 12 months after graduating, and STEM graduates can extend it by 24 months. In October 2026 the government proposed a new OPT fee that is not in force yet, so check the latest rules with your international students office.", "يتيح التدريب العملي الاختياري (OPT) لطلاب تأشيرة F-1 العمل حتى 12 شهرًا بعد التخرج، ويمكن لخريجي تخصصات STEM تمديده 24 شهرًا. وفي أكتوبر 2026 اقترحت الحكومة رسومًا جديدة على OPT لم تُطبق بعد، فتأكد من آخر الأنظمة لدى مكتب الطلاب الدوليين."], u: "https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/optional-practical-training-opt-for-f-1-students" },
       options: {
         intro: ["US universities admit students straight from high school, but entry is competitive and each university sets its own rules. These are the usual routes for Saudi students.",
           "تقبل الجامعات الأمريكية الطلاب مباشرة بعد الثانوية، لكن المنافسة قوية ولكل جامعة شروطها. هذه الطرق المعتادة للطلاب السعوديين."],
@@ -153,7 +152,6 @@
       enrolDoc: ["CAS", "رقم CAS"],
       health: ["(NHS access through the immigration health surcharge)", "(خدمات NHS عبر رسوم الصحة للهجرة)"],
       missionShort: ["the Cultural Bureau", "الملحقية"],
-      postStudy: { t: ["The Graduate visa lets you stay and work for 2 years if you apply by 31 December 2026, or 18 months if you apply from 1 January 2027. PhD graduates get 3 years. It cannot be extended.", "تتيح لك تأشيرة الخريجين (Graduate visa) البقاء والعمل سنتين إذا قدمت حتى 31 ديسمبر 2026، أو 18 شهرًا إذا قدمت من 1 يناير 2027. ويحصل خريجو الدكتوراه على 3 سنوات، ولا يمكن تمديدها."], u: "https://www.gov.uk/graduate-visa" },
       options: {
         intro: ["Most UK universities do not accept the Saudi secondary certificate on its own for direct entry to a bachelor's, so many Saudi students start with a foundation year.",
           "لا تقبل أغلب الجامعات البريطانية شهادة الثانوية السعودية وحدها للقبول المباشر في البكالوريوس، لذلك يبدأ كثير من الطلاب السعوديين بسنة الفاونديشن."],
@@ -270,7 +268,6 @@
       enrolDoc: ["letter of acceptance", "خطاب القبول"],
       health: ["(a provincial or university health plan)", "(خطة صحية من المقاطعة أو الجامعة)"],
       missionShort: ["the Cultural Bureau", "الملحقية"],
-      postStudy: { t: ["A post-graduation work permit (PGWP) can last up to 3 years after a program of 2 years or more, or after an eligible master's. Not every school and program qualifies, so check before you choose.", "يمكن أن يمتد تصريح العمل بعد التخرج (PGWP) حتى 3 سنوات بعد برنامج مدته سنتان أو أكثر، أو بعد ماجستير مؤهل. وليست كل الجامعات والبرامج مؤهلة، فتحقق قبل أن تختار."], u: "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/work/after-graduation/about.html" },
       options: {
         intro: ["Canadian universities admit students straight from high school, and many accept the Saudi secondary certificate with strong grades and an English score.",
           "تقبل الجامعات الكندية الطلاب مباشرة بعد الثانوية، وكثير منها يقبل شهادة الثانوية السعودية مع معدل مرتفع ودرجة لغة."],
@@ -385,7 +382,6 @@
       enrolDoc: ["admission letter (Zulassung)", "خطاب القبول (Zulassung)"],
       health: ["(German health insurance)", "(التأمين الصحي الألماني)"],
       missionShort: ["the Cultural Mission", "الملحقية"],
-      postStudy: { t: ["After you graduate you can get a residence permit for up to 18 months to look for a job that matches your degree, and you may take any job during that time. Apply before your student permit expires.", "بعد التخرج يمكنك الحصول على إقامة لمدة تصل إلى 18 شهرًا للبحث عن عمل يناسب شهادتك، ويحق لك العمل في أي وظيفة خلال هذه المدة. قدّم قبل انتهاء إقامة الدراسة."], u: "https://make-it-in-germany.com/en/study-training/study/prospects/seeking-employment/" },
       options: {
         intro: ["The Saudi secondary certificate does not usually give direct entry to a German bachelor's. Most applicants first complete a Studienkolleg. Many master's degrees are taught in English.",
           "شهادة الثانوية السعودية لا تمنح عادةً قبولًا مباشرًا في البكالوريوس بألمانيا، فيبدأ أغلب المتقدمين بكلية تحضيرية (Studienkolleg). وكثير من برامج الماجستير تُدرّس بالإنجليزية."],
@@ -505,7 +501,6 @@
       enrolDoc: ["In-Principle Approval (IPA)", "خطاب الموافقة المبدئية (IPA)"],
       health: ["(the university's group medical insurance)", "(التأمين الصحي الجماعي في الجامعة)"],
       missionShort: ["the cultural attaché", "الملحق الثقافي"],
-      postStudy: { t: ["Singapore has no general post-study work visa. Graduates of Singapore universities can apply for a one-year Long-Term Visit Pass to look for work, and need a work pass, such as an Employment Pass, to take a job.", "لا توجد في سنغافورة تأشيرة عامة للعمل بعد الدراسة. ويمكن لخريجي جامعاتها التقديم على تصريح زيارة طويلة لمدة سنة للبحث عن عمل، ويحتاجون إلى تصريح عمل مثل Employment Pass لبدء الوظيفة."], u: "https://ask.gov.sg/ica/questions/clos83fvp01ht5k0w2hqby2ji" },
       options: {
         intro: ["Singapore's main universities, NUS, NTU and SMU, are very competitive and have no foundation year, so you apply directly.",
           "جامعات سنغافورة الرئيسية NUS وNTU وSMU تنافسية جدًا وليس لديها سنة فاونديشن، فتقدّم عليها مباشرة."],
@@ -854,9 +849,7 @@
       where: d && d.mission.where ? T(d.mission.where) : "",
       health: d && d.health ? T(d.health) : "",
       enrolDoc: d && d.enrolDoc ? T(d.enrolDoc) : (lang === "ar" ? "خطاب تأكيد التسجيل" : "enrolment confirmation"),
-      missionShort: d && d.missionShort ? T(d.missionShort) : (lang === "ar" ? "الملحقية" : "your cultural mission"),
-      postStudy: d && d.postStudy ? T(d.postStudy.t) : (lang === "ar" ? "تتيح أغلب الدول طريقة للبقاء والعمل بعد التخرج، بشروط مختلفة. اختر دولتك لترى أنظمتها." : "Most countries offer a way to stay and work after you graduate, with different rules. Choose your country to see them."),
-      postStudyUrl: d && d.postStudy ? d.postStudy.u : "https://sites.moe.gov.sa/scholarship-program/"
+      missionShort: d && d.missionShort ? T(d.missionShort) : (lang === "ar" ? "الملحقية" : "your cultural mission")
     };
     document.querySelectorAll("[data-c]").forEach(function (el) {
       var k = el.getAttribute("data-c");
