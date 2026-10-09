@@ -1,10 +1,10 @@
 /* Masarok service worker: makes the guide work offline and installable.
    Pages: network first (so updates show straight away), falling back to the saved copy.
    Scripts, styles and icons: network first too, so a new page never runs old scripts. Fonts: saved copy first. */
-var VERSION = "masarok-v10";
+var VERSION = "masarok-v11";
 var CORE = [
   "/", "/index.html", "/ar/", "/ar/index.html",
-  "/country.js", "/unis.js", "/journey.js", "/journey.css", "/feedback.js", "/flip.js", "/campus.js", "/deadlines.js", "/sections.js", "/game.js", "/journeymap.js", "/app.js",
+  "/country.js", "/unis.js", "/journey.js", "/journey.css", "/feedback.js", "/flip.js", "/campus.js", "/deadlines.js", "/sections.js", "/game.js", "/journeymap.js", "/stepinfo.js", "/quests.js", "/app.js",
   "/manifest.webmanifest", "/ar/manifest.webmanifest", "/favicon.svg",
   "/icons/icon-192.png", "/icons/icon-512.png", "/icons/apple-touch-icon.png"
 ];

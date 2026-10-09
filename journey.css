@@ -404,3 +404,84 @@ button.jm-lbl:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
   .jm-tw, .jm-flag, .jm-plane, .jm-stop.is-here, .jm-stop.is-pop{animation:none !important}
   .jm-me{transition:none}
 }
+
+/* ---------- more about this step ---------- */
+.si{display:grid; gap:10px; border:1px solid rgba(238,242,247,.14); border-radius:12px; padding:12px 14px; background:rgba(255,255,255,.025)}
+.si h4{margin:0}
+.si-tabs{display:flex; flex-wrap:wrap; gap:6px}
+.si-tab{font:inherit; font-size:.86rem; color:var(--night-dim); background:transparent; border:1px solid rgba(238,242,247,.2); border-radius:999px; padding:5px 12px; cursor:pointer}
+.si-tab:hover{color:var(--night-ink); border-color:rgba(226,182,108,.6)}
+.si-tab[aria-selected="true"]{color:#1A1206; background:var(--gold); border-color:var(--gold); font-weight:700}
+.si-tab:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
+.si-list{margin:0; padding-inline-start:20px; display:grid; gap:6px}
+.si-docs li::marker{content:"▢  "; color:var(--gold)}
+.si-oops li::marker{content:"✕  "; color:#E07A6E}
+.si-costs{display:grid; gap:8px}
+.si-cost{display:grid; grid-template-columns:1fr auto; gap:4px 14px; align-items:start; padding:9px 12px; border-radius:10px; background:rgba(6,12,22,.45); border:1px solid rgba(238,242,247,.08)}
+.si-cost > div{display:grid; gap:2px; min-width:0}
+.si-cost b{font-size:.94rem}
+.si-cost small{color:var(--night-dim); font-size:.84rem; line-height:1.45}
+.si-cost small a{color:var(--gold); text-underline-offset:2px; white-space:nowrap}
+.si-cost > span{font-family:var(--f-mono); font-size:.86rem; color:var(--gold); text-align:end; max-width:13rem}
+.si-note{margin:0; font-size:.8rem; color:var(--night-dim)}
+@media (max-width:520px){ .si-cost{grid-template-columns:1fr} .si-cost > span{text-align:start; order:-1} }
+
+/* ---------- quick check ---------- */
+.qz{display:grid; gap:10px; border:1px dashed rgba(226,182,108,.55); border-radius:12px; padding:12px 14px; background:linear-gradient(135deg, rgba(226,182,108,.08), rgba(156,42,34,.06))}
+.qz-h{display:flex; justify-content:space-between; align-items:center; gap:8px; font-family:var(--f-mono); font-size:.76rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold)}
+.qz-h em{font-style:normal; border:1px solid rgba(226,182,108,.6); border-radius:999px; padding:1px 9px; letter-spacing:.02em; text-transform:none}
+.qz-h em.is-ok{background:var(--gold); color:#1A1206}
+.qz-q{margin:0; font-weight:700; color:var(--night-ink)}
+.qz-os{display:grid; gap:6px}
+.qz-o{font:inherit; font-size:.94rem; text-align:start; color:var(--night-ink); background:rgba(6,12,22,.5); border:1px solid rgba(238,242,247,.2); border-radius:10px; padding:9px 12px; cursor:pointer; transition:border-color .2s ease, background-color .2s ease}
+.qz-o:hover:not(:disabled){border-color:var(--gold); background:rgba(226,182,108,.1)}
+.qz-o:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
+.qz-o:disabled{cursor:default; opacity:.7}
+.qz-o.is-right{opacity:1; border-color:#6FBF8E; background:rgba(111,191,142,.16)}
+.qz-o.is-right::before{content:"✓ "; color:#6FBF8E; font-weight:700}
+.qz-o.is-wrong{border-color:#E07A6E; background:rgba(224,122,110,.12)}
+.qz-o.is-wrong::before{content:"✕ "; color:#E07A6E; font-weight:700}
+.qz-res{margin:0; font-size:.92rem; color:#C8D3E0; outline:none}
+.qz-res b{color:#E07A6E}
+.qz-res.is-ok b{color:#6FBF8E}
+
+/* ---------- wardrobe: outfits as colour variables, so a preview can differ from what is worn ---------- */
+[data-outfit]{--jr-shem:#C8102E; --jr-dots:#fff; --jr-thobe:#F6F3EC; --jr-thobe-e:#D9D2C2; --jr-sleeve:#F6F3EC; --jr-sleeve-e:#D9D2C2; --jr-bisht:#1E1B18; --jr-bisht-d:none}
+[data-outfit="ghutra"]{--jr-shem:#F7F5EF; --jr-dots:rgba(0,0,0,0)}
+[data-outfit="winter"]{--jr-thobe:#7B7266; --jr-thobe-e:#5E564C; --jr-sleeve:#7B7266; --jr-sleeve-e:#5E564C}
+[data-outfit="bisht"]{--jr-bisht:#1E1B18; --jr-bisht-d:inline; --jr-sleeve:#1E1B18; --jr-sleeve-e:#0B0A09}
+[data-outfit="gold"]{--jr-bisht:#A97C48; --jr-bisht-d:inline; --jr-sleeve:#A97C48; --jr-sleeve-e:#7E5A30; --jr-shem:#F7F5EF; --jr-dots:rgba(0,0,0,0)}
+.jr-c-shem{fill:var(--jr-shem, #C8102E)}
+.jr-c-dots{stroke:var(--jr-dots, #fff)}
+.jr-c-thobe{fill:var(--jr-thobe, #F6F3EC); stroke:var(--jr-thobe-e, #D9D2C2)}
+.jr-c-sleeve{stroke:var(--jr-sleeve, #F6F3EC)}
+.jr-c-sleeve-e{stroke:var(--jr-sleeve-e, #D9D2C2)}
+.jr-c-bisht{fill:var(--jr-bisht, #1E1B18)}
+.jr-bisht{display:var(--jr-bisht-d, none)}
+
+.wd-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(118px, 1fr)); gap:12px; width:100%}
+.wd-o{display:grid; gap:6px; justify-items:center; align-content:start; padding:12px 8px; border:1px solid rgba(238,242,247,.16); border-radius:14px; background:rgba(255,255,255,.03); font-size:.86rem}
+.wd-o.is-on{border-color:var(--gold); background:rgba(226,182,108,.1)}
+.wd-o.is-locked{opacity:.7}
+.wd-o.is-locked .wd-fig .jr-fig{filter:grayscale(1) brightness(.6)}
+.wd-o small{color:var(--night-dim, #A9B8CB); font-size:.76rem}
+.wd-fig{position:relative; width:52px; height:92px}
+.wd-fig .jr-fig{width:100%; height:100%}
+.wd-lock{position:absolute; inset:auto 0 0 auto; font-size:1.1rem}
+
+.qs-n{font-family:var(--f-mono); font-size:.9rem; color:var(--gold); vertical-align:middle}
+.qs-list{list-style:none; margin:0; padding:0; display:grid; gap:8px; width:100%; text-align:start}
+.qs{display:grid; grid-template-columns:auto 1fr auto; gap:10px; align-items:center; padding:10px 12px; border:1px solid rgba(238,242,247,.14); border-radius:12px; background:rgba(255,255,255,.03)}
+.qs.is-done{border-color:rgba(111,191,142,.5); background:rgba(111,191,142,.08)}
+.qs-ic{font-size:1.3rem}
+.qs-tx{display:grid; gap:2px; min-width:0}
+.qs-tx b{font-size:.94rem}
+.qs-tx small{color:var(--night-dim, #A9B8CB); font-size:.82rem; line-height:1.4}
+.qs-r{display:grid; gap:4px; justify-items:end}
+.qs-r em{font-style:normal; font-family:var(--f-mono); font-size:.78rem; color:var(--gold)}
+.qs-done{color:#6FBF8E; font-size:.84rem; font-weight:700}
+.qs-toast{position:fixed; z-index:150; left:50%; bottom:calc(20px + env(safe-area-inset-bottom, 0px)); translate:-50% 140%; max-width:min(92vw, 28rem);
+  background:var(--night, #0B1626); color:var(--night-ink, #EEF2F7); border:1px solid var(--gold, #E2B66C); border-radius:999px; padding:10px 18px; font-size:.92rem;
+  box-shadow:0 14px 40px -10px rgba(0,0,0,.6); transition:translate .35s cubic-bezier(.2,.9,.3,1.2); pointer-events:none}
+.qs-toast.is-on{translate:-50% 0}
+@media (prefers-reduced-motion: reduce){ .qs-toast{transition:none} }

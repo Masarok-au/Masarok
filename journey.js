@@ -536,8 +536,8 @@
     function arm(side) {
       var x0 = side === "l" ? 19 : 45, x1 = side === "l" ? 16 : 48;
       return '<g class="jr-arm jr-arm-' + side + '" style="transform-origin:' + x0 + 'px 42px">' +
-        '<line x1="' + x0 + '" y1="42" x2="' + x1 + '" y2="70" stroke="' + edge + '" stroke-width="8.6" stroke-linecap="round"/>' +
-        '<line x1="' + x0 + '" y1="42" x2="' + x1 + '" y2="70" stroke="' + thobe + '" stroke-width="7" stroke-linecap="round"/>' +
+        '<line x1="' + x0 + '" y1="42" x2="' + x1 + '" y2="70" class="jr-c-sleeve-e" stroke="' + edge + '" stroke-width="8.6" stroke-linecap="round"/>' +
+        '<line x1="' + x0 + '" y1="42" x2="' + x1 + '" y2="70" class="jr-c-sleeve" stroke="' + thobe + '" stroke-width="7" stroke-linecap="round"/>' +
         '<circle cx="' + x1 + '" cy="72.5" r="3.6" fill="' + skin + '"/></g>';
     }
     return '<svg class="jr-fig ' + (cls || "") + '" viewBox="0 0 64 112" aria-hidden="true" focusable="false">' +
@@ -547,16 +547,19 @@
       // feet
       '<g class="jr-feet"><ellipse class="jr-foot-l" cx="25" cy="104" rx="5.5" ry="2.8" fill="#5A3C1E"/><ellipse class="jr-foot-r" cx="39" cy="104" rx="5.5" ry="2.8" fill="#5A3C1E"/></g>' +
       // thobe
-      '<path d="M24 35 Q32 33 40 35 L46 40 L50.5 102 L13.5 102 L18 40 Z" fill="' + thobe + '" stroke="' + edge + '" stroke-width=".9"/>' +
+      '<path class="jr-c-thobe" d="M24 35 Q32 33 40 35 L46 40 L50.5 102 L13.5 102 L18 40 Z" fill="' + thobe + '" stroke="' + edge + '" stroke-width=".9"/>' +
       '<line x1="32" y1="37" x2="32" y2="52" stroke="' + edge + '" stroke-width="1"/><circle cx="32" cy="42" r=".9" fill="' + edge + '"/><circle cx="32" cy="47" r=".9" fill="' + edge + '"/>' +
       '<line x1="21" y1="40" x2="23" y2="58" stroke="#173252" stroke-width="2.4" stroke-linecap="round"/><line x1="43" y1="40" x2="41" y2="58" stroke="#173252" stroke-width="2.4" stroke-linecap="round"/>' +
+      // bisht (shown by the wardrobe)
+      '<g class="jr-bisht"><path class="jr-c-bisht" d="M17.6 39.6 L24 35 L28.6 37.2 L27.4 103 L12.4 103 Z"/><path class="jr-c-bisht" d="M46.4 39.6 L40 35 L35.4 37.2 L36.6 103 L51.6 103 Z"/>' +
+      '<path d="M28.6 37.2 L27.4 103 M35.4 37.2 L36.6 103" stroke="#E2B66C" stroke-width="1.7"/><path d="M24 35 L28.6 37.2 M40 35 L35.4 37.2" stroke="#E2B66C" stroke-width="1.7" stroke-linecap="round"/></g>' +
       arm("l") + arm("r") +
       // head: shemagh behind, face, shemagh top, agal
-      '<path d="M18.5 16 Q32 2 45.5 16 L48.5 41 Q40.5 34.5 32 34.5 Q23.5 34.5 15.5 41 Z" fill="#C8102E"/>' +
-      '<path d="M17.5 24 L16 39 M46.5 24 L48 39 M20 18 L19 30 M44 18 L45 30" stroke="#fff" stroke-width=".9" stroke-dasharray="1.6 1.8" opacity=".85"/>' +
+      '<path class="jr-c-shem" d="M18.5 16 Q32 2 45.5 16 L48.5 41 Q40.5 34.5 32 34.5 Q23.5 34.5 15.5 41 Z" fill="#C8102E"/>' +
+      '<path class="jr-c-dots" d="M17.5 24 L16 39 M46.5 24 L48 39 M20 18 L19 30 M44 18 L45 30" stroke="#fff" stroke-width=".9" stroke-dasharray="1.6 1.8" opacity=".85"/>' +
       '<ellipse cx="32" cy="22" rx="8.6" ry="9.6" fill="' + skin + '"/>' +
-      '<path d="M21 18.5 Q32 7 43 18.5 Q32 13.5 21 18.5 Z" fill="#C8102E"/>' +
-      '<path d="M22 17 Q32 9 42 17" fill="none" stroke="#fff" stroke-width=".9" stroke-dasharray="1.6 1.8" opacity=".85"/>' +
+      '<path class="jr-c-shem" d="M21 18.5 Q32 7 43 18.5 Q32 13.5 21 18.5 Z" fill="#C8102E"/>' +
+      '<path class="jr-c-dots" d="M22 17 Q32 9 42 17" fill="none" stroke="#fff" stroke-width=".9" stroke-dasharray="1.6 1.8" opacity=".85"/>' +
       '<ellipse cx="32" cy="12.6" rx="11.2" ry="2.6" fill="none" stroke="#14140F" stroke-width="2.2"/>' +
       '<circle cx="28.6" cy="22.6" r="1.25" fill="#14140F"/><circle cx="35.4" cy="22.6" r="1.25" fill="#14140F"/>' +
       '<path d="M28.6 26.8 Q32 29.6 35.4 26.8" fill="none" stroke="#14140F" stroke-width="1.25" stroke-linecap="round"/>' +
@@ -565,9 +568,9 @@
   }
   function headIcon() {
     return '<svg class="jr-head" viewBox="13 3 38 38" aria-hidden="true" focusable="false">' +
-      '<path d="M18.5 16 Q32 2 45.5 16 L48.5 41 Q40.5 34.5 32 34.5 Q23.5 34.5 15.5 41 Z" fill="#C8102E"/>' +
+      '<path d="M18.5 16 Q32 2 45.5 16 L48.5 41 Q40.5 34.5 32 34.5 Q23.5 34.5 15.5 41 Z" fill="#C8102E" class="jr-c-shem"/>' +
       '<ellipse cx="32" cy="22" rx="8.6" ry="9.6" fill="#C08A5A"/>' +
-      '<path d="M21 18.5 Q32 7 43 18.5 Q32 13.5 21 18.5 Z" fill="#C8102E"/>' +
+      '<path d="M21 18.5 Q32 7 43 18.5 Q32 13.5 21 18.5 Z" fill="#C8102E" class="jr-c-shem"/>' +
       '<ellipse cx="32" cy="12.6" rx="11.2" ry="2.6" fill="none" stroke="#14140F" stroke-width="2.2"/>' +
       '<circle cx="28.6" cy="22.6" r="1.25" fill="#14140F"/><circle cx="35.4" cy="22.6" r="1.25" fill="#14140F"/>' +
       '<path d="M28.6 26.8 Q32 29.6 35.4 26.8" fill="none" stroke="#14140F" stroke-width="1.25" stroke-linecap="round"/></svg>';
@@ -581,25 +584,27 @@
     }
     function arm(cls) {
       return '<g class="' + cls + '"><line x1="17" y1="18.5" x2="13" y2="27" stroke="' + edge + '" stroke-width="3.4" stroke-linecap="round"/>' +
-        '<line x1="17" y1="18.5" x2="13" y2="27" stroke="' + thobe + '" stroke-width="2.4" stroke-linecap="round"/>' +
+        '<line class="jr-c-sleeve" x1="17" y1="18.5" x2="13" y2="27" stroke="' + thobe + '" stroke-width="2.4" stroke-linecap="round"/>' +
         '<circle cx="12.6" cy="28" r="1.6" fill="' + skin + '"/></g>';
     }
     return '<svg class="jr-run" viewBox="0 0 40 48" focusable="false">' +
       '<g transform="rotate(-9 17 44)"><g class="jr-run-body">' +
         leg("jr-leg-b") + leg("jr-leg-a") + arm("jr-arm-b") +
+        // bisht flowing behind (shown by the wardrobe)
+        '<g class="jr-bisht"><path class="jr-c-bisht" d="M16.4 15.2 Q20.6 14.6 22.8 16.4 L28.2 41 Q22.4 42.8 16.2 41.8 L17.6 24 Z"/><path d="M16.4 15.2 L17.6 24 L16.2 41.8" fill="none" stroke="#E2B66C" stroke-width="1"/></g>' +
         // backpack on his back
         '<rect x="20.5" y="16.5" width="7.5" height="11" rx="2.4" fill="#173252"/>' +
         '<line x1="22" y1="18" x2="22" y2="25" stroke="#E2B66C" stroke-width="1.1" stroke-linecap="round"/>' +
         // thobe, leaning forward
-        '<path class="jr-hem" d="M13.2 15.5 Q17 14.4 20.8 15.6 L25.4 41.4 Q17.4 43.2 8.8 41.4 Z" fill="' + thobe + '" stroke="' + edge + '" stroke-width=".8"/>' +
+        '<path class="jr-hem jr-c-thobe" d="M13.2 15.5 Q17 14.4 20.8 15.6 L25.4 41.4 Q17.4 43.2 8.8 41.4 Z" fill="' + thobe + '" stroke="' + edge + '" stroke-width=".8"/>' +
         '<line x1="17" y1="16" x2="17" y2="23" stroke="' + edge + '" stroke-width=".7"/>' +
         '<line x1="20.8" y1="16.2" x2="21.6" y2="22" stroke="#173252" stroke-width="1.6" stroke-linecap="round"/>' +
         arm("jr-arm-a") +
         // head: face, shemagh with a tail flying behind, agal
-        '<path class="jr-tail" d="M19.5 7.5 Q25 9 27.5 15.5 Q24 13.5 20.5 13.8 Z" fill="#C8102E"/>' +
+        '<path class="jr-tail jr-c-shem" d="M19.5 7.5 Q25 9 27.5 15.5 Q24 13.5 20.5 13.8 Z" fill="#C8102E"/>' +
         '<circle cx="15" cy="9.4" r="5" fill="' + skin + '"/>' +
-        '<path d="M9.6 9.2 Q10.2 3.2 15.8 3 Q20.9 3.3 21.5 9 L21.6 14.8 Q19.2 12.6 17.6 11.8 Q16.2 8.6 9.6 9.2 Z" fill="#C8102E"/>' +
-        '<path d="M11 8 Q15.5 5.2 20.4 8" fill="none" stroke="#fff" stroke-width=".7" stroke-dasharray="1.2 1.4" opacity=".85"/>' +
+        '<path class="jr-c-shem" d="M9.6 9.2 Q10.2 3.2 15.8 3 Q20.9 3.3 21.5 9 L21.6 14.8 Q19.2 12.6 17.6 11.8 Q16.2 8.6 9.6 9.2 Z" fill="#C8102E"/>' +
+        '<path class="jr-c-dots" d="M11 8 Q15.5 5.2 20.4 8" fill="none" stroke="#fff" stroke-width=".7" stroke-dasharray="1.2 1.4" opacity=".85"/>' +
         '<ellipse cx="15.6" cy="6.4" rx="5.6" ry="1.35" fill="none" stroke="#14140F" stroke-width="1.6" transform="rotate(-10 15.6 6.4)"/>' +
         '<circle cx="12.2" cy="10.4" r=".85" fill="#14140F"/>' +
         '<path d="M10.9 12.6 Q12 13.3 13.1 12.9" fill="none" stroke="#14140F" stroke-width=".75" stroke-linecap="round"/>' +

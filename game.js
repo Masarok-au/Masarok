@@ -33,6 +33,8 @@
     map: '<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>',
     sunrise: '<path d="M3 18h18"/><path d="M6 18a6 6 0 0 1 12 0"/><path d="M12 5v3M4.6 10.6l2 1.1M19.4 10.6l-2 1.1"/>',
     summit: '<path d="M3 20l7-11 4 6 2-3 5 8z"/><path d="M10 9V3l5 2-5 2"/>',
+    bulb: '<path d="M9 18h6M10 21h4"/><path d="M8.5 14.5A6 6 0 1 1 15.5 14.5c-.9.8-1.5 1.7-1.5 3h-4c0-1.3-.6-2.2-1.5-3z"/>',
+    target: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/>',
     lock: '<rect x="6" y="11" width="12" height="9" rx="2"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/>'
   };
   function anyDone(c, ids) { return ids.some(function (id) { return c.done[id] === "done"; }); }
@@ -50,6 +52,8 @@
     { id: "keeper", i: "clock", n: ["Deadline keeper", "حارس المواعيد"], d: ["Set reminders for 3 deadlines.", "فعّل التذكير لثلاثة مواعيد."], t: function (c) { return c.reminders >= 3; } },
     { id: "explorer", i: "map", n: ["Explorer", "المستكشف"], d: ["Open 8 sections of the guide.", "افتح 8 أقسام من الدليل."], t: function (c) { return c.sections >= 8; } },
     { id: "early", i: "sunrise", n: ["Early bird", "السبّاق"], d: ["Finish a step a month or more before its deadline.", "أنجز خطوة قبل موعدها بشهر أو أكثر."], t: function (c) { return c.early; } },
+    { id: "quiz", i: "bulb", n: ["Sharp mind", "الذهن الحاضر"], d: ["Get 5 quick checks right.", "أجب إجابة صحيحة عن 5 أسئلة سريعة."], t: function (c) { return c.quiz >= 5; } },
+    { id: "quester", i: "target", n: ["Side quester", "صاحب المهمات"], d: ["Finish 5 side quests.", "أنجز 5 مهمات جانبية."], t: function (c) { return c.quests >= 5; } },
     { id: "summit", i: "summit", n: ["The summit", "القمة"], d: ["Finish your whole path.", "أكمل طريقك كاملًا."], t: function (c) { return c.n && c.steps + c.skips >= c.n; } }
   ];
   // a tip unlocked when a step is finished, for the stage that comes next
@@ -87,18 +91,19 @@
     shareLine: ["I'm {p}% of the way to studying {in}", "أنجزت {p}% من طريقي للدراسة {in}"],
     shareSub: ["My step-by-step plan on Masarok", "خطتي خطوة بخطوة على مسارُك"],
     shareText: ["I'm {p}% of the way to studying {in}. Plan yours on Masarok:", "أنجزت {p}% من طريقي للدراسة {in}. خطط لطريقك على مسارُك:"],
-    abroad: ["abroad", "في الخارج"], saved: ["Image saved", "حُفظت الصورة"]
+    abroad: ["abroad", "في الخارج"], quests: ["Side quests {d}/{n}", "المهمات {d}/{n}"], wardrobe: ["Wardrobe", "الخزانة"], outfit: ["New outfit unlocked", "زيّ جديد مفتوح"], saved: ["Image saved", "حُفظت الصورة"]
   };
 
   // ---------- saved game state ----------
   var GK = "masarok-game";
-  function gload() { var g = null; try { g = JSON.parse(localStorage.getItem(GK) || "null"); } catch (e) {} g = g || {}; g.seen = g.seen || []; g.sections = g.sections || []; return g; }
+  function gload() { var g = null; try { g = JSON.parse(localStorage.getItem(GK) || "null"); } catch (e) {} g = g || {}; g.seen = g.seen || []; g.sections = g.sections || []; g.bonus = g.bonus || {}; return g; }
   var g = gload();
   function gsave() { try { localStorage.setItem(GK, JSON.stringify(g)); } catch (e) {} }
 
   // ---------- progress → points ----------
   function ctx() {
-    var j = J(), c = { tasks: 0, steps: 0, skips: 0, n: 0, done: {}, reminders: 0, sections: g.sections.length, early: !!g.early, lv: null };
+    var j = J(), c = { tasks: 0, steps: 0, skips: 0, n: 0, done: {}, reminders: 0, sections: g.sections.length, early: !!g.early, lv: null, quiz: 0, quests: 0, bonus: 0 };
+    Object.keys(g.bonus).forEach(function (k) { var v = +g.bonus[k] || 0; c.bonus += v; if (k.indexOf("quiz:") === 0 && v > 0) c.quiz++; if (k.indexOf("quest:") === 0) c.quests++; });
     try { c.reminders = (JSON.parse(localStorage.getItem("masarok-reminders") || "[]") || []).length; } catch (e) {}
     if (!j) return c;
     var st = j.state(), lv = j.level(); c.lv = lv;
@@ -113,7 +118,7 @@
     return c;
   }
   function earned(c) { return BADGES.filter(function (b) { return b.t(c); }).map(function (b) { return b.id; }); }
-  function points(c, e) { return c.tasks * 10 + c.steps * 50 + c.skips * 20 + (e || earned(c)).length * 30; }
+  function points(c, e) { return c.tasks * 10 + c.steps * 50 + c.skips * 20 + (e || earned(c)).length * 30 + c.bonus; }
   function rankOf(p) { var r = 0; RANKS.forEach(function (x, i) { if (p >= x.at) r = i; }); return r; }
   function pct(c) { return c.n ? Math.round((c.steps + c.skips) / c.n * 100) : 0; }
 
@@ -161,7 +166,7 @@
     ".gm-btn{font:inherit; font-size:.85rem; color:var(--night-ink); background:rgba(255,255,255,.05); border:1px solid rgba(226,182,108,.5); border-radius:999px; padding:5px 12px; cursor:pointer; white-space:nowrap}" +
     ".gm-btn:hover{background:rgba(226,182,108,.16)}" +
     ".gm-btn:focus-visible{outline:2px solid var(--gold); outline-offset:2px}" +
-    "@media (max-width:560px){ .gm-bar{grid-template-columns:auto 1fr} .gm-acts{grid-column:1 / -1; flex-direction:row} .gm-acts .gm-btn{flex:1} }" +
+    "@media (max-width:560px){ .gm-bar{grid-template-columns:auto 1fr} .gm-acts{grid-column:1 / -1; display:grid; grid-template-columns:1fr 1fr} .gm-acts .gm-btn{white-space:normal} }" +
     ".gm-chip{display:flex; align-items:center; gap:8px; font-size:.86rem; color:var(--night-ink)}" +
     ".gm-chip .gm-medal{width:26px; height:32px}" +
     ".gm-chip b{color:var(--gold)}" +
@@ -265,7 +270,9 @@
     if (!g.init) { g.init = true; g.seen = e.slice(); g.rank = r; gsave(); paint(); return; }
     g.seen = g.seen.concat(fresh); g.rank = Math.max(g.rank || 0, r); gsave();
     paint();
-    if (reason && reason.type === "step") {
+    if (reason && reason.type === "quiet") {
+      // points counted, no popup
+    } else if (reason && reason.type === "step") {
       celebrateStep(reason, c, p, fresh, up ? r : null, prev);
     } else if (fresh.length || up) {
       celebrateSmall(fresh, up ? r : null);
@@ -278,17 +285,21 @@
     var tip = !reason.skip && TIPS[reason.id];
     var h = '<h2 id="gm-h">' + esc(T(UI.stepDone)) + "</h2>" +
       '<div class="gm-pts">' + esc(fmt(UI.gotPts, { n: gained })) + "</div>";
-    if (newRank != null) h += '<div class="gm-sec"><h3>' + esc(T(UI.rankUp)) + '</h3><div class="gm-badge">' + rankMedal(newRank) + "<b>" + esc(T(RANKS[newRank].n)) + "</b></div></div>";
+    if (newRank != null) h += '<div class="gm-sec"><h3>' + esc(T(UI.rankUp)) + '</h3><div class="gm-badge">' + rankMedal(newRank) + "<b>" + esc(T(RANKS[newRank].n)) + "</b></div>" + outfitLine(newRank) + "</div>";
     if (fresh.length) h += '<div class="gm-sec"><h3>' + esc(T(fresh.length > 1 ? UI.newBadges : UI.newBadge)) + '</h3><div class="gm-row">' +
       fresh.map(function (id) { return badgeHtml(BADGES.filter(function (b) { return b.id === id; })[0], false); }).join("") + "</div></div>";
     if (tip) h += '<div class="gm-sec"><h3>' + esc(T(UI.tip)) + '</h3><p class="gm-tip">💡 ' + esc(T(tip)) + "</p></div>";
     h += '<div class="gm-foot"><button type="button" class="btn btn-primary" data-gm-close data-gm-cont>' + esc(T(UI.cont)) + '</button><button type="button" class="gm-btn" data-gm-share>' + esc(T(UI.share)) + "</button></div>";
     setTimeout(function () { overlay(h); }, reduced() ? 0 : 450);
   }
+  function outfitLine(r) {
+    var W = window.MasarokQuests, o = W && W.outfitAt ? W.outfitAt(r) : null;
+    return o ? '<p class="gm-tip">🧥 <b>' + esc(T(UI.outfit)) + ":</b> " + esc(o) + "</p>" : "";
+  }
   function celebrateSmall(fresh, newRank) {
     confetti();
     var h = "";
-    if (newRank != null) h += '<h2 id="gm-h">' + esc(T(UI.rankUp)) + '</h2><div class="gm-badge">' + rankMedal(newRank) + "<b>" + esc(T(RANKS[newRank].n)) + "</b></div>";
+    if (newRank != null) h += '<h2 id="gm-h">' + esc(T(UI.rankUp)) + '</h2><div class="gm-badge">' + rankMedal(newRank) + "<b>" + esc(T(RANKS[newRank].n)) + "</b></div>" + outfitLine(newRank);
     if (fresh.length) h += (newRank != null ? '<div class="gm-sec">' : "") + '<h2 id="gm-h">' + esc(T(fresh.length > 1 ? UI.newBadges : UI.newBadge)) + '</h2><div class="gm-row">' +
       fresh.map(function (id) { return badgeHtml(BADGES.filter(function (b) { return b.id === id; })[0], false, true); }).join("") + "</div>" + (newRank != null ? "</div>" : "");
     h += '<div class="gm-foot"><button type="button" class="btn btn-primary" data-gm-close data-gm-cont>' + esc(T(UI.cont)) + '</button><button type="button" class="gm-btn" data-gm-shelf>' + esc(T(fmt(UI.badges, { d: g.seen.length, n: BADGES.length }))) + "</button></div>";
@@ -312,7 +323,9 @@
         '<div class="gm-rk"><b>' + esc(T(RANKS[k.r].n)) + " · " + esc(fmt(UI.pts, { n: k.p })) + "</b>" +
         '<div class="gm-xp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + k.w + '"><i style="width:' + k.w + '%"></i></div>' +
         "<small>" + esc(k.nx ? fmt(UI.next, { n: k.nx.at - k.p, r: T(k.nx.n) }) : T(UI.top)) + "</small></div>" +
-        '<div class="gm-acts"><button type="button" class="gm-btn" data-gm-shelf>🏅 ' + esc(fmt(UI.badges, { d: k.e.length, n: BADGES.length })) + '</button><button type="button" class="gm-btn" data-gm-share>' + esc(T(UI.share)) + "</button></div>";
+        '<div class="gm-acts"><button type="button" class="gm-btn" data-gm-shelf>🏅 ' + esc(fmt(UI.badges, { d: k.e.length, n: BADGES.length })) + '</button>' +
+        (window.MasarokQuests ? '<button type="button" class="gm-btn" data-gq>🎯 ' + esc(fmt(UI.quests, { d: k.c.quests, n: window.MasarokQuests.total() })) + '</button><button type="button" class="gm-btn" data-gw>🧥 ' + esc(T(UI.wardrobe)) + '</button>' : "") +
+        '<button type="button" class="gm-btn" data-gm-share>' + esc(T(UI.share)) + "</button></div>";
     }
     // on the plan card under the hero
     var plan = document.querySelector(".jr-banner .jr-plan:not([hidden])");
@@ -417,7 +430,18 @@
   });
   document.addEventListener("change", function (e) { if (e.target.closest && e.target.closest("input[data-dl]")) setTimeout(function () { check(null); }, 50); });
 
-  window.MasarokGame = { badges: BADGES, ranks: RANKS, medal: medal, shelf: shelf, share: share, info: rankInfo };
+  // bonus points from quick checks and side quests: each key pays once
+  function award(key, pts, el, quiet) {
+    if (g.bonus[key] != null) return false;
+    g.bonus[key] = pts; gsave();
+    if (el && pts > 0) floatAt(el, fmt(UI.plus, { n: pts }));
+    check(quiet ? { type: "quiet" } : null);
+    return true;
+  }
+  function has(key) { return g.bonus[key] != null; }
+
+  window.MasarokGame = { badges: BADGES, ranks: RANKS, medal: medal, shelf: shelf, share: share, info: rankInfo,
+    award: award, has: has, bonus: function () { return g.bonus; }, overlay: overlay, closeOverlay: closeOv, refresh: paint, confetti: confetti, rankMedal: rankMedal };
 
   function init() { setTimeout(function () { check(null); paint(); }, 300); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
