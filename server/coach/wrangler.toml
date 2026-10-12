@@ -1,0 +1,27 @@
+# Masarok AI coach · Cloudflare Worker settings
+name = "masarok-coach"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "masarok-coach"
+database_id = "PASTE-YOUR-D1-DATABASE-ID-HERE"
+
+[vars]
+ALLOWED_ORIGINS = "https://masarok.org,https://www.masarok.org"
+MODEL = "claude-sonnet-5-5"
+MAX_TOKENS = "2500"
+PRICE_AMOUNT = "999"          # 9.99 SAR, in halalas
+PRICE_CURRENCY = "sar"
+CREDITS_PER_PACK = "30"       # feedbacks per purchase
+EXPIRY_DAYS = "365"
+MAX_PER_HOUR = "10"           # per coach code
+DAILY_CAP = "500"             # all students together; a safety net for your API bill
+PAYMENT_LINK_ID = ""          # optional: plink_... so only your link counts
+ALLOW_TEST_SESSIONS = "0"     # set to "1" while testing with Stripe test mode
+
+# Secrets (never put these in this file). Set them with:
+#   npx wrangler secret put ANTHROPIC_API_KEY
+#   npx wrangler secret put STRIPE_SECRET_KEY
+#   npx wrangler secret put TOKEN_SECRET

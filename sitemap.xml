@@ -84,4 +84,16 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/life/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/life/"/>
   </url>
+  <url>
+    <loc>https://masarok.org/academy/coach/</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/coach/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/coach/"/>
+  </url>
+  <url>
+    <loc>https://masarok.org/ar/academy/coach/</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/coach/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/coach/"/>
+  </url>
 </urlset>

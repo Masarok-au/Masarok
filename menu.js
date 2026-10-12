@@ -27,7 +27,8 @@
     { id: "home", i: "🏠", href: base, n: ["The guide", "الدليل"], d: ["Everything about studying abroad, for your country", "كل ما تحتاجه للدراسة في الخارج، حسب دولتك"] },
     { id: "journey", i: "🧭", href: base + "#journey", n: ["Guide me, step by step", "أرشدني خطوة بخطوة"], d: ["Your personal plan, with points and badges", "خطتك الشخصية، مع النقاط والأوسمة"] },
     { id: "map", i: "🗺️", href: base + "#map", n: ["Journey map", "خريطة الرحلة"], d: ["Your road from home to campus", "طريقك من البيت إلى الجامعة"] },
-    { id: "academy", i: "🎓", href: base + "academy/", n: ["Masarok Academy", "أكاديمية مسارُك"], d: ["Train for every step: IELTS, essays, visa practice", "تدرّب على كل خطوة: IELTS والمقالات والتأشيرة"], isNew: true }
+    { id: "academy", i: "🎓", href: base + "academy/", n: ["Masarok Academy", "أكاديمية مسارُك"], d: ["Train for every step: IELTS, essays, visa practice", "تدرّب على كل خطوة: IELTS والمقالات والتأشيرة"], isNew: true },
+    { id: "coach", i: "✨", href: base + "academy/coach/", n: ["AI coach", "المدرب الذكي"], d: ["Detailed AI feedback on your writing and speaking", "ملاحظات مفصلة بالذكاء الاصطناعي على كتابتك ومحادثتك"] }
   ];
   var SECTIONS = [
     ["options", "Study options", "خيارات الدراسة"], ["sacm", "The scholarship", "الابتعاث"], ["deadlines", "Deadlines", "المواعيد"],
@@ -112,7 +113,8 @@
   // ---------- the drawer ----------
   var mn, btn, lastFocus;
   function current(id) {
-    if (id === "academy") return onAcademy;
+    if (id === "coach") return /\/academy\/coach(\/|$)/.test(path);
+    if (id === "academy") return onAcademy && !/\/academy\/coach(\/|$)/.test(path);
     if (id === "home") return !onAcademy && !/#(journey|map)$/.test(location.hash);
     return false;
   }

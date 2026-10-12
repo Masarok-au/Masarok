@@ -125,7 +125,7 @@
     mkS1: ["Part 1 (4–5 minutes): record yourself answering these questions, one after another.", "الجزء 1 (4–5 دقائق): سجّل إجاباتك عن هذه الأسئلة واحدًا تلو الآخر."], mkS2: ["Part 2: 1 minute to prepare, then speak for up to 2 minutes.", "الجزء 2: دقيقة للتحضير ثم تحدث حتى دقيقتين."], mkS3: ["Part 3 (4–5 minutes): answer these discussion questions with reasons and examples.", "الجزء 3 (4–5 دقائق): أجب عن أسئلة النقاش مع أسباب وأمثلة."],
     mkNextSp: ["Next part", "الجزء التالي"], mkSubmitS: ["Finish Speaking", "أنهِ المحادثة"],
     mkMarkT: ["Rate your Writing and Speaking", "قيّم كتابتك ومحادثتك"], mkMarkSub: ["Reread your essays and listen to your recordings, then be honest. Listening and Reading are marked for you.", "أعد قراءة مقالاتك واستمع لتسجيلاتك، ثم كن صادقًا. الاستماع والقراءة يُصحَّحان تلقائيًا."],
-    estMock: ["Estimated band", "الدرجة التقديرية"], mkSee: ["See my result", "اعرض نتيجتي"], mkResT: ["Your mock test result", "نتيجة اختبارك التجريبي"],
+    mkCoach: ["Coach notes on your writing", "ملاحظات المدرب على كتابتك"], estMock: ["Estimated band", "الدرجة التقديرية"], mkSee: ["See my result", "اعرض نتيجتي"], mkResT: ["Your mock test result", "نتيجة اختبارك التجريبي"],
     mkNote: ["Listening and Reading are marked from your answers. Writing and Speaking come from your own ratings, so treat the overall as a rough estimate, not an official score.", "الاستماع والقراءة مصححان من إجاباتك، والكتابة والمحادثة من تقييمك لنفسك، فاعتبر الدرجة الكلية تقديرًا تقريبيًا وليست درجة رسمية."],
     mkRevL: ["Review Listening answers", "راجع إجابات الاستماع"], mkRevR: ["Review Reading answers", "راجع إجابات القراءة"],
     // phase 3: ordering, document detective, stories, budget and interviews
@@ -755,6 +755,8 @@
   function copyText(text, btn) {
     try { navigator.clipboard.writeText(text).then(function () { var o = btn.textContent; btn.textContent = T(UI.copied); setTimeout(function () { btn.textContent = o; }, 1500); }); } catch (e) {}
   }
+  // which kind of writing the coach should expect
+  function coachKind(st) { var k = st.key || ""; return st.coach || (k === "task1" || /-t1$/.test(k) ? "task1" : /-t2$/.test(k) ? "task2" : /email/.test(k) ? "email" : "statement"); }
   // one writing box: counter, limits, timer, clichés, self-check
   RENDER.pad = function (el, st) {
     var D = drafts(), d = D[st.key] = D[st.key] || { text: "", checks: [] }, unit = st.unit || "words";
@@ -768,9 +770,10 @@
       '<textarea class="es-pad" rows="' + (st.rows || 12) + '" lang="en" dir="ltr" spellcheck="true" aria-label="' + esc(EN(st.h)) + '">' + esc(d.text) + "</textarea>" +
       '<div class="es-over" data-over></div>' +
       (st.checks ? '<fieldset class="es-ck"><legend>' + esc(T(UI.checkT)) + "</legend>" + st.checks.map(function (x, k) { return '<label><input type="checkbox" data-ck="' + k + '"' + (d.checks[k] ? " checked" : "") + "><span>" + esc(T(x)) + "</span></label>"; }).join("") + "</fieldset>" : "") +
-      '<p class="es-need" data-need></p></div>';
+      '<p class="es-need" data-need></p>' + (st.noCoach ? "" : "<div data-coach></div>") + "</div>";
     fixArDir(el);
     var pad = $(".es-pad", el), wc = $("[data-wc]", el), over = $("[data-over]", el), nd = $("[data-need]", el);
+    if (window.MasarokCoach && !st.noCoach) window.MasarokCoach.writingBox($("[data-coach]", el), function () { return pad.value; }, coachKind(st), Object.assign(unit === "chars" ? { min: 0, max: 0 } : { min: st.min, max: st.max }, { prompt: st.prompt, meta: { course: EN(st.h), limit: st.max ? st.max + " " + unit + " maximum" : st.min ? st.min + "+ " + unit : "" } }));
     function upd() {
       var n = count(pad.value, unit);
       var lim = st.min && st.max ? " / " + st.min + "–" + st.max : st.max ? " / " + st.max : st.min ? " / " + st.min + "+" : "";
@@ -819,8 +822,9 @@
           '<textarea id="bf-' + f.id + '" class="es-pad" rows="' + (f.rows || 5) + '" lang="en" dir="ltr" spellcheck="true">' + esc(d[f.id] || "") + '</textarea><span class="bd-n es-wc" data-bn="' + f.id + '"></span></div>';
       }).join("") + "</div>" +
       '<div class="bd-tot"><span data-btot></span><span class="lp-sp"></span><button type="button" class="es-link" data-bcopy>' + esc(T(UI.copyAll)) + '</button><button type="button" class="btn btn-ghost" data-bdl>⬇ ' + esc(T(UI.download)) + "</button></div>" +
-      '<div class="es-over" data-over></div></div>';
+      '<div class="es-over" data-over></div><div data-coach></div></div>';
     fixArDir(el);
+    if (window.MasarokCoach) window.MasarokCoach.writingBox($("[data-coach]", el), function () { return all(); }, st.coach || "statement", { min: 0, max: 0, aiText: function () { return st.fields.map(function (f) { return d[f.id] ? EN(f.label) + "\n" + d[f.id] : ""; }).filter(Boolean).join("\n\n"); }, meta: { course: st.export || EN(st.h), limit: tot.max ? tot.max + " " + (tot.unit || unit) + " in total" : "" } });
     function all() { return st.fields.map(function (f) { return d[f.id] || ""; }).join("\n\n"); }
     function upd() {
       var sum = 0;
@@ -847,8 +851,10 @@
   // ================= speaking practice: questions with a recorder =================
   var canRecord = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
   // a record button with a countdown; falls back to a timer when recording isn't possible
-  function recorder(box, secs, onDone) {
-    box.innerHTML = '<div class="sp-row"><button type="button" class="btn btn-primary" data-r>' + (canRecord ? "⏺ " + esc(T(UI.recGo)) : "⏱ " + esc(fmt(UI.speakFor, { n: secs }))) + '</button><span class="sp-clock" data-rc>' + Math.floor(secs / 60) + ":" + ("0" + secs % 60).slice(-2) + '</span></div><div data-pb></div><p class="sp-msg" data-rm></p>';
+  function recorder(box, secs, onDone, task) {
+    var MC = window.MasarokCoach, lis = null, t0 = 0;
+    box.innerHTML = '<div class="sp-row"><button type="button" class="btn btn-primary" data-r>' + (canRecord ? "⏺ " + esc(T(UI.recGo)) : "⏱ " + esc(fmt(UI.speakFor, { n: secs }))) + '</button><span class="sp-clock" data-rc>' + Math.floor(secs / 60) + ":" + ("0" + secs % 60).slice(-2) + '</span></div><div data-pb></div><p class="sp-msg" data-rm></p>' +
+      (MC && canRecord ? MC.speechToggle() + "<div data-co-spk></div>" : "");
     var b = $("[data-r]", box), c = $("[data-rc]", box), stop = null;
     function countdown() { stop = clock(secs, c, function () { if (canRecord) stopRec(); else { b.disabled = false; onDone && onDone(); } }); }
     b.addEventListener("click", function () {
@@ -862,11 +868,13 @@
           if (stop) stop();
           var url = URL.createObjectURL(new Blob(rec.chunks, { type: mr.mimeType || "audio/webm" }));
           $("[data-pb]", box).innerHTML = '<audio controls src="' + url + '"></audio>';
+          if (lis) { var L1 = lis; lis = null; L1.finish(Math.round((Date.now() - t0) / 1000), function (r1) { MC.speechReport($("[data-co-spk]", box), MC.speech(r1.text, r1.secs, Math.round(secs * 0.6)), task); }); }
           b.textContent = "⏺ " + T(UI.recAgain); b.classList.remove("is-rec");
           try { stream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) {}
           rec.stream = null; onDone && onDone();
         };
-        mr.start(); b.textContent = "⏹ " + T(UI.recStop); b.classList.add("is-rec"); countdown();
+        mr.start(); t0 = Date.now(); lis = MC ? MC.listen() : null; var sb = $("[data-co-spk]", box); if (sb) sb.innerHTML = "";
+        b.textContent = "⏹ " + T(UI.recStop); b.classList.add("is-rec"); countdown();
       }).catch(function () { $("[data-rm]", box).textContent = T(UI.micDenied); canRecord = false; b.textContent = "⏱ " + fmt(UI.speakFor, { n: secs }); });
     });
   }
@@ -884,7 +892,7 @@
         '<div data-recbox></div><div class="sp-row"><button type="button" class="btn btn-ghost" data-qnext>' + esc(T(qi < set.qs.length - 1 ? UI.nextQ : UI.otherTopic)) + "</button></div>" +
         '<p class="cs-note">' + esc(fmt(UI.answeredN, { n: answered })) + " · " + esc(T(UI.private)) + "</p></div>";
       fixArDir(el);
-      recorder($("[data-recbox]", el), st.secs, function () { answered++; gateUpdate(); });
+      recorder($("[data-recbox]", el), st.secs, function () { answered++; gateUpdate(); }, q);
     }
     el.addEventListener("click", function (e) {
       var b = e.target.closest("[data-set]"); if (b) { set = st.sets[+b.getAttribute("data-set")]; qi = 0; show(); return; }
@@ -906,8 +914,9 @@
       '<div class="es-over" data-over></div>' +
       '<fieldset class="es-ck"><legend>' + esc(T(UI.checkT)) + "</legend>" + UI.ess.map(function (x, k) {
         return '<label><input type="checkbox" data-ck="' + k + '"' + (S.essay.checks[k] ? " checked" : "") + "><span>" + esc(T(x)) + "</span></label>";
-      }).join("") + '</fieldset><p class="es-need" data-need></p></div>';
+      }).join("") + '</fieldset><p class="es-need" data-need></p><div data-coach></div></div>';
     var pad = $(".es-pad", el), wc = $("[data-wc]", el), over = $("[data-over]", el), need = $("[data-need]", el), clock = $("[data-clock]", el), tm = $("[data-tm]", el);
+    if (window.MasarokCoach) window.MasarokCoach.writingBox($("[data-coach]", el), function () { return pad.value; }, "task2", { prompt: st.prompt });
     function upd() {
       var n = wcount(pad.value), low = pad.value.toLowerCase();
       wc.textContent = fmt(UI.wcGoal, { n: n }); wc.classList.toggle("is-ok", n >= 250);
@@ -969,7 +978,8 @@
         '<div class="sp-step"><h3>' + esc(T(UI.p3T)) + '</h3><ul class="tx-list" lang="en" dir="ltr">' + card.p3.map(function (q) { return "<li>" + esc(q) + "</li>"; }).join("") + "</ul></div>" +
         '<button type="button" class="es-link" data-other>' + esc(T(UI.otherCard)) + "</button></div>";
       $("[data-prep]", el).addEventListener("click", function () { timer(60, $("[data-pclock]", el)); });
-      var rb = $("[data-rec]", el);
+      var rb = $("[data-rec]", el), MC = window.MasarokCoach, lis = null, t0 = 0;
+      if (rb && MC) { var pbx = $("[data-play-box]", el); pbx.insertAdjacentHTML("afterend", MC.speechToggle() + "<div data-co-spk></div>"); }
       if (rb) rb.addEventListener("click", function () {
         if (rec.mr && rec.mr.state === "recording") { stopRec(); return; }
         navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
@@ -982,12 +992,13 @@
             if (rec.url) URL.revokeObjectURL(rec.url);
             rec.url = URL.createObjectURL(blob);
             var box = $("[data-play-box]", el); if (box) box.innerHTML = '<p class="sp-lb">🎧 ' + esc(T(UI.listenBack)) + '</p><audio controls src="' + rec.url + '"></audio>';
+            if (lis) { var L2 = lis; lis = null; L2.finish(Math.round((Date.now() - t0) / 1000), function (r2) { MC.speechReport($("[data-co-spk]", el), MC.speech(r2.text, r2.secs, 90), card.title); }); }
             rb.textContent = "⏺ " + T(UI.recAgain); rb.classList.remove("is-rec");
             did = true; gateUpdate();
             try { stream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) {}
             rec.stream = null;
           };
-          mr.start();
+          mr.start(); t0 = Date.now(); lis = MC ? MC.listen() : null; var cs = $("[data-co-spk]", el); if (cs) cs.innerHTML = "";
           rb.textContent = "⏹ " + T(UI.recStop); rb.classList.add("is-rec");
           timer(120, $("[data-rclock]", el), function () { stopRec(); });
         }).catch(function () { var m = $("[data-rmsg]", el); if (m) m.textContent = T(UI.micDenied); });
@@ -1101,7 +1112,7 @@
         el.innerHTML = '<div class="en-block">' + bar("Writing · 60 minutes", true) +
           '<div class="md-tabs" role="tablist"><button type="button" role="tab" class="md-tab" aria-selected="' + (wTask === 0) + '" data-wt="0">Task 1 · 150+ words</button><button type="button" role="tab" class="md-tab" aria-selected="' + (wTask === 1) + '" data-wt="1">Task 2 · 250+ words</button></div>' +
           '<div data-wpad></div><div class="sp-row"><button type="button" class="btn btn-primary" data-mnext>' + esc(T(UI.mkSubmitW)) + "</button></div></div>";
-        RENDER.pad($("[data-wpad]", el), { key: wKey(wTask === 0 ? "t1" : "t2"), h: wTask === 0 ? ["Writing Task 1", "الكتابة، المهمة 1"] : ["Writing Task 2", "الكتابة، المهمة 2"], prompt: t.prompt, chart: t.chart, min: wTask === 0 ? 150 : 250, unit: "words", rows: 12 });
+        RENDER.pad($("[data-wpad]", el), { key: wKey(wTask === 0 ? "t1" : "t2"), h: wTask === 0 ? ["Writing Task 1", "الكتابة، المهمة 1"] : ["Writing Task 2", "الكتابة، المهمة 2"], prompt: t.prompt, chart: t.chart, min: wTask === 0 ? 150 : 250, unit: "words", rows: 12, noCoach: true });
         secClock("W");
       } else if (stage === "S") {
         var Sp = M.speaking, h = '<div class="en-block">' + bar(["Speaking · Part 1", "Speaking · Part 2", "Speaking · Part 3"][sPart], false);
@@ -1120,7 +1131,7 @@
                 return '<label class="q-o"><input type="radio" name="mk' + sk + ci + '" value="' + oi + '"' + (self[sk][ci] === oi ? " checked" : "") + "><span>" + esc(T(o)) + "</span></label>";
               }).join("") + "</div></fieldset>";
             }).join("");
-          }).join("") + '<button type="button" class="btn btn-primary" data-mres>' + esc(T(UI.mkSee)) + "</button></div>";
+          }).join("") + mockCoach() + '<button type="button" class="btn btn-primary" data-mres>' + esc(T(UI.mkSee)) + "</button></div>";
         el.addEventListener("change", onSelf);
       } else if (stage === "res") {
         var m2 = S.mocks[id];
@@ -1146,6 +1157,14 @@
           return '<div class="mk-r ' + (ok ? "is-ok" : "is-no") + '"><b>' + e.n + ". " + (ok ? "✓" : "✕") + "</b> " + esc(q) + "<br><small>Your answer: " + esc(valText(e.it, v, ctx)) + (ok ? "" : " · Answer: " + esc(answerText(e.it, ctx))) + "</small>" +
             '<small class="mk-x">' + esc(EN(e.it.x)) + "</small>" + (S.arHelp && Array.isArray(e.it.x) ? '<small class="ar-help" lang="ar" dir="rtl">' + esc(e.it.x[1]) + "</small>" : "") + "</div>";
         }).join("") + "</div>";
+      }).join("");
+    }
+    // the free coach's notes on both essays, to help an honest self-rating
+    function mockCoach() {
+      var MC = window.MasarokCoach, D = drafts(); if (!MC) return "";
+      return [["t1", "task1", "Task 1"], ["t2", "task2", "Task 2"]].map(function (x) {
+        var t = (D[wKey(x[0])] || {}).text || ""; if (wcount(t) < 40) return "";
+        return '<details class="co-mk"><summary>🧭 ' + esc(T(UI.mkCoach)) + " · " + x[2] + "</summary>" + MC.writingHtml(MC.writing(t, x[1])) + "</details>";
       }).join("");
     }
     function onSelf(e) { var nm = e.target.name || ""; if (nm.indexOf("mk") === 0) self[nm.charAt(2)][+nm.slice(3)] = +e.target.value; }
@@ -1366,7 +1385,7 @@
         '<div data-recbox></div><div class="sp-row"><button type="button" class="btn btn-ghost" data-iv-say>🔊 ' + esc(T(UI.ivRepeat)) + '</button><button type="button" class="btn btn-ghost" data-iv-next>' + esc(T(qi < qs.length - 1 ? UI.nextQ : UI.ivFinish)) + "</button></div>" +
         '<p class="cs-note">' + esc(T(UI.private)) + "</p></div>";
       fixArDir(el);
-      recorder($("[data-recbox]", el), st.secs, function () { answered++; });
+      recorder($("[data-recbox]", el), st.secs, function () { answered++; }, q.q);
       if (voice) say(q.q);
     }
     function say(t) { try { if (!tts) return; tts.cancel(); var u = new SpeechSynthesisUtterance(t); u.lang = st.accent || "en-US"; u.rate = 0.95; tts.speak(u); } catch (e) {} }
