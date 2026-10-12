@@ -538,12 +538,36 @@
       return '<g class="jr-arm jr-arm-' + side + '" style="transform-origin:' + x0 + 'px 42px">' +
         '<line x1="' + x0 + '" y1="42" x2="' + x1 + '" y2="70" class="jr-c-sleeve-e" stroke="' + edge + '" stroke-width="8.6" stroke-linecap="round"/>' +
         '<line x1="' + x0 + '" y1="42" x2="' + x1 + '" y2="70" class="jr-c-sleeve" stroke="' + thobe + '" stroke-width="7" stroke-linecap="round"/>' +
-        '<circle cx="' + x1 + '" cy="72.5" r="3.6" fill="' + skin + '"/></g>';
+        (side === "l" ? dallah() : "") +
+        '<circle cx="' + x1 + '" cy="72.5" r="3.6" fill="' + skin + '"/>' + (side === "r" ? falcon() : "") + '</g>';
+    }
+    // accessories from the wardrobe, hidden unless chosen
+    function dallah() {
+      return '<g class="jr-acc-dallah" transform="translate(-1.5 -4)">' +
+        '<path d="M10.6 80.6 Q7 79.4 6 75.2" fill="none" stroke="#C99A5B" stroke-width="1.7" stroke-linecap="round"/>' +
+        '<path d="M17.6 80 Q21.2 80.6 20.6 84.4 Q20.2 86.6 18.4 86.8" fill="none" stroke="#9C7440" stroke-width="1.4" stroke-linecap="round"/>' +
+        '<path d="M9.6 88 Q8.6 82 11.2 78.4 L16.8 78.4 Q19.4 82 18.4 88 Z" fill="#C99A5B"/>' +
+        '<path d="M11.4 78.4 L12.4 75.4 L15.6 75.4 L16.6 78.4 Z" fill="#B0844D"/><circle cx="14" cy="74.3" r="1.1" fill="#E2B66C"/>' +
+        '<path d="M10 83 H18" stroke="#9C7440" stroke-width=".8"/><rect x="9.2" y="87.4" width="9.6" height="1.8" rx=".9" fill="#9C7440"/></g>';
+    }
+    function falcon() {
+      return '<g class="jr-acc-falcon" transform="translate(48 72.5) scale(1.55) translate(-48 -72.5)">' +
+        '<path d="M46.4 69.6 L43.6 76 L47.8 72.4 Z" fill="#4E351E"/>' +
+        '<path d="M45.6 70.6 Q44.4 64 48.6 60.4 Q52.6 58.4 54.2 62 Q55.2 66.6 51.6 70.6 Z" fill="#6B4A2B"/>' +
+        '<path d="M48.8 61.6 Q51.6 61 52.5 64 Q52.7 67.6 50.5 70 Q48.8 66 48.8 61.6 Z" fill="#E9DCC2"/>' +
+        '<path d="M49.4 64 l1 .6 M49.6 66.4 l1 .6" stroke="#9C7440" stroke-width=".6"/>' +
+        '<circle cx="52.6" cy="58.4" r="3" fill="#6B4A2B"/>' +
+        '<path d="M49.7 58.8 Q49.9 55 52.6 55.1 Q55.5 55.3 55.7 58.5 Q53 57.5 49.7 58.8 Z" fill="#9C2A22"/><circle cx="52.6" cy="54.7" r=".8" fill="#E2B66C"/>' +
+        '<path d="M55.4 58.6 L57.6 59.4 L55.4 60.3 Z" fill="#E2B66C"/>' +
+        '<path d="M47.4 70.6 v1.6 M49.4 70.8 v1.6" stroke="#E2B66C" stroke-width=".8" stroke-linecap="round"/></g>';
     }
     return '<svg class="jr-fig ' + (cls || "") + '" viewBox="0 0 64 112" aria-hidden="true" focusable="false">' +
       // backpack
       '<rect x="43" y="44" width="11" height="28" rx="4" fill="#173252"/>' +
       '<line x1="51" y1="48" x2="51" y2="60" stroke="#E2B66C" stroke-width="1.6" stroke-linecap="round"/><circle cx="51" cy="61.5" r="1.6" fill="#E2B66C"/>' +
+      '<g class="jr-acc-sadu"><rect x="44.5" y="43" width="14" height="30" rx="4.5" fill="#2A1612" stroke="#C99A5B" stroke-width=".8"/>' +
+        '<path d="M45.2 48 L48.5 45 L51.6 48 L54.8 45 L57.8 47.6 V49.6 H45.2 Z M45.2 68.2 L48.5 71.2 L51.6 68.2 L54.8 71.2 L57.8 68.6 V66.4 H45.2 Z" fill="#9C2A22"/>' +
+        '<path d="M51.6 52 l2.8 2.8 -2.8 2.8 -2.8 -2.8z M51.6 59.2 l2.8 2.8 -2.8 2.8 -2.8 -2.8z" fill="#F3EBDD"/><path d="M45.4 50.6 H57.6 M45.4 65.4 H57.6" stroke="#C99A5B" stroke-width=".9"/></g>' +
       // feet
       '<g class="jr-feet"><ellipse class="jr-foot-l" cx="25" cy="104" rx="5.5" ry="2.8" fill="#5A3C1E"/><ellipse class="jr-foot-r" cx="39" cy="104" rx="5.5" ry="2.8" fill="#5A3C1E"/></g>' +
       // thobe

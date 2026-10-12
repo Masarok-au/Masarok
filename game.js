@@ -35,6 +35,8 @@
     summit: '<path d="M3 20l7-11 4 6 2-3 5 8z"/><path d="M10 9V3l5 2-5 2"/>',
     bulb: '<path d="M9 18h6M10 21h4"/><path d="M8.5 14.5A6 6 0 1 1 15.5 14.5c-.9.8-1.5 1.7-1.5 3h-4c0-1.3-.6-2.2-1.5-3z"/>',
     target: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/>',
+    dallah: '<path d="M8 20.5h8"/><path d="M9 20.5c-1.6-2.2-2-4.6-1-7.6l.9-2.4h6.2l.9 2.4c1 3 .6 5.4-1 7.6"/><path d="M9.6 10.5l1-3h2.8l1 3"/><path d="M12 7.5V5"/><circle cx="12" cy="4.2" r=".9"/><path d="M8.2 13C5.6 12.6 4 10.6 3.6 8"/><path d="M16.3 12c1.7.3 2.6 1.7 2.4 3.3-.2 1.4-1.3 2.3-2.7 2.4"/>',
+    flame: '<path d="M12 21c-3.9 0-6.5-2.6-6.5-6.2 0-3.6 3-5.8 3.7-9.3 2.2 1.4 3.4 3.4 3.5 5.6 1-.8 1.6-2 1.7-3.3 2.4 2 4.1 4.7 4.1 7.3 0 3.4-2.6 5.9-6.5 5.9z"/>',
     lock: '<rect x="6" y="11" width="12" height="9" rx="2"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/>'
   };
   function anyDone(c, ids) { return ids.some(function (id) { return c.done[id] === "done"; }); }
@@ -54,6 +56,8 @@
     { id: "early", i: "sunrise", n: ["Early bird", "السبّاق"], d: ["Finish a step a month or more before its deadline.", "أنجز خطوة قبل موعدها بشهر أو أكثر."], t: function (c) { return c.early; } },
     { id: "quiz", i: "bulb", n: ["Sharp mind", "الذهن الحاضر"], d: ["Get 5 quick checks right.", "أجب إجابة صحيحة عن 5 أسئلة سريعة."], t: function (c) { return c.quiz >= 5; } },
     { id: "quester", i: "target", n: ["Side quester", "صاحب المهمات"], d: ["Finish 5 side quests.", "أنجز 5 مهمات جانبية."], t: function (c) { return c.quests >= 5; } },
+    { id: "streak3", i: "dallah", n: ["Steady pace", "الخطى الثابتة"], d: ["Keep a 3-week streak: do something each week.", "حافظ على سلسلة 3 أسابيع: أنجز شيئًا كل أسبوع."], t: function (c) { return c.best >= 3; } },
+    { id: "streak6", i: "flame", n: ["Never stops", "المثابر"], d: ["Keep a 6-week streak.", "حافظ على سلسلة 6 أسابيع."], t: function (c) { return c.best >= 6; } },
     { id: "summit", i: "summit", n: ["The summit", "القمة"], d: ["Finish your whole path.", "أكمل طريقك كاملًا."], t: function (c) { return c.n && c.steps + c.skips >= c.n; } }
   ];
   // a tip unlocked when a step is finished, for the stage that comes next
@@ -91,18 +95,20 @@
     shareLine: ["I'm {p}% of the way to studying {in}", "أنجزت {p}% من طريقي للدراسة {in}"],
     shareSub: ["My step-by-step plan on Masarok", "خطتي خطوة بخطوة على مسارُك"],
     shareText: ["I'm {p}% of the way to studying {in}. Plan yours on Masarok:", "أنجزت {p}% من طريقي للدراسة {in}. خطط لطريقك على مسارُك:"],
+    streak: ["🔥 {n}-week streak", "🔥 سلسلة {w}"], streakRisk: ["Do one thing this week to keep it going", "أنجز شيئًا هذا الأسبوع لتحافظ عليها"],
+    streakNew: ["🔥 Start a weekly streak: do one thing each week", "🔥 ابدأ سلسلة أسبوعية: أنجز شيئًا كل أسبوع"], streakUp: ["🔥 {n}-week streak!", "🔥 سلسلة {w}!"],
     abroad: ["abroad", "في الخارج"], quests: ["Side quests {d}/{n}", "المهمات {d}/{n}"], wardrobe: ["Wardrobe", "الخزانة"], outfit: ["New outfit unlocked", "زيّ جديد مفتوح"], saved: ["Image saved", "حُفظت الصورة"]
   };
 
   // ---------- saved game state ----------
   var GK = "masarok-game";
-  function gload() { var g = null; try { g = JSON.parse(localStorage.getItem(GK) || "null"); } catch (e) {} g = g || {}; g.seen = g.seen || []; g.sections = g.sections || []; g.bonus = g.bonus || {}; return g; }
+  function gload() { var g = null; try { g = JSON.parse(localStorage.getItem(GK) || "null"); } catch (e) {} g = g || {}; g.seen = g.seen || []; g.sections = g.sections || []; g.bonus = g.bonus || {}; g.weeks = g.weeks || []; return g; }
   var g = gload();
   function gsave() { try { localStorage.setItem(GK, JSON.stringify(g)); } catch (e) {} }
 
   // ---------- progress → points ----------
   function ctx() {
-    var j = J(), c = { tasks: 0, steps: 0, skips: 0, n: 0, done: {}, reminders: 0, sections: g.sections.length, early: !!g.early, lv: null, quiz: 0, quests: 0, bonus: 0 };
+    var j = J(), sk = streak(), c = { tasks: 0, steps: 0, skips: 0, n: 0, done: {}, reminders: 0, sections: g.sections.length, early: !!g.early, lv: null, quiz: 0, quests: 0, bonus: 0, weeks: g.weeks.length, streak: sk.n, best: sk.best, risk: sk.risk };
     Object.keys(g.bonus).forEach(function (k) { var v = +g.bonus[k] || 0; c.bonus += v; if (k.indexOf("quiz:") === 0 && v > 0) c.quiz++; if (k.indexOf("quest:") === 0) c.quests++; });
     try { c.reminders = (JSON.parse(localStorage.getItem("masarok-reminders") || "[]") || []).length; } catch (e) {}
     if (!j) return c;
@@ -118,7 +124,38 @@
     return c;
   }
   function earned(c) { return BADGES.filter(function (b) { return b.t(c); }).map(function (b) { return b.id; }); }
-  function points(c, e) { return c.tasks * 10 + c.steps * 50 + c.skips * 20 + (e || earned(c)).length * 30 + c.bonus; }
+  function points(c, e) { return c.tasks * 10 + c.steps * 50 + c.skips * 20 + (e || earned(c)).length * 30 + c.bonus + c.weeks * 10; }
+
+  // ---------- weekly streak: any progress in a week keeps it going ----------
+  function weekKey(d) {
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    var day = d.getUTCDay() || 7; d.setUTCDate(d.getUTCDate() + 4 - day);
+    var y0 = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return d.getUTCFullYear() + "-W" + ("0" + Math.ceil(((d - y0) / 864e5 + 1) / 7)).slice(-2);
+  }
+  function weekBefore(k) { var p = k.split("-W"), d = isoMonday(+p[0], +p[1]); d.setUTCDate(d.getUTCDate() - 7); return weekKey(new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())); }
+  function isoMonday(y, w) { var j4 = new Date(Date.UTC(y, 0, 4)), day = j4.getUTCDay() || 7; var m = new Date(j4); m.setUTCDate(j4.getUTCDate() - day + 1 + (w - 1) * 7); return m; }
+  function streak() {
+    var set = {}; (g.weeks || []).forEach(function (k) { set[k] = 1; });
+    var now = weekKey(new Date()), start = set[now] ? now : (set[weekBefore(now)] ? weekBefore(now) : null), n = 0;
+    for (var k = start; k && set[k]; k = weekBefore(k)) n++;
+    var best = Math.max(+g.best || 0, n);
+    return { n: n, best: best, risk: !!start && start !== now };
+  }
+  function touchWeek() {
+    var k = weekKey(new Date());
+    if (g.weeks.indexOf(k) > -1) return false;
+    g.weeks.push(k); var sk = streak(); g.best = sk.best; gsave();
+    if (sk.n >= 2) toast(fmt(UI.streakUp, { n: sk.n, w: weeksAr(sk.n) }) + " · " + fmt(UI.plus, { n: 10 }));
+    return true;
+  }
+  function weeksAr(n) { return n === 1 ? "أسبوع واحد" : n === 2 ? "أسبوعين" : n <= 10 ? n + " أسابيع" : n + " أسبوعًا"; }
+  var tEl, tT;
+  function toast(msg) {
+    if (!tEl) { tEl = document.createElement("div"); tEl.className = "qs-toast"; tEl.setAttribute("role", "status"); document.body.appendChild(tEl); }
+    tEl.textContent = msg; tEl.classList.add("is-on");
+    clearTimeout(tT); tT = setTimeout(function () { tEl.classList.remove("is-on"); }, 3600);
+  }
   function rankOf(p) { var r = 0; RANKS.forEach(function (x, i) { if (p >= x.at) r = i; }); return r; }
   function pct(c) { return c.n ? Math.round((c.steps + c.skips) / c.n * 100) : 0; }
 
@@ -227,7 +264,7 @@
     }
     document.body.appendChild(box);
     setTimeout(function () { box.remove(); }, 3400);
-    try { if (navigator.vibrate) navigator.vibrate(30); } catch (e) {}
+    try { if (navigator.vibrate && (!navigator.userActivation || navigator.userActivation.hasBeenActive)) navigator.vibrate(30); } catch (e) {}
   }
 
   // ---------- overlay (celebration, badge shelf) ----------
@@ -322,7 +359,8 @@
       bar.innerHTML = rankMedal(k.r) +
         '<div class="gm-rk"><b>' + esc(T(RANKS[k.r].n)) + " · " + esc(fmt(UI.pts, { n: k.p })) + "</b>" +
         '<div class="gm-xp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + k.w + '"><i style="width:' + k.w + '%"></i></div>' +
-        "<small>" + esc(k.nx ? fmt(UI.next, { n: k.nx.at - k.p, r: T(k.nx.n) }) : T(UI.top)) + "</small></div>" +
+        "<small>" + esc(k.nx ? fmt(UI.next, { n: k.nx.at - k.p, r: T(k.nx.n) }) : T(UI.top)) + "</small>" +
+        '<span class="gm-streak' + (k.c.risk ? " is-risk" : "") + '">' + esc(k.c.streak ? fmt(UI.streak, { n: k.c.streak, w: weeksAr(k.c.streak) }) + (k.c.risk ? " · " + T(UI.streakRisk) : "") : T(UI.streakNew)) + "</span></div>" +
         '<div class="gm-acts"><button type="button" class="gm-btn" data-gm-shelf>🏅 ' + esc(fmt(UI.badges, { d: k.e.length, n: BADGES.length })) + '</button>' +
         (window.MasarokQuests ? '<button type="button" class="gm-btn" data-gq>🎯 ' + esc(fmt(UI.quests, { d: k.c.quests, n: window.MasarokQuests.total() })) + '</button><button type="button" class="gm-btn" data-gw>🧥 ' + esc(T(UI.wardrobe)) + '</button>' : "") +
         '<button type="button" class="gm-btn" data-gm-share>' + esc(T(UI.share)) + "</button></div>";
@@ -332,7 +370,7 @@
     if (plan && k.c.n) {
       var chip = plan.querySelector(".gm-chip");
       if (!chip) { chip = document.createElement("div"); chip.className = "gm-chip"; plan.insertBefore(chip, plan.firstChild); }
-      chip.innerHTML = rankMedal(k.r) + "<span><b>" + esc(T(RANKS[k.r].n)) + "</b> · " + esc(fmt(UI.pts, { n: k.p })) + " · 🏅 " + k.e.length + "/" + BADGES.length + "</span>";
+      chip.innerHTML = rankMedal(k.r) + "<span><b>" + esc(T(RANKS[k.r].n)) + "</b> · " + esc(fmt(UI.pts, { n: k.p })) + " · 🏅 " + k.e.length + "/" + BADGES.length + (k.c.streak >= 2 ? " · 🔥 " + k.c.streak : "") + "</span>";
     }
   }
 
@@ -415,6 +453,7 @@
     var d = e.detail || {};
     if (d.type === "task" && d.on) floatAt(d.el, fmt(UI.plus, { n: 10 }));
     if (d.type === "step" && d.early) { g.early = true; gsave(); }
+    if ((d.type === "task" && d.on) || d.type === "step") touchWeek();
     if (d.type === "step" || d.type === "task") check(d.type === "step" ? d : null);
   });
   document.addEventListener("masarok:journey-render", function () { setTimeout(function () { paint(); check(null); }, 0); });
@@ -434,13 +473,16 @@
   function award(key, pts, el, quiet) {
     if (g.bonus[key] != null) return false;
     g.bonus[key] = pts; gsave();
+    if (!quiet) touchWeek();
     if (el && pts > 0) floatAt(el, fmt(UI.plus, { n: pts }));
     check(quiet ? { type: "quiet" } : null);
     return true;
   }
   function has(key) { return g.bonus[key] != null; }
 
-  window.MasarokGame = { badges: BADGES, ranks: RANKS, medal: medal, shelf: shelf, share: share, info: rankInfo,
+  document.addEventListener("masarok:activity", function () { if (touchWeek()) check({ type: "quiet" }); });
+
+  window.MasarokGame = { badges: BADGES, streak: streak, ranks: RANKS, medal: medal, shelf: shelf, share: share, info: rankInfo,
     award: award, has: has, bonus: function () { return g.bonus; }, overlay: overlay, closeOverlay: closeOv, refresh: paint, confetti: confetti, rankMedal: rankMedal };
 
   function init() { setTimeout(function () { check(null); paint(); }, 300); }

@@ -458,6 +458,14 @@ button.jm-lbl:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
 .jr-c-sleeve-e{stroke:var(--jr-sleeve-e, #D9D2C2)}
 .jr-c-bisht{fill:var(--jr-bisht, #1E1B18)}
 .jr-bisht{display:var(--jr-bisht-d, none)}
+/* accessories: one at a time, chosen in the wardrobe */
+[data-acc]{--jr-dallah:none; --jr-falcon:none; --jr-sadu:none}
+[data-acc="dallah"]{--jr-dallah:inline}
+[data-acc="falcon"]{--jr-falcon:inline}
+[data-acc="sadu"]{--jr-sadu:inline}
+.jr-acc-dallah{display:var(--jr-dallah, none)}
+.jr-acc-falcon{display:var(--jr-falcon, none)}
+.jr-acc-sadu{display:var(--jr-sadu, none)}
 
 .wd-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(118px, 1fr)); gap:12px; width:100%}
 .wd-o{display:grid; gap:6px; justify-items:center; align-content:start; padding:12px 8px; border:1px solid rgba(238,242,247,.16); border-radius:14px; background:rgba(255,255,255,.03); font-size:.86rem}
@@ -485,3 +493,50 @@ button.jm-lbl:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
   box-shadow:0 14px 40px -10px rgba(0,0,0,.6); transition:translate .35s cubic-bezier(.2,.9,.3,1.2); pointer-events:none}
 .qs-toast.is-on{translate:-50% 0}
 @media (prefers-reduced-motion: reduce){ .qs-toast{transition:none} }
+
+/* ---------- FAQ tab ---------- */
+.si-faq{display:grid; gap:6px}
+.si-qa{border:1px solid rgba(238,242,247,.12); border-radius:10px; background:rgba(6,12,22,.45)}
+.si-qa summary{cursor:pointer; padding:9px 12px; font-weight:700; font-size:.94rem; list-style:none; display:flex; gap:8px; align-items:baseline}
+.si-qa summary::-webkit-details-marker{display:none}
+.si-qa summary::before{content:"+"; color:var(--gold); font-family:var(--f-mono); width:12px; flex:none}
+.si-qa[open] summary::before{content:"−"}
+.si-qa summary:hover{color:var(--gold)}
+.si-qa summary:focus-visible{outline:2px solid var(--gold); outline-offset:2px; border-radius:10px}
+.si-qa p{margin:0; padding:0 12px 11px 32px; color:#C8D3E0; font-size:.92rem; line-height:1.55}
+[dir="rtl"] .si-qa p{padding:0 32px 11px 12px}
+
+/* ---------- glossary ---------- */
+.gl{font:inherit; color:inherit; background:none; border:0; padding:0; margin:0; cursor:help; text-decoration:underline dotted var(--gold); text-decoration-thickness:1.5px; text-underline-offset:3px}
+.gl:hover, .gl[aria-expanded="true"]{color:var(--gold)}
+.gl:focus-visible{outline:2px solid var(--gold); outline-offset:2px; border-radius:3px}
+.jr-card{position:relative}
+.gl-pop{position:absolute; z-index:6; display:grid; gap:4px; padding:12px 34px 12px 14px; border-radius:12px; border:1px solid rgba(226,182,108,.6);
+  background:#0E1F36; color:var(--night-ink); box-shadow:0 18px 40px -12px rgba(0,0,0,.7); animation:glIn .18s ease-out}
+[dir="rtl"] .gl-pop{padding:12px 14px 12px 34px}
+.gl-pop b{color:var(--gold); font-size:.95rem}
+.gl-pop p{margin:0; font-size:.9rem; line-height:1.5; color:#C8D3E0}
+.gl-x{position:absolute; top:6px; inset-inline-end:6px; width:26px; height:26px; border-radius:50%; border:0; background:rgba(255,255,255,.06); color:var(--night-ink); font-size:1.1rem; line-height:1; cursor:pointer}
+.gl-x:focus-visible{outline:2px solid var(--gold)}
+@keyframes glIn{from{opacity:0; translate:0 -4px}to{opacity:1; translate:0}}
+
+/* ---------- three-question quick check ---------- */
+.qz-dots{display:flex; gap:6px}
+.qz-dot{width:26px; height:6px; border-radius:3px; border:0; padding:0; background:rgba(238,242,247,.18); cursor:pointer}
+.qz-dot.is-on{background:rgba(226,182,108,.7)}
+.qz-dot.is-ok{background:#6FBF8E}
+.qz-dot.is-miss{background:#E07A6E}
+.qz-dot.is-on.is-ok, .qz-dot.is-on.is-miss{outline:2px solid var(--gold); outline-offset:2px}
+.qz-dot:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
+.qz-next{justify-self:start}
+.qz-sum{margin:0; font-weight:700; color:var(--gold); font-size:.92rem}
+
+/* ---------- streak, quest sections, local words ---------- */
+.gm-streak{font-size:.82rem; color:#E2B66C}
+.gm-streak.is-risk{color:#F0A36B}
+.qs-h{margin:10px 0 0; font-size:.8rem; font-family:var(--f-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--gold); justify-self:start}
+.qs-words{list-style:none; margin:6px 0 0; padding:0; display:grid; gap:3px; font-size:.84rem}
+.qs-words li{display:flex; gap:8px; align-items:baseline}
+.qs-words b{color:var(--night-ink); min-width:5.5rem}
+.qs-words span{color:var(--night-dim)}
+@media (prefers-reduced-motion: reduce){ .gl-pop{animation:none} }

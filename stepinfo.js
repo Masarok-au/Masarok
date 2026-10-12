@@ -36,7 +36,7 @@
     m: [["Booking too late to retake before the application deadline. Leave room for a second try.", "الحجز متأخرًا بحيث لا يبقى وقت لإعادة الاختبار قبل موعد التقديم. اترك مجالًا لمحاولة ثانية."],
       ["Checking only the overall score. Many programs also ask for a minimum in each band, such as writing.", "الاكتفاء بالدرجة الكلية، مع أن كثيرًا من البرامج تشترط حدًا أدنى لكل مهارة، مثل الكتابة."],
       ["Paying for an English course yourself after you apply. SACM does not pay for English courses.", "دفع تكاليف دورة لغة بنفسك بعد التقديم، فالملحقية لا تبتعث على دورات اللغة."]],
-    c: [[["IELTS in Saudi Arabia", "اختبار IELTS في السعودية"], ["About SAR 1,150 to 1,750", "من 1,150 إلى 1,750 ريالًا تقريبًا"], ["You pay. The price depends on the centre, and UKVI versions cost more. Check the price when you book.", "على حسابك. يختلف السعر حسب المركز، ونسخة UKVI أغلى، فتحقق من السعر عند الحجز."], SRC.ielts],
+    c: [[["IELTS in Saudi Arabia", "اختبار IELTS في السعودية"], ["About SAR 1,640", "نحو 1,640 ريالًا"], ["IELTS Academic was SAR 1,636 at British Council centres in October 2026. You pay, and prices can differ by centre and test type.", "كان IELTS الأكاديمي بـ1,636 ريالًا في مراكز المجلس الثقافي البريطاني في أكتوبر 2026، وهو على حسابك، وقد يختلف السعر حسب المركز ونوع الاختبار."], SRC.ielts],
       [["Each retake", "كل إعادة"], ["The full fee again", "الرسوم كاملة مرة أخرى"], ["So aim to be ready on your first attempt.", "لذلك استعد جيدًا من المحاولة الأولى."]]]
   };
   var FREE = [[["Application", "التقديم"], ["Free", "مجاني"], ["There is no fee to apply.", "لا توجد رسوم للتقديم."]]];
@@ -281,15 +281,28 @@
     if (cc() !== "au" && !o.d && id === "safeer") r.d = [["Your nomination in the scholarship.", "ترشيحك في البعثة."], ["The financial guarantee letter from Safeer.", "خطاب الضمان المالي من سفير."], ["Your enrolment document from the university.", "مستند التسجيل من الجامعة."]];
     if (cc() !== "au" && !o.c && id === "housing") r.c = [[["Short stay for 2 weeks", "سكن مؤقت لأسبوعين"], ["Varies", "يختلف"], ["Book near campus.", "احجز قريبًا من الجامعة."]]];
     if (cc() !== "au" && !o.m && id === "visa") r.m = [["Booking flights before the visa is granted.", "حجز الطيران قبل صدور التأشيرة."], ["Health cover that ends before your visa does.", "تأمين صحي ينتهي قبل التأشيرة."]];
+    var X = window.MasarokStepMore, c0 = cc();
+    if (X) r.f = (X.FC[c0] && X.FC[c0][id]) || (c0 !== "au" && !X.FC[c0] && X.FG[id]) || X.F[id] || [];
+    else r.f = [];
     return r;
   }
   var OFFER_ANY = { q: ["Why save your offer letter as a PDF?", "لماذا تحفظ خطاب القبول بصيغة PDF؟"], o: [["You need it for your scholarship application", "لأنك تحتاجه للتقديم على البعثة"], ["Universities delete offers after a week", "لأن الجامعات تحذف العروض بعد أسبوع"], ["It's only for your records", "للاحتفاظ به فقط"]], a: 0, x: ["You upload it to Qubool when you apply for the scholarship.", "ترفعه في منصة قبول عند التقديم على البعثة."] };
-  function quizFor(id) { if (id === "offerF" && cc() !== "au" && !(QC[cc()] && QC[cc()].offerF)) return OFFER_ANY; return (QC[cc()] && QC[cc()][id]) || Q[id] || null; }
+  function quizOne(id) { if (id === "offerF" && cc() !== "au" && !(QC[cc()] && QC[cc()].offerF)) return OFFER_ANY; return (QC[cc()] && QC[cc()][id]) || Q[id] || null; }
+  // three questions per step: the first one, then two more from stepmore.js
+  function quizFor(id) {
+    var first = quizOne(id); if (!first) return [];
+    var X = window.MasarokStepMore, c0 = cc(), more = [];
+    if (X) more = (X.QXC[c0] && X.QXC[c0][id]) || X.QX[id] || [];
+    return [first].concat(more.slice(0, 2));
+  }
+  function qkey(id, k) { return cc() + ":" + id + (k ? ":" + (k + 1) : ""); }
 
   // ---------- UI ----------
   var UI = {
     more: ["More about this step", "المزيد عن هذه الخطوة"],
-    tabs: [["📄 Documents", "📄 المستندات"], ["⚠️ Common mistakes", "⚠️ أخطاء شائعة"], ["💰 Cost & time", "💰 التكلفة والوقت"]],
+    tabs: [["📄 Documents", "📄 المستندات"], ["⚠️ Common mistakes", "⚠️ أخطاء شائعة"], ["💰 Cost & time", "💰 التكلفة والوقت"], ["❓ FAQ", "❓ أسئلة شائعة"]],
+    qn: ["Question {k} of {t}", "السؤال {k} من {t}"], next: ["Next question", "السؤال التالي"], allDone: ["Quick check done: {r} of {t} right", "انتهى الاختبار السريع: {r} من {t} صحيحة"],
+    glClose: ["Close", "إغلاق"], glHint: ["Tap underlined words to see what they mean.", "اضغط على الكلمات المسطّرة لمعرفة معناها."],
     src: ["Official page", "الصفحة الرسمية"],
     check: ["Quick check", "سؤال سريع"], pts: ["+{n} pts", "+{n} {w}"],
     right: ["Correct!", "إجابة صحيحة!"], wrong: ["Not quite.", "ليست هذه."], again: ["Try once more for {n} pts", "حاول مرة أخرى مقابل {n} {w}"],
@@ -310,6 +323,9 @@
       '<div class="si-p" id="si-p" role="tabpanel" aria-labelledby="si-t' + tab + '">' + panel(r) + "</div></section>";
   }
   function panel(r) {
+    if (tab === 3) return '<div class="si-faq">' + (r.f || []).map(function (x, i) {
+      return '<details class="si-qa"' + (i === 0 ? " open" : "") + '><summary>' + esc(T(x[0])) + '</summary><p>' + esc(T(x[1])) + "</p></details>";
+    }).join("") + "</div>";
     if (tab === 0) return '<ul class="si-list si-docs">' + r.d.map(function (x) { return "<li>" + esc(T(x)) + "</li>"; }).join("") + "</ul>";
     if (tab === 1) return '<ul class="si-list si-oops">' + r.m.map(function (x) { return "<li>" + esc(T(x)) + "</li>"; }).join("") + "</ul>";
     var anyFee = false;
@@ -320,35 +336,50 @@
     return '<div class="si-costs">' + rows + "</div>" + (anyFee ? '<p class="si-note">' + esc(T(UI.feesNote)) + "</p>" : "");
   }
 
+  var qAt = {}; // which question is showing, per step
+  function qrec(all, id, k) { return all[qkey(id, k)] || {}; }
+  function qdone(r) { return !!(r.ok || r.t >= 2); }
   function quizHtml(id) {
-    var q = quizFor(id); if (!q) return "";
-    var rec = qload()[cc() + ":" + id] || {}, G = window.MasarokGame;
-    var doneQ = rec.ok || rec.t >= 2, pts = rec.t ? 10 : 20;
+    var qs = quizFor(id); if (!qs.length) return "";
+    var all = qload(), n = qs.length, right = 0, finished = 0, earnedPts = 0;
+    qs.forEach(function (x, k) { var r = qrec(all, id, k); if (qdone(r)) finished++; if (r.ok) { right++; earnedPts += r.pts || 0; } });
+    var first = 0; while (first < n && qdone(qrec(all, id, first))) first++;
+    var k = qAt[id] != null ? qAt[id] : Math.min(first, n - 1);
+    var q = qs[k], rec = qrec(all, id, k), doneQ = qdone(rec), pts = rec.t ? 10 : 20;
     var opts = q.o.map(function (o, i) {
       var cls = "";
       if (doneQ || rec.pick != null) { if (i === q.a && doneQ) cls = " is-right"; if (rec.pick === i && i !== q.a) cls = " is-wrong"; }
-      return '<button type="button" class="qz-o' + cls + '" data-qz="' + i + '"' + (doneQ ? " disabled" : "") + ">" + esc(T(o)) + "</button>";
+      return '<button type="button" class="qz-o' + cls + '" data-qz="' + i + '" data-qz-k="' + k + '"' + (doneQ ? " disabled" : "") + ">" + esc(T(o)) + "</button>";
     }).join("");
     var res = "";
     if (rec.ok) res = '<p class="qz-res is-ok"><b>' + esc(T(UI.right)) + "</b> " + esc(T(q.x)) + (rec.pts ? " " + esc(fmt(UI.earnedQ, { n: rec.pts })) : "") + "</p>";
     else if (rec.t >= 2) res = '<p class="qz-res"><b>' + esc(T(UI.wrong)) + "</b> " + esc(T(q.x)) + " " + esc(T(UI.noPts)) + "</p>";
     else if (rec.t === 1) res = '<p class="qz-res"><b>' + esc(T(UI.wrong)) + "</b> " + esc(fmt(UI.again, { n: 10 })) + "</p>";
-    return '<section class="qz" data-qz-id="' + id + '" aria-label="' + esc(T(UI.check)) + '"><div class="qz-h"><span>💡 ' + esc(T(UI.check)) + "</span>" +
+    var dots = qs.map(function (x, j) { var r = qrec(all, id, j); return '<button type="button" class="qz-dot' + (r.ok ? " is-ok" : qdone(r) ? " is-miss" : "") + (j === k ? " is-on" : "") + '" data-qz-go="' + j + '" aria-label="' + esc(fmt(UI.qn, { k: j + 1, t: n })) + '"' + (j === k ? ' aria-current="step"' : "") + "></button>"; }).join("");
+    var nextBtn = doneQ && k < n - 1 ? '<button type="button" class="gm-btn qz-next" data-qz-go="' + (k + 1) + '">' + esc(T(UI.next)) + " →</button>" : "";
+    var summary = finished === n ? '<p class="qz-sum">🏁 ' + esc(fmt(UI.allDone, { r: right, t: n })) + (earnedPts ? " · " + esc(fmt(UI.pts, { n: earnedPts })) : "") + "</p>" : "";
+    return '<section class="qz" data-qz-id="' + id + '" aria-label="' + esc(T(UI.check)) + '"><div class="qz-h"><span>💡 ' + esc(T(UI.check)) + " · " + esc(fmt(UI.qn, { k: k + 1, t: n })) + "</span>" +
       (!doneQ ? '<em>' + esc(fmt(UI.pts, { n: pts })) + "</em>" : rec.ok ? '<em class="is-ok">✓ ' + esc(fmt(UI.pts, { n: rec.pts || 0 })) + "</em>" : "") + "</div>" +
-      '<p class="qz-q">' + esc(T(q.q)) + '</p><div class="qz-os" role="group">' + opts + "</div>" + res + "</section>";
+      '<div class="qz-dots">' + dots + "</div>" +
+      '<p class="qz-q">' + esc(T(q.q)) + '</p><div class="qz-os" role="group">' + opts + "</div>" + res + nextBtn + summary + "</section>";
   }
 
-  function answer(id, i, el) {
-    var q = quizFor(id); if (!q) return;
-    var all = qload(), k = cc() + ":" + id, rec = all[k] || { t: 0 };
+  function answer(id, k, i, el) {
+    var qs = quizFor(id), q = qs[k]; if (!q) return;
+    var all = qload(), key = qkey(id, k), rec = all[key] || { t: 0 };
     if (rec.ok || rec.t >= 2) return;
     rec.t++; rec.pick = i;
     if (i === q.a) {
       rec.ok = true; rec.pts = rec.t === 1 ? 20 : 10;
       var G = window.MasarokGame;
-      if (G && G.award && !G.award("quiz:" + k, rec.pts, el)) rec.pts = 0;
+      if (G && G.award && !G.award("quiz:" + key, rec.pts, el)) rec.pts = 0;
     }
-    all[k] = rec; qsave(all);
+    all[key] = rec; qsave(all);
+    qAt[id] = k;
+    document.dispatchEvent(new CustomEvent("masarok:activity", { detail: { type: "quiz" } }));
+    // a perfect run on a step gets a little celebration
+    var perfect = qs.every(function (x, j) { var r = j === k ? rec : (all[qkey(id, j)] || {}); return r.ok && r.t === 1; });
+    if (perfect && window.MasarokGame && window.MasarokGame.confetti) window.MasarokGame.confetti();
     render(true);
   }
 
@@ -363,7 +394,48 @@
     var wrap = document.createElement("div");
     wrap.innerHTML = infoHtml(id) + quizHtml(id);
     while (wrap.firstChild) card.insertBefore(wrap.firstChild, at);
-    if (keepFocus) { var f = card.querySelector(".qz-res") ; if (f) { f.setAttribute("tabindex", "-1"); f.focus({ preventScroll: true }); } }
+    gloss(card.querySelector(".jr-cols")); gloss(card.querySelector(".si-p"));
+    if (keepFocus) { var f = card.querySelector(".qz-res") || card.querySelector(".qz-q"); if (f) { f.setAttribute("tabindex", "-1"); f.focus({ preventScroll: true }); } }
+  }
+
+  // ---------- glossary: underline known terms; tap to see what they mean ----------
+  function gloss(zone) {
+    var X = window.MasarokStepMore; if (!zone || !X) return;
+    var used = {}, walker = document.createTreeWalker(zone, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) { var p = n.parentNode; return p.closest("a, button, summary, .gl, h4") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; }
+    });
+    var nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (node) {
+      var text = node.nodeValue, best = null;
+      Object.keys(X.GL).forEach(function (key) {
+        if (used[key]) return;
+        var m = X.GL[key].m[A].exec(text);
+        if (m && (!best || m.index < best.i)) best = { i: m.index, len: m[0].length, key: key };
+      });
+      if (!best) return;
+      used[best.key] = 1;
+      var after = node.splitText(best.i); var rest = after.splitText(best.len);
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "gl"; b.setAttribute("data-gl", best.key); b.setAttribute("aria-expanded", "false");
+      b.textContent = after.nodeValue; after.parentNode.replaceChild(b, after);
+      nodes.push(rest); // look for more terms in the rest of this text
+    });
+  }
+  var pop = null, popFor = null;
+  function closePop(back) { if (pop) { pop.remove(); pop = null; } if (popFor) { popFor.setAttribute("aria-expanded", "false"); if (back) popFor.focus(); popFor = null; } }
+  function openPop(btn) {
+    var X = window.MasarokStepMore, g = X && X.GL[btn.getAttribute("data-gl")]; if (!g) return;
+    closePop(false);
+    var card = btn.closest(".jr-card"); if (!card) return;
+    pop = document.createElement("div"); pop.className = "gl-pop"; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-label", T(g.t));
+    pop.innerHTML = '<b>' + esc(T(g.t)) + '</b><p>' + esc(T(g.d)) + '</p><button type="button" class="gl-x" aria-label="' + esc(T(UI.glClose)) + '">×</button>';
+    card.appendChild(pop);
+    var cr = card.getBoundingClientRect(), br = btn.getBoundingClientRect();
+    var w = Math.min(300, cr.width - 24), left = br.left - cr.left + br.width / 2 - w / 2;
+    left = Math.max(12, Math.min(left, cr.width - w - 12));
+    pop.style.width = w + "px"; pop.style.left = left + "px"; pop.style.top = (br.bottom - cr.top + 8) + "px";
+    btn.setAttribute("aria-expanded", "true"); popFor = btn;
+    pop.querySelector(".gl-x").focus({ preventScroll: true });
   }
 
   document.addEventListener("masarok:journey-render", function () { setTimeout(function () { render(false); }, 0); });
@@ -374,12 +446,18 @@
       tab = +t.getAttribute("data-si-tab");
       var sec = t.closest(".si"), id = sec && sec.closest(".jr-card").querySelector("[data-task]").getAttribute("data-task").split(":")[0];
       sec.querySelectorAll(".si-tab").forEach(function (b, i) { b.setAttribute("aria-selected", String(i === tab)); b.tabIndex = i === tab ? 0 : -1; });
-      var p = sec.querySelector(".si-p"); p.setAttribute("aria-labelledby", "si-t" + tab); p.innerHTML = panel(infoFor(id));
+      var p = sec.querySelector(".si-p"); p.setAttribute("aria-labelledby", "si-t" + tab); p.innerHTML = panel(infoFor(id)); gloss(p);
       return;
     }
+    var gb = e.target.closest && e.target.closest(".gl");
+    if (gb) { e.preventDefault(); e.stopPropagation(); if (popFor === gb) closePop(true); else openPop(gb); return; }
+    if (pop && (e.target.closest(".gl-x") || !e.target.closest(".gl-pop"))) closePop(!!e.target.closest(".gl-x"));
+    var go = e.target.closest && e.target.closest("[data-qz-go]");
+    if (go) { var s0 = go.closest("[data-qz-id]"), id0 = s0.getAttribute("data-qz-id"); qAt[id0] = +go.getAttribute("data-qz-go"); render(false); var nq = document.querySelector(".jr-panel .qz-q"); if (nq) { nq.setAttribute("tabindex", "-1"); nq.focus({ preventScroll: true }); } return; }
     var o = e.target.closest && e.target.closest("[data-qz]");
-    if (o && !o.disabled) { var s = o.closest("[data-qz-id]"); answer(s.getAttribute("data-qz-id"), +o.getAttribute("data-qz"), o); }
+    if (o && !o.disabled) { var s = o.closest("[data-qz-id]"); answer(s.getAttribute("data-qz-id"), +o.getAttribute("data-qz-k"), +o.getAttribute("data-qz"), o); }
   });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && pop) { e.stopPropagation(); closePop(true); } }, true);
   // arrow keys move between the tabs
   document.addEventListener("keydown", function (e) {
     var t = e.target.closest && e.target.closest(".si-tab"); if (!t) return;
