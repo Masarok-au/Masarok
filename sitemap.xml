@@ -12,4 +12,16 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/"/>
   </url>
+  <url>
+    <loc>https://masarok.org/academy/</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/"/>
+  </url>
+  <url>
+    <loc>https://masarok.org/ar/academy/</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/"/>
+  </url>
 </urlset>

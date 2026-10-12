@@ -400,6 +400,10 @@
   });
 
   window.MasarokMap = { open: function () { open(null); }, close: function () { close(false); }, isOpen: isOpen };
-  function init() { addButtons(); addPlanChip(); }
+  function init() {
+    addButtons(); addPlanChip();
+    // masarok.org/#map opens the map straight away (used by the site menu)
+    if (location.hash === "#map") setTimeout(function () { var j = J(); if (!j) return; j.open(); if (j.state().started && j.level()) setTimeout(function () { open(null); }, 120); }, 150);
+  }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
