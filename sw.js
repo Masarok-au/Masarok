@@ -1,10 +1,10 @@
 /* Masarok service worker: makes the guide work offline and installable.
    Pages: network first (so updates show straight away), falling back to the saved copy.
    Scripts, styles and icons: network first too, so a new page never runs old scripts. Fonts: saved copy first. */
-var VERSION = "masarok-v16";
+var VERSION = "masarok-v17";
 var CORE = [
   "/", "/index.html", "/ar/", "/ar/index.html",
-  "/country.js", "/unis.js", "/journey.js", "/journey.css", "/feedback.js", "/flip.js", "/campus.js", "/deadlines.js", "/sections.js", "/game.js", "/journeymap.js", "/stepmore.js", "/stepinfo.js", "/quests.js", "/app.js", "/menu.js", "/academy/", "/ar/academy/", "/academy.css", "/academy.js", "/academy/ielts/", "/ar/academy/ielts/", "/academy-player.js", "/courses/ielts.js", "/courses/ielts-reading.js", "/courses/ielts-listening.js", "/courses/ielts-more.js", "/courses/ielts-mock1.js", "/courses/ielts-mock2.js", "/courses/writing.js", "/academy/writing/", "/ar/academy/writing/",
+  "/country.js", "/unis.js", "/journey.js", "/journey.css", "/feedback.js", "/flip.js", "/campus.js", "/deadlines.js", "/sections.js", "/game.js", "/journeymap.js", "/stepmore.js", "/stepinfo.js", "/quests.js", "/app.js", "/menu.js", "/academy/", "/ar/academy/", "/academy.css", "/academy.js", "/academy/ielts/", "/ar/academy/ielts/", "/academy-player.js", "/courses/ielts.js", "/courses/ielts-reading.js", "/courses/ielts-listening.js", "/courses/ielts-more.js", "/courses/ielts-mock1.js", "/courses/ielts-mock2.js", "/courses/writing.js", "/academy/writing/", "/ar/academy/writing/", "/courses/scholarship.js", "/courses/visa.js", "/courses/life.js", "/academy/scholarship/", "/ar/academy/scholarship/", "/academy/visa/", "/ar/academy/visa/", "/academy/life/", "/ar/academy/life/",
   "/manifest.webmanifest", "/ar/manifest.webmanifest", "/favicon.svg",
   "/icons/icon-192.png", "/icons/icon-512.png", "/icons/apple-touch-icon.png"
 ];

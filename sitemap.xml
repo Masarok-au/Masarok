@@ -48,4 +48,40 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/writing/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/writing/"/>
   </url>
+  <url>
+    <loc>https://masarok.org/academy/scholarship/</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/scholarship/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/scholarship/"/>
+  </url>
+  <url>
+    <loc>https://masarok.org/ar/academy/scholarship/</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/scholarship/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/scholarship/"/>
+  </url>
+  <url>
+    <loc>https://masarok.org/academy/visa/</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/visa/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/visa/"/>
+  </url>
+  <url>
+    <loc>https://masarok.org/ar/academy/visa/</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/visa/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/visa/"/>
+  </url>
+  <url>
+    <loc>https://masarok.org/academy/life/</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/life/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/life/"/>
+  </url>
+  <url>
+    <loc>https://masarok.org/ar/academy/life/</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/life/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/life/"/>
+  </url>
 </urlset>

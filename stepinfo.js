@@ -307,9 +307,12 @@
     trainNew: ["IELTS placement test, a study plan, 22 lessons and 2 full mock tests. +40 points for each lesson.", "اختبار تحديد مستوى IELTS، وخطة دراسة، و22 درسًا، واختباران تجريبيان كاملان. 40 نقطة لكل درس."],
     trainProg: ["Starting band {b} · {d} of {t} lessons done", "المستوى المبدئي {b} · أنجزت {d} من {t} دروس"],
     trainGo: ["Start the IELTS course", "ابدأ دورة IELTS"],
+    trainTS: ["Practise this step in Masarok Academy", "تدرّب على هذه الخطوة في أكاديمية مسارُك"], trainNewS: ["How the tracks work, your Qubool file, a document detective game and a budget simulator. +40 points for each lesson.", "كيف تعمل المسارات، وملفك لمنصة قبول، ولعبة محقق المستندات، ومحاكي الميزانية. 40 نقطة لكل درس."], trainGoS: ["Start the scholarship course", "ابدأ دورة الابتعاث"],
+    trainTV: ["Rehearse your visa in Masarok Academy", "تدرّب على تأشيرتك في أكاديمية مسارُك"], trainNewV: ["The steps and fees for your country, interview practice, packing and the rules after you arrive. +40 points for each lesson.", "الخطوات والرسوم لدولتك، والتدريب على المقابلة، والحقائب، والأنظمة بعد الوصول. 40 نقطة لكل درس."], trainGoV: ["Start visa practice", "ابدأ التدريب على التأشيرة"],
+    trainTL: ["Get ready for life there in Masarok Academy", "استعد للحياة هناك في أكاديمية مسارُك"], trainNewL: ["Spot rental scams, read a lease, check your payslip and plan your first week. +40 points for each lesson.", "اكتشف احتيالات السكن، واقرأ عقد الإيجار، وراجع قسيمة راتبك، وخطط لأسبوعك الأول. 40 نقطة لكل درس."], trainGoL: ["Start the life skills course", "ابدأ دورة مهارات الحياة"],
     trainTW: ["Write your application in Masarok Academy", "اكتب طلبك في أكاديمية مسارُك"],
     trainNewW: ["Personal statement, study plan or research proposal, with builders matched to your country. +40 points for each lesson.", "الخطاب الشخصي أو خطة الدراسة أو مقترح البحث، مع أدوات كتابة مطابقة لدولتك. 40 نقطة لكل درس."],
-    trainProgW: ["{d} of {t} writing lessons done", "أنجزت {d} من {t} دروس الكتابة"], trainGoW: ["Start the writing course", "ابدأ دورة الكتابة"], trainCont: ["Continue the course", "تابع الدورة"], glHint: ["Tap underlined words to see what they mean.", "اضغط على الكلمات المسطّرة لمعرفة معناها."],
+    trainProgW: ["{d} of {t} lessons done", "أنجزت {d} من {t} دروس"], trainGoW: ["Start the writing course", "ابدأ دورة الكتابة"], trainCont: ["Continue the course", "تابع الدورة"], glHint: ["Tap underlined words to see what they mean.", "اضغط على الكلمات المسطّرة لمعرفة معناها."],
     src: ["Official page", "الصفحة الرسمية"],
     check: ["Quick check", "سؤال سريع"], pts: ["+{n} pts", "+{n} {w}"],
     right: ["Correct!", "إجابة صحيحة!"], wrong: ["Not quite.", "ليست هذه."], again: ["Try once more for {n} pts", "حاول مرة أخرى مقابل {n} {w}"],
@@ -409,18 +412,22 @@
   }
 
   // ---------- Masarok Academy: train for the English step, and points for lessons done there ----------
-  var AC_IELTS = ["englishF", "englishB", "englishPg"], AC_WRITE = ["offerF", "offer", "supervisor", "docs"];
+  // which Academy course trains each Guide me step
+  var AC_MAP = { englishF: "ielts", englishB: "ielts", englishPg: "ielts", offerF: "writing", offer: "writing", supervisor: "writing", docs: "writing",
+    qubool: "scholarship", safeer: "scholarship", fieldRoute: "scholarship", fieldUni: "scholarship", courseType: "scholarship", uniCheckPg: "scholarship", uniCheckPhd: "scholarship",
+    researchArea: "scholarship", rulesF: "scholarship", premaster: "scholarship", progressF: "scholarship", visa: "visa", housing: "life", arrive: "life" };
+  var AC_INFO = {
+    ielts: ["🎓", UI.trainT, UI.trainNew, UI.trainGo], writing: ["✍️", UI.trainTW, UI.trainNewW, UI.trainGoW],
+    scholarship: ["📄", UI.trainTS, UI.trainNewS, UI.trainGoS], visa: ["🛂", UI.trainTV, UI.trainNewV, UI.trainGoV], life: ["🏙️", UI.trainTL, UI.trainNewL, UI.trainGoL] };
   function acState() { try { return JSON.parse(localStorage.getItem("masarok-academy") || "null") || {}; } catch (e) { return {}; } }
   function trainHtml(id) {
-    var w = AC_WRITE.indexOf(id) >= 0;
-    if (!w && (AC_IELTS.indexOf(id) < 0 || cc() === "de")) return "";
-    var a = acState(), cr = (a.courses || {})[w ? "writing" : "ielts"], d = cr ? cr.done : 0, line;
-    if (w) line = cr ? fmt(UI.trainProgW, { d: d, t: cr.total }) : T(UI.trainNewW);
-    else line = a.placement ? fmt(UI.trainProg, { b: (Math.round(a.placement.o * 2) / 2).toFixed(1), d: d, t: cr ? cr.total : 24 }) : T(UI.trainNew);
-    var href = (A ? "/ar" : "") + "/academy/" + (w ? "writing" : "ielts") + "/";
-    var tt = T(w ? UI.trainTW : UI.trainT);
-    return '<section class="ac-train" aria-label="' + esc(tt) + '"><span class="ac-train-ic" aria-hidden="true">' + (w ? "✍️" : "🎓") + '</span><div class="ac-train-tx"><b>' + esc(tt) + "</b><small>" + esc(line) + "</small></div>" +
-      '<a class="btn btn-primary" href="' + href + '">' + esc(T(d ? UI.trainCont : (w ? UI.trainGoW : UI.trainGo))) + "</a></section>";
+    var c = AC_MAP[id]; if (!c || (c === "ielts" && cc() === "de")) return "";
+    var I = AC_INFO[c], a = acState(), cr = (a.courses || {})[c], d = cr ? cr.done : 0, line;
+    if (c === "ielts") line = a.placement ? fmt(UI.trainProg, { b: (Math.round(a.placement.o * 2) / 2).toFixed(1), d: d, t: cr ? cr.total : 24 }) : T(UI.trainNew);
+    else line = cr ? fmt(UI.trainProgW, { d: d, t: cr.total }) : T(I[2]);
+    var href = (A ? "/ar" : "") + "/academy/" + c + "/", tt = T(I[1]);
+    return '<section class="ac-train" aria-label="' + esc(tt) + '"><span class="ac-train-ic" aria-hidden="true">' + I[0] + '</span><div class="ac-train-tx"><b>' + esc(tt) + "</b><small>" + esc(line) + "</small></div>" +
+      '<a class="btn btn-primary" href="' + href + '">' + esc(T(d ? UI.trainCont : I[3])) + "</a></section>";
   }
   // every lesson finished in any Academy course earns +40 once
   function syncAcademy() {

@@ -31,6 +31,8 @@
   var MY_CC = pref("masarok-country"), MY_LV = pref("masarok-level");
   function visible(l) { return (!l.cc || !MY_CC || l.cc.indexOf(MY_CC) > -1) && (!l.lv || !MY_LV || l.lv.indexOf(MY_LV) > -1); }
   C.lessons = ALL_LESSONS.filter(visible);
+  // steps can be country or degree specific too
+  ALL_LESSONS.forEach(function (l) { l.steps = l.steps.filter(visible); });
   var CC_NAME = { au: ["Australia", "أستراليا"], us: ["the USA", "أمريكا"], uk: ["the UK", "بريطانيا"], ca: ["Canada", "كندا"], de: ["Germany", "ألمانيا"], sg: ["Singapore", "سنغافورة"] };
   var LV_NAME = { foundation: ["foundation", "الفاونديشن"], bachelor: ["bachelor's", "البكالوريوس"], master: ["master's", "الماجستير"], phd: ["PhD", "الدكتوراه"] };
 
@@ -101,7 +103,7 @@
     comeBack: ["Come back tomorrow: words you knew come back after 1, 3, 7 and 14 days so they stick.", "عد غدًا: الكلمات التي عرفتها تعود بعد 1 و3 و7 و14 يومًا لتثبت في ذاكرتك."],
     deck: ["Review the deck", "راجع المجموعة"], allLearned: ["You've seen every word. Keep reviewing to move them into long-term memory.", "رأيت كل الكلمات، فاستمر بالمراجعة لتثبيتها في الذاكرة الطويلة."],
     mockBand: ["estimated band {b}", "الدرجة التقديرية {b}"], courseProg: ["{d} of {t} lessons done", "أنجزت {d} من {t} دروس"],
-    forYou: ["Showing the lessons for {c} · {l}.", "تظهر الدروس الخاصة بـ{c} · {l}."], forAll: ["Showing lessons for every country. Pick your country and degree in the guide to see only the ones you need.", "تظهر الدروس لكل الدول. اختر دولتك ودرجتك في الدليل لترى ما تحتاجه فقط."],
+    forYou: ["Showing the lessons for {c} · {l}.", "تظهر الدروس المناسبة لدولتك ودرجتك: {c} · {l}."], forAll: ["Showing lessons for every country. Pick your country and degree in the guide to see only the ones you need.", "تظهر الدروس لكل الدول. اختر دولتك ودرجتك في الدليل لترى ما تحتاجه فقط."],
     anyLevel: ["any degree", "أي درجة"], changeCc: ["Change it in the guide", "غيّرها من الدليل"],
     certT: ["Course complete!", "أكملت الدورة!"], certSub: ["Download your certificate. Write your name as you'd like it to appear.", "حمّل شهادتك، واكتب اسمك كما تريد أن يظهر."], certName: ["Your name", "اسمك"], certGo: ["Download certificate", "حمّل الشهادة"],
     certHead: ["Certificate of completion", "شهادة إتمام"], certThis: ["This is to certify that", "تشهد أكاديمية مسارُك بأن"], certDone: ["has completed the Masarok Academy course", "أتمّ دورة أكاديمية مسارُك"],
@@ -126,6 +128,23 @@
     estMock: ["Estimated band", "الدرجة التقديرية"], mkSee: ["See my result", "اعرض نتيجتي"], mkResT: ["Your mock test result", "نتيجة اختبارك التجريبي"],
     mkNote: ["Listening and Reading are marked from your answers. Writing and Speaking come from your own ratings, so treat the overall as a rough estimate, not an official score.", "الاستماع والقراءة مصححان من إجاباتك، والكتابة والمحادثة من تقييمك لنفسك، فاعتبر الدرجة الكلية تقديرًا تقريبيًا وليست درجة رسمية."],
     mkRevL: ["Review Listening answers", "راجع إجابات الاستماع"], mkRevR: ["Review Reading answers", "راجع إجابات القراءة"],
+    // phase 3: ordering, document detective, stories, budget and interviews
+    orderSub: ["Use the arrows to put these in the right order.", "استخدم الأسهم لترتيبها بالترتيب الصحيح."], moveUp: ["Move up", "انقل للأعلى"], moveDown: ["Move down", "انقل للأسفل"], rightOrder: ["The right order", "الترتيب الصحيح"],
+    spotSub: ["Tap every line that is wrong or needs your action. Tap it again to remove the flag.", "اضغط على كل سطر خاطئ أو يحتاج منك إجراء، واضغط مرة أخرى لإزالة العلامة."], spotNone: ["Flag at least one line first.", "ضع علامة على سطر واحد على الأقل أولًا."],
+    spotRight: ["✓ Found it.", "✓ أحسنت، اكتشفته."], spotMissed: ["✕ Missed.", "✕ فاتك."], spotFine: ["This line was fine.", "هذا السطر كان سليمًا."], sample: ["Practice sample · not a real document", "نموذج تدريبي · ليس وثيقة حقيقية"],
+    storyPick: ["What do you do?", "ماذا تفعل؟"], storyCont: ["Continue", "تابع"], storyYes: ["Good call.", "قرار موفق."], storyNo: ["Risky.", "قرار فيه مخاطرة."], storyHm: ["Okay.", "لا بأس."],
+    storyScore: ["Good decisions: {c} of {t}", "القرارات الموفقة: {c} من {t}"], storyBest: ["Every call was a good one. You're ready for this.", "كل قراراتك موفقة، أنت مستعد."], storyOk: ["Not bad. Play again to see how the other choices turn out.", "جيد. العب مرة أخرى لترى نتائج الخيارات الأخرى."], storyAgain: ["Play again", "العب مرة أخرى"],
+    bgCountry: ["Country", "الدولة"], bgAllow: ["Monthly allowance", "المكافأة الشهرية"], bgKnown: ["The 2026 amount for a single student, as shown in the guide. Change it if yours is different.", "مبلغ عام 2026 للطالب الأعزب كما في الدليل، وعدّله إذا كان مبلغك مختلفًا."],
+    bgPractice: ["A practice amount, not the real allowance. Type the amount in your scholarship decision.", "مبلغ للتدريب وليس المكافأة الفعلية. اكتب المبلغ المذكور في قرار ابتعاثك."], bgYours: ["Your own amount.", "المبلغ الذي أدخلته."],
+    perWeek: ["per week", "أسبوعيًا"], perMonth: ["per month", "شهريًا"], bgSpend: ["Planned spending per month", "المصروف المخطط شهريًا"], bgLeft: ["Left", "المتبقي"], bgStart: ["Start the month", "ابدأ الشهر"], bgOverPlan: ["Your plan already costs more than your allowance. Try a cheaper room or cut other spending first.", "خطتك تتجاوز مكافأتك من البداية، فجرّب غرفة أرخص أو قلّل المصاريف الأخرى أولًا."],
+    bgNote: ["The costs are examples from the guide. Your rent and prices will differ by city.", "التكاليف أمثلة من الدليل، وستختلف الإيجارات والأسعار حسب المدينة."],
+    bgWeek: ["Week {n} of {t}", "الأسبوع {n} من {t}"], bgBal: ["Left this month", "المتبقي هذا الشهر"], bgFree: ["Free", "مجانًا"], bgNextWeek: ["Next week", "الأسبوع التالي"], bgEnd: ["See how the month ended", "شاهد نهاية الشهر"],
+    bgLeftEnd: ["Left at the end of the month", "المتبقي في نهاية الشهر"], bgGreat: ["Great month. You covered everything and still saved some of your allowance.", "شهر ممتاز، غطيت كل شيء وادخرت جزءًا من مكافأتك."],
+    bgOk: ["You made it through, but with little to spare. Look at the tips below.", "أكملت الشهر لكن بهامش بسيط، فاطلع على النصائح أدناه."], bgOver: ["You ran out before the month ended. Look at your rent and the surprises, then try again.", "نفد المال قبل نهاية الشهر. راجع الإيجار والمفاجآت ثم حاول مرة أخرى."], bgAgain: ["Plan the month again", "خطط للشهر من جديد"],
+    ivHow: ["{n} questions, one at a time. Answer out loud in about {s} seconds each, then rate yourself.", "{n} أسئلة، سؤال بعد سؤال. أجب بصوت عالٍ في نحو {s} ثانية لكل سؤال، ثم قيّم نفسك."], ivVoice: ["Read the questions aloud", "اقرأ الأسئلة بصوت مسموع"],
+    ivStart: ["Start the interview", "ابدأ المقابلة"], ivAgain: ["Practise with new questions", "تدرب بأسئلة جديدة"], ivRounds: ["Rounds practised: {n}", "الجولات التي تدربت عليها: {n}"], ivQ: ["Question {n} of {t}", "السؤال {n} من {t}"],
+    ivTip: ["What a good answer includes", "ما تتضمنه الإجابة الجيدة"], ivRepeat: ["Hear it again", "استمع مرة أخرى"], ivFinish: ["Finish the interview", "أنهِ المقابلة"],
+    ivReview: ["How did it go?", "كيف كان أداؤك؟"], ivReviewSub: ["Listen back to a few answers, then tick what is true. Practise again until you can tick every box.", "استمع لبعض إجاباتك، ثم ضع علامة على ما ينطبق. تدرب مجددًا حتى تضع علامة على كل البنود."],
     disclaimer: ["Practice material in Masarok Academy is original, written in the official IELTS formats. Scores here are estimates, not official results.", "تمارين أكاديمية مسارُك أصلية ومكتوبة بالصيغ الرسمية لاختبار IELTS، والدرجات هنا تقديرية وليست نتائج رسمية."]
   };
 
@@ -137,10 +156,11 @@
   function bandStr(b) { return (Math.round(b * 2) / 2).toFixed(1); }
 
   // ================= course home =================
-  var GROUPS = C.id === "ielts"
+  var GROUPS = C.groups ? C.groups : C.id === "ielts"
     ? [["all", ["Start here", "ابدأ من هنا"]], ["r", ["Reading", "القراءة"]], ["l", ["Listening", "الاستماع"]], ["w", ["Writing", "الكتابة"]], ["s", ["Speaking", "المحادثة"]], ["v", ["Vocabulary", "المفردات"]], ["mock", ["Mock tests", "الاختبارات التجريبية"]]]
     : [["base", ["The basics", "الأساسيات"]], ["app", ["Your application", "طلبك"]], ["pg", ["Postgraduate", "الدراسات العليا"]], ["end", ["Final check", "المراجعة النهائية"]]];
   function groupOf(l) {
+    if (l.group) return l.group;
     if (C.id === "ielts") return l.skill || "all";
     var o = l.order || 0; return o < 40 ? "base" : o < 50 ? "app" : o < 60 ? "pg" : "end";
   }
@@ -181,7 +201,7 @@
       '<section class="cs-hero"><p class="eyebrow">' + esc(T(UI.academy)) + '</p><h1 id="main-h" tabindex="-1">' + esc(T(C.t)) + '</h1><p class="cs-sub">' + esc(T(C.sub)) + "</p></section>" +
       top +
       '<section class="cs-ls" aria-labelledby="ls-h"><h2 id="ls-h">' + esc(T(UI.lessonsT)) + "</h2>" + cert + groups + "</section>" +
-      '<p class="cs-note">' + esc(T(C.id === "ielts" ? UI.disclaimer : UI.disclaimerW)) + "</p>";
+      '<p class="cs-note">' + esc(T(C.note || (C.id === "ielts" ? UI.disclaimer : UI.disclaimerW))) + "</p>";
     wirePlan(); wireCert();
   }
   function backArrow() { return '<svg viewBox="0 0 16 16" aria-hidden="true" class="bk"><path d="M13 8H4M7.5 4.5L4 8l3.5 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'; }
@@ -314,7 +334,7 @@
     chk.addEventListener("click", function () {
       var res = cur.ctl.check(); if (!res) return;
       cur.results[i] = res;
-      var pass = st.pass ? res.c >= st.pass : true;
+      var need = st.pass != null ? st.pass : (st.t === "order" || st.t === "spot") ? Math.ceil(res.t * 0.6) : 0, pass = res.c >= need;
       $(".lp-msg").innerHTML = "<b>" + esc(fmt(UI.score, { c: res.c, t: res.t })) + "</b> · " + esc(T(pass ? UI.passed : UI.notYet));
       chk.hidden = true; nxt.hidden = false;
       if (!pass || res.c < res.t) addRetry();
@@ -357,6 +377,7 @@
     var h = "<h2>" + esc(EN(st.h)) + "</h2>" + (S.arHelp && Array.isArray(st.h) ? '<p class="ar-help ar-h" lang="ar" dir="rtl">' + esc(st.h[1]) + "</p>" : "");
     (st.p || []).forEach(function (x) { h += '<div class="tx">' + enText(x) + (S.arHelp ? help(x) : "") + "</div>"; });
     if (st.list) h += '<ul class="tx-list">' + st.list.map(function (x) { return "<li>" + enText(x) + (S.arHelp ? help(x) : "") + "</li>"; }).join("") + "</ul>";
+    if (st.cta) h += '<p class="tx-cta"><a class="btn btn-ghost" href="' + base + st.cta.href + '">' + esc(T(st.cta.t)) + " →</a></p>";
     el.innerHTML = '<div class="en-block" lang="en" dir="ltr">' + h + "</div>";
     fixArDir(el);
   };
@@ -400,7 +421,7 @@
       var lb = k === "head" ? "Paragraph " + it.p : qs, sid = name + "s" + n;
       h = '<div class="q-gap q-sel"><label for="' + sid + '"><span class="q-n">' + n + "</span> " + esc(lb) + '</label><select id="' + sid + '"><option value="">—</option>' + opts.map(function (o) { return '<option value="' + esc(o[0]) + '">' + esc(o[1]) + "</option>"; }).join("") + "</select></div>" + arQ;
     } else {
-      h = '<legend><span class="q-n">' + n + "</span> " + esc(qs) + "</legend>" + arQ + '<div class="q-os">' + it.o.map(function (o, j) {
+      h = '<legend><span class="q-n">' + n + "</span> " + esc(qs) + "</legend>" + arQ + '<div class="q-os' + (it.row ? " is-tfng is-row" : "") + '">' + it.o.map(function (o, j) {
         return '<label class="q-o"><input type="radio" name="' + name + n + '" value="' + j + '"><span>' + esc(EN(o)) + (S.arHelp && Array.isArray(o) ? ' <small class="ar-o" lang="ar" dir="rtl">' + esc(o[1]) + "</small>" : "") + "</span></label>";
       }).join("") + "</div>";
     }
@@ -497,7 +518,7 @@
   };
   RENDER.quiz = function (el, st) {
     var name = "z" + cur.i + "-";
-    el.innerHTML = '<div class="en-block" lang="en" dir="ltr">' + head(st) + '<div class="qs-col">' + groupsHtml(st, name, {}) + "</div></div>";
+    el.innerHTML = '<div class="en-block" lang="en" dir="ltr">' + head(st) + intro(st) + '<div class="qs-col">' + groupsHtml(st, name, {}) + "</div></div>";
     fixArDir(el);
     return { check: function () { var r = gradeEntries(el, entries(st), {}); if (r && st.part) cur.ans[st.part] = r.c; return r; } };
   };
@@ -1155,6 +1176,215 @@
     });
     draw();
     return { gate: function () { return finished; }, leave: function () { stopSec(); clearTimers(); stopRec(true); try { tts && tts.cancel(); } catch (e) {} } };
+  };
+
+  // ================= Phase 3 exercise types =================
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function intro(st) { return (st.intro || []).map(function (x) { return '<div class="tx">' + enText(x) + (S.arHelp ? help(x) : "") + "</div>"; }).join(""); }
+  function both(x) { return "<span>" + esc(EN(x)) + "</span>" + (S.arHelp && Array.isArray(x) && x[1] ? '<small class="ar-help" lang="ar" dir="rtl">' + esc(x[1]) + "</small>" : ""); }
+
+  // put the steps in the right order with up and down buttons
+  RENDER.order = function (el, st) {
+    var cur2 = shuffle(st.items.map(function (x, i) { return i; }));
+    if (cur2.every(function (v, i) { return v === i; })) cur2.reverse();
+    var checked = false;
+    function draw() {
+      el.innerHTML = '<div class="en-block">' + head(st) + intro(st) + '<p class="lp-sub">' + esc(T(UI.orderSub)) + '</p><ol class="od">' + cur2.map(function (ix, p) {
+        var cls = checked ? (ix === p ? " is-right" : " is-wrong") : "";
+        return '<li class="od-i' + cls + '"><span class="od-n">' + (p + 1) + '</span><span class="od-t" lang="en" dir="ltr">' + both(st.items[ix]) + "</span>" +
+          (checked ? "" : '<span class="od-b"><button type="button" class="od-mv" data-mv="' + p + ':-1" aria-label="' + esc(T(UI.moveUp)) + '"' + (p === 0 ? " disabled" : "") + '>↑</button><button type="button" class="od-mv" data-mv="' + p + ':1" aria-label="' + esc(T(UI.moveDown)) + '"' + (p === cur2.length - 1 ? " disabled" : "") + ">↓</button></span>") + "</li>";
+      }).join("") + "</ol>" +
+        (checked ? '<div class="od-ans"><b>' + esc(T(UI.rightOrder)) + '</b><ol>' + st.items.map(function (x) { return '<li lang="en" dir="ltr">' + both(x) + "</li>"; }).join("") + "</ol>" + (st.x ? '<div class="tx">' + enText(st.x) + (S.arHelp ? help(st.x) : "") + "</div>" : "") + "</div>" : "") + "</div>";
+      fixArDir(el);
+    }
+    el.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-mv]"); if (!b) return;
+      var a = b.getAttribute("data-mv").split(":"), p = +a[0], d = +a[1], t = cur2[p]; cur2[p] = cur2[p + d]; cur2[p + d] = t; draw();
+      var nb = $('[data-mv="' + (p + d) + ":" + d + '"]', el) || $('[data-mv="' + (p + d) + ":" + (-d) + '"]', el); if (nb) nb.focus();
+    });
+    draw();
+    return { check: function () { checked = true; var c = cur2.filter(function (v, i) { return v === i; }).length; draw(); return { c: c, t: cur2.length }; } };
+  };
+
+  // document detective: tap the lines that look wrong
+  RENDER.spot = function (el, st) {
+    var flags = {}, checked = false, d = st.doc;
+    function rowHtml(r, i) {
+      var f = !!flags[i], res = "";
+      if (checked) {
+        var cls = r[2] ? (f ? "is-right" : "is-miss") : (f ? "is-wrong" : "");
+        res = cls ? '<div class="dd-x ' + cls + '"><b dir="auto">' + esc(T(r[2] ? (f ? UI.spotRight : UI.spotMissed) : UI.spotFine)) + "</b>" + (r[3] ? " " + esc(EN(r[3])) + (S.arHelp && Array.isArray(r[3]) ? '<small class="ar-help" lang="ar" dir="rtl">' + esc(r[3][1]) + "</small>" : "") : "") + "</div>" : "";
+        return '<div class="dd-row ' + cls + '"><div class="dd-k">' + esc(r[0]) + '</div><div class="dd-v">' + esc(r[1]) + "</div>" + res + "</div>";
+      }
+      return '<button type="button" class="dd-row" data-sp="' + i + '" aria-pressed="' + f + '"><span class="dd-k">' + esc(r[0]) + '</span><span class="dd-v">' + esc(r[1]) + '</span><span class="dd-flag" aria-hidden="true">' + (f ? "🚩" : "") + "</span></button>";
+    }
+    function draw() {
+      var ref = st.ref ? '<div class="dd-ref" lang="en" dir="ltr"><b>' + esc(st.ref.title) + "</b>" + st.ref.rows.map(function (r) { return '<div class="dd-rr"><span>' + esc(r[0]) + "</span><b>" + esc(r[1]) + "</b></div>"; }).join("") + "</div>" : "";
+      el.innerHTML = '<div class="en-block">' + head(st) + intro(st) + '<p class="lp-sub">' + esc(T(UI.spotSub)) + "</p>" + ref +
+        '<div class="dd-doc" lang="en" dir="ltr"><div class="dd-head"><b>' + esc(d.title) + "</b>" + (d.from ? "<small>" + esc(d.from) + "</small>" : "") + '<em class="dd-stamp">' + esc(EN(UI.sample)) + '</em></div><div class="dd-rows">' +
+        d.rows.map(rowHtml).join("") + "</div></div></div>";
+      fixArDir(el);
+    }
+    el.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-sp]"); if (!b || checked) return;
+      var i = +b.getAttribute("data-sp"); flags[i] = !flags[i]; draw(); var nb = $('[data-sp="' + i + '"]', el); if (nb) nb.focus();
+    });
+    draw();
+    return {
+      check: function () {
+        if (!Object.keys(flags).some(function (k) { return flags[k]; })) { $(".lp-msg").textContent = T(UI.spotNone); return null; }
+        var t = 0, good = 0, bad = 0;
+        d.rows.forEach(function (r, i) { if (r[2]) { t++; if (flags[i]) good++; } else if (flags[i]) bad++; });
+        checked = true; draw();
+        return { c: Math.max(0, good - bad), t: t };
+      }
+    };
+  };
+
+  // a short choose-your-path story; good choices score a point
+  RENDER.story = function (el, st) {
+    var node = st.start, made = 0, good = 0, picked = null, ended = false;
+    function draw() {
+      var n = st.nodes[node];
+      var h = '<div class="en-block">' + head(st) + (node === st.start && !made ? intro(st) : "") + '<div class="sy">' +
+        '<div class="sy-scene"><span class="sy-ic" aria-hidden="true">' + (n.i || "📍") + '</span><div class="tx">' + enText(n.p) + (S.arHelp ? help(n.p) : "") + "</div></div>";
+      if (n.end) {
+        ended = true;
+        h += '<div class="sy-end"><b>' + esc(fmt(UI.storyScore, { c: good, t: made })) + "</b><p>" + esc(T(good === made ? UI.storyBest : UI.storyOk)) + '</p><button type="button" class="btn btn-ghost" data-sy-again>↺ ' + esc(T(UI.storyAgain)) + "</button></div>";
+        cur.results[cur.i] = { c: good, t: made };
+      } else if (picked == null) {
+        h += '<div class="sy-ch" role="group" aria-label="' + esc(T(UI.storyPick)) + '">' + n.ch.map(function (c, k) { return '<button type="button" class="cc-btn sy-btn" data-ch="' + k + '" lang="en" dir="ltr">' + both(c.t) + "</button>"; }).join("") + "</div>";
+      } else {
+        var c = n.ch[picked];
+        h += '<div class="sy-fb ' + (c.ok === false ? "is-no" : c.ok ? "is-ok" : "") + '"><b>' + esc(T(c.ok === false ? UI.storyNo : c.ok ? UI.storyYes : UI.storyHm)) + '</b><div class="tx">' + enText(c.fb) + (S.arHelp ? help(c.fb) : "") + '</div></div><button type="button" class="btn btn-primary" data-sy-go>' + esc(T(UI.storyCont)) + " →</button>";
+      }
+      el.innerHTML = h + "</div></div>"; fixArDir(el); gateUpdate();
+      var f = $("[data-sy-go]", el) || $(".sy-scene", el); if (f && made) { if (!f.hasAttribute("tabindex") && f.tagName !== "BUTTON") f.setAttribute("tabindex", "-1"); f.focus({ preventScroll: false }); }
+    }
+    el.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-ch]");
+      if (b) { picked = +b.getAttribute("data-ch"); var c = st.nodes[node].ch[picked]; if (c.ok != null) { made++; if (c.ok) good++; } draw(); return; }
+      if (e.target.closest("[data-sy-go]")) { node = st.nodes[node].ch[picked].go; picked = null; draw(); return; }
+      if (e.target.closest("[data-sy-again]")) { node = st.start; made = 0; good = 0; picked = null; ended = false; delete cur.results[cur.i]; draw(); }
+    });
+    draw();
+    return { gate: function () { return ended; } };
+  };
+
+  // a month on your allowance: plan, then live through four weeks of surprises
+  var CUR = { au: ["A$", 1], us: ["US$", 0.65], uk: ["£", 0.5], ca: ["CA$", 0.9], de: ["€", 0.6], sg: ["S$", 0.85] };
+  var KNOWN_ALLOW = { au: 2699, us: 1736 };
+  RENDER.budget = function (el, st) {
+    var cc = MY_CC && CUR[MY_CC] ? MY_CC : null, stage = "plan", wk = 0, bal = 0, picked = null, log = [];
+    var B = S.budget = S.budget || {};
+    function cur3() { return CUR[cc || "au"]; }
+    function money(v) { var c = cur3()[0]; return (v < 0 ? "−" : "") + c + Math.abs(Math.round(v)).toLocaleString("en-AU"); }
+    function scale(v) { return Math.max(5, Math.round(v * cur3()[1] / 5) * 5); }
+    function allowance() {
+      var saved = null; try { saved = parseFloat(localStorage.getItem("masarok-allow-" + (cc || "au"))); } catch (e) {}
+      if (B.allow && B.cc === cc) return { v: B.allow, k: "you" };
+      if (KNOWN_ALLOW[cc || "au"]) return { v: KNOWN_ALLOW[cc || "au"], k: "known" };
+      if (saved > 0) return { v: saved, k: "you" };
+      var tot = 0; st.cats.forEach(function (c) { var x = costOf(c); tot += x[1] === "w" ? x[0] * 52 / 12 : x[0]; });
+      return { v: Math.round(tot * 1.25 / 10) * 10, k: "practice" };
+    }
+    function costOf(c) { return st.costs[cc || "au"][c.id] || [0, "m"]; }
+    function perOf(c) { return costOf(c)[1] || "m"; }
+    var A = allowance(), vals = {};
+    function resetVals() { st.cats.forEach(function (c) { vals[c.id] = costOf(c)[0]; }); }
+    resetVals();
+    function monthly() { var t = 0; st.cats.forEach(function (c) { var v = +vals[c.id] || 0; t += perOf(c) === "w" ? v * 52 / 12 : v; }); return t; }
+    function plan() {
+      var left = A.v - monthly();
+      el.innerHTML = '<div class="en-block">' + head(st) + intro(st) +
+        (MY_CC ? "" : '<label class="bg-cc"><span>' + esc(T(UI.bgCountry)) + '</span><select data-bg-cc>' + Object.keys(CUR).map(function (k) { return '<option value="' + k + '"' + ((cc || "au") === k ? " selected" : "") + ">" + esc(T(CC_NAME[k])) + "</option>"; }).join("") + "</select></label>") +
+        '<div class="bg"><div class="bg-allow"><label for="bg-a">' + esc(T(UI.bgAllow)) + '</label><div class="money-in"><span>' + esc(cur3()[0]) + '</span><input id="bg-a" type="number" inputmode="decimal" min="0" step="10" value="' + Math.round(A.v) + '" data-bg-a></div>' +
+        '<small>' + esc(T(A.k === "known" ? UI.bgKnown : A.k === "practice" ? UI.bgPractice : UI.bgYours)) + "</small></div>" +
+        st.cats.map(function (c) {
+          return '<div class="bg-row"><label for="bg-' + c.id + '">' + both(c.l) + " <small>" + esc(T(perOf(c) === "w" ? UI.perWeek : UI.perMonth)) + '</small></label><div class="money-in"><span>' + esc(cur3()[0]) + '</span><input id="bg-' + c.id + '" type="number" inputmode="decimal" min="0" step="5" value="' + vals[c.id] + '" data-bg="' + c.id + '"></div></div>';
+        }).join("") +
+        '<div class="bg-tot"><span>' + esc(T(UI.bgSpend)) + ": <b data-bg-sp>" + money(monthly()) + '</b></span><span class="' + (left >= 0 ? "is-ok" : "is-low") + '" data-bg-left-w>' + esc(T(UI.bgLeft)) + ": <b data-bg-left>" + money(left) + "</b></span></div>" +
+        '<p class="bg-warn" data-bg-warn' + (left < 0 ? "" : " hidden") + ">⚠️ " + esc(T(UI.bgOverPlan)) + "</p>" +
+        '<button type="button" class="btn btn-primary" data-bg-go>' + esc(T(UI.bgStart)) + " →</button></div>" +
+        '<p class="cs-note">' + esc(T(UI.bgNote)) + "</p></div>";
+      fixArDir(el);
+    }
+    function upd() {
+      var left = A.v - monthly(), sp = $("[data-bg-sp]", el), lf = $("[data-bg-left]", el), w = $("[data-bg-left-w]", el);
+      if (sp) sp.textContent = money(monthly()); if (lf) lf.textContent = money(left); if (w) w.className = left >= 0 ? "is-ok" : "is-low"; var wn = $("[data-bg-warn]", el); if (wn) wn.hidden = left >= 0;
+    }
+    function week() {
+      var ev = st.events[wk], h = '<div class="en-block">' + head(st) +
+        '<div class="bg-meter"><span>' + esc(fmt(UI.bgWeek, { n: wk + 1, t: st.events.length })) + '</span><b class="' + (bal >= 0 ? "is-ok" : "is-low") + '">' + esc(T(UI.bgBal)) + ": " + money(bal) + "</b></div>" +
+        '<div class="sy"><div class="sy-scene"><span class="sy-ic" aria-hidden="true">' + (ev.i || "📅") + '</span><div class="tx">' + enText(ev.p) + (S.arHelp ? help(ev.p) : "") + "</div></div>";
+      if (picked == null) h += '<div class="sy-ch">' + ev.ch.map(function (c, k) { return '<button type="button" class="cc-btn sy-btn" data-bc="' + k + '" lang="en" dir="ltr">' + both(c.t) + '<em class="bg-cost">' + (c.cost ? "−" + money(scale(c.cost)) : esc(EN(UI.bgFree))) + "</em></button>"; }).join("") + "</div>";
+      else { var c = ev.ch[picked]; h += '<div class="sy-fb ' + (c.ok === false ? "is-no" : c.ok ? "is-ok" : "") + '"><div class="tx">' + enText(c.fb) + (S.arHelp ? help(c.fb) : "") + '</div></div><button type="button" class="btn btn-primary" data-bg-next>' + esc(T(wk < st.events.length - 1 ? UI.bgNextWeek : UI.bgEnd)) + " →</button>"; }
+      el.innerHTML = h + "</div></div>"; fixArDir(el);
+    }
+    function end() {
+      var good = log.filter(function (x) { return x; }).length;
+      B.cc = cc; B.allow = A.v; B.left = bal; B.at = Date.now(); save();
+      el.innerHTML = '<div class="en-block">' + head(st) + '<div class="pl-card bg-res"><div class="pl-ov"><small>' + esc(T(UI.bgLeftEnd)) + '</small><b class="' + (bal >= 0 ? "" : "is-low") + '">' + money(bal) + "</b></div>" +
+        '<p class="pl-note">' + esc(T(bal >= A.v * 0.1 ? UI.bgGreat : bal >= 0 ? UI.bgOk : UI.bgOver)) + "</p>" +
+        '<ul class="tx-list">' + st.tips.map(function (x) { return "<li>" + enText(x) + (S.arHelp ? help(x) : "") + "</li>"; }).join("") + "</ul>" +
+        '<button type="button" class="btn btn-ghost" data-bg-again>↺ ' + esc(T(UI.bgAgain)) + "</button></div></div>";
+      fixArDir(el);
+      cur.results[cur.i] = { c: good, t: log.length };
+      gateUpdate();
+    }
+    el.addEventListener("input", function (e) {
+      if (e.target.hasAttribute("data-bg-a")) { A = { v: +e.target.value || 0, k: "you" }; upd(); return; }
+      var k = e.target.getAttribute("data-bg"); if (k) { vals[k] = e.target.value; upd(); }
+    });
+    el.addEventListener("change", function (e) { if (e.target.hasAttribute("data-bg-cc")) { cc = e.target.value; B.allow = null; A = allowance(); resetVals(); plan(); } });
+    el.addEventListener("click", function (e) {
+      if (e.target.closest("[data-bg-go]")) { bal = A.v - monthly(); wk = 0; picked = null; log = []; stage = "week"; if (A.k === "you") { B.allow = A.v; B.cc = cc; save(); } week(); window.scrollTo(0, 0); return; }
+      var b = e.target.closest("[data-bc]");
+      if (b) { picked = +b.getAttribute("data-bc"); var c = st.events[wk].ch[picked]; bal -= c.cost ? scale(c.cost) : 0; if (c.ok != null) log.push(!!c.ok); week(); return; }
+      if (e.target.closest("[data-bg-next]")) { wk++; picked = null; if (wk < st.events.length) week(); else { stage = "end"; end(); } window.scrollTo(0, 0); return; }
+      if (e.target.closest("[data-bg-again]")) { stage = "plan"; delete cur.results[cur.i]; plan(); gateUpdate(); }
+    });
+    plan();
+    return { gate: function () { return stage === "end"; } };
+  };
+
+  // interview practice: random questions, an optional spoken officer, a recorder and a self-check
+  RENDER.interview = function (el, st) {
+    var qs = [], qi = 0, answered = 0, rounds = 0, voice = !!tts;
+    function newSet() { qs = shuffle(st.bank).slice(0, st.n || 6); qi = 0; }
+    function intro2() {
+      el.innerHTML = '<div class="en-block">' + head(st) + intro(st) + '<div class="iv-start"><span class="iv-ic" aria-hidden="true">' + (st.icon || "🛂") + "</span><p>" + esc(fmt(UI.ivHow, { n: st.n || 6, s: st.secs })) + "</p>" +
+        (tts ? '<label class="iv-voice"><input type="checkbox" data-iv-voice' + (voice ? " checked" : "") + "> " + esc(T(UI.ivVoice)) + "</label>" : "") +
+        '<button type="button" class="btn btn-primary" data-iv-go>' + esc(T(rounds ? UI.ivAgain : UI.ivStart)) + "</button></div>" +
+        (rounds ? '<p class="cs-note">' + esc(fmt(UI.ivRounds, { n: rounds })) + "</p>" : "") + "</div>";
+      fixArDir(el);
+    }
+    function ask() {
+      var q = qs[qi];
+      el.innerHTML = '<div class="en-block">' + head(st) + '<p class="lp-n">' + esc(fmt(UI.ivQ, { n: qi + 1, t: qs.length })) + '</p><div class="qa-q iv-q" lang="en" dir="ltr"><span aria-hidden="true">' + (st.officer || "👮") + "</span> " + esc(q.q) + "</div>" +
+        (q.tip ? '<details class="iv-tip"><summary>💡 ' + esc(T(UI.ivTip)) + '</summary><div class="tx">' + enText(q.tip) + (S.arHelp ? help(q.tip) : "") + "</div></details>" : "") +
+        '<div data-recbox></div><div class="sp-row"><button type="button" class="btn btn-ghost" data-iv-say>🔊 ' + esc(T(UI.ivRepeat)) + '</button><button type="button" class="btn btn-ghost" data-iv-next>' + esc(T(qi < qs.length - 1 ? UI.nextQ : UI.ivFinish)) + "</button></div>" +
+        '<p class="cs-note">' + esc(T(UI.private)) + "</p></div>";
+      fixArDir(el);
+      recorder($("[data-recbox]", el), st.secs, function () { answered++; });
+      if (voice) say(q.q);
+    }
+    function say(t) { try { if (!tts) return; tts.cancel(); var u = new SpeechSynthesisUtterance(t); u.lang = st.accent || "en-US"; u.rate = 0.95; tts.speak(u); } catch (e) {} }
+    function review() {
+      rounds++;
+      el.innerHTML = '<div class="en-block">' + head(st) + '<h3>' + esc(T(UI.ivReview)) + "</h3><p class=\"lp-sub\">" + esc(T(UI.ivReviewSub)) + '</p><fieldset class="es-ck"><legend>' + esc(T(UI.checkT)) + "</legend>" +
+        st.checks.map(function (x, k) { return '<label><input type="checkbox" data-ivc="' + k + '"><span>' + esc(T(x)) + "</span></label>"; }).join("") + "</fieldset>" +
+        '<button type="button" class="btn btn-ghost" data-iv-again>↺ ' + esc(T(UI.ivAgain)) + "</button></div>";
+      fixArDir(el); gateUpdate();
+    }
+    el.addEventListener("change", function (e) { if (e.target.hasAttribute("data-iv-voice")) voice = e.target.checked; });
+    el.addEventListener("click", function (e) {
+      if (e.target.closest("[data-iv-go]") || e.target.closest("[data-iv-again]")) { newSet(); ask(); return; }
+      if (e.target.closest("[data-iv-say]")) { say(qs[qi].q); return; }
+      if (e.target.closest("[data-iv-next]")) { stopRec(true); clearTimers(); try { tts && tts.cancel(); } catch (x) {} if (qi < qs.length - 1) { qi++; ask(); } else review(); }
+    });
+    intro2();
+    return { gate: function () { return rounds > 0; }, leave: function () { stopRec(true); clearTimers(); try { tts && tts.cancel(); } catch (x) {} } };
   };
 
   // ================= routing =================
