@@ -109,7 +109,7 @@ curl -X POST https://masarok-coach.<you>.workers.dev/admin/codes \
 
 These are things to check yourself; this isn't legal or tax advice.
 
-- **Refunds and consumer law:** Australian Consumer Law applies to what you sell. Decide your refund policy and add it to the coach page (it currently says to message you with the receipt).
+- **Refund policy:** decide it and state it on the coach page (it currently says to message you with the receipt). A simple, fair option: unused credits refunded within 7 days of purchase. Saudi e-commerce rules may give buyers a right to cancel unused purchases, so check them.
 - **ABN, GST and tax:** check what you need as a sole trader, and how the income is taxed.
 - **Your scholarship:** as a SACM-sponsored student, check SACM's rules on earning income while you study.
 - **Privacy:** the coach page explains what's sent where. Keep it accurate if you change anything.
