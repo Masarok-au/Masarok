@@ -445,7 +445,7 @@
       levelAll: "Show everything",
       inCity: "In {city}",
       otherCities: "Other cities",
-      back: "Back",
+      back: "Back", restore: "Moving from another phone? Load your backup",
       note: "<b>Important:</b> the universities SACM sponsors can change each year. Being accepted by a university is not the same as being sponsored to study there. Check the current list on the Ministry's <a href=\"https://ru.moe.gov.sa/Search\" rel=\"noopener\">recommended universities search</a> or with your cultural mission before you commit.",
       close: "Close",
       campus: "Main campus",
@@ -475,7 +475,7 @@
       levelAll: "اعرض كل شيء",
       inCity: "في {city}",
       otherCities: "مدن أخرى",
-      back: "رجوع",
+      back: "رجوع", restore: "انتقلت من جوال آخر؟ حمّل نسختك الاحتياطية",
       note: "<b>مهم:</b> الجامعات التي تبتعث عليها الوزارة قد تتغير كل عام. الحصول على قبول من جامعة لا يعني أنك مبتعث إليها. تحقق من القائمة الحالية عبر <a href=\"https://ru.moe.gov.sa/Search\" rel=\"noopener\">خدمة الاستعلام عن الجامعات الموصى بها</a> أو من الملحقية الثقافية قبل أن تلتزم.",
       close: "إغلاق",
       campus: "الحرم الرئيسي",
@@ -695,7 +695,8 @@
       "<p class=\"pk-sub\">" + esc(t.subs[step]) + "</p>" +
       stepHtml(step) +
       (step > 0 ? "<button type=\"button\" class=\"pk-back\" data-step=\"" + (step - 1) + "\">" + (lang === "ar" ? "&rarr; " : "&larr; ") + esc(t.back) + "</button>" : "") +
-      (step === 2 ? "<p class=\"pk-note\">" + t.note + "</p>" : "");
+      (step === 2 ? "<p class=\"pk-note\">" + t.note + "</p>" : "") +
+      (step === 0 && window.MasarokMenu && window.MasarokMenu.backup ? "<p class=\"pk-note\"><button type=\"button\" class=\"pk-restore\" data-restore>📦 " + esc(t.restore) + "</button></p>" : "");
     var panel = dlg.querySelector(".pk-panel");
     if (panel) panel.scrollTop = 0;
     var first = body.querySelector(".uni-card[aria-pressed=\"true\"]") || body.querySelector(".uni-card");
@@ -717,6 +718,7 @@
       var s = e.target.closest("[data-step]");
       if (s) { step = +s.getAttribute("data-step"); render(); return; }
       if (e.target.closest("[data-close]")) closeDialog();
+      if (e.target.closest("[data-restore]")) { closeDialog(); setTimeout(function () { window.MasarokMenu.backup(); }, 60); }
     });
     dlg.addEventListener("keydown", function (e) {
       if (e.key === "Escape") { e.preventDefault(); closeDialog(); }

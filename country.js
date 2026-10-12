@@ -66,7 +66,8 @@
           "لا يوجد رقم حكومي موحد في أمريكا. يظهر في نموذج I-20 تقدير جامعتك لتكاليف المعيشة لسنة. والتكاليف تختلف كثيرًا: نيويورك وبوسطن ومنطقة سان فرانسيسكو أغلى بكثير من المدن الجامعية الصغيرة."],
         src: { l: ["EducationUSA", "EducationUSA"], u: "https://educationusa.state.gov" },
         allowance: 1736,
-        ex: { rent: 1500, food: 450, travel: 80, bills: 120 }
+        ex: { rent: 1000, food: 450, travel: 80, bills: 120 },
+        exNote: ["In this example, rent is for a room in a shared apartment in a typical college town. In New York, Boston or the San Francisco Bay Area it can easily be double.", "في هذا المثال، الإيجار لغرفة في شقة مشتركة في مدينة جامعية متوسطة، وقد يصل إلى الضعف في نيويورك أو بوسطن أو منطقة سان فرانسيسكو."]
       },
       before: [
         [["Get your I-20 from the university", "احصل على نموذج I-20 من الجامعة"], ["The university issues the I-20 after it receives your SACM financial guarantee. You need it for the visa.", "تصدر الجامعة نموذج I-20 بعد أن يصلها الضمان المالي من الملحقية، وتحتاجه لطلب التأشيرة."]],

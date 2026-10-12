@@ -441,10 +441,13 @@
   }
   function page(root) {
     var on = !!AI.url, q = new URLSearchParams(location.search), sid = q.get("session_id");
+    // Stripe always returns to the English page: send Arabic buyers back to the Arabic one
+    var wantAr = null; try { wantAr = localStorage.getItem("masarok-ai-lang"); } catch (e) {}
+    if (sid && wantAr === "ar" && !AR) { location.replace("/ar/academy/coach/" + location.search); return; }
     function wrap(h) { return '<section class="cp-card">' + h + "</section>"; }
     function packHtml() {
       return wrap('<div class="cp-pack"><div><b class="cp-n">' + esc(fmt(P.pack, { n: AI.credits })) + '</b><small>' + esc(fmt(P.packSub, { d: Math.round(AI.days / 30.4) })) + '</small></div><b class="cp-price">' + esc(T(AI.price)) + "</b></div>" +
-        (on && AI.buy ? '<a class="btn btn-primary cp-buy" href="' + esc(AI.buy) + '">' + esc(fmt(P.buy, { p: T(AI.price) })) + " →</a>" :
+        (on && AI.buy ? '<a class="btn btn-primary cp-buy" data-cp-buy href="' + esc(AI.buy) + '">' + esc(fmt(P.buy, { p: T(AI.price) })) + " →</a>" :
           '<button type="button" class="btn btn-primary" disabled>' + esc(T(P.soon)) + '</button><p class="co-small">' + esc(T(P.soonSub)) + ' <a href="https://t.me/badersm18" target="_blank" rel="noopener">' + esc(T(P.tell)) + " ↗</a></p>"));
     }
     function mine(d) {
@@ -476,6 +479,7 @@
     root.addEventListener("click", function (e) {
       var t = e.target;
       function copy(txt, btn) { try { navigator.clipboard.writeText(txt).then(function () { var o = btn.textContent; btn.textContent = T(P.copied); setTimeout(function () { btn.textContent = o; }, 1500); }); } catch (x) {} }
+      if (t.closest("[data-cp-buy]")) { try { localStorage.setItem("masarok-ai-lang", AR ? "ar" : "en"); } catch (x) {} return; }
       if (t.closest("[data-cp-copy-full]")) { copy(code(), t.closest("button")); return; }
       if (t.closest("[data-cp-copy]")) { copy(code(), t.closest("button")); return; }
       if (t.closest("[data-cp-show]")) { var el = root.querySelector("[data-cp-code]"), full = el.textContent === el.getAttribute("data-full"); el.textContent = el.getAttribute(full ? "data-mask" : "data-full"); t.textContent = T(full ? P.show : P.hide); return; }

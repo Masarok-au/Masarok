@@ -185,7 +185,7 @@
           { id: "other", l: ["Eating out and other spending", "المطاعم والمصاريف الأخرى"] }],
         costs: {
           au: { rent: [400, "w"], food: [100, "w"], travel: [40, "w"], bills: [80, "m"], other: [30, "w"] },
-          us: { rent: [1500, "m"], food: [450, "m"], travel: [80, "m"], bills: [120, "m"], other: [100, "m"] },
+          us: { rent: [1000, "m"], food: [450, "m"], travel: [80, "m"], bills: [120, "m"], other: [80, "m"] },
           uk: { rent: [800, "m"], food: [250, "m"], travel: [80, "m"], bills: [60, "m"], other: [80, "m"] },
           ca: { rent: [1200, "m"], food: [400, "m"], travel: [110, "m"], bills: [90, "m"], other: [100, "m"] },
           de: { rent: [550, "m"], food: [250, "m"], travel: [0, "m"], bills: [200, "m"], other: [80, "m"] },

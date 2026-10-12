@@ -91,6 +91,29 @@
     ".top nav{align-items:center}" +
     "@media (max-width:760px){ .top nav .nav-ac{display:none !important} }" +
     ".nav-new{font-family:var(--f-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; color:#1A1206; background:var(--gold, #E2B66C); border-radius:999px; padding:0 6px; margin-inline-start:4px; vertical-align:2px}" +
+    ".bkm{display:grid; place-items:center; padding:16px}" +
+    ".bkm .mn-bg{animation:mnFade .2s ease}" +
+    ".bk-box{position:relative; width:min(32rem, 100%); max-height:calc(100vh - 32px); overflow:auto; background:var(--night, #0B1626); color:var(--night-ink, #EEF2F7); border:1px solid rgba(226,182,108,.45); border-radius:18px; box-shadow:0 30px 80px -30px rgba(0,0,0,.9)}" +
+    ".bk-in{display:grid; gap:14px; padding:0 18px 18px}" +
+    ".bk-head{padding:14px 0 0}" +
+    ".bk-head h2{font-family:var(--f-display); font-size:1.25rem; margin:0}" +
+    "[lang='ar'] .bk-head h2{font-family:var(--f-ar)}" +
+    ".bk-p{margin:0; color:#D5DEE9; font-size:.95rem; line-height:1.6}" +
+    ".bk-s{display:grid; gap:10px; padding:14px; border-radius:14px; border:1px solid rgba(238,242,247,.14); background:rgba(16,34,60,.7)}" +
+    ".bk-s h3{margin:0; font-size:1rem; font-family:inherit}" +
+    ".bk-sum{margin:0; font-size:.9rem; color:var(--night-dim, #A9B8CB); line-height:1.6}" +
+    ".bk-sum b{color:var(--night-ink, #EEF2F7)}" +
+    ".bk-row{display:flex; gap:8px; flex-wrap:wrap}" +
+    ".bk-btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; font:inherit; font-weight:700; font-size:.95rem; padding:10px 16px; border-radius:999px; border:1px solid rgba(238,242,247,.35); background:transparent; color:var(--night-ink, #EEF2F7); cursor:pointer; position:relative}" +
+    ".bk-btn:hover{border-color:var(--gold, #E2B66C)}" +
+    ".bk-btn.is-main{background:var(--gold, #E2B66C); color:#1A1206; border-color:var(--gold, #E2B66C)}" +
+    ".bk-btn.is-armed{background:#E07A6E; border-color:#E07A6E; color:#1A0A06}" +
+    ".bk-btn:disabled{opacity:.5; cursor:default}" +
+    ".bk-btn:focus-visible, .bk-pick:focus-within{outline:3px solid var(--gold, #E2B66C); outline-offset:2px}" +
+    ".bk-pick{justify-self:start}" +
+    ".bk-pick input{position:absolute; inset:0; opacity:0; cursor:pointer; width:100%}" +
+    ".bk-bad{margin:0; color:#F6C2B9; font-size:.92rem}" +
+    ".bk-note{margin:0; font-size:.84rem; color:var(--night-dim, #A9B8CB)}" +
     "@media (prefers-reduced-motion: reduce){ .mn-sheet, .mn-bg{animation:none} }";
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
@@ -109,6 +132,116 @@
     return '<li><button type="button" class="mn-item mn-reset" data-mn-reset' + (has ? "" : " disabled") + '><span class="mn-ic" aria-hidden="true">↺</span><span class="mn-tx"><b>' + esc(T(has ? UI.reset : UI.resetNone)) + "</b>" + (has ? "<small>" + esc(T(UI.resetSub)) + "</small>" : "") + "</span></button></li>";
   }
   var armed = false;
+
+  // ---------- move your progress: save a backup file, load it on another phone ----------
+  var BK = {
+    item: ["Move my progress", "انقل تقدمي"], itemSub: ["Save a backup, or load one on a new phone", "احفظ نسخة احتياطية، أو حمّلها على جوال جديد"],
+    title: ["Move your progress", "انقل تقدمك"],
+    intro: ["Your progress is saved only on this device. To move it, save a backup file, send it to yourself (WhatsApp, Telegram or email), then open masarok.org on the new phone and load it here.", "يُحفظ تقدمك على هذا الجهاز فقط. لنقله، احفظ ملفًا احتياطيًا وأرسله لنفسك (واتساب أو تيليجرام أو البريد)، ثم افتح masarok.org على الجوال الجديد وحمّله من هنا."],
+    saveT: ["1 · Save a backup", "1 · احفظ نسخة احتياطية"], save: ["Save backup file", "احفظ الملف الاحتياطي"], share: ["Send it…", "أرسله…"],
+    loadT: ["2 · Load a backup", "2 · حمّل نسخة احتياطية"], pick: ["Choose a backup file", "اختر الملف الاحتياطي"],
+    apply: ["Replace my progress with this backup", "استبدل تقدمي بهذه النسخة"], applySure: ["Tap again: this replaces what's on this device", "اضغط مرة أخرى: سيُستبدل ما على هذا الجهاز"],
+    bad: ["That isn't a Masarok backup file.", "هذا ليس ملفًا احتياطيًا من مسارُك."], empty: ["Nothing saved on this device yet.", "لا يوجد تقدم محفوظ على هذا الجهاز بعد."],
+    from: ["Backup from {d}", "نسخة بتاريخ {d}"], here: ["On this device", "على هذا الجهاز"],
+    steps: ["{n} Guide me steps done", "{n} خطوات منجزة في «أرشدني»"], lessons: ["{n} Academy lessons done", "{n} دروس منجزة في الأكاديمية"], pts: ["{n} bonus points", "{n} نقطة إضافية"],
+    code: ["your AI coach code", "رمز المدرب الذكي"], choices: ["your country and university", "دولتك وجامعتك"],
+    priv: ["The file stays with you: nothing is uploaded. It includes your AI coach code if you have one, so only send it to yourself.", "يبقى الملف معك ولا يُرفع إلى أي مكان. ويتضمن رمز المدرب الذكي إن كان لديك، فلا ترسله إلا لنفسك."],
+    done: ["Progress loaded. Reloading…", "تم تحميل التقدم. جارٍ إعادة التحميل…"], close: ["Close", "إغلاق"]
+  };
+  function bkKeys() { var out = []; try { for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (/^masarok-[\w-]{1,60}$/.test(k) && k !== "masarok-ai-dev") out.push(k); } } catch (e) {} return out.sort(); }
+  function bkCollect() { var d = {}; bkKeys().forEach(function (k) { try { d[k] = localStorage.getItem(k); } catch (e) {} }); return d; }
+  function bkSummary(d) {
+    function J(k) { try { return JSON.parse(d[k] || "null") || {}; } catch (e) { return {}; } }
+    var steps = 0, j = J("masarok-journey"); Object.keys(j.done || {}).forEach(function (lv) { var o = j.done[lv] || {}; Object.keys(o).forEach(function (s) { if (o[s] === "done") steps++; }); });
+    var ac = J("masarok-academy"), lessons = 0; Object.keys(ac.lessons || {}).forEach(function (k) { if ((ac.lessons[k] || {}).done) lessons++; });
+    var g = J("masarok-game"), pts = 0; Object.keys(g.bonus || {}).forEach(function (k) { pts += +g.bonus[k] || 0; });
+    var parts = [fmtB(BK.steps, steps), fmtB(BK.lessons, lessons)];
+    if (pts) parts.push(fmtB(BK.pts, pts));
+    if (d["masarok-ai-code"]) parts.push(T(BK.code));
+    if (d["masarok-country"] && d["masarok-country"] !== "all") parts.push(T(BK.choices));
+    return parts;
+  }
+  function fmtB(s, n) { return T(s).replace("{n}", n); }
+  function bkDate(t) { return new Date(t).toLocaleDateString(AR ? "ar-SA-u-ca-gregory" : "en-AU", { day: "numeric", month: "long", year: "numeric" }); }
+  function bkFile() {
+    var data = bkCollect(), body = JSON.stringify({ app: "masarok", v: 1, at: Date.now(), data: data }, null, 1);
+    var dt = new Date(), name = "masarok-backup-" + dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" + ("0" + dt.getDate()).slice(-2) + ".json";
+    return { name: name, blob: new Blob([body], { type: "application/json" }), n: Object.keys(data).length };
+  }
+  function bkParse(text) {
+    var o; try { o = JSON.parse(text); } catch (e) { return null; }
+    if (!o || o.app !== "masarok" || typeof o.data !== "object" || !o.data) return null;
+    var d = {}, ok = true, size = 0;
+    Object.keys(o.data).forEach(function (k) { var v = o.data[k]; if (!/^masarok-[\w-]{1,60}$/.test(k) || k === "masarok-ai-dev" || typeof v !== "string") { ok = false; return; } size += v.length; d[k] = v; });
+    if (!ok || size > 4e6 || !Object.keys(d).length) return null;
+    return { at: +o.at || 0, data: d };
+  }
+  var bk, bkPending = null, bkArmed = false;
+  function bkOpen() {
+    close(true);
+    if (!bk) {
+      bk = document.createElement("div"); bk.className = "mn bkm"; bk.hidden = true;
+      bk.innerHTML = '<div class="mn-bg" data-bk-close></div><div class="bk-box" role="dialog" aria-modal="true" aria-labelledby="bk-h"><div class="sadu" aria-hidden="true"></div><div class="bk-in">' +
+        '<div class="mn-head bk-head"><h2 id="bk-h">📦 ' + esc(T(BK.title)) + '</h2><button type="button" class="mn-x" data-bk-close aria-label="' + esc(T(BK.close)) + '">×</button></div>' +
+        '<p class="bk-p">' + esc(T(BK.intro)) + "</p>" +
+        '<section class="bk-s"><h3>' + esc(T(BK.saveT)) + '</h3><p class="bk-sum" data-bk-here></p><div class="bk-row"><button type="button" class="bk-btn is-main" data-bk-save>⬇ ' + esc(T(BK.save)) + '</button><button type="button" class="bk-btn" data-bk-share hidden>↗ ' + esc(T(BK.share)) + "</button></div></section>" +
+        '<section class="bk-s"><h3>' + esc(T(BK.loadT)) + '</h3><label class="bk-btn bk-pick">📂 ' + esc(T(BK.pick)) + '<input type="file" accept=".json,application/json" data-bk-file></label><div data-bk-preview></div></section>' +
+        '<p class="bk-note">🔒 ' + esc(T(BK.priv)) + "</p></div></div>";
+      document.body.appendChild(bk);
+      bk.addEventListener("click", bkClick);
+      bk.addEventListener("change", bkChange);
+      bk.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { bkClose(); return; }
+        if (e.key !== "Tab") return;
+        var f = bk.querySelectorAll("button:not([hidden]), input, label"), first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      });
+    }
+    var here = bkCollect(), has = Object.keys(here).length;
+    bk.querySelector("[data-bk-here]").textContent = has ? T(BK.here) + ": " + bkSummary(here).join(" · ") : T(BK.empty);
+    bk.querySelector("[data-bk-save]").disabled = !has;
+    var f = bkFile(), canShare = false; try { canShare = !!(navigator.canShare && navigator.canShare({ files: [new File([f.blob], f.name, { type: "application/json" })] })); } catch (e) {}
+    bk.querySelector("[data-bk-share]").hidden = !canShare || !has;
+    bk.querySelector("[data-bk-preview]").innerHTML = ""; bkPending = null; bkArmed = false;
+    bk.hidden = false; document.documentElement.style.overflow = "hidden";
+    bk.querySelector(".mn-x").focus();
+  }
+  function bkClose() { if (!bk || bk.hidden) return; bk.hidden = true; document.documentElement.style.overflow = ""; if (btn) btn.focus(); }
+  function bkClick(e) {
+    var t = e.target;
+    if (t.closest("[data-bk-close]")) { bkClose(); return; }
+    if (t.closest("[data-bk-save]")) {
+      var f = bkFile(), a = document.createElement("a"); a.href = URL.createObjectURL(f.blob); a.download = f.name;
+      document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500); return;
+    }
+    if (t.closest("[data-bk-share]")) { var g = bkFile(); try { navigator.share({ files: [new File([g.blob], g.name, { type: "application/json" })], title: g.name }).catch(function () {}); } catch (x) {} return; }
+    var ap = t.closest("[data-bk-apply]");
+    if (ap && bkPending) {
+      if (!bkArmed) { bkArmed = true; ap.classList.add("is-armed"); ap.textContent = T(BK.applySure); return; }
+      try {
+        bkKeys().forEach(function (k) { localStorage.removeItem(k); });
+        Object.keys(bkPending.data).forEach(function (k) { localStorage.setItem(k, bkPending.data[k]); });
+      } catch (x) {}
+      ap.disabled = true; ap.textContent = T(BK.done);
+      setTimeout(function () { location.replace(location.pathname); }, 600);
+    }
+  }
+  function bkChange(e) {
+    var inp = e.target; if (!inp.hasAttribute("data-bk-file") || !inp.files || !inp.files[0]) return;
+    var out = bk.querySelector("[data-bk-preview]"), file = inp.files[0];
+    bkPending = null; bkArmed = false;
+    if (file.size > 5e6) { out.innerHTML = '<p class="bk-bad">' + esc(T(BK.bad)) + "</p>"; return; }
+    var r = new FileReader();
+    r.onload = function () {
+      var p = bkParse(String(r.result || ""));
+      if (!p) { out.innerHTML = '<p class="bk-bad">' + esc(T(BK.bad)) + "</p>"; return; }
+      bkPending = p;
+      out.innerHTML = '<p class="bk-sum"><b>' + esc(T(BK.from).replace("{d}", p.at ? bkDate(p.at) : "—")) + "</b><br>" + esc(bkSummary(p.data).join(" · ")) + '</p><button type="button" class="bk-btn is-main" data-bk-apply>' + esc(T(BK.apply)) + "</button>";
+    };
+    r.readAsText(file);
+    inp.value = "";
+  }
+  function bkItem() { return '<li><button type="button" class="mn-item" data-mn-backup><span class="mn-ic" aria-hidden="true">📦</span><span class="mn-tx"><b>' + esc(T(BK.item)) + "</b><small>" + esc(T(BK.itemSub)) + "</small></span></button></li>"; }
 
   // ---------- the drawer ----------
   var mn, btn, lastFocus;
@@ -142,7 +275,7 @@
       '<div class="mn-g"><h2>' + esc(T(UI.gMore)) + '</h2><ul class="mn-list mn-more">' +
         '<li><a class="mn-item" href="' + FORM + '" target="_blank" rel="noopener"><span class="mn-ic" aria-hidden="true">💬</span><span class="mn-tx"><b>' + esc(T(UI.feedback)) + " ↗</b></span></a></li>" + install +
         '<li><a class="mn-item mn-lang" href="' + esc(otherLangHref()) + '" lang="' + (AR ? "en" : "ar") + '" hreflang="' + (AR ? "en" : "ar") + '"><span class="mn-ic" aria-hidden="true">🌐</span><span class="mn-tx"><b>' + esc(T(UI.other)) + "</b></span></a></li>" +
-      resetItem() + "</ul></div>" +
+      bkItem() + resetItem() + "</ul></div>" +
       '<p class="mn-foot">masarok.org · ' + (AR ? "دليل مجاني يكتبه طالب" : "A free guide written by a student") + "</p></div>";
     document.body.appendChild(mn);
     mn.addEventListener("click", onClick);
@@ -178,6 +311,7 @@
       if (!armed) { armed = true; rs.classList.add("is-armed"); rs.querySelector("b").textContent = T(UI.resetSure); return; }
       clearChoices(); return;
     }
+    if (t.closest("[data-mn-backup]")) { bkOpen(); return; }
     if (t.closest("[data-mn-install]")) { close(true); var c = document.querySelector(".app-chip"); if (c) c.click(); return; }
     var a = t.closest("a"); if (!a) return;
     var id = a.getAttribute("data-mn-id");
@@ -204,5 +338,5 @@
     if (top && nav !== top) top.appendChild(btn); else nav.appendChild(btn);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
-  window.MasarokMenu = { open: open, close: close };
+  window.MasarokMenu = { open: open, close: close, backup: bkOpen };
 })();

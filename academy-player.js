@@ -145,6 +145,7 @@
     ivStart: ["Start the interview", "ابدأ المقابلة"], ivAgain: ["Practise with new questions", "تدرب بأسئلة جديدة"], ivRounds: ["Rounds practised: {n}", "الجولات التي تدربت عليها: {n}"], ivQ: ["Question {n} of {t}", "السؤال {n} من {t}"],
     ivTip: ["What a good answer includes", "ما تتضمنه الإجابة الجيدة"], ivRepeat: ["Hear it again", "استمع مرة أخرى"], ivFinish: ["Finish the interview", "أنهِ المقابلة"],
     ivReview: ["How did it go?", "كيف كان أداؤك؟"], ivReviewSub: ["Listen back to a few answers, then tick what is true. Practise again until you can tick every box.", "استمع لبعض إجاباتك، ثم ضع علامة على ما ينطبق. تدرب مجددًا حتى تضع علامة على كل البنود."],
+    bkHint: ["Your progress is saved on this device only.", "يُحفظ تقدمك على هذا الجهاز فقط."], bkGo: ["Move it to another phone", "انقله إلى جوال آخر"],
     disclaimer: ["Practice material in Masarok Academy is original, written in the official IELTS formats. Scores here are estimates, not official results.", "تمارين أكاديمية مسارُك أصلية ومكتوبة بالصيغ الرسمية لاختبار IELTS، والدرجات هنا تقديرية وليست نتائج رسمية."]
   };
 
@@ -201,7 +202,8 @@
       '<section class="cs-hero"><p class="eyebrow">' + esc(T(UI.academy)) + '</p><h1 id="main-h" tabindex="-1">' + esc(T(C.t)) + '</h1><p class="cs-sub">' + esc(T(C.sub)) + "</p></section>" +
       top +
       '<section class="cs-ls" aria-labelledby="ls-h"><h2 id="ls-h">' + esc(T(UI.lessonsT)) + "</h2>" + cert + groups + "</section>" +
-      '<p class="cs-note">' + esc(T(C.note || (C.id === "ielts" ? UI.disclaimer : UI.disclaimerW))) + "</p>";
+      '<p class="cs-note">' + esc(T(C.note || (C.id === "ielts" ? UI.disclaimer : UI.disclaimerW))) + "</p>" +
+      '<p class="cs-note">📦 ' + esc(T(UI.bkHint)) + ' <button type="button" class="es-link" data-backup>' + esc(T(UI.bkGo)) + "</button></p>";
     wirePlan(); wireCert();
   }
   function backArrow() { return '<svg viewBox="0 0 16 16" aria-hidden="true" class="bk"><path d="M13 8H4M7.5 4.5L4 8l3.5 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'; }
@@ -1416,6 +1418,7 @@
     } else { cur = null; home(); var h = $("#main-h"); if (h && document.activeElement === document.body) h.focus({ preventScroll: true }); }
   }
   app.addEventListener("click", function (e) {
+    if (e.target.closest("[data-backup]") && window.MasarokMenu) { window.MasarokMenu.backup(); return; }
     if (e.target.closest("[data-ar-toggle]")) {
       S.arHelp = !S.arHelp; save();
       if (cur) renderStep(); else home();
