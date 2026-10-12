@@ -304,9 +304,12 @@
     qn: ["Question {k} of {t}", "السؤال {k} من {t}"], next: ["Next question", "السؤال التالي"], allDone: ["Quick check done: {r} of {t} right", "انتهى الاختبار السريع: {r} من {t} صحيحة"],
     glClose: ["Close", "إغلاق"],
     trainT: ["Train for this step in Masarok Academy", "تدرّب على هذه الخطوة في أكاديمية مسارُك"],
-    trainNew: ["IELTS placement test, a study plan, lessons and model essays. +40 points for each lesson.", "اختبار تحديد مستوى IELTS، وخطة دراسة، ودروس، ونماذج مقالات. 40 نقطة لكل درس."],
+    trainNew: ["IELTS placement test, a study plan, 22 lessons and 2 full mock tests. +40 points for each lesson.", "اختبار تحديد مستوى IELTS، وخطة دراسة، و22 درسًا، واختباران تجريبيان كاملان. 40 نقطة لكل درس."],
     trainProg: ["Starting band {b} · {d} of {t} lessons done", "المستوى المبدئي {b} · أنجزت {d} من {t} دروس"],
-    trainGo: ["Start the IELTS course", "ابدأ دورة IELTS"], trainCont: ["Continue the course", "تابع الدورة"], glHint: ["Tap underlined words to see what they mean.", "اضغط على الكلمات المسطّرة لمعرفة معناها."],
+    trainGo: ["Start the IELTS course", "ابدأ دورة IELTS"],
+    trainTW: ["Write your application in Masarok Academy", "اكتب طلبك في أكاديمية مسارُك"],
+    trainNewW: ["Personal statement, study plan or research proposal, with builders matched to your country. +40 points for each lesson.", "الخطاب الشخصي أو خطة الدراسة أو مقترح البحث، مع أدوات كتابة مطابقة لدولتك. 40 نقطة لكل درس."],
+    trainProgW: ["{d} of {t} writing lessons done", "أنجزت {d} من {t} دروس الكتابة"], trainGoW: ["Start the writing course", "ابدأ دورة الكتابة"], trainCont: ["Continue the course", "تابع الدورة"], glHint: ["Tap underlined words to see what they mean.", "اضغط على الكلمات المسطّرة لمعرفة معناها."],
     src: ["Official page", "الصفحة الرسمية"],
     check: ["Quick check", "سؤال سريع"], pts: ["+{n} pts", "+{n} {w}"],
     right: ["Correct!", "إجابة صحيحة!"], wrong: ["Not quite.", "ليست هذه."], again: ["Try once more for {n} pts", "حاول مرة أخرى مقابل {n} {w}"],
@@ -406,20 +409,24 @@
   }
 
   // ---------- Masarok Academy: train for the English step, and points for lessons done there ----------
-  var AC_LESSONS = ["placement", "know", "tfng", "headings", "writing", "speaking", "vocab1"];
+  var AC_IELTS = ["englishF", "englishB", "englishPg"], AC_WRITE = ["offerF", "offer", "supervisor", "docs"];
   function acState() { try { return JSON.parse(localStorage.getItem("masarok-academy") || "null") || {}; } catch (e) { return {}; } }
   function trainHtml(id) {
-    if (["englishF", "englishB", "englishPg"].indexOf(id) < 0 || cc() === "de") return "";
-    var a = acState(), ls = a.lessons || {}, d = AC_LESSONS.filter(function (k) { return ls[k] && ls[k].done; }).length;
-    var line = a.placement ? fmt(UI.trainProg, { b: (Math.round(a.placement.o * 2) / 2).toFixed(1), d: d, t: AC_LESSONS.length }) : T(UI.trainNew);
-    var href = (A ? "/ar" : "") + "/academy/ielts/";
-    return '<section class="ac-train" aria-label="' + esc(T(UI.trainT)) + '"><span class="ac-train-ic" aria-hidden="true">🎓</span><div class="ac-train-tx"><b>' + esc(T(UI.trainT)) + "</b><small>" + esc(line) + "</small></div>" +
-      '<a class="btn btn-primary" href="' + href + '">' + esc(T(d ? UI.trainCont : UI.trainGo)) + "</a></section>";
+    var w = AC_WRITE.indexOf(id) >= 0;
+    if (!w && (AC_IELTS.indexOf(id) < 0 || cc() === "de")) return "";
+    var a = acState(), cr = (a.courses || {})[w ? "writing" : "ielts"], d = cr ? cr.done : 0, line;
+    if (w) line = cr ? fmt(UI.trainProgW, { d: d, t: cr.total }) : T(UI.trainNewW);
+    else line = a.placement ? fmt(UI.trainProg, { b: (Math.round(a.placement.o * 2) / 2).toFixed(1), d: d, t: cr ? cr.total : 24 }) : T(UI.trainNew);
+    var href = (A ? "/ar" : "") + "/academy/" + (w ? "writing" : "ielts") + "/";
+    var tt = T(w ? UI.trainTW : UI.trainT);
+    return '<section class="ac-train" aria-label="' + esc(tt) + '"><span class="ac-train-ic" aria-hidden="true">' + (w ? "✍️" : "🎓") + '</span><div class="ac-train-tx"><b>' + esc(tt) + "</b><small>" + esc(line) + "</small></div>" +
+      '<a class="btn btn-primary" href="' + href + '">' + esc(T(d ? UI.trainCont : (w ? UI.trainGoW : UI.trainGo))) + "</a></section>";
   }
+  // every lesson finished in any Academy course earns +40 once
   function syncAcademy() {
     var G = window.MasarokGame; if (!G || !G.award) return;
     var ls = acState().lessons || {};
-    AC_LESSONS.forEach(function (k) { if (ls[k] && ls[k].done) G.award("academy:" + k, 40, null, true); });
+    Object.keys(ls).forEach(function (k) { if (ls[k] && ls[k].done) G.award("academy:" + k, 40, null, true); });
   }
   setTimeout(syncAcademy, 900);
 

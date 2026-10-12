@@ -6,7 +6,7 @@
 
   // ---------------- placement test ----------------
   var PLACEMENT = {
-    id: "placement", icon: "🧭", mins: 15, skill: "all",
+    id: "placement", order: 1, icon: "🧭", mins: 15, skill: "all",
     t: ["Placement test", "اختبار تحديد المستوى"],
     d: ["Find your starting band in 15 minutes and get a study plan.", "اعرف مستواك المبدئي في 15 دقيقة واحصل على خطة دراسة."],
     steps: [
@@ -85,7 +85,7 @@
 
   // ---------------- lesson: know the test ----------------
   var KNOW = {
-    id: "know", icon: "📋", mins: 8, skill: "all",
+    id: "know", order: 2, icon: "📋", mins: 8, skill: "all",
     t: ["Know the test", "اعرف الاختبار"],
     d: ["The format, timing and how your band score is worked out.", "شكل الاختبار وتوقيته وكيف تُحسب درجتك."],
     steps: [
@@ -105,7 +105,7 @@
       { t: "quiz", h: ["Check yourself", "اختبر نفسك"], items: [
         { s: ["How many questions are in the Reading test?", "كم سؤالًا في اختبار القراءة؟"], o: ["20", "30", "40", "60"], a: 2, x: ["40 questions across 3 passages.", "40 سؤالًا في 3 نصوص."] },
         { s: ["What is the minimum length for Writing Task 2?", "ما الحد الأدنى لطول المهمة الثانية في الكتابة؟"], o: ["150 words", "200 words", "250 words", "400 words"], a: 2, x: ["At least 250 words. Task 1 needs at least 150.", "250 كلمة على الأقل، والمهمة الأولى 150 كلمة على الأقل."] },
-        { s: ["Your bands are Listening 6.5, Reading 6.0, Writing 5.5 and Speaking 6.0. What is your overall band?", "درجاتك: استماع 6.5، قراءة 6.0، كتابة 5.5، محادثة 6.0. ما درجتك الكلية؟"], o: ["5.5", "6.0", "6.5", "7.0"], a: 1, x: ["(6.5 + 6.0 + 5.5 + 6.0) ÷ 4 = 6.0.", "(6.5 + 6.0 + 5.5 + 6.0) ÷ 4 = 6.0."] },
+        { s: ["Your bands are Listening 6.5, Reading 6.0, Writing 5.5 and Speaking 6.0. What is your overall band?", "درجاتك: استماع 6.5، قراءة 6.0، كتابة 5.5، محادثة 6.0. ما درجتك الكلية؟"], o: ["5.5", "6.0", "6.5", "7.0"], a: 1, x: ["(6.5 + 6.0 + 5.5 + 6.0) ÷ 4 = 6.0.", "المتوسط: (6.5 + 6.0 + 5.5 + 6.0) ÷ 4 = 6.0."] },
         { s: ["Your university asks for 6.5 overall with no band below 6.0. You got 6.5 overall, but 5.5 in Writing. Do you meet it?", "تطلب جامعتك 6.5 كلية دون أن تقل أي مهارة عن 6.0. حصلت على 6.5 كلية و5.5 في الكتابة. هل استوفيت الشرط؟"], o: [["Yes", "نعم"], ["No", "لا"]], a: 1, x: ["Writing is below 6.0, so you would need to improve it.", "الكتابة أقل من 6.0، فستحتاج إلى تحسينها."] },
         { s: ["How long does the Speaking test last?", "كم مدة اختبار المحادثة؟"], o: ["3–5 minutes", "11–14 minutes", "30 minutes", "60 minutes"], a: 1, x: ["11–14 minutes, in 3 parts.", "من 11 إلى 14 دقيقة في 3 أجزاء."] }
       ], pass: 4 }
@@ -114,7 +114,7 @@
 
   // ---------------- lesson: true / false / not given ----------------
   var TFNG = {
-    id: "tfng", icon: "🔎", mins: 15, skill: "r",
+    id: "tfng", order: 40, icon: "🔎", mins: 15, skill: "r",
     t: ["Reading: True, False or Not Given", "القراءة: صحيح أم خطأ أم غير مذكور"],
     d: ["The question type students miss most, and how to get it right.", "أكثر نوع أسئلة يخطئ فيه الطلاب، وكيف تجيب عنه بثقة."],
     steps: [
@@ -155,7 +155,7 @@
 
   // ---------------- lesson: matching headings ----------------
   var HEAD = {
-    id: "headings", icon: "🧩", mins: 15, skill: "r",
+    id: "headings", order: 41, icon: "🧩", mins: 15, skill: "r",
     t: ["Reading: Matching headings", "القراءة: مطابقة العناوين"],
     d: ["Find the main idea of each paragraph, and avoid the word-matching trap.", "اعثر على الفكرة الرئيسية لكل فقرة، وتجنّب فخ الكلمات المتشابهة."],
     steps: [
@@ -196,7 +196,7 @@
   // ---------------- lesson: writing task 2 ----------------
   var PROMPT = "Some people believe that university students should study abroad for at least one year, while others think this is unnecessary. Discuss both views and give your own opinion.";
   var WRITE = {
-    id: "writing", icon: "✍️", mins: 50, skill: "w",
+    id: "writing", order: 61, icon: "✍️", mins: 50, skill: "w",
     t: ["Writing Task 2: the essay", "الكتابة، المهمة 2: المقال"],
     d: ["Plan, compare model answers at band 6, 7 and 8, then write your own essay.", "خطط، وقارن نماذج إجابات بدرجات 6 و7 و8، ثم اكتب مقالك."],
     steps: [
@@ -265,7 +265,7 @@
 
   // ---------------- lesson: speaking part 2 ----------------
   var SPEAK = {
-    id: "speaking", icon: "🎙️", mins: 15, skill: "s",
+    id: "speaking", order: 70, icon: "🎙️", mins: 15, skill: "s",
     t: ["Speaking Part 2: the cue card", "المحادثة، الجزء 2: بطاقة الموضوع"],
     d: ["Prepare for 1 minute, speak for 2, then listen back and check yourself.", "حضّر دقيقة وتحدث دقيقتين، ثم استمع لنفسك وقيّم أداءك."],
     steps: [
@@ -295,7 +295,7 @@
 
   // ---------------- vocabulary deck 1 ----------------
   var VOCAB = {
-    id: "vocab1", icon: "🃏", mins: 10, skill: "v",
+    id: "vocab1", order: 80, icon: "🃏", mins: 10, skill: "v",
     t: ["Vocabulary 1: study and university", "المفردات 1: الدراسة والجامعة"],
     d: ["24 academic words you'll read, hear and use from day one.", "24 كلمة أكاديمية ستقرؤها وتسمعها وتستخدمها من أول يوم."],
     steps: [{ t: "cards" }],
