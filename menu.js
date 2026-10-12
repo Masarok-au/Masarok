@@ -19,7 +19,9 @@
     gMain: ["Masarok", "مسارُك"], gGuide: ["In the guide", "في الدليل"], gMore: ["More", "المزيد"],
     newTag: ["New", "جديد"],
     install: ["Install the app", "ثبّت التطبيق"], feedback: ["Share your feedback", "شارك رأيك"],
-    other: ["العربية", "English"]
+    other: ["العربية", "English"],
+    reset: ["Clear my choices", "امسح اختياراتي"], resetSub: ["Country, city, university and degree level. Your progress stays.", "الدولة والمدينة والجامعة والدرجة العلمية. يبقى تقدمك كما هو."],
+    resetSure: ["Tap again to clear your choices", "اضغط مرة أخرى لمسح اختياراتك"], resetNone: ["No saved choices yet", "لا توجد اختيارات محفوظة"]
   };
   var PAGES = [
     { id: "home", i: "🏠", href: base, n: ["The guide", "الدليل"], d: ["Everything about studying abroad, for your country", "كل ما تحتاجه للدراسة في الخارج، حسب دولتك"] },
@@ -72,6 +74,11 @@
     ".mn-secs a:hover{color:var(--night-ink, #EEF2F7); background:rgba(255,255,255,.05)}" +
     ".mn-secs a:focus-visible{outline:2px solid var(--gold, #E2B66C)}" +
     ".mn-more{display:grid; gap:4px}" +
+    ".mn-reset .mn-ic{font-size:1.35rem; color:var(--gold, #E2B66C)}" +
+    ".mn-reset.is-armed{border-color:#E07A6E; background:rgba(224,122,110,.12)}" +
+    ".mn-reset.is-armed b{color:#F2A79D}" +
+    ".mn-reset[disabled]{opacity:.55; cursor:default}" +
+    ".mn-reset[disabled]:hover{background:none; border-color:transparent}" +
     ".mn-lang:lang(ar){font-family:var(--f-ar)}" +
     ".mn-foot{margin-top:auto; padding:18px 20px 0; color:var(--night-dim, #A9B8CB); font-size:.8rem}" +
     "@keyframes mnIn{from{transform:translateX(100%)}to{transform:none}}" +
@@ -87,6 +94,20 @@
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
   var ICON_MENU = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+
+  // ---------- the picker's saved choices ----------
+  var PICK = ["masarok-country", "masarok-city", "masarok-uni", "masarok-level"];
+  function hasChoices() { try { return PICK.some(function (k) { var v = localStorage.getItem(k); return v && v !== "all"; }); } catch (e) { return false; } }
+  function clearChoices() {
+    try { PICK.forEach(function (k) { localStorage.removeItem(k); }); } catch (e) {}
+    // reload without ?country=…&uni=… so nothing is picked again from the address
+    location.replace(location.pathname);
+  }
+  function resetItem() {
+    var has = hasChoices();
+    return '<li><button type="button" class="mn-item mn-reset" data-mn-reset' + (has ? "" : " disabled") + '><span class="mn-ic" aria-hidden="true">↺</span><span class="mn-tx"><b>' + esc(T(has ? UI.reset : UI.resetNone)) + "</b>" + (has ? "<small>" + esc(T(UI.resetSub)) + "</small>" : "") + "</span></button></li>";
+  }
+  var armed = false;
 
   // ---------- the drawer ----------
   var mn, btn, lastFocus;
@@ -119,7 +140,7 @@
       '<div class="mn-g"><h2>' + esc(T(UI.gMore)) + '</h2><ul class="mn-list mn-more">' +
         '<li><a class="mn-item" href="' + FORM + '" target="_blank" rel="noopener"><span class="mn-ic" aria-hidden="true">💬</span><span class="mn-tx"><b>' + esc(T(UI.feedback)) + " ↗</b></span></a></li>" + install +
         '<li><a class="mn-item mn-lang" href="' + esc(otherLangHref()) + '" lang="' + (AR ? "en" : "ar") + '" hreflang="' + (AR ? "en" : "ar") + '"><span class="mn-ic" aria-hidden="true">🌐</span><span class="mn-tx"><b>' + esc(T(UI.other)) + "</b></span></a></li>" +
-      "</ul></div>" +
+      resetItem() + "</ul></div>" +
       '<p class="mn-foot">masarok.org · ' + (AR ? "دليل مجاني يكتبه طالب" : "A free guide written by a student") + "</p></div>";
     document.body.appendChild(mn);
     mn.addEventListener("click", onClick);
@@ -133,6 +154,8 @@
   }
   function open() {
     if (!mn) build();
+    else { var r = mn.querySelector(".mn-reset"); if (r) { var tmp = document.createElement("ul"); tmp.innerHTML = resetItem(); r.parentNode.replaceWith(tmp.firstChild); } }
+    armed = false;
     lastFocus = document.activeElement;
     mn.hidden = false; btn && btn.setAttribute("aria-expanded", "true");
     document.documentElement.style.overflow = "hidden";
@@ -147,6 +170,12 @@
   function onClick(e) {
     var t = e.target;
     if (t.closest("[data-mn-close]")) { close(); return; }
+    var rs = t.closest("[data-mn-reset]");
+    if (rs) {
+      if (rs.disabled) return;
+      if (!armed) { armed = true; rs.classList.add("is-armed"); rs.querySelector("b").textContent = T(UI.resetSure); return; }
+      clearChoices(); return;
+    }
     if (t.closest("[data-mn-install]")) { close(true); var c = document.querySelector(".app-chip"); if (c) c.click(); return; }
     var a = t.closest("a"); if (!a) return;
     var id = a.getAttribute("data-mn-id");
