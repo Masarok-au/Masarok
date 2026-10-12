@@ -69,8 +69,13 @@ export function installFetch() {
   };
 }
 
+// a stand-in for an R2 bucket: { key: text }
+export function makeR2(files) {
+  return { files: files || {}, async get(k) { return k in this.files ? { text: async () => this.files[k] } : null; }, async put(k, v) { this.files[k] = String(v); } };
+}
+
 export function env(db, extra) {
   return Object.assign({ DB: db, ANTHROPIC_API_KEY: "sk-ant-fake", STRIPE_SECRET_KEY: "sk_test_fake", TOKEN_SECRET: "local-secret",
     ALLOWED_ORIGINS: "https://masarok.org,http://localhost:8765", MODEL: "claude-sonnet-5-5", PRICE_AMOUNT: "999", PRICE_CURRENCY: "sar",
-    CREDITS_PER_PACK: "3", EXPIRY_DAYS: "365", MAX_PER_HOUR: "10", DAILY_CAP: "500", PAYMENT_LINK_ID: "plink_test", ALLOW_TEST_SESSIONS: "1" }, extra || {});
+    CREDITS_PER_PACK: "3", EXPIRY_DAYS: "365", MAX_PER_HOUR: "10", DAILY_CAP: "500", PAYMENT_LINK_ID: "plink_test", ALLOW_TEST_SESSIONS: "1", MAIL_MODE: "log", ADMIN_TOKEN: "local-admin-token-123456", CONTENT: makeR2() }, extra || {});
 }

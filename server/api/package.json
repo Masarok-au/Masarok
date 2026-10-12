@@ -1,0 +1,9 @@
+{
+  "name": "masarok-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --no-warnings test/run.mjs && node --no-warnings test/accounts.mjs",
+    "deploy": "wrangler deploy"
+  }
+}

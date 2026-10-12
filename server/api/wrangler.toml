@@ -1,12 +1,16 @@
-# Masarok AI coach · Cloudflare Worker settings
-name = "masarok-coach"
+# Masarok server · Cloudflare Worker settings (accounts, paid lessons, progress sync, AI coach)
+name = "masarok-api"
 main = "src/index.js"
 compatibility_date = "2026-09-01"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "masarok-coach"
+database_name = "masarok"
 database_id = "PASTE-YOUR-D1-DATABASE-ID-HERE"
+
+[[r2_buckets]]
+binding = "CONTENT"
+bucket_name = "masarok-content"   # paid lesson bundles, uploaded by tools/build-content.mjs
 
 [vars]
 ALLOWED_ORIGINS = "https://masarok.org,https://www.masarok.org"
@@ -20,8 +24,17 @@ MAX_PER_HOUR = "10"           # per coach code
 DAILY_CAP = "500"             # all students together; a safety net for your API bill
 PAYMENT_LINK_ID = ""          # optional: plink_... so only your link counts
 ALLOW_TEST_SESSIONS = "0"     # set to "1" while testing with Stripe test mode
+# accounts
+MAIL_FROM = "Masarok <login@masarok.org>"   # a sender on a domain you verified in Resend
+SESSION_DAYS = "180"          # how long a device stays signed in
+CODES_PER_EMAIL_HOUR = "5"
+CODES_PER_IP_HOUR = "20"
+VERIFY_PER_IP_HOUR = "60"
+SYNC_MAX_BYTES = "2097152"    # synced progress per student (2 MB)
 
 # Secrets (never put these in this file). Set them with:
 #   npx wrangler secret put ANTHROPIC_API_KEY
 #   npx wrangler secret put STRIPE_SECRET_KEY
 #   npx wrangler secret put TOKEN_SECRET
+#   npx wrangler secret put ADMIN_TOKEN
+#   npx wrangler secret put RESEND_API_KEY

@@ -2,13 +2,13 @@
    1. A free coach that runs on the student's own device: it checks writing patterns and,
       if the student turns it on, gives pace and filler feedback on speaking from a live transcript.
    2. Optional AI feedback (a paid add-on). It stays switched off until AI.url below points at
-      the Masarok AI server (see server/ai-coach/README.md). Nothing is sent anywhere while it is off. */
+      the Masarok AI server (see server/api/README.md). Nothing is sent anywhere while it is off. */
 (function () {
   "use strict";
 
-  // ---------- settings: fill these in once the coach server and the Stripe link are live (see server/coach/README.md) ----------
+  // ---------- settings: fill these in once the coach server and the Stripe link are live (see server/api/README.md) ----------
   var AI = {
-    url: "",         // the coach server, e.g. "https://masarok-coach.<account>.workers.dev"
+    url: "",         // leave empty to use the Masarok server set in account.js
     buy: "",         // the Stripe Payment Link, e.g. "https://buy.stripe.com/..."
     price: ["9.99 SAR", "9.99 ريال"],
     credits: 30,     // feedbacks in one pack (keep the same as CREDITS_PER_PACK on the server)
@@ -16,6 +16,8 @@
   };
   // for testing before launch: only this browser sees the AI coach
   try { var o = JSON.parse(localStorage.getItem("masarok-ai-dev") || "null"); if (o && /^https?:\/\//.test(o.url || "")) { AI.url = o.url; if (o.buy) AI.buy = o.buy; } } catch (e) {}
+  // the coach lives on the same Masarok server as accounts (account.js); it turns on once the buy link is set
+  if (!AI.url && AI.buy && window.MasarokAccount && window.MasarokAccount.url) AI.url = window.MasarokAccount.url;
 
   var AR = (document.documentElement.lang || "en").slice(0, 2) === "ar", A = AR ? 1 : 0;
   function T(x) { return Array.isArray(x) ? x[A] : x; }

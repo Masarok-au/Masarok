@@ -30,9 +30,17 @@
   function pref(k) { try { var v = localStorage.getItem(k); return v && v !== "all" ? v : null; } catch (e) { return null; } }
   var MY_CC = pref("masarok-country"), MY_LV = pref("masarok-level");
   function visible(l) { return (!l.cc || !MY_CC || l.cc.indexOf(MY_CC) > -1) && (!l.lv || !MY_LV || l.lv.indexOf(MY_LV) > -1); }
-  C.lessons = ALL_LESSONS.filter(visible);
   // steps can be country or degree specific too
-  ALL_LESSONS.forEach(function (l) { l.steps = l.steps.filter(visible); });
+  function fit(l) { l.steps = (l.steps || []).filter(visible); return l; }
+  ALL_LESSONS.forEach(fit);
+  C.lessons = ALL_LESSONS.filter(visible);
+  // paid lessons arrive as title cards (locked: true) until MasarokAccount brings their content for owners
+  var ACCESS = "open"; // "open" | "off" | "signed_out" | "not_owned" | "offline"
+  function hasLocked() { return ALL_LESSONS.some(function (l) { return l.locked; }); }
+  function unlock(full) {
+    full.forEach(function (f) { for (var i = 0; i < ALL_LESSONS.length; i++) if (ALL_LESSONS[i].id === f.id) ALL_LESSONS[i] = fit(f); });
+    C.lessons = ALL_LESSONS.filter(visible);
+  }
   var CC_NAME = { au: ["Australia", "أستراليا"], us: ["the USA", "أمريكا"], uk: ["the UK", "بريطانيا"], ca: ["Canada", "كندا"], de: ["Germany", "ألمانيا"], sg: ["Singapore", "سنغافورة"] };
   var LV_NAME = { foundation: ["foundation", "الفاونديشن"], bachelor: ["bachelor's", "البكالوريوس"], master: ["master's", "الماجستير"], phd: ["PhD", "الدكتوراه"] };
 
@@ -146,6 +154,15 @@
     ivTip: ["What a good answer includes", "ما تتضمنه الإجابة الجيدة"], ivRepeat: ["Hear it again", "استمع مرة أخرى"], ivFinish: ["Finish the interview", "أنهِ المقابلة"],
     ivReview: ["How did it go?", "كيف كان أداؤك؟"], ivReviewSub: ["Listen back to a few answers, then tick what is true. Practise again until you can tick every box.", "استمع لبعض إجاباتك، ثم ضع علامة على ما ينطبق. تدرب مجددًا حتى تضع علامة على كل البنود."],
     bkHint: ["Your progress is saved on this device only.", "يُحفظ تقدمك على هذا الجهاز فقط."], bkGo: ["Move it to another phone", "انقله إلى جوال آخر"],
+    acHint: ["Sign in to keep your progress on every device.", "سجّل الدخول لتحتفظ بتقدمك على كل أجهزتك."], acGo: ["Sign in", "تسجيل الدخول"],
+    acIn: ["Your progress saves to your account ({e}).", "يُحفظ تقدمك في حسابك ({e})."],
+    lockTag: ["Full course", "الدورة الكاملة"], lockedT: ["Part of the full course", "ضمن الدورة الكاملة"],
+    lockBanner: ["{f} free lessons to try. The other {p} are in the full course.", "{f} دروس مجانية للتجربة، والدروس الـ{p} الأخرى ضمن الدورة الكاملة."],
+    lockSignedOut: ["This lesson is in the full course. Already bought it? Sign in with the same email to open it.", "هذا الدرس ضمن الدورة الكاملة. هل اشتريتها؟ سجّل الدخول بالبريد نفسه لتفتحه."],
+    lockNotOwned: ["Your account doesn't include this course yet.", "حسابك لا يشمل هذه الدورة بعد."],
+    lockSoon: ["The full course opens for purchase soon. The free lessons are ready now.", "يُتاح شراء الدورة الكاملة قريبًا، والدروس المجانية جاهزة الآن."],
+    lockOffline: ["Connect to the internet once to open your paid lessons. After that, they work offline on this device.", "اتصل بالإنترنت مرة واحدة لتفتح دروسك المدفوعة، وبعدها تعمل دون إنترنت على هذا الجهاز."],
+    lockRetry: ["Try again", "أعد المحاولة"], lockFree: ["Go to a free lesson", "اذهب إلى درس مجاني"],
     disclaimer: ["Practice material in Masarok Academy is original, written in the official IELTS formats. Scores here are estimates, not official results.", "تمارين أكاديمية مسارُك أصلية ومكتوبة بالصيغ الرسمية لاختبار IELTS، والدرجات هنا تقديرية وليست نتائج رسمية."]
   };
 
@@ -167,6 +184,9 @@
   }
   function lessonRow(l) {
     var r = S.lessons[l.id] || {}, st = r.done ? "done" : r.started ? "started" : "new";
+    if (l.locked) return '<li><a class="ls is-locked" href="#/l/' + l.id + '"><span class="ls-ic" aria-hidden="true">' + l.icon + '</span>' +
+      '<span class="ls-tx"><b>' + esc(T(l.t)) + "</b><small>" + esc(T(l.d)) + '</small><span class="ls-meta">' + esc(fmt(UI.mins, { n: l.mins })) + "</span></span>" +
+      '<span class="ls-go">🔒 ' + esc(T(UI.lockTag)) + "</span></a></li>";
     var m = S.mocks && S.mocks[l.id];
     var extra = l.words ? vocabStatus(l) : m ? fmt(UI.mockBand, { b: bandStr(m.o) }) : r.done && r.score && r.score[1] ? fmt(UI.score, { c: r.score[0], t: r.score[1] }) : "";
     var rec = recommended() === l.id;
@@ -201,10 +221,34 @@
       '<header class="cs-head"><a class="cs-back" href="' + base + 'academy/">' + backArrow() + esc(T(UI.backAc)) + "</a>" + arToggle() + "</header>" +
       '<section class="cs-hero"><p class="eyebrow">' + esc(T(UI.academy)) + '</p><h1 id="main-h" tabindex="-1">' + esc(T(C.t)) + '</h1><p class="cs-sub">' + esc(T(C.sub)) + "</p></section>" +
       top +
-      '<section class="cs-ls" aria-labelledby="ls-h"><h2 id="ls-h">' + esc(T(UI.lessonsT)) + "</h2>" + cert + groups + "</section>" +
+      '<section class="cs-ls" aria-labelledby="ls-h"><h2 id="ls-h">' + esc(T(UI.lessonsT)) + "</h2>" + lockBanner() + cert + groups + "</section>" +
       '<p class="cs-note">' + esc(T(C.note || (C.id === "ielts" ? UI.disclaimer : UI.disclaimerW))) + "</p>" +
-      '<p class="cs-note">📦 ' + esc(T(UI.bkHint)) + ' <button type="button" class="es-link" data-backup>' + esc(T(UI.bkGo)) + "</button></p>";
+      saveNote();
     wirePlan(); wireCert();
+  }
+  function lockBanner() {
+    var locked = C.lessons.filter(function (l) { return l.locked; }).length;
+    if (!locked) return "";
+    return '<div class="lk-ban"><p>🔓 ' + esc(fmt(UI.lockBanner, { f: C.lessons.length - locked, p: locked })) + "</p>" +
+      (ACCESS === "signed_out" ? '<button type="button" class="btn btn-ghost" data-sign-in>' + esc(T(UI.acGo)) + "</button>" : "") + "</div>";
+  }
+  function saveNote() {
+    var MA = window.MasarokAccount;
+    if (MA && MA.signedIn()) { var me = MA.me() || {}; return '<p class="cs-note">☁️ ' + esc(fmt(UI.acIn, { e: me.email || "" })) + "</p>"; }
+    return '<p class="cs-note">📦 ' + esc(T(UI.bkHint)) + (MA && MA.enabled ? " " + esc(T(UI.acHint)) + ' <button type="button" class="es-link" data-sign-in>' + esc(T(UI.acGo)) + "</button> ·" : "") +
+      ' <button type="button" class="es-link" data-backup>' + esc(T(UI.bkGo)) + "</button></p>";
+  }
+  function lockScreen(l) {
+    var why = ACCESS === "signed_out" ? UI.lockSignedOut : ACCESS === "not_owned" ? UI.lockNotOwned : ACCESS === "offline" ? UI.lockOffline : UI.lockSoon;
+    var free = C.lessons.filter(function (x) { return !x.locked; })[0];
+    app.innerHTML = '<header class="cs-head"><a class="cs-back" href="#">' + backArrow() + esc(T(UI.back)) + "</a>" + arToggle() + "</header>" +
+      '<section class="lp-done lk"><div class="lp-medal" aria-hidden="true">🔒</div><p class="eyebrow">' + l.icon + " " + esc(T(UI.lockedT)) + '</p><h2 tabindex="-1">' + esc(T(l.t)) + '</h2><p class="lp-dt">' + esc(T(l.d)) + "</p>" +
+      '<p class="lk-why">' + esc(T(why)) + (ACCESS === "not_owned" ? " " + esc(T(UI.lockSoon)) : "") + "</p>" +
+      '<div class="ac-cta">' + (ACCESS === "signed_out" ? '<button type="button" class="btn btn-primary" data-sign-in>' + esc(T(UI.acGo)) + "</button>" : "") +
+      (ACCESS === "offline" ? '<button type="button" class="btn btn-primary" data-retry-load>' + esc(T(UI.lockRetry)) + "</button>" : "") +
+      (free ? '<a class="btn btn-ghost" href="#/l/' + free.id + '">' + esc(T(UI.lockFree)) + ": " + esc(T(free.t)) + "</a>" : "") + "</div></section>";
+    var h = $(".lk h2"); if (h) h.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
   }
   function backArrow() { return '<svg viewBox="0 0 16 16" aria-hidden="true" class="bk"><path d="M13 8H4M7.5 4.5L4 8l3.5 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'; }
   function arToggle() { return '<button type="button" class="ar-tg" data-ar-toggle aria-pressed="' + !!S.arHelp + '">🌙 ' + esc(T(S.arHelp ? UI.arOn : UI.arOff)) + "</button>"; }
@@ -309,6 +353,7 @@
   function openLesson(id, stepIx) {
     stopAll();
     var l = L(id); if (!l) { location.hash = ""; return; }
+    if (l.locked) { cur = null; lockScreen(l); return; }
     if (!cur || cur.l.id !== id) cur = { l: l, results: {}, ans: {} };
     cur.i = Math.max(0, Math.min(stepIx || 0, l.steps.length));
     var r = S.lessons[id] = S.lessons[id] || {}; r.started = true; save();
@@ -1419,6 +1464,8 @@
   }
   app.addEventListener("click", function (e) {
     if (e.target.closest("[data-backup]") && window.MasarokMenu) { window.MasarokMenu.backup(); return; }
+    if (e.target.closest("[data-sign-in]") && window.MasarokAccount) { window.MasarokAccount.open(); return; }
+    if (e.target.closest("[data-retry-load]")) { boot(); return; }
     if (e.target.closest("[data-ar-toggle]")) {
       S.arHelp = !S.arHelp; save();
       if (cur) renderStep(); else home();
@@ -1426,6 +1473,17 @@
   });
   window.addEventListener("hashchange", route);
   if (tts && tts.onvoiceschanged !== undefined) tts.onvoiceschanged = function () {};
-  route();
-  window.MasarokAcademy = { state: function () { return S; } };
+  // paid lessons: owners get them from the Masarok server (or this device's saved copy), everyone else sees them locked
+  function boot() {
+    if (!hasLocked()) { ACCESS = "open"; route(); return; }
+    var MA = window.MasarokAccount;
+    if (!MA || !MA.enabled) { ACCESS = "off"; route(); return; }
+    MA.course(C.id).then(function (res) {
+      if (res && res.lessons) { unlock(res.lessons); ACCESS = hasLocked() ? "not_owned" : "open"; }
+      else ACCESS = (res && res.error) || "offline";
+      route();
+    });
+  }
+  boot();
+  window.MasarokAcademy = { state: function () { return S; }, access: function () { return ACCESS; } };
 })();

@@ -1,0 +1,10 @@
+{
+  "_about": "Which Academy courses are paid, and which lessons stay free. Lessons not listed in 'free' are paid; if 'free' is missing, the first 2 lessons by order stay free. Used by tools/build-content.mjs.",
+  "courses": {
+    "ielts": { "paid": true, "free": ["placement", "know"], "unlock": ["course:ielts", "pass"] },
+    "writing": { "paid": true, "unlock": ["course:writing", "pass"] },
+    "scholarship": { "paid": false },
+    "visa": { "paid": false },
+    "life": { "paid": false }
+  }
+}

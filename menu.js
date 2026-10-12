@@ -148,7 +148,9 @@
     priv: ["The file stays with you: nothing is uploaded. It includes your AI coach code if you have one, so only send it to yourself.", "يبقى الملف معك ولا يُرفع إلى أي مكان. ويتضمن رمز المدرب الذكي إن كان لديك، فلا ترسله إلا لنفسك."],
     done: ["Progress loaded. Reloading…", "تم تحميل التقدم. جارٍ إعادة التحميل…"], close: ["Close", "إغلاق"]
   };
-  function bkKeys() { var out = []; try { for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (/^masarok-[\w-]{1,60}$/.test(k) && k !== "masarok-ai-dev") out.push(k); } } catch (e) {} return out.sort(); }
+  // device-only keys never go in a backup file: the dev override and the account sign-in
+  var BK_SKIP = ["masarok-ai-dev", "masarok-session", "masarok-sync", "masarok-me"];
+  function bkKeys() { var out = []; try { for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (/^masarok-[\w-]{1,60}$/.test(k) && BK_SKIP.indexOf(k) < 0) out.push(k); } } catch (e) {} return out.sort(); }
   function bkCollect() { var d = {}; bkKeys().forEach(function (k) { try { d[k] = localStorage.getItem(k); } catch (e) {} }); return d; }
   function bkSummary(d) {
     function J(k) { try { return JSON.parse(d[k] || "null") || {}; } catch (e) { return {}; } }
@@ -172,7 +174,7 @@
     var o; try { o = JSON.parse(text); } catch (e) { return null; }
     if (!o || o.app !== "masarok" || typeof o.data !== "object" || !o.data) return null;
     var d = {}, ok = true, size = 0;
-    Object.keys(o.data).forEach(function (k) { var v = o.data[k]; if (!/^masarok-[\w-]{1,60}$/.test(k) || k === "masarok-ai-dev" || typeof v !== "string") { ok = false; return; } size += v.length; d[k] = v; });
+    Object.keys(o.data).forEach(function (k) { var v = o.data[k]; if (BK_SKIP.indexOf(k) > -1) return; if (!/^masarok-[\w-]{1,60}$/.test(k) || typeof v !== "string") { ok = false; return; } size += v.length; d[k] = v; });
     if (!ok || size > 4e6 || !Object.keys(d).length) return null;
     return { at: +o.at || 0, data: d };
   }
@@ -275,7 +277,7 @@
       '<div class="mn-g"><h2>' + esc(T(UI.gMore)) + '</h2><ul class="mn-list mn-more">' +
         '<li><a class="mn-item" href="' + FORM + '" target="_blank" rel="noopener"><span class="mn-ic" aria-hidden="true">💬</span><span class="mn-tx"><b>' + esc(T(UI.feedback)) + " ↗</b></span></a></li>" + install +
         '<li><a class="mn-item mn-lang" href="' + esc(otherLangHref()) + '" lang="' + (AR ? "en" : "ar") + '" hreflang="' + (AR ? "en" : "ar") + '"><span class="mn-ic" aria-hidden="true">🌐</span><span class="mn-tx"><b>' + esc(T(UI.other)) + "</b></span></a></li>" +
-      bkItem() + resetItem() + "</ul></div>" +
+      (window.MasarokAccount ? window.MasarokAccount.menuItem() : "") + bkItem() + resetItem() + "</ul></div>" +
       '<p class="mn-foot">masarok.org · ' + (AR ? "دليل مجاني يكتبه طالب" : "A free guide written by a student") + "</p></div>";
     document.body.appendChild(mn);
     mn.addEventListener("click", onClick);
@@ -312,6 +314,7 @@
       clearChoices(); return;
     }
     if (t.closest("[data-mn-backup]")) { bkOpen(); return; }
+    if (t.closest("[data-mn-account]") && window.MasarokAccount) { close(true); window.MasarokAccount.open(); return; }
     if (t.closest("[data-mn-install]")) { close(true); var c = document.querySelector(".app-chip"); if (c) c.click(); return; }
     var a = t.closest("a"); if (!a) return;
     var id = a.getAttribute("data-mn-id");

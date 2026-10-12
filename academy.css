@@ -637,3 +637,10 @@ button.dd-row:focus-visible{outline:3px solid #9C2A22; outline-offset:1px}
 .cp-what li{display:grid; gap:2px; padding:10px 12px; border-radius:12px; background:rgba(6,12,22,.45)}
 .cp-what span{color:var(--night-dim); font-size:.93rem}
 .cp-terms li{font-size:.94rem}
+
+/* paid lessons */
+.ls.is-locked{opacity:.82}
+.ls.is-locked .ls-go{color:var(--night-dim, #A9B8CB)}
+.lk-ban{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 14px; padding:12px 16px; border-radius:14px; border:1px dashed rgba(226,182,108,.55); background:rgba(226,182,108,.07)}
+.lk-ban p{margin:0}
+.lk .lk-why{max-width:34rem; margin:12px auto 0; line-height:1.6}

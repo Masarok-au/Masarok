@@ -1,9 +1,10 @@
-/* Masarok AI coach · Cloudflare Worker
+/* AI coach: paid packs of feedback credits, bought with a Stripe Payment Link.
    - POST /claim     { session_id }        → checks a paid Stripe Checkout session and returns a coach code with credits
    - GET  /balance   (Authorization: Bearer <code>) → credits left
    - POST /feedback  (Authorization: Bearer <code>) { kind, text, task, meta, lang } → Claude feedback, uses 1 credit
-   Secrets: ANTHROPIC_API_KEY, STRIPE_SECRET_KEY, TOKEN_SECRET. D1 binding: DB. Settings: see wrangler.toml.
+   - POST /admin/codes (admin) → codes you give out yourself
    Student text is sent to the Anthropic API to write the feedback and is never stored here. */
+import { num, now, words, hmac, code32, codeHash, cleanCode, json, fail, adminOk } from "./util.js";
 
 const KINDS = {
   ielts_task1: { keys: ["task_achievement", "coherence_cohesion", "lexical_resource", "grammar"], max: 9, min: 60, chars: 9000 },
@@ -12,31 +13,6 @@ const KINDS = {
   statement: { keys: ["clarity", "specific_evidence", "reflection", "fit", "language"], max: 4, min: 60, chars: 16000 }
 };
 
-const enc = new TextEncoder();
-const B32 = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // no I, O, 0, 1
-
-function num(v, d) { var n = parseInt(v, 10); return isFinite(n) ? n : d; }
-function now() { return Math.floor(Date.now() / 1000); }
-function words(t) { return (String(t || "").match(/\S+/g) || []).length; }
-
-async function hmac(secret, msg) {
-  const key = await crypto.subtle.importKey("raw", enc.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
-  return new Uint8Array(await crypto.subtle.sign("HMAC", key, enc.encode(msg)));
-}
-async function sha256(s) { return [...new Uint8Array(await crypto.subtle.digest("SHA-256", enc.encode(s)))].map((b) => b.toString(16).padStart(2, "0")).join(""); }
-function code32(bytes) { let out = ""; for (let i = 0; i < 16; i++) out += B32[bytes[i] % 32]; return "MSRK-" + out.match(/.{4}/g).join("-"); }
-function cleanCode(c) { return String(c || "").toUpperCase().replace(/[^A-Z0-9]/g, "").replace(/^MSRK/, ""); }
-async function codeHash(code) { return sha256("MSRK" + cleanCode(code)); }
-
-function cors(req, env) {
-  const origin = req.headers.get("Origin") || "";
-  const allowed = String(env.ALLOWED_ORIGINS || "https://masarok.org").split(",").map((s) => s.trim());
-  const h = { "Vary": "Origin", "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type, Authorization", "Access-Control-Max-Age": "86400" };
-  if (allowed.includes(origin)) h["Access-Control-Allow-Origin"] = origin;
-  return h;
-}
-function json(data, status, headers) { return new Response(JSON.stringify(data), { status: status || 200, headers: Object.assign({ "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" }, headers) }); }
-function fail(code, status, headers, extra) { return json(Object.assign({ error: code }, extra || {}), status, headers); }
 
 async function passFor(req, env) {
   const m = (req.headers.get("Authorization") || "").match(/^Bearer\s+(.+)$/i);
@@ -187,8 +163,7 @@ async function feedback(req, env, H) {
 
 // ---------- /admin/codes: codes you give out yourself (reviewers, refunds, manual sales) ----------
 async function adminCodes(req, env, H) {
-  const auth = req.headers.get("Authorization") || "";
-  if (!env.ADMIN_TOKEN || env.ADMIN_TOKEN.length < 16 || auth !== "Bearer " + env.ADMIN_TOKEN) return fail("forbidden", 403, H);
+  if (!adminOk(req, env)) return fail("forbidden", 403, H);
   let b; try { b = await req.json(); } catch (e) { b = {}; }
   const count = Math.max(1, Math.min(50, num(b.count, 1))), credits = Math.max(1, Math.min(500, num(b.credits, num(env.CREDITS_PER_PACK, 30))));
   const exp = now() + Math.max(1, Math.min(3650, num(b.days, num(env.EXPIRY_DAYS, 365)))) * 86400, out = [];
@@ -200,26 +175,10 @@ async function adminCodes(req, env, H) {
   return json({ codes: out, credits: credits, expires_at: exp }, 200, H);
 }
 
-export default {
-  async fetch(req, env) {
-    const H = cors(req, env), url = new URL(req.url);
-    if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: H });
-    if (!H["Access-Control-Allow-Origin"] && req.headers.get("Origin")) return fail("forbidden", 403, H);
-    try {
-      if (url.pathname === "/claim" && req.method === "POST") return await claim(req, env, H);
-      if (url.pathname === "/balance" && req.method === "GET") {
-        const p = await passFor(req, env);
-        if (p === null) return fail("no_code", 401, H);
-        if (p === false) return fail("bad_code", 401, H);
-        return json({ credits: p.expires_at < now() ? 0 : p.credits, total: p.total, expires_at: p.expires_at }, 200, H);
-      }
-      if (url.pathname === "/feedback" && req.method === "POST") return await feedback(req, env, H);
-      if (url.pathname === "/admin/codes" && req.method === "POST") return await adminCodes(req, env, H);
-      if (url.pathname === "/" && req.method === "GET") return json({ ok: true, service: "masarok-coach" }, 200, H);
-      return fail("not_found", 404, H);
-    } catch (e) {
-      return fail("server_error", 500, H);
-    }
-  }
-};
-export { KINDS, cleanFeedback, sysFor, toolFor, userMsg };
+export async function balance(req, env, H) {
+  const p = await passFor(req, env);
+  if (p === null) return fail("no_code", 401, H);
+  if (p === false) return fail("bad_code", 401, H);
+  return json({ credits: p.expires_at < now() ? 0 : p.credits, total: p.total, expires_at: p.expires_at }, 200, H);
+}
+export { KINDS, claim, feedback, adminCodes, cleanFeedback, sysFor, toolFor, userMsg };

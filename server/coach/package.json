@@ -1,9 +1,0 @@
-{
-  "name": "masarok-coach",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "test": "node --no-warnings test/run.mjs",
-    "deploy": "wrangler deploy"
-  }
-}
