@@ -302,7 +302,11 @@
     more: ["More about this step", "المزيد عن هذه الخطوة"],
     tabs: [["📄 Documents", "📄 المستندات"], ["⚠️ Common mistakes", "⚠️ أخطاء شائعة"], ["💰 Cost & time", "💰 التكلفة والوقت"], ["❓ FAQ", "❓ أسئلة شائعة"]],
     qn: ["Question {k} of {t}", "السؤال {k} من {t}"], next: ["Next question", "السؤال التالي"], allDone: ["Quick check done: {r} of {t} right", "انتهى الاختبار السريع: {r} من {t} صحيحة"],
-    glClose: ["Close", "إغلاق"], glHint: ["Tap underlined words to see what they mean.", "اضغط على الكلمات المسطّرة لمعرفة معناها."],
+    glClose: ["Close", "إغلاق"],
+    trainT: ["Train for this step in Masarok Academy", "تدرّب على هذه الخطوة في أكاديمية مسارُك"],
+    trainNew: ["IELTS placement test, a study plan, lessons and model essays. +40 points for each lesson.", "اختبار تحديد مستوى IELTS، وخطة دراسة، ودروس، ونماذج مقالات. 40 نقطة لكل درس."],
+    trainProg: ["Starting band {b} · {d} of {t} lessons done", "المستوى المبدئي {b} · أنجزت {d} من {t} دروس"],
+    trainGo: ["Start the IELTS course", "ابدأ دورة IELTS"], trainCont: ["Continue the course", "تابع الدورة"], glHint: ["Tap underlined words to see what they mean.", "اضغط على الكلمات المسطّرة لمعرفة معناها."],
     src: ["Official page", "الصفحة الرسمية"],
     check: ["Quick check", "سؤال سريع"], pts: ["+{n} pts", "+{n} {w}"],
     right: ["Correct!", "إجابة صحيحة!"], wrong: ["Not quite.", "ليست هذه."], again: ["Try once more for {n} pts", "حاول مرة أخرى مقابل {n} {w}"],
@@ -394,9 +398,30 @@
     var wrap = document.createElement("div");
     wrap.innerHTML = infoHtml(id) + quizHtml(id);
     while (wrap.firstChild) card.insertBefore(wrap.firstChild, at);
+    var tr = trainHtml(id);
+    if (tr) { var tw = document.createElement("div"); tw.innerHTML = tr; card.insertBefore(tw.firstChild, card.querySelector(".si") || at); }
+    syncAcademy();
     gloss(card.querySelector(".jr-cols")); gloss(card.querySelector(".si-p"));
     if (keepFocus) { var f = card.querySelector(".qz-res") || card.querySelector(".qz-q"); if (f) { f.setAttribute("tabindex", "-1"); f.focus({ preventScroll: true }); } }
   }
+
+  // ---------- Masarok Academy: train for the English step, and points for lessons done there ----------
+  var AC_LESSONS = ["placement", "know", "tfng", "headings", "writing", "speaking", "vocab1"];
+  function acState() { try { return JSON.parse(localStorage.getItem("masarok-academy") || "null") || {}; } catch (e) { return {}; } }
+  function trainHtml(id) {
+    if (["englishF", "englishB", "englishPg"].indexOf(id) < 0 || cc() === "de") return "";
+    var a = acState(), ls = a.lessons || {}, d = AC_LESSONS.filter(function (k) { return ls[k] && ls[k].done; }).length;
+    var line = a.placement ? fmt(UI.trainProg, { b: (Math.round(a.placement.o * 2) / 2).toFixed(1), d: d, t: AC_LESSONS.length }) : T(UI.trainNew);
+    var href = (A ? "/ar" : "") + "/academy/ielts/";
+    return '<section class="ac-train" aria-label="' + esc(T(UI.trainT)) + '"><span class="ac-train-ic" aria-hidden="true">🎓</span><div class="ac-train-tx"><b>' + esc(T(UI.trainT)) + "</b><small>" + esc(line) + "</small></div>" +
+      '<a class="btn btn-primary" href="' + href + '">' + esc(T(d ? UI.trainCont : UI.trainGo)) + "</a></section>";
+  }
+  function syncAcademy() {
+    var G = window.MasarokGame; if (!G || !G.award) return;
+    var ls = acState().lessons || {};
+    AC_LESSONS.forEach(function (k) { if (ls[k] && ls[k].done) G.award("academy:" + k, 40, null, true); });
+  }
+  setTimeout(syncAcademy, 900);
 
   // ---------- glossary: underline known terms; tap to see what they mean ----------
   function gloss(zone) {

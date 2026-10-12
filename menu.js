@@ -10,7 +10,7 @@
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]; }); }
   var base = AR ? "/ar/" : "/";
   var path = location.pathname.replace(/index\.html$/, "");
-  var onAcademy = /\/academy\/?$/.test(path);
+  var onAcademy = /\/academy(\/|$)/.test(path);
   var onGuide = !!document.getElementById("options");
   var FORM = "https://docs.google.com/forms/d/e/1FAIpQLSdVGMftz6scJBj8c-EaS6RiCKUwoXW71xYNwpxmqZ7jpOsHQQ/viewform";
 

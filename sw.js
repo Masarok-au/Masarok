@@ -1,10 +1,10 @@
 /* Masarok service worker: makes the guide work offline and installable.
    Pages: network first (so updates show straight away), falling back to the saved copy.
    Scripts, styles and icons: network first too, so a new page never runs old scripts. Fonts: saved copy first. */
-var VERSION = "masarok-v14";
+var VERSION = "masarok-v15";
 var CORE = [
   "/", "/index.html", "/ar/", "/ar/index.html",
-  "/country.js", "/unis.js", "/journey.js", "/journey.css", "/feedback.js", "/flip.js", "/campus.js", "/deadlines.js", "/sections.js", "/game.js", "/journeymap.js", "/stepmore.js", "/stepinfo.js", "/quests.js", "/app.js", "/menu.js", "/academy/", "/ar/academy/", "/academy.css", "/academy.js",
+  "/country.js", "/unis.js", "/journey.js", "/journey.css", "/feedback.js", "/flip.js", "/campus.js", "/deadlines.js", "/sections.js", "/game.js", "/journeymap.js", "/stepmore.js", "/stepinfo.js", "/quests.js", "/app.js", "/menu.js", "/academy/", "/ar/academy/", "/academy.css", "/academy.js", "/academy/ielts/", "/ar/academy/ielts/", "/academy-player.js", "/courses/ielts.js",
   "/manifest.webmanifest", "/ar/manifest.webmanifest", "/favicon.svg",
   "/icons/icon-192.png", "/icons/icon-512.png", "/icons/apple-touch-icon.png"
 ];

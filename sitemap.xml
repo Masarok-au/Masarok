@@ -24,4 +24,16 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/"/>
   </url>
+  <url>
+    <loc>https://masarok.org/academy/ielts/</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/ielts/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/ielts/"/>
+  </url>
+  <url>
+    <loc>https://masarok.org/ar/academy/ielts/</loc>
+    <lastmod>2026-10-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://masarok.org/academy/ielts/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://masarok.org/ar/academy/ielts/"/>
+  </url>
 </urlset>

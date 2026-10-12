@@ -37,6 +37,7 @@
     target: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/>',
     dallah: '<path d="M8 20.5h8"/><path d="M9 20.5c-1.6-2.2-2-4.6-1-7.6l.9-2.4h6.2l.9 2.4c1 3 .6 5.4-1 7.6"/><path d="M9.6 10.5l1-3h2.8l1 3"/><path d="M12 7.5V5"/><circle cx="12" cy="4.2" r=".9"/><path d="M8.2 13C5.6 12.6 4 10.6 3.6 8"/><path d="M16.3 12c1.7.3 2.6 1.7 2.4 3.3-.2 1.4-1.3 2.3-2.7 2.4"/>',
     flame: '<path d="M12 21c-3.9 0-6.5-2.6-6.5-6.2 0-3.6 3-5.8 3.7-9.3 2.2 1.4 3.4 3.4 3.5 5.6 1-.8 1.6-2 1.7-3.3 2.4 2 4.1 4.7 4.1 7.3 0 3.4-2.6 5.9-6.5 5.9z"/>',
+    book: '<path d="M4 5.5C6.5 4.5 9.5 4.5 12 6c2.5-1.5 5.5-1.5 8-.5v13c-2.5-1-5.5-1-8 .5-2.5-1.5-5.5-1.5-8-.5z"/><path d="M12 6v13.5"/>',
     lock: '<rect x="6" y="11" width="12" height="9" rx="2"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/>'
   };
   function anyDone(c, ids) { return ids.some(function (id) { return c.done[id] === "done"; }); }
@@ -58,6 +59,7 @@
     { id: "quester", i: "target", n: ["Side quester", "صاحب المهمات"], d: ["Finish 5 side quests.", "أنجز 5 مهمات جانبية."], t: function (c) { return c.quests >= 5; } },
     { id: "streak3", i: "dallah", n: ["Steady pace", "الخطى الثابتة"], d: ["Keep a 3-week streak: do something each week.", "حافظ على سلسلة 3 أسابيع: أنجز شيئًا كل أسبوع."], t: function (c) { return c.best >= 3; } },
     { id: "streak6", i: "flame", n: ["Never stops", "المثابر"], d: ["Keep a 6-week streak.", "حافظ على سلسلة 6 أسابيع."], t: function (c) { return c.best >= 6; } },
+    { id: "academy", i: "book", n: ["Academy student", "طالب الأكاديمية"], d: ["Finish 3 lessons in Masarok Academy.", "أكمل 3 دروس في أكاديمية مسارُك."], t: function (c) { return c.academy >= 3; } },
     { id: "summit", i: "summit", n: ["The summit", "القمة"], d: ["Finish your whole path.", "أكمل طريقك كاملًا."], t: function (c) { return c.n && c.steps + c.skips >= c.n; } }
   ];
   // a tip unlocked when a step is finished, for the stage that comes next
@@ -108,8 +110,8 @@
 
   // ---------- progress → points ----------
   function ctx() {
-    var j = J(), sk = streak(), c = { tasks: 0, steps: 0, skips: 0, n: 0, done: {}, reminders: 0, sections: g.sections.length, early: !!g.early, lv: null, quiz: 0, quests: 0, bonus: 0, weeks: g.weeks.length, streak: sk.n, best: sk.best, risk: sk.risk };
-    Object.keys(g.bonus).forEach(function (k) { var v = +g.bonus[k] || 0; c.bonus += v; if (k.indexOf("quiz:") === 0 && v > 0) c.quiz++; if (k.indexOf("quest:") === 0) c.quests++; });
+    var j = J(), sk = streak(), c = { tasks: 0, steps: 0, skips: 0, n: 0, done: {}, reminders: 0, sections: g.sections.length, early: !!g.early, lv: null, quiz: 0, quests: 0, academy: 0, bonus: 0, weeks: g.weeks.length, streak: sk.n, best: sk.best, risk: sk.risk };
+    Object.keys(g.bonus).forEach(function (k) { var v = +g.bonus[k] || 0; c.bonus += v; if (k.indexOf("quiz:") === 0 && v > 0) c.quiz++; if (k.indexOf("quest:") === 0) c.quests++; if (k.indexOf("academy:") === 0) c.academy++; });
     try { c.reminders = (JSON.parse(localStorage.getItem("masarok-reminders") || "[]") || []).length; } catch (e) {}
     if (!j) return c;
     var st = j.state(), lv = j.level(); c.lv = lv;

@@ -540,3 +540,12 @@ button.jm-lbl:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
 .qs-words b{color:var(--night-ink); min-width:5.5rem}
 .qs-words span{color:var(--night-dim)}
 @media (prefers-reduced-motion: reduce){ .gl-pop{animation:none} }
+
+/* ---------- Academy link on the English step ---------- */
+.ac-train{display:grid; grid-template-columns:auto 1fr auto; gap:10px 14px; align-items:center; padding:12px 14px; border-radius:14px; border:1px solid rgba(226,182,108,.6); background:linear-gradient(135deg, rgba(226,182,108,.14), rgba(156,42,34,.1))}
+.ac-train-ic{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-size:1.4rem; background:#2A1612; border:1px solid #C99A5B}
+.ac-train-tx{display:grid; gap:2px; min-width:0}
+.ac-train-tx b{color:var(--night-ink)}
+.ac-train-tx small{color:#C8D3E0; font-size:.88rem}
+.ac-train .btn{white-space:nowrap}
+@media (max-width:560px){ .ac-train{grid-template-columns:auto 1fr} .ac-train .btn{grid-column:1 / -1; justify-self:start} }
