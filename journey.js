@@ -19,6 +19,7 @@
     housing: { href: "#housing", en: "Finding a place", ar: "البحث عن سكن" },
     lessons: { href: "#lessons", en: "What I learned on the way", ar: "ما تعلمته في الطريق" },
     myuni: { href: "#myuni", en: "Your university at a glance", ar: "جامعتك باختصار" },
+    deadlines: { href: "#deadlines", en: "Your deadlines", ar: "مواعيدك" },
     lists: { href: "https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf", en: "2026–2027 university lists", ar: "قوائم الجامعات 2026–2027" },
     ruSearch: { href: "https://ru.moe.gov.sa/Search", en: "Recommended universities search", ar: "البحث في الجامعات الموصى بها" },
     qubool: { href: "https://www.uap.sa/#scholarship", en: "Qubool (uap.sa)", ar: "منصة قبول (uap.sa)" },
@@ -39,6 +40,16 @@
   // ---------- the steps ----------
   // {uni} {college} {city} {transport} {bond} {track} are filled from the student's choices.
   var S = {
+    // Level 1's real task: get to know the plan (nothing is given for just setting up)
+    explore: {
+      en: { t: "Get to know your plan",
+        why: "Five minutes here saves you hours later: you'll know your university, your first deadline and the road ahead.",
+        what: ["Open “Your university at a glance” on this page and read about {uni}.", "In “Your deadlines”, turn on a reminder for one deadline.", "Open your journey map and look at the road from home to campus."] },
+      ar: { t: "تعرّف على خطتك",
+        why: "خمس دقائق هنا توفر عليك ساعات لاحقًا: ستعرف جامعتك وأول موعد لك والطريق الذي أمامك.",
+        what: ["افتح قسم «جامعتك باختصار» في هذه الصفحة واقرأ عن {uni}.", "في قسم «مواعيدك»، فعّل التذكير لموعد واحد.", "افتح خريطة رحلتك وشاهد الطريق من البيت إلى الجامعة."] },
+      links: ["myuni", "deadlines"] },
+
     fieldRoute: {
       en: { t: "Choose your field and your route",
         why: "Your field decides which universities and scholarship lists apply to you. Your route decides what you need next: Foundation leads to first year, and a Diploma leads to second year.",
@@ -284,10 +295,10 @@
   };
 
   var PATHS = {
-    foundation: ["fieldRoute", "englishF", "rulesF", "offerF", "qubool", "safeer", "visa", "housing", "arrive", "progressF"],
-    bachelor: ["fieldUni", "englishB", "sat", "offer", "qubool", "safeer", "visa", "housing", "arrive"],
-    master: ["courseType", "uniCheckPg", "englishPg", "premaster", "docs", "offer", "qubool", "safeer", "visa", "housing", "arrive"],
-    phd: ["researchArea", "supervisor", "englishPg", "uniCheckPhd", "offer", "qubool", "safeer", "visa", "housing", "arrive"]
+    foundation: ["explore", "fieldRoute", "englishF", "rulesF", "offerF", "qubool", "safeer", "visa", "housing", "arrive", "progressF"],
+    bachelor: ["explore", "fieldUni", "englishB", "sat", "offer", "qubool", "safeer", "visa", "housing", "arrive"],
+    master: ["explore", "courseType", "uniCheckPg", "englishPg", "premaster", "docs", "offer", "qubool", "safeer", "visa", "housing", "arrive"],
+    phd: ["explore", "researchArea", "supervisor", "englishPg", "uniCheckPhd", "offer", "qubool", "safeer", "visa", "housing", "arrive"]
   };
 
   var TRACK = {
@@ -299,6 +310,7 @@
 
   // rough time each step usually takes
   var EST = {
+    explore: ["About 5 minutes", "نحو 5 دقائق"],
     fieldRoute: ["About 1–2 weeks", "نحو أسبوع إلى أسبوعين"],
     englishF: ["1–3 months, results included", "من شهر إلى 3 أشهر مع النتائج"],
     englishB: ["1–3 months, results included", "من شهر إلى 3 أشهر مع النتائج"],
@@ -385,7 +397,19 @@
       tight: "Starting within 6 months is tight. Focus on the deadlines below, and ask your university early about late applications.",
       selfNote: "You're self-funded for now: once you've studied for a while, you can apply to join the scholarship (windows: 1 Oct–30 Nov and 1 May–30 Jun).",
       plan: "Your plan", planStep: "Step {n} of {total}", planTask: "Next small task:", planCta: "Continue my plan",
-      cont: "Continue", lvKicker: "Level {n} of 10 · {name}", lvProg: "{d} of 10 levels cleared", stars: "{n} of 3 stars",
+      cont: "Continue", lvKicker: "Level {n} of 10 · {name}",
+      whereT: "Where do you want to study?", whereSub: "Your plan, deadlines and visa steps follow this choice. You can change it any time.",
+      whereNone: "Not decided yet", uniL: "Your university (optional)", uniNone: "Not sure yet",
+      avT: "Choose your avatar", avSub: "This is you on the journey. New outfits unlock as you level up.", avM: "Male", avF: "Female", skinL: "Skin tone", avGo: "This is me",
+      tourNext: "Next", tourBack: "Back", tourSkip: "Skip the tour", tourGo: "Let's start", tourN: "{n} of {t}", tourAgain: "Take the tour again",
+      tour: ["Hi, I'm you! These 10 stairs are your 10 levels, from dreaming about studying abroad to arriving on campus.",
+        "This is your level and your points. You start at 0. Every star you earn is 1 point, and every side quest is 1 more.",
+        "Every level has 3 stars. The first: Learn. It opens a short free lesson in Masarok Academy.",
+        "The second: Check. Answer 3 quick questions and get 2 right.",
+        "The third: Do. The real step, with small tasks, deadlines and helpful links.",
+        "Learn and Check clear a level and open the next one. Finishing the real step clears it too. New levels unlock new outfits.",
+        "Open your journey map any time to see the whole road from home to campus.",
+        "That's it. Start with Level 1: open your first lesson."], lvProg: "{d} of 10 levels cleared", stars: "{n} of 3 stars",
       learn: "Learn", learnSub: "{m} min · free in Masarok Academy", doT: "Do", doSub: "The real step", checkT: "Check", checkSub: "3 quick questions",
       lessonGo: "Start the lesson", lessonReview: "Open it again", lessonDone: "Done",
       checkGo: "Check my answers", checkAll: "Answer all three questions first.", checkPass: "{c} of 3 right. Star earned!",
@@ -447,7 +471,19 @@
       tight: "البدء خلال 6 أشهر وقت ضيق. ركّز على المواعيد أدناه، واسأل جامعتك مبكرًا عن التقديم المتأخر.",
       selfNote: "أنت تدرس على حسابك حاليًا: بعد فترة من الدراسة يمكنك التقديم على الإلحاق بالبعثة (الفترات: 1 أكتوبر–30 نوفمبر و1 مايو–30 يونيو).",
       plan: "خطتك", planStep: "الخطوة {n} من {total}", planTask: "المهمة الصغيرة التالية:", planCta: "أكمل خطتي",
-      cont: "متابعة", lvKicker: "المستوى {n} من 10 · {name}", lvProg: "اجتزت {d} من 10 مستويات", stars: "{n} من 3 نجوم",
+      cont: "متابعة", lvKicker: "المستوى {n} من 10 · {name}",
+      whereT: "أين تريد أن تدرس؟", whereSub: "خطتك ومواعيدك وخطوات التأشيرة تتبع هذا الاختيار، ويمكنك تغييره متى شئت.",
+      whereNone: "لم أقرر بعد", uniL: "جامعتك (اختياري)", uniNone: "لست متأكدًا بعد",
+      avT: "اختر شخصيتك", avSub: "هذا أنت في الرحلة، وتُفتح لك أزياء جديدة كلما ارتفع مستواك.", avM: "شاب", avF: "فتاة", skinL: "لون البشرة", avGo: "هذا أنا",
+      tourNext: "التالي", tourBack: "السابق", tourSkip: "تخطَّ الجولة", tourGo: "لنبدأ", tourN: "{n} من {t}", tourAgain: "شاهد الجولة مرة أخرى",
+      tour: ["أهلًا، أنا أنت! هذه الدرجات العشر هي مستوياتك العشرة، من حلم الدراسة في الخارج حتى الوصول إلى الجامعة.",
+        "هنا مستواك ونقاطك. تبدأ من الصفر، وكل نجمة تكسبها نقطة واحدة، وكل مهمة جانبية نقطة أخرى.",
+        "لكل مستوى 3 نجوم. الأولى: تعلّم، وتفتح درسًا قصيرًا مجانيًا في أكاديمية مسارُك.",
+        "الثانية: اختبر. أجب عن 3 أسئلة سريعة واحصل على إجابتين صحيحتين.",
+        "الثالثة: نفّذ. الخطوة الفعلية بمهامها الصغيرة ومواعيدها وروابطها المفيدة.",
+        "«تعلّم» و«اختبر» يكفيان لاجتياز المستوى وفتح الذي بعده، وإنجاز الخطوة الفعلية يجتازه أيضًا. والمستويات الجديدة تفتح أزياء جديدة.",
+        "افتح خريطة رحلتك متى شئت لترى الطريق كاملًا من البيت إلى الجامعة.",
+        "هذا كل شيء. ابدأ بالمستوى 1: افتح درسك الأول."], lvProg: "اجتزت {d} من 10 مستويات", stars: "{n} من 3 نجوم",
       learn: "تعلّم", learnSub: "{m} د · مجانًا في أكاديمية مسارُك", doT: "نفّذ", doSub: "الخطوة الفعلية", checkT: "اختبر", checkSub: "3 أسئلة سريعة",
       lessonGo: "ابدأ الدرس", lessonReview: "افتحه مرة أخرى", lessonDone: "مكتمل",
       checkGo: "تحقق من إجاباتي", checkAll: "أجب عن الأسئلة الثلاثة أولًا.", checkPass: "{c} من 3 صحيحة. حصلت على نجمة!",
@@ -479,6 +515,10 @@
     return s;
   }
   var st = load();
+  // before levels, the path started at the field step: anyone who already finished a step has done "explore" in practice
+  (function () {
+    Object.keys(st.done).forEach(function (lv) { var m = st.done[lv]; if (m && !m.explore && Object.keys(m).some(function (k) { return m[k] === "done" || m[k] === "skip"; })) m.explore = "done"; });
+  })();
   function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
 
   function pick() {
@@ -541,7 +581,7 @@
   function LVD(n) { return LVM().list[n - 1]; }
   function levelSteps(lv, n) { return stepsFor(lv).filter(function (id) { return LVM().levelOf(id) === n; }); }
   function pickDone() { return !!(pick().cc && level()); }
-  function doDone(lv, n) { if (n === 1) return pickDone(); var ids = levelSteps(lv, n); return ids.length > 0 && ids.every(function (id) { return isDone(lv, id); }); }
+  function doDone(lv, n) { var ids = levelSteps(lv, n); return ids.length > 0 && ids.every(function (id) { return isDone(lv, id); }); }
   function lvState(lv, n) {
     var M = LVM(), learn = M.learnDone(n), chk = M.checkDone(n), dd = doDone(lv, n);
     return { n: n, learn: learn, check: chk, "do": dd, cleared: (learn && chk) || dd, stars: (learn ? 1 : 0) + (chk ? 1 : 0) + (dd ? 1 : 0) };
@@ -584,16 +624,26 @@
   }
   function title(id, V) { return fmt(content(id).t, V); }
 
+  // ---------- the student's avatar: male or female, and a skin tone ----------
+  var AVK = "masarok-avatar";
+  function avatar() { try { var a = JSON.parse(localStorage.getItem(AVK) || "null"); if (a && (a.g === "m" || a.g === "f")) return { g: a.g, skin: [0, 1, 2].indexOf(+a.skin) > -1 ? +a.skin : 1 }; } catch (e) {} return null; }
+  function applyAvatar() { var a = avatar() || { g: "m", skin: 1 }; document.documentElement.setAttribute("data-av", a.g); document.documentElement.setAttribute("data-skin", String(a.skin)); }
+  applyAvatar();
+  window.MasarokAvatar = { get: avatar, apply: applyAvatar };
+  var FLAGS = { au: "🇦🇺", uk: "🇬🇧", us: "🇺🇸", ca: "🇨🇦", de: "🇩🇪", sg: "🇸🇬" };
+
   // ---------- the character (flat SVG, drawn in the site's style) ----------
   function figure(cls) {
     var skin = "#C08A5A", thobe = "#F6F3EC", edge = "#D9D2C2";
     function arm(side) {
       var x0 = side === "l" ? 19 : 45, x1 = side === "l" ? 16 : 48;
       return '<g class="jr-arm jr-arm-' + side + '" style="transform-origin:' + x0 + 'px 42px">' +
-        '<line x1="' + x0 + '" y1="42" x2="' + x1 + '" y2="70" class="jr-c-sleeve-e" stroke="' + edge + '" stroke-width="8.6" stroke-linecap="round"/>' +
-        '<line x1="' + x0 + '" y1="42" x2="' + x1 + '" y2="70" class="jr-c-sleeve" stroke="' + thobe + '" stroke-width="7" stroke-linecap="round"/>' +
+        '<g class="jr-av-m"><line x1="' + x0 + '" y1="42" x2="' + x1 + '" y2="70" class="jr-c-sleeve-e" stroke="' + edge + '" stroke-width="8.6" stroke-linecap="round"/>' +
+        '<line x1="' + x0 + '" y1="42" x2="' + x1 + '" y2="70" class="jr-c-sleeve" stroke="' + thobe + '" stroke-width="7" stroke-linecap="round"/></g>' +
+        '<g class="jr-av-f"><line x1="' + x0 + '" y1="42" x2="' + x1 + '" y2="70" class="jr-c-abaya-se" stroke-width="9" stroke-linecap="round"/>' +
+        '<line x1="' + x0 + '" y1="42" x2="' + x1 + '" y2="70" class="jr-c-abaya-s" stroke-width="7.4" stroke-linecap="round"/></g>' +
         (side === "l" ? dallah() : "") +
-        '<circle cx="' + x1 + '" cy="72.5" r="3.6" fill="' + skin + '"/>' + (side === "r" ? falcon() : "") + '</g>';
+        '<circle class="jr-c-skin" cx="' + x1 + '" cy="72.5" r="3.6" fill="' + skin + '"/>' + (side === "r" ? falcon() : "") + '</g>';
     }
     // accessories from the wardrobe, hidden unless chosen
     function dallah() {
@@ -624,21 +674,30 @@
         '<path d="M51.6 52 l2.8 2.8 -2.8 2.8 -2.8 -2.8z M51.6 59.2 l2.8 2.8 -2.8 2.8 -2.8 -2.8z" fill="#F3EBDD"/><path d="M45.4 50.6 H57.6 M45.4 65.4 H57.6" stroke="#C99A5B" stroke-width=".9"/></g>' +
       // feet
       '<g class="jr-feet"><ellipse class="jr-foot-l" cx="25" cy="104" rx="5.5" ry="2.8" fill="#5A3C1E"/><ellipse class="jr-foot-r" cx="39" cy="104" rx="5.5" ry="2.8" fill="#5A3C1E"/></g>' +
-      // thobe
-      '<path class="jr-c-thobe" d="M24 35 Q32 33 40 35 L46 40 L50.5 102 L13.5 102 L18 40 Z" fill="' + thobe + '" stroke="' + edge + '" stroke-width=".9"/>' +
-      '<line x1="32" y1="37" x2="32" y2="52" stroke="' + edge + '" stroke-width="1"/><circle cx="32" cy="42" r=".9" fill="' + edge + '"/><circle cx="32" cy="47" r=".9" fill="' + edge + '"/>' +
+      // thobe (male avatar) or abaya (female avatar)
+      '<g class="jr-av-m"><path class="jr-c-thobe" d="M24 35 Q32 33 40 35 L46 40 L50.5 102 L13.5 102 L18 40 Z" fill="' + thobe + '" stroke="' + edge + '" stroke-width=".9"/>' +
+      '<line x1="32" y1="37" x2="32" y2="52" stroke="' + edge + '" stroke-width="1"/><circle cx="32" cy="42" r=".9" fill="' + edge + '"/><circle cx="32" cy="47" r=".9" fill="' + edge + '"/></g>' +
+      '<g class="jr-av-f"><path class="jr-c-abaya" d="M24 35 Q32 33 40 35 L46.5 40 L52.5 103 L11.5 103 L17.5 40 Z" stroke-width=".9"/>' +
+      '<path class="jr-c-abaya-se" d="M32 36 V103" stroke-width=".9" fill="none"/>' +
+      '<g class="jr-trim"><path d="M30.4 36 L29.4 103 M33.6 36 L34.6 103 M12.2 99.5 H51.8" stroke="#E2B66C" stroke-width="1.3" fill="none"/></g></g>' +
       '<line x1="21" y1="40" x2="23" y2="58" stroke="#173252" stroke-width="2.4" stroke-linecap="round"/><line x1="43" y1="40" x2="41" y2="58" stroke="#173252" stroke-width="2.4" stroke-linecap="round"/>' +
       // bisht (shown by the wardrobe)
-      '<g class="jr-bisht"><path class="jr-c-bisht" d="M17.6 39.6 L24 35 L28.6 37.2 L27.4 103 L12.4 103 Z"/><path class="jr-c-bisht" d="M46.4 39.6 L40 35 L35.4 37.2 L36.6 103 L51.6 103 Z"/>' +
-      '<path d="M28.6 37.2 L27.4 103 M35.4 37.2 L36.6 103" stroke="#E2B66C" stroke-width="1.7"/><path d="M24 35 L28.6 37.2 M40 35 L35.4 37.2" stroke="#E2B66C" stroke-width="1.7" stroke-linecap="round"/></g>' +
+      '<g class="jr-av-m"><g class="jr-bisht"><path class="jr-c-bisht" d="M17.6 39.6 L24 35 L28.6 37.2 L27.4 103 L12.4 103 Z"/><path class="jr-c-bisht" d="M46.4 39.6 L40 35 L35.4 37.2 L36.6 103 L51.6 103 Z"/>' +
+      '<path d="M28.6 37.2 L27.4 103 M35.4 37.2 L36.6 103" stroke="#E2B66C" stroke-width="1.7"/><path d="M24 35 L28.6 37.2 M40 35 L35.4 37.2" stroke="#E2B66C" stroke-width="1.7" stroke-linecap="round"/></g></g>' +
       arm("l") + arm("r") +
-      // head: shemagh behind, face, shemagh top, agal
-      '<path class="jr-c-shem" d="M18.5 16 Q32 2 45.5 16 L48.5 41 Q40.5 34.5 32 34.5 Q23.5 34.5 15.5 41 Z" fill="#C8102E"/>' +
+      // head (male): shemagh behind, face, shemagh top, agal
+      '<g class="jr-av-m"><path class="jr-c-shem" d="M18.5 16 Q32 2 45.5 16 L48.5 41 Q40.5 34.5 32 34.5 Q23.5 34.5 15.5 41 Z" fill="#C8102E"/>' +
       '<path class="jr-c-dots" d="M17.5 24 L16 39 M46.5 24 L48 39 M20 18 L19 30 M44 18 L45 30" stroke="#fff" stroke-width=".9" stroke-dasharray="1.6 1.8" opacity=".85"/>' +
-      '<ellipse cx="32" cy="22" rx="8.6" ry="9.6" fill="' + skin + '"/>' +
+      '<ellipse class="jr-c-skin" cx="32" cy="22" rx="8.6" ry="9.6" fill="' + skin + '"/>' +
       '<path class="jr-c-shem" d="M21 18.5 Q32 7 43 18.5 Q32 13.5 21 18.5 Z" fill="#C8102E"/>' +
       '<path class="jr-c-dots" d="M22 17 Q32 9 42 17" fill="none" stroke="#fff" stroke-width=".9" stroke-dasharray="1.6 1.8" opacity=".85"/>' +
-      '<ellipse cx="32" cy="12.6" rx="11.2" ry="2.6" fill="none" stroke="#14140F" stroke-width="2.2"/>' +
+      '<ellipse cx="32" cy="12.6" rx="11.2" ry="2.6" fill="none" stroke="#14140F" stroke-width="2.2"/></g>' +
+      // head (female): hijab around the face
+      '<g class="jr-av-f"><path class="jr-c-hijab" d="M19.2 20 Q19.2 6 32 6 Q44.8 6 44.8 20 L47.6 41 Q40 35.4 32 35.4 Q24 35.4 16.4 41 Z"/>' +
+      '<path class="jr-c-hijab-e" d="M19.6 22 Q19.4 32 24 36 M44.4 22 Q44.6 32 40 36" fill="none" stroke-width="1.1"/>' +
+      '<ellipse class="jr-c-skin" cx="32" cy="22.6" rx="8" ry="9.2" fill="' + skin + '"/>' +
+      '<path class="jr-c-hijab" d="M23.4 19 Q24 10.4 32 10.2 Q40 10.4 40.6 19 Q37.4 15.2 32 15 Q26.6 15.2 23.4 19 Z"/>' +
+      '<path class="jr-c-hijab-e" d="M23.6 19.4 Q22.6 27.6 26 32.4 M40.4 19.4 Q41.4 27.6 38 32.4" fill="none" stroke-width="1.2"/></g>' +
       '<circle cx="28.6" cy="22.6" r="1.25" fill="#14140F"/><circle cx="35.4" cy="22.6" r="1.25" fill="#14140F"/>' +
       '<path d="M28.6 26.8 Q32 29.6 35.4 26.8" fill="none" stroke="#14140F" stroke-width="1.25" stroke-linecap="round"/>' +
       '<circle cx="26.4" cy="26" r="1.6" fill="#E08A6E" opacity=".45"/><circle cx="37.6" cy="26" r="1.6" fill="#E08A6E" opacity=".45"/>' +
@@ -646,10 +705,13 @@
   }
   function headIcon() {
     return '<svg class="jr-head" viewBox="13 3 38 38" aria-hidden="true" focusable="false">' +
-      '<path d="M18.5 16 Q32 2 45.5 16 L48.5 41 Q40.5 34.5 32 34.5 Q23.5 34.5 15.5 41 Z" fill="#C8102E" class="jr-c-shem"/>' +
-      '<ellipse cx="32" cy="22" rx="8.6" ry="9.6" fill="#C08A5A"/>' +
+      '<g class="jr-av-m"><path d="M18.5 16 Q32 2 45.5 16 L48.5 41 Q40.5 34.5 32 34.5 Q23.5 34.5 15.5 41 Z" fill="#C8102E" class="jr-c-shem"/>' +
+      '<ellipse class="jr-c-skin" cx="32" cy="22" rx="8.6" ry="9.6" fill="#C08A5A"/>' +
       '<path d="M21 18.5 Q32 7 43 18.5 Q32 13.5 21 18.5 Z" fill="#C8102E" class="jr-c-shem"/>' +
-      '<ellipse cx="32" cy="12.6" rx="11.2" ry="2.6" fill="none" stroke="#14140F" stroke-width="2.2"/>' +
+      '<ellipse cx="32" cy="12.6" rx="11.2" ry="2.6" fill="none" stroke="#14140F" stroke-width="2.2"/></g>' +
+      '<g class="jr-av-f"><path class="jr-c-hijab" d="M19.2 20 Q19.2 6 32 6 Q44.8 6 44.8 20 L47.6 41 Q40 35.4 32 35.4 Q24 35.4 16.4 41 Z"/>' +
+      '<ellipse class="jr-c-skin" cx="32" cy="22.6" rx="8" ry="9.2" fill="#C08A5A"/>' +
+      '<path class="jr-c-hijab" d="M23.4 19 Q24 10.4 32 10.2 Q40 10.4 40.6 19 Q37.4 15.2 32 15 Q26.6 15.2 23.4 19 Z"/></g>' +
       '<circle cx="28.6" cy="22.6" r="1.25" fill="#14140F"/><circle cx="35.4" cy="22.6" r="1.25" fill="#14140F"/>' +
       '<path d="M28.6 26.8 Q32 29.6 35.4 26.8" fill="none" stroke="#14140F" stroke-width="1.25" stroke-linecap="round"/></svg>';
   }
@@ -674,16 +736,22 @@
         '<rect x="20.5" y="16.5" width="7.5" height="11" rx="2.4" fill="#173252"/>' +
         '<line x1="22" y1="18" x2="22" y2="25" stroke="#E2B66C" stroke-width="1.1" stroke-linecap="round"/>' +
         // thobe, leaning forward
-        '<path class="jr-hem jr-c-thobe" d="M13.2 15.5 Q17 14.4 20.8 15.6 L25.4 41.4 Q17.4 43.2 8.8 41.4 Z" fill="' + thobe + '" stroke="' + edge + '" stroke-width=".8"/>' +
-        '<line x1="17" y1="16" x2="17" y2="23" stroke="' + edge + '" stroke-width=".7"/>' +
+        '<g class="jr-av-m"><path class="jr-hem jr-c-thobe" d="M13.2 15.5 Q17 14.4 20.8 15.6 L25.4 41.4 Q17.4 43.2 8.8 41.4 Z" fill="' + thobe + '" stroke="' + edge + '" stroke-width=".8"/>' +
+        '<line x1="17" y1="16" x2="17" y2="23" stroke="' + edge + '" stroke-width=".7"/></g>' +
+        '<g class="jr-av-f"><path class="jr-hem jr-c-abaya" d="M13 15.5 Q17 14.4 21 15.6 L26 42.2 Q17.4 44 8 42.2 Z" stroke-width=".8"/>' +
+        '<g class="jr-trim"><path d="M8.6 40.8 Q17.4 42.6 25.4 40.8" stroke="#E2B66C" stroke-width=".9" fill="none"/></g></g>' +
         '<line x1="20.8" y1="16.2" x2="21.6" y2="22" stroke="#173252" stroke-width="1.6" stroke-linecap="round"/>' +
         arm("jr-arm-a") +
         // head: face, shemagh with a tail flying behind, agal
-        '<path class="jr-tail jr-c-shem" d="M19.5 7.5 Q25 9 27.5 15.5 Q24 13.5 20.5 13.8 Z" fill="#C8102E"/>' +
-        '<circle cx="15" cy="9.4" r="5" fill="' + skin + '"/>' +
+        '<g class="jr-av-m"><path class="jr-tail jr-c-shem" d="M19.5 7.5 Q25 9 27.5 15.5 Q24 13.5 20.5 13.8 Z" fill="#C8102E"/>' +
+        '<circle class="jr-c-skin" cx="15" cy="9.4" r="5" fill="' + skin + '"/>' +
         '<path class="jr-c-shem" d="M9.6 9.2 Q10.2 3.2 15.8 3 Q20.9 3.3 21.5 9 L21.6 14.8 Q19.2 12.6 17.6 11.8 Q16.2 8.6 9.6 9.2 Z" fill="#C8102E"/>' +
         '<path class="jr-c-dots" d="M11 8 Q15.5 5.2 20.4 8" fill="none" stroke="#fff" stroke-width=".7" stroke-dasharray="1.2 1.4" opacity=".85"/>' +
-        '<ellipse cx="15.6" cy="6.4" rx="5.6" ry="1.35" fill="none" stroke="#14140F" stroke-width="1.6" transform="rotate(-10 15.6 6.4)"/>' +
+        '<ellipse cx="15.6" cy="6.4" rx="5.6" ry="1.35" fill="none" stroke="#14140F" stroke-width="1.6" transform="rotate(-10 15.6 6.4)"/></g>' +
+        '<g class="jr-av-f"><path class="jr-tail jr-c-hijab" d="M19.6 8 Q25 10 26.6 16 Q23.4 14 20.4 14.4 Z"/>' +
+        '<path class="jr-c-hijab" d="M9.4 10 Q9.4 2.6 15.6 2.6 Q21.8 2.8 21.8 9.4 L22 15.4 Q18.4 13.6 15 14.6 Q11.6 13.8 9.4 10 Z"/>' +
+        '<circle class="jr-c-skin" cx="14.6" cy="9.6" r="4.3" fill="' + skin + '"/>' +
+        '<path class="jr-c-hijab" d="M10.2 8.8 Q11 4.4 15.6 4.4 Q19.6 4.6 20.4 8.6 Q16.6 6.6 10.2 8.8 Z"/></g>' +
         '<circle cx="12.2" cy="10.4" r=".85" fill="#14140F"/>' +
         '<path d="M10.9 12.6 Q12 13.3 13.1 12.9" fill="none" stroke="#14140F" stroke-width=".75" stroke-linecap="round"/>' +
       '</g></g></svg>';
@@ -842,6 +910,7 @@
     panel.addEventListener("change", onTask);
     panel.addEventListener("submit", onCheck);
     panel.addEventListener("keydown", function (e) {
+      if (tourEl) { if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); tourEnd(false); } else if (e.key === "Tab") tourTrap(e); return; }
       if (e.key === "Escape") { e.preventDefault(); close(); }
       if (e.key === "Tab") trap(e);
     });
@@ -858,14 +927,17 @@
     if (!panel) buildPanel();
     lastFocus = document.activeElement;
     var lv = level();
-    if (!st.started || !lv) { screen = st.stage ? "level" : "stage"; tmp = { stage: st.stage }; }
+    if (!st.started || !lv) { screen = !st.stage ? "stage" : !st.level ? "level" : "where"; tmp = { stage: st.stage }; }
+    else if (!avatar()) { screen = "avatar"; tmp = {}; } // students from before avatars choose theirs once
     else screen = "main";
     viewing = null; resetArm = false;
     panel.hidden = false;
     document.documentElement.classList.add("jr-open");
     render(true);
+    if (screen === "main" && !st.tour) setTimeout(tourStart, reduced() ? 50 : 500);
   }
   function close() {
+    if (tourEl && !tourEl.hidden) tourEl.hidden = true;
     if (!panel || panel.hidden) return;
     panel.hidden = true;
     document.documentElement.classList.remove("jr-open");
@@ -898,6 +970,27 @@
         }).join("") + '</div>' +
         '<div class="jr-actions"><button type="button" class="btn btn-primary" data-prof-go>' + esc(t.pGo) + ICON.arrow + '</button>' +
         '<button type="button" class="jr-textbtn" data-prof-skip>' + esc(st.started ? t.back : t.pSkip) + '</button></div>';
+    } else if (screen === "where") {
+      var M = window.Masarok, cs = M && M.countries ? M.countries() : [];
+      if (tmp.cc === undefined) { var cur0 = M && M.current ? M.current() : {}; tmp.cc = cur0.cc || null; tmp.uni = cur0.uni || null; }
+      var us = tmp.cc && M.unis ? M.unis(tmp.cc) : [];
+      h = eyebrow + '<h2 id="jr-title">' + esc(t.whereT) + '</h2><p class="jr-sub">' + esc(t.whereSub) + '</p>' +
+        '<div class="jr-chips jr-cc">' + cs.map(function (c) { return '<button type="button" class="jr-chip" data-cc="' + c.cc + '" aria-pressed="' + (tmp.cc === c.cc) + '">' + (FLAGS[c.cc] || "") + " " + esc(c.name) + "</button>"; }).join("") +
+        '<button type="button" class="jr-chip" data-cc="" aria-pressed="' + (!tmp.cc) + '">' + esc(t.whereNone) + "</button></div>" +
+        (us.length ? '<label class="jr-uni"><span>' + esc(t.uniL) + '</span><select data-uni-sel><option value="">' + esc(t.uniNone) + "</option>" +
+          us.map(function (u) { return '<option value="' + u.id + '"' + (tmp.uni === u.id ? " selected" : "") + ">" + esc(u.name) + "</option>"; }).join("") + "</select></label>" : "") +
+        '<div class="jr-actions"><button type="button" class="btn btn-primary" data-where-go>' + esc(t.cont) + ICON.arrow + '</button>' +
+        '<button type="button" class="jr-textbtn" data-go="level">' + esc(t.back) + '</button></div>';
+    } else if (screen === "avatar") {
+      var av = tmp.av || (tmp.av = avatar() || { g: "m", skin: 1 });
+      h = eyebrow + '<h2 id="jr-title">' + esc(t.avT) + '</h2><p class="jr-sub">' + esc(t.avSub) + '</p>' +
+        '<div class="jr-avs">' + ["m", "f"].map(function (g) {
+          return '<button type="button" class="jr-av-card" data-av-g="' + g + '" aria-pressed="' + (av.g === g) + '"><span class="jr-av-prev" data-av="' + g + '" data-skin="' + av.skin + '">' + figure("") + "</span><b>" + esc(g === "m" ? t.avM : t.avF) + "</b></button>";
+        }).join("") + "</div>" +
+        '<fieldset class="jr-skins"><legend>' + esc(t.skinL) + "</legend>" + [0, 1, 2].map(function (k) {
+          return '<button type="button" class="jr-skin" data-av-skin="' + k + '" data-skin="' + k + '" aria-pressed="' + (av.skin === k) + '" aria-label="' + esc(t.skinL) + " " + (k + 1) + '"><i></i></button>';
+        }).join("") + "</fieldset>" +
+        '<div class="jr-actions"><button type="button" class="btn btn-primary" data-av-go>' + esc(t.avGo) + ICON.arrow + "</button></div>";
     } else if (screen === "applied") {
       var lv0 = tmp.level, V0 = vars(lv0);
       h = eyebrow + '<h2 id="jr-title">' + esc(t.q3) + '</h2><p class="jr-sub">' + esc(t.q3sub) + '</p>' +
@@ -974,7 +1067,7 @@
     }
     h += '</ol></details>';
 
-    h += '<div class="jr-foot"><span>' + esc(t.saved) + '</span><button type="button" class="jr-textbtn" data-reset>' + esc(resetArm ? t.startOverSure : t.startOver) + '</button></div>';
+    h += '<div class="jr-foot"><span>' + esc(t.saved) + '</span><button type="button" class="jr-textbtn" data-tour-start>' + esc(t.tourAgain) + '</button><button type="button" class="jr-textbtn" data-reset>' + esc(resetArm ? t.startOverSure : t.startOver) + '</button></div>';
     return h;
   }
 
@@ -990,12 +1083,7 @@
       '<a class="jr-lesson" href="' + esc(M.lessonUrl(n)) + '" data-jr-lesson><span class="jr-lesson-ic" aria-hidden="true">' + les.icon + '</span><span class="jr-lesson-tx"><b>' + esc(L2(les.t)) + "</b><small>" + esc(L2(les.d)) + '</small></span><span class="jr-lesson-go">' + esc(s.learn ? t.lessonReview : t.lessonGo) + ICON.arrow + "</span></a></li>";
     // Do
     var ids = levelSteps(lv, n), doBody;
-    if (n === 1) {
-      var p = pick(), cn = window.MasarokCountry && p.cc ? window.MasarokCountry.name(p.cc) : "", lvTxt = t.levels[lv] ? t.levels[lv][0] : "";
-      var mine = [cn, p.hasUni && p.v ? p.v.short : "", lvTxt].filter(Boolean).join(" · ");
-      doBody = '<p class="jr-p">' + esc(t.pickDo) + '</p><p class="jr-p"><b>' + esc(fmt(t.pickYours, { c: mine || t.pickNone })) + '</b></p>' +
-        '<div class="jr-actions"><button type="button" class="btn jr-btn-ghost" data-change-uni>' + esc(t.pickChange) + "</button></div>";
-    } else if (!ids.length) {
+    if (!ids.length) {
       doBody = '<p class="jr-p">' + esc(t.noDo) + "</p>";
     } else {
       var all = stepsFor(lv), cIdx = currentIndex(lv);
@@ -1111,7 +1199,7 @@
     if (e.target.closest("[data-applied-go]")) {
       var lv = tmp.level, m = doneMap(lv);
       panel.querySelectorAll(".jr-ticks input").forEach(function (b) { if (b.checked) m[b.value] = S[b.value].optional ? (m[b.value] || "done") : "done"; else delete m[b.value]; });
-      st.level = lv; st.started = true; save(); viewing = null; screen = "main"; refresh(); render(true); return;
+      st.level = lv; save(); startJourney(); return;
     }
     if ((el = e.target.closest("[data-prof]"))) {
       var qa = el.getAttribute("data-prof").split(":"); tmp.prof = tmp.prof || {};
@@ -1125,8 +1213,7 @@
       else if (!st.profile) st.profile = {};
       tmp.level = lvp; save();
       if (st.started) { screen = "main"; viewing = null; refresh(); render(true); return; }
-      if (st.stage === "applying") { screen = "applied"; render(true); return; }
-      st.started = true; save(); viewing = null; screen = "main"; refresh(); render(true); return;
+      screen = "avatar"; render(true); return;
     }
     if ((el = e.target.closest("[data-remind]"))) {
       var M = window.MasarokDeadlines; if (!M) return;
@@ -1136,6 +1223,27 @@
     }
     if ((el = e.target.closest("[data-go]"))) { screen = el.getAttribute("data-go"); if (screen === "level") tmp.level = level(); if (screen === "profile") tmp.prof = Object.assign({}, st.profile || {}); render(true); return; }
     if (e.target.closest("[data-change-uni]")) { close(); if (window.Masarok && window.Masarok.openPicker) window.Masarok.openPicker(2); return; }
+    if ((el = e.target.closest("[data-cc]"))) {
+      tmp.cc = el.getAttribute("data-cc") || null; tmp.uni = null; render(false);
+      var b2 = panel.querySelector('[data-cc="' + (tmp.cc || "") + '"]'); if (b2) b2.focus(); return;
+    }
+    if (e.target.closest("[data-where-go]")) {
+      var M2 = window.Masarok;
+      if (M2 && M2.choose) M2.choose(tmp.cc ? { country: tmp.cc, uni: tmp.uni, level: st.level } : { level: st.level });
+      if (st.started) { screen = "main"; viewing = null; refresh(); render(true); return; }
+      if (st.profile) { screen = "avatar"; render(true); return; }
+      tmp.prof = {}; screen = "profile"; render(true); return;
+    }
+    if ((el = e.target.closest("[data-av-g]"))) { tmp.av = tmp.av || {}; tmp.av.g = el.getAttribute("data-av-g"); render(false); var b3 = panel.querySelector('[data-av-g="' + tmp.av.g + '"]'); if (b3) b3.focus(); return; }
+    if ((el = e.target.closest("[data-av-skin]"))) { tmp.av = tmp.av || {}; tmp.av.skin = +el.getAttribute("data-av-skin"); render(false); var b4 = panel.querySelector('[data-av-skin="' + tmp.av.skin + '"]'); if (b4) b4.focus(); return; }
+    if (e.target.closest("[data-av-go]")) {
+      try { localStorage.setItem(AVK, JSON.stringify({ g: (tmp.av && tmp.av.g) || "m", skin: tmp.av && tmp.av.skin != null ? tmp.av.skin : 1 })); } catch (x) {}
+      applyAvatar(); emit("masarok:avatar", {});
+      if (st.started) { screen = "main"; viewing = null; refresh(); render(true); if (!st.tour) setTimeout(tourStart, reduced() ? 50 : 500); return; }
+      if (st.stage === "applying") { tmp.level = st.level || level(); screen = "applied"; render(true); return; }
+      startJourney(); return;
+    }
+    if (e.target.closest("[data-tour-start]")) { tourStart(); return; }
     if ((el = e.target.closest("[data-chk-retry]"))) { chkOpen[+el.getAttribute("data-chk-retry")] = true; render(false); focusCard(); return; }
     if ((el = e.target.closest("[data-chk-again]"))) {
       var f0 = el.closest("form");
@@ -1182,6 +1290,7 @@
     if ((el = e.target.closest("a[data-jr-anchor]"))) { close(); return; } // let the page scroll to the section
   }
   function onTask(e) {
+    if (e.target.matches && e.target.matches("[data-uni-sel]")) { tmp.uni = e.target.value || null; return; }
     var cb = e.target.closest && e.target.closest("input[data-task]");
     if (!cb) return;
     var pr = cb.getAttribute("data-task").split(":"), id = pr[0], k = +pr[1], lv = level();
@@ -1226,16 +1335,21 @@
     acts.innerHTML = pass ? '<button type="button" class="btn btn-primary" data-chk-done>' + esc(t.cont || "OK") + ICON.arrow + "</button>" : '<button type="button" class="btn jr-btn-ghost" data-chk-again>' + esc(t.checkRetry) + "</button>";
     if (pass) {
       chkOpen[n] = false;
-      if (window.MasarokGame && window.MasarokGame.award) window.MasarokGame.award("check:" + n, 30, acts.firstChild);
+      if (window.MasarokGame && window.MasarokGame.award) window.MasarokGame.award("check:" + n, 1, acts.firstChild);
       refresh();
       if (!was && lvState(lv, n).cleared) { emit("masarok:journey", { type: "level", n: n }); say(t.lvCleared + (n < NL ? " " + fmt(t.lvOpened, { n: num(n + 1) }) : "")); }
     }
   }
+  // the first questions, in order: stage → degree → where → about you → avatar → (what's done) → the journey and its tour
   function chooseLevel(lv) {
-    tmp.level = lv; st.level = lv;
-    if (!st.profile) { save(); tmp.prof = {}; tmp.after = true; screen = "profile"; render(true); return; }
-    if (st.stage === "applying" && !st.started) { screen = "applied"; render(true); return; }
+    tmp.level = lv; st.level = lv; save();
+    if (!st.started) { screen = "where"; render(true); return; }
+    var M = window.Masarok; if (M && M.choose) M.choose({ level: lv });
+    viewing = null; screen = "main"; refresh(); render(true);
+  }
+  function startJourney() {
     st.started = true; save(); viewing = null; screen = "main"; refresh(); render(true);
+    if (!st.tour) setTimeout(tourStart, reduced() ? 50 : 500);
   }
   function focusCard(showStairs) {
     var hd = panel.querySelector("#jr-card-h") || panel.querySelector(".jr-finished h3");
@@ -1243,6 +1357,72 @@
     hd.setAttribute("tabindex", "-1"); hd.focus({ preventScroll: true });
     var to = showStairs ? panel.querySelector(".jr-stairs-wrap") : hd.closest(".jr-card");
     if (to && to.scrollIntoView) to.scrollIntoView({ block: showStairs ? "center" : "nearest", behavior: reduced() ? "auto" : "smooth" });
+  }
+
+  // ---------- the tour: the avatar points at each part of the journey screen ----------
+  var TOUR = [".jr-stairs-wrap", ".gm-bar", ".jr-lvcard .jr-part:nth-child(1)", ".jr-lvcard .jr-part:nth-child(2)", ".jr-lvcard .jr-part:nth-child(3) .jr-part-h", ".jr-lvnext", ".jm-open", ".jr-lvcard .jr-lesson"];
+  var tourEl = null, tourI = 0, tourT = null;
+  function tourStart() {
+    if (!panel || panel.hidden) return;
+    if (screen !== "main" || viewing !== null) { screen = "main"; viewing = null; render(false); }
+    tourI = 0;
+    if (!tourEl) {
+      tourEl = document.createElement("div"); tourEl.className = "jr-tour";
+      tourEl.innerHTML = '<div class="jr-tour-hole"></div><div class="jr-tour-bub" role="dialog" aria-modal="true" aria-labelledby="jr-tour-txt">' +
+        '<div class="jr-tour-face" aria-hidden="true">' + figure("is-waving") + '</div><div class="jr-tour-in"><p id="jr-tour-txt" class="jr-tour-txt"></p>' +
+        '<div class="jr-tour-acts"><small class="jr-tour-n"></small><button type="button" class="jr-textbtn" data-tour-skip>' + esc(t.tourSkip) + '</button>' +
+        '<button type="button" class="btn jr-btn-ghost" data-tour-back>' + esc(t.tourBack) + '</button><button type="button" class="btn btn-primary" data-tour-next></button></div></div></div>';
+      tourEl.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (e.target.closest("[data-tour-skip]")) tourEnd(false);
+        else if (e.target.closest("[data-tour-back]")) { tourI = Math.max(0, tourI - 1); tourShow(-1); }
+        else if (e.target.closest("[data-tour-next]")) { if (tourI >= TOUR.length - 1) tourEnd(true); else { tourI++; tourShow(1); } }
+      });
+      panel.appendChild(tourEl);
+      panel.querySelector(".jr-sheet").addEventListener("scroll", tourPlace, { passive: true });
+      window.addEventListener("resize", tourPlace);
+    }
+    tourEl.hidden = false;
+    tourShow(1);
+  }
+  function tourTarget() { return panel.querySelector(TOUR[tourI]); }
+  function tourShow(dir) {
+    // skip parts that aren't on the screen (for example the map button before the map loads)
+    while (!tourTarget() && tourI > 0 && tourI < TOUR.length - 1) tourI += dir < 0 ? -1 : 1;
+    var tg = tourTarget();
+    tourEl.querySelector(".jr-tour-txt").textContent = t.tour[tourI];
+    tourEl.querySelector(".jr-tour-n").textContent = fmt(t.tourN, { n: num(tourI + 1), total: "", t: num(TOUR.length) });
+    tourEl.querySelector("[data-tour-back]").hidden = tourI === 0;
+    var nx = tourEl.querySelector("[data-tour-next]"); nx.innerHTML = esc(tourI >= TOUR.length - 1 ? t.tourGo : t.tourNext) + ICON.arrow;
+    if (tg && tg.scrollIntoView) tg.scrollIntoView({ block: "center", behavior: reduced() ? "auto" : "smooth" });
+    tourEl.classList.add("is-moving");
+    clearTimeout(tourT); tourT = setTimeout(function () { tourEl.classList.remove("is-moving"); tourPlace(); nx.focus({ preventScroll: true }); }, reduced() ? 0 : 380);
+    say(t.tour[tourI]);
+  }
+  function tourPlace() {
+    if (!tourEl || tourEl.hidden) return;
+    var tg = tourTarget(), hole = tourEl.querySelector(".jr-tour-hole"), bub = tourEl.querySelector(".jr-tour-bub");
+    var vw = window.innerWidth, vh = window.innerHeight;
+    if (!tg) { hole.style.cssText = "left:50%;top:50%;width:0;height:0"; bub.style.top = Math.max(16, vh / 2 - bub.offsetHeight / 2) + "px"; return; }
+    var r = tg.getBoundingClientRect(), pad = 8;
+    var top = Math.max(8, r.top - pad), bottom = Math.min(vh - 8, r.bottom + pad);
+    hole.style.left = Math.max(8, r.left - pad) + "px"; hole.style.width = Math.min(vw - 16, r.width + pad * 2) + "px";
+    hole.style.top = top + "px"; hole.style.height = Math.max(0, bottom - top) + "px";
+    var bh = bub.offsetHeight, below = vh - bottom, above = top;
+    bub.style.top = (below >= bh + 16 ? bottom + 12 : above >= bh + 16 ? top - bh - 12 : Math.max(12, vh - bh - 12)) + "px";
+  }
+  function tourTrap(e) {
+    var f = tourEl.querySelectorAll("button:not([hidden])"), first = f[0], last = f[f.length - 1];
+    if (!tourEl.contains(document.activeElement)) { e.preventDefault(); first.focus(); return; }
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+  function tourEnd(go) {
+    if (!tourEl) return;
+    tourEl.hidden = true; st.tour = 1; save();
+    var l = panel.querySelector(".jr-lvcard .jr-lesson");
+    if (go && l) { l.scrollIntoView({ block: "center", behavior: reduced() ? "auto" : "smooth" }); l.focus({ preventScroll: true }); }
+    else { var h = panel.querySelector("#jr-title"); if (h) h.focus({ preventScroll: true }); }
   }
 
   function refresh() { updateBanner(); updateFab(); }

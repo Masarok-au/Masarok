@@ -10,6 +10,7 @@
 
   // which level each guide step belongs to (the steps differ by degree, the levels don't)
   var STEP_LEVEL = {
+    explore: 1,
     fieldRoute: 2, fieldUni: 2, courseType: 2, uniCheckPg: 2, researchArea: 2, uniCheckPhd: 2,
     englishF: 3, englishB: 3, englishPg: 3,
     rulesF: 4, sat: 4, premaster: 4, docs: 4, supervisor: 4,
@@ -34,8 +35,8 @@
 
   var LEVELS = [
     { n: 1, name: ["Dreamer", "الحالم"], icon: "star", part: 0,
-      goal: ["Decide where you want to go", "حدّد وجهتك"],
-      sub: ["Pick your country, university and degree, and learn how the scholarship works.", "اختر دولتك وجامعتك ودرجتك، وتعرّف على طريقة عمل الابتعاث."],
+      goal: ["Start your journey", "ابدأ رحلتك"],
+      sub: ["Learn how the scholarship works, and get to know your plan.", "تعرّف على طريقة عمل الابتعاث، وعلى خطتك."],
       learn: lesson("scholarship", "sch-how", "🧭", 10, ["How the scholarship works", "كيف يعمل الابتعاث"], ["The tracks, the path from offer to departure, and what the scholarship pays.", "المسارات، والطريق من القبول حتى السفر، وما تغطيه البعثة."]),
       check: [
         q(["Where does every new applicant apply for the scholarship?", "أين يقدّم كل متقدم جديد على البعثة؟"], [["Qubool", "منصة قبول"], ["Safeer", "سفير"], ["Absher", "أبشر"]], 0,

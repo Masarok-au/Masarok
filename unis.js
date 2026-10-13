@@ -878,7 +878,21 @@
   window.Masarok = {
     values: function () { var r = values(); return { v: r.v, hasUni: !!r.u, level: state.level, cc: r.cc }; },
     openPicker: function (atStep) { openDialog(atStep); },
-    uniNames: function () { var o = {}; UNIS.forEach(function (u) { o[u.id] = u.name[lang]; }); return o; }
+    uniNames: function () { var o = {}; UNIS.forEach(function (u) { o[u.id] = u.name[lang]; }); return o; },
+    // for Guide me's first questions: the countries, their universities, and saving a choice
+    countries: function () { return COUNTRY_ORDER.map(function (cc) { return { cc: cc, name: MC.name(cc) }; }); },
+    unis: function (cc) { return UNIS.filter(function (u) { return ccOfCity(u.city) === cc; }).map(function (u) { return { id: u.id, short: u.short, name: u.name[lang] }; }); },
+    current: function () { return { cc: currentCountry(), uni: state.uni && state.uni !== "all" ? state.uni : null }; },
+    choose: function (o) {
+      if (o.country && validCountry(o.country)) {
+        var u = o.uni ? byId(o.uni) : null;
+        if (u && ccOfCity(u.city) !== o.country) u = null;
+        state.country = o.country; state.uni = u ? u.id : "all"; state.city = u ? u.city : "all";
+        put("country", state.country); put("uni", state.uni); put("city", state.city);
+      }
+      if (o.level && validLevel(o.level)) { state.level = o.level; put("level", o.level); }
+      apply();
+    }
   };
 
   function init() {

@@ -78,7 +78,7 @@
     estNote: ["This is a practice estimate, not an official IELTS score.", "هذا تقدير تدريبي وليس درجة IELTS رسمية."],
     finishParts: ["Answer all four parts first, then your result appears here.", "أجب عن الأجزاء الأربعة أولًا، ثم تظهر نتيجتك هنا."],
     redo: ["Retake", "أعد الاختبار"], editPlan: ["Change plan", "عدّل الخطة"],
-    lessonDone: ["Lesson complete!", "أكملت الدرس!"], guidePts: ["+40 points in Guide me next time you open it.", "+40 نقطة في «أرشدني» عند فتحه."], nextLesson: ["Next lesson", "الدرس التالي"], toCourse: ["Back to the course", "العودة إلى الدورة"],
+    lessonDone: ["Lesson complete!", "أكملت الدرس!"], guidePts: ["If this lesson is part of a Guide me level, its Learn star is waiting for you there.", "إذا كان هذا الدرس ضمن مستوى في «أرشدني»، فنجمة «تعلّم» بانتظارك هناك."], nextLesson: ["Next lesson", "الدرس التالي"], toCourse: ["Back to the course", "العودة إلى الدورة"],
     t: ["True", "صحيح"], f: ["False", "خطأ"], ng: ["Not Given", "غير مذكور"],
     play: ["Play recording", "شغّل التسجيل"], playing: ["Playing…", "يعمل…"], playsLeft: ["Plays left: {n}", "مرات التشغيل المتبقية: {n}"], noPlays: ["No plays left", "انتهت مرات التشغيل"],
     noTts: ["Your browser can't play this recording, so the script is shown instead. Read it once, then answer.", "متصفحك لا يستطيع تشغيل هذا التسجيل، لذلك يظهر النص بدلًا منه. اقرأه مرة واحدة ثم أجب."],

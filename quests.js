@@ -9,6 +9,7 @@
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]; }); }
   function fmt(s, o) { return T(s).replace(/\{(\w+)\}/g, function (m, k) { return o[k] != null ? o[k] : m; }); }
   function G() { return window.MasarokGame; }
+  function ptsTxt(n) { return "+" + n + (A ? (n >= 3 && n <= 10 ? " نقاط" : " نقطة") : (n === 1 ? " point" : " points")); }
   function J() { return window.MasarokJourney; }
   function ls(k, d) { try { var v = JSON.parse(localStorage.getItem(k) || "null"); return v == null ? d : v; } catch (e) { return d; } }
   function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
@@ -27,30 +28,25 @@
 
   // ---------- the quests ----------
   var Q = [
-    { id: "uni", p: 20, i: "🎓", n: ["Pick your university", "اختر جامعتك"], d: ["Choose your country and university so the guide fits you.", "اختر دولتك وجامعتك ليناسبك الدليل."],
-      t: function () { var M = window.Masarok; return !!(M && M.values && M.values().hasUni); },
-      go: function () { var x = document.querySelector(".jr-panel [data-journey-close]"); if (x && J().isOpen()) x.click(); if (window.Masarok && window.Masarok.openPicker) window.Masarok.openPicker(); } },
-    { id: "profile", p: 20, i: "🧭", n: ["Tell the guide about you", "عرّف الدليل بنفسك"], d: ["Answer the four quick questions about your offer, English and plans.", "أجب عن الأسئلة الأربعة السريعة عن قبولك ولغتك وخططك."],
-      t: function () { var j = J(); return !!(j && j.state().profile); },
-      go: function () { var b = document.querySelector('.jr-panel [data-go="profile"]'); if (b) b.click(); else if (J()) J().open(); } },
-    { id: "reminder", p: 25, i: "⏰", n: ["Set a deadline reminder", "فعّل تذكيرًا بموعد"], d: ["Save one real deadline to your calendar.", "احفظ موعدًا حقيقيًا واحدًا في تقويمك."],
+    // choosing a university and answering the first questions are part of setting up, so they give no points
+    { id: "reminder", p: 1, i: "⏰", n: ["Set a deadline reminder", "فعّل تذكيرًا بموعد"], d: ["Save one real deadline to your calendar.", "احفظ موعدًا حقيقيًا واحدًا في تقويمك."],
       t: function () { return ls("masarok-reminders", []).length > 0; }, go: function () { goSection("deadlines"); } },
-    { id: "map", p: 15, i: "🗺️", n: ["Open your journey map", "افتح خريطة رحلتك"], d: ["See your road from home to campus.", "شاهد طريقك من البيت إلى الجامعة."],
+    { id: "map", p: 1, i: "🗺️", n: ["Open your journey map", "افتح خريطة رحلتك"], d: ["See your road from home to campus.", "شاهد طريقك من البيت إلى الجامعة."],
       t: function () { return !!flags.map; }, go: function () { if (window.MasarokMap) window.MasarokMap.open(); } },
-    { id: "flip", p: 20, i: "🃏", n: ["Flip 3 info cards", "اقلب 3 بطاقات معلومات"], d: ["Tap the cards in “Your university” and “Choose your route” to see the back.", "اضغط على البطاقات في «جامعتك» و«اختر مسارك» لترى ظهرها."],
+    { id: "flip", p: 1, i: "🃏", n: ["Flip 3 info cards", "اقلب 3 بطاقات معلومات"], d: ["Tap the cards in “Your university” and “Choose your route” to see the back.", "اضغط على البطاقات في «جامعتك» و«اختر مسارك» لترى ظهرها."],
       t: function () { return flags.flips.length >= 3; }, go: function () { goSection("myuni"); } },
-    { id: "budget", p: 25, i: "🧮", n: ["Plan your month", "خطط لشهرك"], d: ["Put your own numbers into the budget builder.", "أدخل أرقامك في حاسبة الميزانية."],
+    { id: "budget", p: 1, i: "🧮", n: ["Plan your month", "خطط لشهرك"], d: ["Put your own numbers into the budget builder.", "أدخل أرقامك في حاسبة الميزانية."],
       t: function () { return !!flags.budget; }, go: function () { goSection("allowance"); } },
-    { id: "checklist", p: 20, i: "✅", n: ["Tick 3 things before you fly", "أنجز 3 أمور قبل السفر"], d: ["Use the “Before you fly” checklist.", "استخدم قائمة «ما قبل السفر»."],
+    { id: "checklist", p: 1, i: "✅", n: ["Tick 3 things before you fly", "أنجز 3 أمور قبل السفر"], d: ["Use the “Before you fly” checklist.", "استخدم قائمة «ما قبل السفر»."],
       t: function () { var c = ls("masar-checklist-v1", {}), n = 0; Object.keys(c).forEach(function (k) { if (c[k]) n++; }); return n >= 3; }, go: function () { goSection("before"); } },
-    { id: "lessons", p: 15, i: "📖", n: ["Read what I learned on the way", "اقرأ ما تعلمته في الطريق"], d: ["Open the lessons section.", "افتح قسم الدروس."],
+    { id: "lessons", p: 1, i: "📖", n: ["Read what I learned on the way", "اقرأ ما تعلمته في الطريق"], d: ["Open the lessons section.", "افتح قسم الدروس."],
       t: function () { return (ls("masarok-game", {}).sections || []).indexOf("lessons") > -1; }, go: function () { goSection("lessons"); } },
-    { id: "share", p: 30, i: "📣", n: ["Share your progress", "شارك تقدمك"], d: ["Share your progress card with a friend who is applying too.", "شارك بطاقة تقدمك مع صديق يقدّم هو أيضًا."],
+    { id: "share", p: 1, i: "📣", n: ["Share your progress", "شارك تقدمك"], d: ["Share your progress card with a friend who is applying too.", "شارك بطاقة تقدمك مع صديق يقدّم هو أيضًا."],
       t: function () { return !!flags.share; }, go: function () { if (G()) { G().closeOverlay(); G().share(); } } },
-    { id: "install", p: 40, i: "📲", n: ["Install the app", "ثبّت التطبيق"], d: ["Add Masarok to your phone's home screen.", "أضف مسارُك إلى الشاشة الرئيسية في جوالك."],
+    { id: "install", p: 1, i: "📲", n: ["Install the app", "ثبّت التطبيق"], d: ["Add Masarok to your phone's home screen.", "أضف مسارُك إلى الشاشة الرئيسية في جوالك."],
       t: function () { return !!flags.install || document.documentElement.classList.contains("is-app"); },
       go: function () { var b = document.querySelector(".app-chip, .app-foot"); G().closeOverlay(); if (b) b.click(); else toast(T(UI.installHow)); } },
-    { id: "feedback", p: 30, i: "💬", n: ["Share your feedback", "شارك رأيك"], d: ["Tell us what would make the guide better.", "أخبرنا بما يجعل الدليل أفضل."],
+    { id: "feedback", p: 1, i: "💬", n: ["Share your feedback", "شارك رأيك"], d: ["Tell us what would make the guide better.", "أخبرنا بما يجعل الدليل أفضل."],
       t: function () { return ls("masarok-feedback", null) === "sent" || localStorage.getItem("masarok-feedback") === "sent"; },
       go: function () { var a = document.querySelector(".fb-foot"); if (a) a.click(); } }
   ];
@@ -69,17 +65,17 @@
   var SOS = { au: "000", uk: "999 (or 112)", us: "911", ca: "911", de: "112 (police 110)", sg: "999 police, 995 ambulance and fire" };
   var SOS_AR = { au: "000", uk: "999 (أو 112)", us: "911", ca: "911", de: "112 (الشرطة 110)", sg: "999 للشرطة، و995 للإسعاف والإطفاء" };
   var LQ = [
-    { id: "mission", p: 15, i: "🏛️", n: ["Save your cultural mission's contacts", "احفظ بيانات التواصل مع الملحقية"], d: function () { return ["Find your cultural mission's official website and save its phone number and email in your phone.", "ابحث عن الموقع الرسمي للملحقية الثقافية، واحفظ رقمها وبريدها في جوالك."]; } },
-    { id: "club", p: 15, i: "🤝", n: ["Find the Saudi students club", "ابحث عن نادي الطلاب السعوديين"], d: function () { return ["Most universities with Saudi students have a Saudi students association or club. Follow it before you fly.", "معظم الجامعات التي فيها طلاب سعوديون لديها نادٍ أو رابطة للطلاب السعوديين، فتابعها قبل السفر."]; } },
-    { id: "words", p: 15, i: "🗣️", n: ["Learn 5 local words", "تعلّم 5 كلمات محلية"], d: function () { return ["People will use these from day one. Learn what they mean.", "سيستخدمها الناس من أول يوم، فتعلّم معانيها."]; }, x: function () {
+    { id: "mission", p: 1, i: "🏛️", n: ["Save your cultural mission's contacts", "احفظ بيانات التواصل مع الملحقية"], d: function () { return ["Find your cultural mission's official website and save its phone number and email in your phone.", "ابحث عن الموقع الرسمي للملحقية الثقافية، واحفظ رقمها وبريدها في جوالك."]; } },
+    { id: "club", p: 1, i: "🤝", n: ["Find the Saudi students club", "ابحث عن نادي الطلاب السعوديين"], d: function () { return ["Most universities with Saudi students have a Saudi students association or club. Follow it before you fly.", "معظم الجامعات التي فيها طلاب سعوديون لديها نادٍ أو رابطة للطلاب السعوديين، فتابعها قبل السفر."]; } },
+    { id: "words", p: 1, i: "🗣️", n: ["Learn 5 local words", "تعلّم 5 كلمات محلية"], d: function () { return ["People will use these from day one. Learn what they mean.", "سيستخدمها الناس من أول يوم، فتعلّم معانيها."]; }, x: function () {
       var w = WORDS[cc()] || WORDS.xx;
       return '<ul class="qs-words">' + w.map(function (r) { return '<li><b dir="ltr">' + esc(r[0]) + "</b><span>" + esc(A ? r[2] : r[1]) + "</span></li>"; }).join("") + "</ul>";
     } },
-    { id: "sos", p: 15, i: "🚨", n: ["Save the emergency number", "احفظ رقم الطوارئ"], d: function () { var c = cc(); return SOS[c] ? ["In your study country it is " + SOS[c] + ". Save it, with the nearest hospital to where you'll live.", "رقم الطوارئ في دولة دراستك هو " + SOS_AR[c] + "، فاحفظه مع أقرب مستشفى لسكنك."] : ["Look up the emergency number in your study country and save it, with the nearest hospital.", "ابحث عن رقم الطوارئ في دولة دراستك واحفظه مع أقرب مستشفى."]; } },
-    { id: "backup", p: 15, i: "☁️", n: ["Back up your documents", "انسخ مستنداتك احتياطيًا"], d: function () { return ["Scan your passport, offer, guarantee letter, visa and transcripts into one cloud folder.", "امسح جوازك وقبولك وخطاب الضمان والتأشيرة وكشوف الدرجات في مجلد سحابي واحد."]; } },
-    { id: "halal", p: 15, i: "🍽️", n: ["Find halal food near campus", "ابحث عن طعام حلال قرب الجامعة"], d: function () { return ["Look up a halal butcher, supermarket and a couple of restaurants near your university.", "ابحث عن ملحمة حلال وسوبرماركت وبعض المطاعم قرب جامعتك."]; } },
-    { id: "mosque", p: 15, i: "🕌", n: ["Find a prayer room or mosque", "ابحث عن مصلى أو مسجد"], d: function () { return ["Many campuses have a prayer room. Find it, and the nearest mosque for Friday prayer.", "كثير من الجامعات فيها مصلى، فابحث عنه وعن أقرب مسجد لصلاة الجمعة."]; } },
-    { id: "sim", p: 15, i: "📶", n: ["Plan your phone", "خطط لجوالك"], d: function () { return ["Compare local SIM plans now, so you can buy one on the day you land.", "قارن باقات الجوال المحلية الآن، لتشتري واحدة يوم وصولك."]; } }
+    { id: "sos", p: 1, i: "🚨", n: ["Save the emergency number", "احفظ رقم الطوارئ"], d: function () { var c = cc(); return SOS[c] ? ["In your study country it is " + SOS[c] + ". Save it, with the nearest hospital to where you'll live.", "رقم الطوارئ في دولة دراستك هو " + SOS_AR[c] + "، فاحفظه مع أقرب مستشفى لسكنك."] : ["Look up the emergency number in your study country and save it, with the nearest hospital.", "ابحث عن رقم الطوارئ في دولة دراستك واحفظه مع أقرب مستشفى."]; } },
+    { id: "backup", p: 1, i: "☁️", n: ["Back up your documents", "انسخ مستنداتك احتياطيًا"], d: function () { return ["Scan your passport, offer, guarantee letter, visa and transcripts into one cloud folder.", "امسح جوازك وقبولك وخطاب الضمان والتأشيرة وكشوف الدرجات في مجلد سحابي واحد."]; } },
+    { id: "halal", p: 1, i: "🍽️", n: ["Find halal food near campus", "ابحث عن طعام حلال قرب الجامعة"], d: function () { return ["Look up a halal butcher, supermarket and a couple of restaurants near your university.", "ابحث عن ملحمة حلال وسوبرماركت وبعض المطاعم قرب جامعتك."]; } },
+    { id: "mosque", p: 1, i: "🕌", n: ["Find a prayer room or mosque", "ابحث عن مصلى أو مسجد"], d: function () { return ["Many campuses have a prayer room. Find it, and the nearest mosque for Friday prayer.", "كثير من الجامعات فيها مصلى، فابحث عنه وعن أقرب مسجد لصلاة الجمعة."]; } },
+    { id: "sim", p: 1, i: "📶", n: ["Plan your phone", "خطط لجوالك"], d: function () { return ["Compare local SIM plans now, so you can buy one on the day you land.", "قارن باقات الجوال المحلية الآن، لتشتري واحدة يوم وصولك."]; } }
   ];
   function lifeDone(id) { var g = G(); return !!(g && g.has && g.has("quest:life-" + id)); }
 
@@ -88,7 +84,7 @@
     onSite: ["On the guide", "في الدليل"], inLife: ["In real life", "في الواقع"], did: ["I did it", "أنجزتها"],
     lifeSub: ["Things to sort out for your move. Tick them off yourself when they're done.", "أمور ترتبها لانتقالك، وأشّر عليها بنفسك عند إنجازها."],
     sub: ["Optional missions around the guide. Each one gives bonus points, and 5 of them earn the Side quester badge.", "مهمات اختيارية في أنحاء الدليل، لكل منها نقاط إضافية، وإنجاز 5 منها يمنحك وسام «صاحب المهمات»."],
-    go: ["Go", "ابدأ"], done: ["Done", "تمت"], pts: ["+{n} pts", "+{n} نقطة"],
+    go: ["Go", "ابدأ"], done: ["Done", "تمت"], pts: ["+{n} point", "+{n} نقطة"],
     toast: ["Side quest complete: {q}", "أنجزت مهمة: {q}"],
     already: ["{n} side quests already done", "مهمات منجزة مسبقًا: {n}"],
     close: ["Close", "إغلاق"],
@@ -101,12 +97,14 @@
   };
 
   // ---------- wardrobe ----------
+  function isF() { var a = window.MasarokAvatar && window.MasarokAvatar.get(); return !!(a && a.g === "f"); }
+  function oName(o) { return isF() && o.f ? o.f : o.n; }
   var OUTFITS = [
-    { id: "classic", r: 0, n: ["Thobe and red shemagh", "الثوب والشماغ الأحمر"] },
-    { id: "ghutra", r: 2, n: ["White ghutra", "الغترة البيضاء"] },
-    { id: "winter", r: 4, n: ["Winter thobe", "الثوب الشتوي"] },
-    { id: "bisht", r: 6, n: ["Black bisht", "البشت الأسود"] },
-    { id: "gold", r: 9, n: ["Golden bisht", "البشت الذهبي"] }
+    { id: "classic", r: 0, n: ["Thobe and red shemagh", "الثوب والشماغ الأحمر"], f: ["Black abaya", "العباءة السوداء"] },
+    { id: "ghutra", r: 2, n: ["White ghutra", "الغترة البيضاء"], f: ["Cream hijab", "الحجاب العاجي"] },
+    { id: "winter", r: 4, n: ["Winter thobe", "الثوب الشتوي"], f: ["Navy winter abaya", "العباءة الشتوية الكحلية"] },
+    { id: "bisht", r: 6, n: ["Black bisht", "البشت الأسود"], f: ["Embroidered abaya", "العباءة المطرزة"] },
+    { id: "gold", r: 9, n: ["Golden bisht", "البشت الذهبي"], f: ["Golden abaya", "العباءة الذهبية"] }
   ];
   var ACC = [
     { id: "none", b: null, n: ["Nothing", "بدون"] },
@@ -128,7 +126,7 @@
     var cards = OUTFITS.map(function (o) {
       var open = o.r <= r, on = o.id === w;
       return '<div class="wd-o' + (open ? "" : " is-locked") + (on ? " is-on" : "") + '" data-outfit="' + o.id + '">' +
-        '<div class="wd-fig">' + fig + (open ? "" : '<span class="wd-lock" aria-hidden="true">🔒</span>') + "</div><b>" + esc(T(o.n)) + "</b>" +
+        '<div class="wd-fig">' + fig + (open ? "" : '<span class="wd-lock" aria-hidden="true">🔒</span>') + "</div><b>" + esc(T(oName(o))) + "</b>" +
         (open ? '<button type="button" class="gm-btn" data-wear="' + o.id + '"' + (on ? ' aria-pressed="true" disabled' : "") + ">" + esc(T(on ? UI.wearing : UI.wear)) + "</button>"
           : "<small>" + esc(fmt(UI.unlock, { r: (A ? "المستوى " : "Level ") + (o.r + 1) + " · " + T(g.ranks[o.r].n) })) + "</small>") + "</div>";
     }).join("");
@@ -153,12 +151,12 @@
     var rows = Q.map(function (q) {
       var d = awarded(q.id);
       return '<li class="qs' + (d ? " is-done" : "") + '"><span class="qs-ic" aria-hidden="true">' + q.i + '</span><span class="qs-tx"><b>' + esc(T(q.n)) + "</b><small>" + esc(T(q.d)) + "</small></span>" +
-        '<span class="qs-r"><em>' + esc(fmt(UI.pts, { n: q.p })) + "</em>" + (d ? '<span class="qs-done">✓ ' + esc(T(UI.done)) + "</span>" : '<button type="button" class="gm-btn" data-quest-go="' + q.id + '">' + esc(T(UI.go)) + "</button>") + "</span></li>";
+        '<span class="qs-r"><em>' + esc(ptsTxt(q.p)) + "</em>" + (d ? '<span class="qs-done">✓ ' + esc(T(UI.done)) + "</span>" : '<button type="button" class="gm-btn" data-quest-go="' + q.id + '">' + esc(T(UI.go)) + "</button>") + "</span></li>";
     }).join("");
     var life = LQ.map(function (q) {
       var d = lifeDone(q.id);
       return '<li class="qs' + (d ? " is-done" : "") + '"><span class="qs-ic" aria-hidden="true">' + q.i + '</span><span class="qs-tx"><b>' + esc(T(q.n)) + "</b><small>" + esc(T(q.d())) + "</small>" + (q.x ? q.x() : "") + "</span>" +
-        '<span class="qs-r"><em>' + esc(fmt(UI.pts, { n: q.p })) + "</em>" + (d ? '<span class="qs-done">✓ ' + esc(T(UI.done)) + "</span>" : '<button type="button" class="gm-btn" data-life="' + q.id + '">' + esc(T(UI.did)) + "</button>") + "</span></li>";
+        '<span class="qs-r"><em>' + esc(ptsTxt(q.p)) + "</em>" + (d ? '<span class="qs-done">✓ ' + esc(T(UI.done)) + "</span>" : '<button type="button" class="gm-btn" data-life="' + q.id + '">' + esc(T(UI.did)) + "</button>") + "</span></li>";
     }).join("");
     g.overlay('<h2 id="gm-h">🎯 ' + esc(T(UI.title)) + ' <span class="qs-n">' + count() + "/" + (Q.length + LQ.length) + '</span></h2><p class="gm-sub">' + esc(T(UI.sub)) + '</p>' +
       '<h3 class="qs-h">' + esc(T(UI.onSite)) + '</h3><ul class="qs-list">' + rows + "</ul>" +
@@ -171,6 +169,7 @@
   function soon() { clearTimeout(tmr); tmr = setTimeout(evaluate, 350); }
   function evaluate() {
     var g = G(); if (!g || !g.award) return;
+    var j = J(); if (!j || !j.state().started) return; // points only start once the journey has
     var got = [];
     Q.forEach(function (q) {
       if (awarded(q.id)) return;
@@ -178,8 +177,8 @@
       if (ok && g.award("quest:" + q.id, q.p, null, first)) got.push(q);
     });
     if (got.length) {
-      var pts = got.reduce(function (s, q) { return s + q.p; }, 0);
-      toast((first && got.length > 1 ? fmt(UI.already, { n: got.length }) : fmt(UI.toast, { q: T(got[got.length - 1].n) })) + " · " + fmt(UI.pts, { n: pts }));
+      var pts = got.length;
+      toast((first && got.length > 1 ? fmt(UI.already, { n: got.length }) : fmt(UI.toast, { q: T(got[got.length - 1].n) })) + " · " + ptsTxt(pts));
     }
     first = false;
     g.refresh && g.refresh();
@@ -224,7 +223,7 @@
 
   window.MasarokQuests = {
     total: function () { return Q.length + LQ.length; }, done: count, life: LQ, board: board, wardrobe: wardrobe, quests: Q,
-    outfitAt: function (r) { var o = OUTFITS.filter(function (x) { return x.r === r; })[0]; return o && r > 0 ? T(o.n) : null; }
+    outfitAt: function (r) { var o = OUTFITS.filter(function (x) { return x.r === r; })[0]; return o && r > 0 ? T(oName(o)) : null; }
   };
 
   applyOutfit();

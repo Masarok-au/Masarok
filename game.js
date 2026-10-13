@@ -90,7 +90,7 @@
     rank: ["Level", "المستوى"], next: ["{s} of 3 stars on this level · next: {r}", "{s} من 3 نجوم في هذا المستوى · التالي: {r}"], top: ["All 10 levels cleared", "اجتزت المستويات العشرة كلها"],
     lvName: ["Level {n} · {name}", "المستوى {n} · {name}"],
     badges: ["Badges {d}/{n}", "الأوسمة {d}/{n}"], shelfT: ["Your badges", "أوسمتك"], shelfSub: ["Earn them by moving through your journey. Each one is woven with Sadu, like the tents of the desert.", "تكسبها بالتقدم في رحلتك، وكل وسام منسوج بنقش السدو مثل بيوت الشعر في البادية."],
-    stepDone: ["Step complete!", "أنجزت الخطوة!"], gotPts: ["+{n} points", "+{n} نقطة"], rankUp: ["Level up!", "مستوى جديد!"],
+    stepDone: ["Step complete!", "أنجزت الخطوة!"], gotPts: ["+{n}", "+{n}"], rankUp: ["Level up!", "مستوى جديد!"],
     newBadge: ["Badge earned", "حصلت على وسام"], newBadges: ["Badges earned", "حصلت على أوسمة"], tip: ["Tip unlocked", "نصيحة جديدة"],
     cont: ["Keep going", "واصل"], share: ["Share my progress", "شارك تقدمي"], close: ["Close", "إغلاق"], locked: ["Locked", "مقفل"],
     shareLine: ["I'm {p}% of the way to studying {in}", "أنجزت {p}% من طريقي للدراسة {in}"],
@@ -110,7 +110,7 @@
   // ---------- progress → points ----------
   function ctx() {
     var j = J(), sk = streak(), c = { tasks: 0, steps: 0, skips: 0, n: 0, done: {}, reminders: 0, sections: g.sections.length, early: !!g.early, lv: null, quiz: 0, quests: 0, academy: 0, bonus: 0, weeks: g.weeks.length, streak: sk.n, best: sk.best, risk: sk.risk };
-    Object.keys(g.bonus).forEach(function (k) { var v = +g.bonus[k] || 0; c.bonus += v; if ((k.indexOf("quiz:") === 0 || k.indexOf("check:") === 0) && v > 0) c.quiz++; if (k.indexOf("quest:") === 0) c.quests++; if (k.indexOf("academy:") === 0) c.academy++; });
+    Object.keys(g.bonus).forEach(function (k) { var v = +g.bonus[k] || 0; c.bonus += v; if ((k.indexOf("quiz:") === 0 || k.indexOf("check:") === 0) && v > 0) c.quiz++; if (k.indexOf("quest:") === 0 && k !== "quest:uni" && k !== "quest:profile") c.quests++; if (k.indexOf("academy:") === 0) c.academy++; });
     try { c.reminders = (JSON.parse(localStorage.getItem("masarok-reminders") || "[]") || []).length; } catch (e) {}
     if (!j) return c;
     var st = j.state(), lv = j.level(); c.lv = lv;
@@ -125,7 +125,10 @@
     return c;
   }
   function earned(c) { return BADGES.filter(function (b) { return b.t(c); }).map(function (b) { return b.id; }); }
-  function points(c, e) { return c.tasks * 10 + c.steps * 50 + c.skips * 20 + (e || earned(c)).length * 30 + c.bonus + c.weeks * 10; }
+  // points are simple: 1 for every star in Guide me (Learn, Check, Do on each level) and 1 for every side quest
+  function starsNow() { var j = J(); if (!j || !j.levels || !j.state().started) return 0; return j.levels().reduce(function (a, x) { return a + x.stars; }, 0); }
+  function points(c) { return starsNow() + c.quests; }
+  function ptsTxt(n) { return AR ? n + (n >= 3 && n <= 10 ? " نقاط" : " نقطة") : n + (n === 1 ? " point" : " points"); }
 
   // ---------- weekly streak: any progress in a week keeps it going ----------
   function weekKey(d) {
@@ -323,10 +326,10 @@
   var lastPts = null;
   function celebrateStep(reason, c, p, fresh, newRank, prev) {
     confetti();
-    var gained = prev != null ? Math.max(0, p - prev) : 50;
+    var gained = prev != null ? Math.max(0, p - prev) : 1;
     var tip = !reason.skip && TIPS[reason.id];
     var h = '<h2 id="gm-h">' + esc(T(UI.stepDone)) + "</h2>" +
-      '<div class="gm-pts">' + esc(fmt(UI.gotPts, { n: gained })) + "</div>";
+      (gained > 0 ? '<div class="gm-pts">' + esc(fmt(UI.gotPts, { n: gained })) + "</div>" : "");
     if (newRank != null) h += '<div class="gm-sec"><h3>' + esc(T(UI.rankUp)) + '</h3><div class="gm-badge">' + rankMedal(newRank) + "<b>" + esc(rankName(newRank)) + "</b></div>" + outfitLine(newRank) + "</div>";
     if (fresh.length) h += '<div class="gm-sec"><h3>' + esc(T(fresh.length > 1 ? UI.newBadges : UI.newBadge)) + '</h3><div class="gm-row">' +
       fresh.map(function (id) { return badgeHtml(BADGES.filter(function (b) { return b.id === id; })[0], false); }).join("") + "</div></div>";
@@ -363,7 +366,7 @@
     if (meta && k.c.n) {
       if (!bar) { bar = document.createElement("div"); bar.className = "gm-bar"; meta.parentNode.insertBefore(bar, meta.nextSibling); }
       bar.innerHTML = rankMedal(k.r) +
-        '<div class="gm-rk"><b>' + esc(rankName(k.r)) + " · " + esc(fmt(UI.pts, { n: k.p })) + "</b>" +
+        '<div class="gm-rk"><b>' + esc(rankName(k.r)) + " · " + esc(ptsTxt(k.p)) + "</b>" +
         '<div class="gm-xp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + k.w + '"><i style="width:' + k.w + '%"></i></div>' +
         "<small>" + esc(k.fin ? T(UI.top) : fmt(UI.next, { s: k.stars, r: k.nx ? rankName(k.r + 1) : T(UI.top) })) + "</small>" +
         '<span class="gm-streak' + (k.c.risk ? " is-risk" : "") + '">' + esc(k.c.streak ? fmt(UI.streak, { n: k.c.streak, w: weeksAr(k.c.streak) }) + (k.c.risk ? " · " + T(UI.streakRisk) : "") : T(UI.streakNew)) + "</span></div>" +
@@ -376,7 +379,7 @@
     if (plan && k.c.n) {
       var chip = plan.querySelector(".gm-chip");
       if (!chip) { chip = document.createElement("div"); chip.className = "gm-chip"; plan.insertBefore(chip, plan.firstChild); }
-      chip.innerHTML = rankMedal(k.r) + "<span><b>" + esc(rankName(k.r)) + "</b> · " + esc(fmt(UI.pts, { n: k.p })) + " · 🏅 " + k.e.length + "/" + BADGES.length + (k.c.streak >= 2 ? " · 🔥 " + k.c.streak : "") + "</span>";
+      chip.innerHTML = rankMedal(k.r) + "<span><b>" + esc(rankName(k.r)) + "</b> · " + esc(ptsTxt(k.p)) + " · 🏅 " + k.e.length + "/" + BADGES.length + (k.c.streak >= 2 ? " · 🔥 " + k.c.streak : "") + "</span>";
     }
   }
 
@@ -436,7 +439,7 @@
     var badges = k.e.slice(-6);
     Promise.all([svgImg(rankMedal(k.r))].concat(badges.map(function (id) { var b = BADGES.filter(function (q) { return q.id === id; })[0]; return svgImg(medal(b.i)); }))).then(function (ims) {
       if (ims[0]) x.drawImage(ims[0], cx - 90, y + 40, 180, 220);
-      x.fillStyle = "#E2B66C"; x.font = "800 54px " + font; x.fillText(rankName(k.r) + " · " + fmt(UI.pts, { n: k.p }), cx, y + 320);
+      x.fillStyle = "#E2B66C"; x.font = "800 54px " + font; x.fillText(rankName(k.r) + " · " + ptsTxt(k.p), cx, y + 320);
       var bs = ims.slice(1).filter(Boolean), bw = 130, gap = 20, total = bs.length * bw + (bs.length - 1) * gap, bx = cx - total / 2;
       bs.forEach(function (im, i) { x.drawImage(im, bx + i * (bw + gap), y + 380, bw, bw * 1.22); });
       x.fillStyle = "#EEF2F7"; x.font = "700 52px " + font; x.direction = "ltr"; x.fillText("masarok.org", cx, H - 120);
@@ -457,7 +460,7 @@
   // ---------- wiring ----------
   document.addEventListener("masarok:journey", function (e) {
     var d = e.detail || {};
-    if (d.type === "task" && d.on) floatAt(d.el, fmt(UI.plus, { n: 10 }));
+    // ticking a small task moves the Do star along; it isn't worth points on its own
     if (d.type === "step" && d.early) { g.early = true; gsave(); }
     if ((d.type === "task" && d.on) || d.type === "step") touchWeek();
     if (d.type === "step" || d.type === "task") check(d.type === "step" ? d : null);

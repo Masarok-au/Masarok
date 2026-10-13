@@ -611,3 +611,61 @@ button.jm-lbl:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
 .jm-lbl.is-locked .jm-learn{opacity:.7}
 .jr-plan-task .jr-stars{display:inline-flex; vertical-align:middle; margin-inline-end:6px}
 .jr-plan-task .jr-stars i{width:7px; height:7px}
+
+/* ---------- avatars: male or female, three skin tones; outfits recolour both ---------- */
+[data-av="m"]{--jr-m:inline; --jr-f:none}
+[data-av="f"]{--jr-m:none; --jr-f:inline}
+.jr-av-m{display:var(--jr-m, inline)}
+.jr-av-f{display:var(--jr-f, none)}
+[data-skin="0"]{--jr-skin:#EBC4A0}
+[data-skin="1"]{--jr-skin:#C08A5A}
+[data-skin="2"]{--jr-skin:#8A5634}
+.jr-c-skin{fill:var(--jr-skin, #C08A5A)}
+[data-outfit]{--jr-abaya:#24212B; --jr-abaya-e:#121118; --jr-hijab:#24212B; --jr-hijab-e:#4A4554; --jr-trim:none}
+[data-outfit="ghutra"]{--jr-hijab:#EFE8D8; --jr-hijab-e:#CFC6B2}
+[data-outfit="winter"]{--jr-abaya:#2B4066; --jr-abaya-e:#1A2842; --jr-hijab:#2B4066; --jr-hijab-e:#4C6390}
+[data-outfit="bisht"]{--jr-trim:inline}
+[data-outfit="gold"]{--jr-abaya:#A97C48; --jr-abaya-e:#7E5A30; --jr-hijab:#EFE8D8; --jr-hijab-e:#CFC6B2; --jr-trim:inline}
+.jr-c-abaya{fill:var(--jr-abaya, #24212B); stroke:var(--jr-abaya-e, #121118)}
+.jr-c-abaya-s{stroke:var(--jr-abaya, #24212B)}
+.jr-c-abaya-se{stroke:var(--jr-abaya-e, #121118)}
+.jr-c-hijab{fill:var(--jr-hijab, #24212B)}
+.jr-c-hijab-e{stroke:var(--jr-hijab-e, #4A4554)}
+.jr-trim{display:var(--jr-trim, none)}
+
+/* ---------- first questions: where, and your avatar ---------- */
+.jr-cc{gap:8px}
+.jr-uni{display:grid; gap:6px; max-width:32rem}
+.jr-uni span{font-weight:700; color:var(--night-ink)}
+.jr-uni select{font:inherit; font-size:1rem; padding:10px 12px; border-radius:12px; border:1px solid rgba(238,242,247,.3); background:#10223B; color:var(--night-ink)}
+.jr-uni select:focus{outline:3px solid var(--gold); outline-offset:1px}
+.jr-avs{display:grid; grid-template-columns:repeat(2, minmax(0, 11rem)); gap:14px}
+.jr-av-card{display:grid; justify-items:center; gap:8px; padding:16px 10px 12px; border-radius:16px; border:1.5px solid rgba(238,242,247,.2); background:rgba(255,255,255,.03); color:var(--night-ink); font:inherit; cursor:pointer}
+.jr-av-card:hover{border-color:var(--gold)}
+.jr-av-card[aria-pressed="true"]{border-color:var(--gold); background:rgba(226,182,108,.12); box-shadow:0 0 0 3px rgba(226,182,108,.25)}
+.jr-av-card:focus-visible{outline:3px solid var(--gold); outline-offset:2px}
+.jr-av-card b{font-size:1.05rem}
+.jr-av-prev{display:block; width:70px; height:122px}
+.jr-av-prev .jr-fig{width:100%; height:100%}
+.jr-skins{border:0; padding:0; margin:0; display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+.jr-skins legend{float:left; margin-inline-end:6px; font-weight:700; color:var(--night-ink); padding:0}
+.jr-skin{width:42px; height:42px; border-radius:50%; border:2px solid rgba(238,242,247,.3); background:none; padding:4px; cursor:pointer}
+.jr-skin i{display:block; width:100%; height:100%; border-radius:50%; background:var(--jr-skin)}
+.jr-skin[aria-pressed="true"]{border-color:var(--gold); box-shadow:0 0 0 3px rgba(226,182,108,.3)}
+.jr-skin:focus-visible{outline:3px solid var(--gold); outline-offset:2px}
+
+/* ---------- the tour ---------- */
+.jr-tour{position:fixed; inset:0; z-index:130}
+.jr-tour[hidden]{display:none}
+.jr-tour-hole{position:fixed; border-radius:14px; box-shadow:0 0 0 9999px rgba(4,9,18,.74); outline:2px solid var(--gold); outline-offset:0; transition:left .35s ease, top .35s ease, width .35s ease, height .35s ease; pointer-events:none}
+.jr-tour-bub{position:fixed; inset-inline:16px; margin:0 auto; max-width:30rem; display:flex; gap:12px; align-items:flex-end; padding:14px 16px; border-radius:18px; background:var(--night, #0B1626); border:1.5px solid var(--gold); color:var(--night-ink); box-shadow:0 24px 60px -20px rgba(0,0,0,.9); transition:top .35s ease, opacity .2s ease}
+.jr-tour.is-moving .jr-tour-bub{opacity:.0}
+.jr-tour-face{flex:none; width:48px; height:84px}
+.jr-tour-face .jr-fig{width:100%; height:100%}
+.jr-tour-in{display:grid; gap:10px; min-width:0; flex:1}
+.jr-tour-txt{margin:0; font-size:1rem; line-height:1.55}
+.jr-tour-acts{display:flex; flex-wrap:wrap; align-items:center; gap:8px}
+.jr-tour-acts .btn{padding:8px 14px; font-size:.92rem}
+.jr-tour-n{font-family:var(--f-mono); color:var(--gold); font-size:.78rem; margin-inline-end:auto}
+@media (prefers-reduced-motion: reduce){ .jr-tour-hole, .jr-tour-bub{transition:none} }
+.jr-tour-acts .btn{display:inline-flex; align-items:center; gap:6px}
