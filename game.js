@@ -315,7 +315,9 @@
     if (!g.init) { g.init = true; g.rv = 2; g.seen = e.slice(); g.rank = r; gsave(); paint(); return; }
     g.seen = g.seen.concat(fresh); g.rank = Math.max(g.rank || 0, r); gsave();
     paint();
-    if (reason && reason.type === "quiet") {
+    var started = !!(J() && J().state() && J().state().started);
+    if (!started || (reason && reason.type === "quiet")) {
+      // nothing pops up before the student has started Guide me
       // points counted, no popup
     } else if (reason && reason.type === "step") {
       celebrateStep(reason, c, p, fresh, up ? r : null, prev);

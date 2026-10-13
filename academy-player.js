@@ -80,7 +80,8 @@
     redo: ["Retake", "أعد الاختبار"], editPlan: ["Change plan", "عدّل الخطة"],
     lessonDone: ["Lesson complete!", "أكملت الدرس!"], guidePts: ["If this lesson is part of a Guide me level, its Learn star is waiting for you there.", "إذا كان هذا الدرس ضمن مستوى في «أرشدني»، فنجمة «تعلّم» بانتظارك هناك."], nextLesson: ["Next lesson", "الدرس التالي"], toCourse: ["Back to the course", "العودة إلى الدورة"],
     t: ["True", "صحيح"], f: ["False", "خطأ"], ng: ["Not Given", "غير مذكور"],
-    play: ["Play recording", "شغّل التسجيل"], playing: ["Playing…", "يعمل…"], playsLeft: ["Plays left: {n}", "مرات التشغيل المتبقية: {n}"], noPlays: ["No plays left", "انتهت مرات التشغيل"],
+    play: ["Play recording", "شغّل التسجيل"], playing: ["Playing…", "يعمل…"], loading: ["Starting…", "جارٍ التشغيل…"],
+    noSound: ["The recording didn't start, so this play wasn't counted. Turn the volume up and check your phone isn't on silent, then try again. If it still doesn't play, your browser can't read it aloud: the script is open below, so read it once, then answer.", "لم يبدأ التسجيل، لذا لم تُحتسب هذه المرة. ارفع الصوت وتأكد أن جوالك ليس على الوضع الصامت، ثم حاول مرة أخرى. إن لم يعمل فمتصفحك لا يستطيع قراءته بصوت: النص مفتوح بالأسفل، فاقرأه مرة واحدة ثم أجب."], playsLeft: ["Plays left: {n}", "مرات التشغيل المتبقية: {n}"], noPlays: ["No plays left", "انتهت مرات التشغيل"],
     noTts: ["Your browser can't play this recording, so the script is shown instead. Read it once, then answer.", "متصفحك لا يستطيع تشغيل هذا التسجيل، لذلك يظهر النص بدلًا منه. اقرأه مرة واحدة ثم أجب."],
     script: ["Show the script", "اعرض النص"],
     yours: ["Your answer", "إجابتك"],
@@ -618,20 +619,84 @@
     var a = list[0] || null, b = list.filter(function (x) { return a && x.name !== a.name; })[0] || a;
     return { a: a, b: b };
   }
-  function stopAll() { try { if (tts) tts.cancel(); } catch (e) {} if (rec.stream) stopRec(true); clearInterval(timerId); clearTimers(); }
+  function stopAll() { SP.stop(); if (rec.stream) stopRec(true); clearInterval(timerId); clearTimers(); }
+
+  // ---------- the speech engine ----------
+  // Browsers drop long sentences (Chrome stops after about 15 seconds), lose queued ones, or never say they finished.
+  // So scripts are read in short pieces, one at a time, with a watchdog that moves on if the browser goes quiet,
+  // a retry if nothing starts, and a clear message (plus the script) if the device can't speak at all.
+  var SP = (function () {
+    var run = 0, keep = null, dog = null, hold = null, ua = navigator.userAgent || "";
+    var DESK_CHROME = /Chrome\//.test(ua) && !/Android|Mobile|Edg\//.test(ua);
+    function chunks(text) {
+      // split after . ! ? only when a space follows, so "9.30" and "£4.50" stay whole
+      var out = [], parts = String(text).replace(/\b(Dr|Mr|Mrs|Ms|Mt|St|Prof|No|Jr|Sr|vs|approx|e\.g|i\.e)\.\s+/g, "$1.\u0002")
+        .replace(/([.!?…]+["”’)]?)\s+/g, "$1\u0001").split("\u0001").map(function (x) { return x.replace(/\u0002/g, " "); });
+      parts.forEach(function (p) {
+        p = p.trim(); if (!p) return;
+        while (p.length > 170) {
+          var cut = Math.max(p.lastIndexOf(", ", 160), p.lastIndexOf("; ", 160), p.lastIndexOf(" – ", 160));
+          if (cut < 60) cut = p.lastIndexOf(" ", 160);
+          if (cut < 20) cut = 160;
+          out.push(p.slice(0, cut + 1).trim()); p = p.slice(cut + 1).trim();
+        }
+        if (p) out.push(p);
+      });
+      return out;
+    }
+    function stop() { run++; clearInterval(keep); clearTimeout(dog); hold = null; try { if (tts) tts.cancel(); } catch (e) {} }
+    // items: [{ t: text, voice, pitch, rate, lang, gap }]; o: { onStart, onProgress(i, n), onEnd, onFail }
+    function play(items, o) {
+      o = o || {};
+      if (!tts || !window.SpeechSynthesisUtterance) { if (o.onFail) o.onFail(); return; }
+      stop();
+      var my = run, q = [], i = 0, started = false, retried = false;
+      items.forEach(function (it) { chunks(it.t).forEach(function (c, k) { q.push({ t: c, voice: it.voice || null, pitch: it.pitch, rate: it.rate, lang: it.lang, gap: k === 0 ? (it.gap || 0) : 0 }); }); });
+      function finish() { clearInterval(keep); clearTimeout(dog); hold = null; if (my === run) { run++; if (o.onEnd) o.onEnd(); } }
+      function next() {
+        if (my !== run) return;
+        clearTimeout(dog);
+        if (i >= q.length) { finish(); return; }
+        var it = q[i++];
+        function go() {
+          if (my !== run) return;
+          var u = new SpeechSynthesisUtterance(it.t), ended = false;
+          u.lang = it.lang || "en-GB"; u.rate = it.rate || 0.92; if (it.pitch) u.pitch = it.pitch; if (it.voice) u.voice = it.voice;
+          u.onstart = function () { if (!started) { started = true; if (o.onStart) o.onStart(); } if (o.onProgress) o.onProgress(i, q.length); };
+          u.onend = function () { if (ended) return; ended = true; next(); };
+          u.onerror = function (e) {
+            if (ended) return; ended = true;
+            var er = e && e.error;
+            if (er === "interrupted" || er === "canceled") return;
+            // a voice that fails (often an online one) gets one more try with the device's default voice
+            if (it.voice && !it.again) { it.again = true; it.voice = null; i--; }
+            setTimeout(next, 60);
+          };
+          hold = u; // keep a reference, or some browsers drop the sentence and never call onend
+          dog = setTimeout(function () { if (!ended && my === run) { ended = true; try { tts.cancel(); } catch (x) {} setTimeout(next, 80); } }, 4000 + it.t.length * 90);
+          try { tts.speak(u); } catch (x) { ended = true; setTimeout(next, 60); }
+        }
+        if (it.gap) setTimeout(go, it.gap); else go();
+      }
+      // Chrome on computers pauses long reads by itself; nudging it every 10 seconds keeps it going
+      if (DESK_CHROME) keep = setInterval(function () { if (my !== run) return; try { if (tts.speaking && !tts.paused) { tts.pause(); tts.resume(); } } catch (x) {} }, 10000);
+      next(); // the first piece starts inside the tap, which phones need
+      // nothing yet? try once more, then give up and say so
+      setTimeout(function () { if (my === run && !started && !retried) { retried = true; clearTimeout(dog); try { tts.cancel(); } catch (x) {} i = 0; setTimeout(next, 120); } }, 1800);
+      setTimeout(function () { if (my === run && !started) { stop(); if (o.onFail) o.onFail(); } }, 5200);
+    }
+    // load the voice list early (Chrome fills it in later)
+    try { if (tts) { tts.getVoices(); if (tts.addEventListener) tts.addEventListener("voiceschanged", function () {}); } } catch (e) {}
+    return { play: play, stop: stop, chunks: chunks };
+  })();
   // speak a script with a different voice for each speaker
-  function speakLines(lines, onEnd) {
+  function speakLines(lines, o) {
     var v = voicesAll(), keys = [];
     lines.forEach(function (l) { if (keys.indexOf(l[0]) < 0) keys.push(l[0]); });
-    tts.cancel();
-    lines.forEach(function (l, j) {
-      var u = new SpeechSynthesisUtterance(l[1]); u.lang = "en-GB"; u.rate = 0.92;
-      var ix = keys.indexOf(l[0]), vv = v[ix % Math.max(1, v.length)];
-      if (vv) u.voice = vv;
-      if (v.length < keys.length) u.pitch = [1, 1.3, 0.8, 1.15][ix % 4];
-      if (j === lines.length - 1) u.onend = function () { onEnd && onEnd(); };
-      tts.speak(u);
-    });
+    SP.play(lines.map(function (l, j) {
+      var ix = keys.indexOf(l[0]);
+      return { t: l[1], voice: v[ix % Math.max(1, v.length)] || null, pitch: v.length < keys.length ? [1, 1.3, 0.8, 1.15][ix % 4] : 1, gap: j > 0 && lines[j - 1][0] !== l[0] ? 250 : 0 };
+    }), o);
   }
   function voicesAll() {
     var v = tts ? tts.getVoices().filter(function (x) { return /^en(-|_|$)/i.test(x.lang); }) : [];
@@ -651,12 +716,23 @@
   }
   function wirePlay(el, st, plays) {
     var pb = $("[data-play]", el); if (!pb) return;
+    var lf = $("[data-left]", el);
+    function left() { if (lf) lf.textContent = plays > 0 ? "Plays left: " + plays : ""; }
     pb.addEventListener("click", function () {
       if (plays <= 0) return;
-      plays--; pb.disabled = true; pb.textContent = "🔊 " + EN(UI.playing);
-      var t0 = setTimeout(done, 240000);
-      speakLines(st.lines, done);
-      function done() { clearTimeout(t0); pb.disabled = plays <= 0; pb.textContent = "▶ " + EN(plays > 0 ? UI.play : UI.noPlays); var lf = $("[data-left]", el); if (lf) lf.textContent = plays > 0 ? "Plays left: " + plays : ""; }
+      pb.disabled = true; pb.textContent = "🔊 " + EN(UI.loading);
+      var warn = $(".ls-warn", el); if (warn) warn.remove();
+      speakLines(st.lines, {
+        // a play only counts once the sound has really started
+        onStart: function () { plays--; pb.textContent = "🔊 " + EN(UI.playing); },
+        onProgress: function (i, n) { if (lf) lf.textContent = Math.round(i / n * 100) + "%"; },
+        onEnd: function () { pb.disabled = plays <= 0; pb.textContent = "▶ " + EN(plays > 0 ? UI.play : UI.noPlays); left(); },
+        onFail: function () {
+          pb.disabled = false; pb.textContent = "▶ " + EN(UI.play); left();
+          pb.closest(".ls-play").insertAdjacentHTML("afterend", '<p class="pl-warn ls-warn">' + esc(EN(UI.noSound)) + "</p>");
+          var sc = $(".ls-script", el); if (sc) { sc.hidden = false; sc.open = true; }
+        }
+      });
     });
   }
   RENDER.listen = function (el, st) {
@@ -669,10 +745,10 @@
         if (!r) return null;
         var sc = $(".ls-script", el); if (sc) sc.hidden = false;
         if (st.part) cur.ans[st.part] = r.c;
-        try { tts && tts.cancel(); } catch (e) {}
+        SP.stop();
         return r;
       },
-      leave: function () { try { tts && tts.cancel(); } catch (e) {} }
+      leave: function () { SP.stop(); }
     };
   };
 
@@ -1097,7 +1173,7 @@
         $("[data-yes]", el).focus();
       } else if (t.closest("[data-yes]")) grade(true);
       else if (t.closest("[data-no]")) grade(false);
-      else if (t.closest("[data-say]") && tts) { tts.cancel(); var u = new SpeechSynthesisUtterance(queue[0][0]); u.lang = "en-GB"; var v = voices(); if (v.a) u.voice = v.a; tts.speak(u); }
+      else if (t.closest("[data-say]") && tts) { var v = voices(); SP.play([{ t: queue[0][0], voice: v.a }]); }
     });
     draw();
     return { gate: function () { return !queue.length || allSeen(); } };
@@ -1140,7 +1216,7 @@
     function bar(title, clockOn) { return '<div class="mk-bar" lang="en" dir="ltr"><b>' + esc(title) + "</b>" + (clockOn ? '<span class="ps-clock" data-mclock></span>' : "") + "</div>"; }
     function save1(list, store, root) { list.forEach(function (e) { var node = $('[data-qn="' + e.n + '"]', root); if (node) store[e.n] = readVal(node, e.it); }); }
     function draw() {
-      try { tts && tts.cancel(); } catch (e) {}
+      SP.stop();
       if (stage === "intro") {
         el.innerHTML = '<div class="en-block"><h2>' + esc(T(UI.mkT)) + '</h2><ul class="tx-list">' + UI.mkSteps.map(function (x) { return "<li>" + esc(T(x)) + "</li>"; }).join("") + '</ul><button type="button" class="btn btn-primary" data-mgo="L">' + esc(T(UI.mkStart)) + "</button></div>";
       } else if (stage === "L") {
@@ -1244,7 +1320,7 @@
       if (stage === "S") { stopRec(true); clearTimers(); if (sPart < 2) { sPart++; draw(); } else { stage = "mark"; draw(); } }
     });
     draw();
-    return { gate: function () { return finished; }, leave: function () { stopSec(); clearTimers(); stopRec(true); try { tts && tts.cancel(); } catch (e) {} } };
+    return { gate: function () { return finished; }, leave: function () { stopSec(); clearTimers(); stopRec(true); SP.stop(); } };
   };
 
   // ================= Phase 3 exercise types =================
@@ -1438,7 +1514,7 @@
       recorder($("[data-recbox]", el), st.secs, function () { answered++; }, q.q);
       if (voice) say(q.q);
     }
-    function say(t) { try { if (!tts) return; tts.cancel(); var u = new SpeechSynthesisUtterance(t); u.lang = st.accent || "en-US"; u.rate = 0.95; tts.speak(u); } catch (e) {} }
+    function say(t) { SP.play([{ t: t, lang: st.accent || "en-US", rate: 0.95 }]); }
     function review() {
       rounds++;
       el.innerHTML = '<div class="en-block">' + head(st) + '<h3>' + esc(T(UI.ivReview)) + "</h3><p class=\"lp-sub\">" + esc(T(UI.ivReviewSub)) + '</p><fieldset class="es-ck"><legend>' + esc(T(UI.checkT)) + "</legend>" +
@@ -1450,10 +1526,10 @@
     el.addEventListener("click", function (e) {
       if (e.target.closest("[data-iv-go]") || e.target.closest("[data-iv-again]")) { newSet(); ask(); return; }
       if (e.target.closest("[data-iv-say]")) { say(qs[qi].q); return; }
-      if (e.target.closest("[data-iv-next]")) { stopRec(true); clearTimers(); try { tts && tts.cancel(); } catch (x) {} if (qi < qs.length - 1) { qi++; ask(); } else review(); }
+      if (e.target.closest("[data-iv-next]")) { stopRec(true); clearTimers(); SP.stop(); if (qi < qs.length - 1) { qi++; ask(); } else review(); }
     });
     intro2();
-    return { gate: function () { return rounds > 0; }, leave: function () { stopRec(true); clearTimers(); try { tts && tts.cancel(); } catch (x) {} } };
+    return { gate: function () { return rounds > 0; }, leave: function () { stopRec(true); clearTimers(); SP.stop(); } };
   };
 
   // ================= routing =================

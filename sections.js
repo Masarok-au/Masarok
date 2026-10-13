@@ -82,7 +82,7 @@
     if (!main.querySelector(".acc-tools") && secs.length) {
       var t = document.createElement("div");
       t.className = "acc-tools";
-      t.innerHTML = "<span>" + esc(T(UI.hint)) + '</span><div><button type="button" data-acc="open">' + esc(T(UI.openAll)) + '</button><button type="button" data-acc="close">' + esc(T(UI.closeAll)) + "</button></div>";
+      t.innerHTML = "<span>" + esc(T(UI.hint)) + '</span><div><button type="button" data-acc-all="open">' + esc(T(UI.openAll)) + '</button><button type="button" data-acc-all="close">' + esc(T(UI.closeAll)) + "</button></div>";
       main.insertBefore(t, secs[0]);
     }
     var keep = saved();
@@ -145,9 +145,9 @@
       if (s.classList.contains("is-open")) close(s); else open(s);
       return;
     }
-    var t = e.target.closest && e.target.closest("[data-acc]");
+    var t = e.target.closest && e.target.closest("[data-acc-all]");
     if (t) {
-      var all = t.getAttribute("data-acc") === "open";
+      var all = t.getAttribute("data-acc-all") === "open";
       secs.forEach(function (s) { if (all) open(s); else if (s.classList.contains("is-open")) { s.classList.remove("is-open"); var bb = s.querySelector(".acc-btn"); if (bb) bb.setAttribute("aria-expanded", "false"); } });
       save();
       if (!all) secs[0] && secs[0].scrollIntoView({ block: "start", behavior: "auto" });
