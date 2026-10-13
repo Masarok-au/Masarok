@@ -384,7 +384,21 @@
       takes: "Usually takes", nextDl: "Next deadline", startsOn: "Your studies start", remind: "Remind me", reminded: "Reminder on", allDl: "All deadlines", expected: "expected",
       tight: "Starting within 6 months is tight. Focus on the deadlines below, and ask your university early about late applications.",
       selfNote: "You're self-funded for now: once you've studied for a while, you can apply to join the scholarship (windows: 1 Oct–30 Nov and 1 May–30 Jun).",
-      plan: "Your plan", planStep: "Step {n} of {total}", planTask: "Next small task:", planCta: "Continue my plan"
+      plan: "Your plan", planStep: "Step {n} of {total}", planTask: "Next small task:", planCta: "Continue my plan",
+      cont: "Continue", lvKicker: "Level {n} of 10 · {name}", lvProg: "{d} of 10 levels cleared", stars: "{n} of 3 stars",
+      learn: "Learn", learnSub: "{m} min · free in Masarok Academy", doT: "Do", doSub: "The real step", checkT: "Check", checkSub: "3 quick questions",
+      lessonGo: "Start the lesson", lessonReview: "Open it again", lessonDone: "Done",
+      checkGo: "Check my answers", checkAll: "Answer all three questions first.", checkPass: "{c} of 3 right. Star earned!",
+      checkFail: "{c} of 3 right. You need 2 to pass. Read why, then try again.", checkRetry: "Try again", checkDoneT: "Passed · {c} of 3 right",
+      right: "Right.", wrongA: "Not quite.",
+      lvRule: "To clear this level, finish Learn and Check, or finish the real step.", lvNext: "Next: Level {n} · {name}",
+      lvCleared: "Level cleared!", lvGoNext: "Go to Level {n}", lvFinT: "You cleared all 10 levels!",
+      pickDo: "Choose your country and degree in the picker. Adding your university makes every step fit you.", pickYours: "Your choices: {c}",
+      pickChange: "Change my choices", pickNone: "Not chosen yet",
+      lvLabel: "Level {n}: {name}. {state}", lvLocked: "Clear Level {n} first to open this one.", lvOpened: "Level {n} is now open.",
+      welcomeLv: "Welcome back. You're on Level {n} · {name}.", fabLv: "Level {n} of 10", planLv: "Level {n} of 10 · {name}",
+      nextLearn: "Learn: {t}", nextCheck: "Check: answer 3 quick questions", nextDo: "Do: {t}",
+      noDo: "There's no real-world step at this level for your degree. Learn and Check clear it.", lvPath: "All 10 levels"
     },
     ar: {
       bTitle: "تشعر بالضياع؟ ابدأ رحلتك خطوة بخطوة.",
@@ -432,7 +446,21 @@
       takes: "يستغرق عادةً", nextDl: "الموعد القادم", startsOn: "تبدأ دراستك", remind: "ذكّرني", reminded: "التذكير مفعّل", allDl: "كل المواعيد", expected: "متوقع",
       tight: "البدء خلال 6 أشهر وقت ضيق. ركّز على المواعيد أدناه، واسأل جامعتك مبكرًا عن التقديم المتأخر.",
       selfNote: "أنت تدرس على حسابك حاليًا: بعد فترة من الدراسة يمكنك التقديم على الإلحاق بالبعثة (الفترات: 1 أكتوبر–30 نوفمبر و1 مايو–30 يونيو).",
-      plan: "خطتك", planStep: "الخطوة {n} من {total}", planTask: "المهمة الصغيرة التالية:", planCta: "أكمل خطتي"
+      plan: "خطتك", planStep: "الخطوة {n} من {total}", planTask: "المهمة الصغيرة التالية:", planCta: "أكمل خطتي",
+      cont: "متابعة", lvKicker: "المستوى {n} من 10 · {name}", lvProg: "اجتزت {d} من 10 مستويات", stars: "{n} من 3 نجوم",
+      learn: "تعلّم", learnSub: "{m} د · مجانًا في أكاديمية مسارُك", doT: "نفّذ", doSub: "الخطوة الفعلية", checkT: "اختبر", checkSub: "3 أسئلة سريعة",
+      lessonGo: "ابدأ الدرس", lessonReview: "افتحه مرة أخرى", lessonDone: "مكتمل",
+      checkGo: "تحقق من إجاباتي", checkAll: "أجب عن الأسئلة الثلاثة أولًا.", checkPass: "{c} من 3 صحيحة. حصلت على نجمة!",
+      checkFail: "{c} من 3 صحيحة. تحتاج إجابتين صحيحتين للاجتياز. اقرأ السبب ثم حاول مرة أخرى.", checkRetry: "أعد المحاولة", checkDoneT: "اجتزت · {c} من 3 صحيحة",
+      right: "صحيح.", wrongA: "ليس تمامًا.",
+      lvRule: "لتجتاز هذا المستوى: أكمل «تعلّم» و«اختبر»، أو أنجز الخطوة الفعلية.", lvNext: "التالي: المستوى {n} · {name}",
+      lvCleared: "اجتزت المستوى!", lvGoNext: "انتقل إلى المستوى {n}", lvFinT: "اجتزت المستويات العشرة كلها!",
+      pickDo: "اختر دولتك ودرجتك من أداة الاختيار، وإضافة جامعتك تجعل كل خطوة مناسبة لك.", pickYours: "اختياراتك: {c}",
+      pickChange: "غيّر اختياراتي", pickNone: "لم تختر بعد",
+      lvLabel: "المستوى {n}: {name}. {state}", lvLocked: "اجتز المستوى {n} أولًا لفتح هذا المستوى.", lvOpened: "فُتح المستوى {n}.",
+      welcomeLv: "أهلًا بعودتك. أنت في المستوى {n} · {name}.", fabLv: "المستوى {n} من 10", planLv: "المستوى {n} من 10 · {name}",
+      nextLearn: "تعلّم: {t}", nextCheck: "اختبر: أجب عن 3 أسئلة سريعة", nextDo: "نفّذ: {t}",
+      noDo: "لا توجد خطوة فعلية في هذا المستوى لدرجتك، ويكفي «تعلّم» و«اختبر» لاجتيازه.", lvPath: "المستويات العشرة"
     }
   };
   var t = T[lang];
@@ -507,6 +535,32 @@
     var M = window.MasarokDeadlines, ty = DLT[id];
     return M && ty && M.next ? M.next(ty) : null;
   }
+  // ---------- levels (levels.js): Learn, Do, Check ----------
+  var NL = 10;
+  function LVM() { return window.MasarokLevels; }
+  function LVD(n) { return LVM().list[n - 1]; }
+  function levelSteps(lv, n) { return stepsFor(lv).filter(function (id) { return LVM().levelOf(id) === n; }); }
+  function pickDone() { return !!(pick().cc && level()); }
+  function doDone(lv, n) { if (n === 1) return pickDone(); var ids = levelSteps(lv, n); return ids.length > 0 && ids.every(function (id) { return isDone(lv, id); }); }
+  function lvState(lv, n) {
+    var M = LVM(), learn = M.learnDone(n), chk = M.checkDone(n), dd = doDone(lv, n);
+    return { n: n, learn: learn, check: chk, "do": dd, cleared: (learn && chk) || dd, stars: (learn ? 1 : 0) + (chk ? 1 : 0) + (dd ? 1 : 0) };
+  }
+  function curLevel(lv) { for (var n = 1; n <= NL; n++) if (!lvState(lv, n).cleared) return n; return NL + 1; }
+  function lvCleared(lv) { var d = 0; for (var n = 1; n <= NL; n++) if (lvState(lv, n).cleared) d++; return d; }
+  function lvOpen(lv, n) { return n === 1 || lvState(lv, n - 1).cleared || lvState(lv, n).cleared || n <= curLevel(lv); }
+  function lvName(n) { return LVD(n).name[lang === "ar" ? 1 : 0]; }
+  function L2(x) { return x[lang === "ar" ? 1 : 0]; }
+  function starsHtml(k) { var h = ""; for (var i = 0; i < 3; i++) h += '<i class="' + (i < k ? "is-on" : "") + '"></i>'; return '<span class="jr-stars" aria-hidden="true">' + h + "</span>"; }
+  // what to do next on a level, in one line
+  function nextThing(lv, n) {
+    var s = lvState(lv, n);
+    if (!s.learn) return fmt(t.nextLearn, { t: L2(LVM().learn(n).t) });
+    if (!s.check) return t.nextCheck;
+    var ids = levelSteps(lv, n).filter(function (id) { return !isDone(lv, id); });
+    return ids.length ? fmt(t.nextDo, { t: stripTags(title(ids[0], vars(lv))) }) : "";
+  }
+
   function countDone(lv) { var n = 0; stepsFor(lv).forEach(function (id) { if (isDone(lv, id)) n++; }); return n; }
   function MCj(id) { var M = window.MasarokCountry, cc = pick().cc; return M && cc && cc !== "au" ? M.journey(cc, id) : null; }
   function content(id) {
@@ -654,9 +708,9 @@
   function bannerText() {
     var lv = level();
     if (st.started && lv) {
-      var ids = stepsFor(lv), i = currentIndex(lv), V = vars(lv);
-      if (i >= ids.length) return { h: t.bDoneTitle, p: welcome(t.bDoneSub), c: t.bDoneCta };
-      return { h: t.plan + " · " + fmt(t.planStep, { n: num(i + 1), total: num(ids.length) }), p: stripTags(title(ids[i], V)), c: t.planCta };
+      var c = curLevel(lv);
+      if (c > NL) return { h: t.bDoneTitle, p: welcome(t.bDoneSub), c: t.bDoneCta };
+      return { h: t.plan + " · " + fmt(t.planLv, { n: num(c), name: lvName(c) }), p: L2(LVD(c).goal), c: t.planCta };
     }
     return { h: t.bTitle, p: t.bSub, c: t.bCta };
   }
@@ -685,15 +739,15 @@
     banner.querySelector(".jr-cta span").textContent = b.c;
     // the plan card: progress, the next small task, time and the next real date
     var plan = banner.querySelector(".jr-plan"), lv = level();
-    var ids = lv ? stepsFor(lv) : [], i = lv ? currentIndex(lv) : 0;
-    banner.classList.toggle("is-plan", !!(st.started && lv && i < ids.length));
-    if (!(st.started && lv && i < ids.length)) { plan.hidden = true; plan.innerHTML = ""; return; }
-    var d = countDone(lv), task = nextTask(lv), est = EST[ids[i]] ? EST[ids[i]][lang === "ar" ? 1 : 0] : "", dl = dlFor(ids[i]);
+    var c = lv ? curLevel(lv) : 1, ids = lv ? levelSteps(lv, Math.min(c, NL)).filter(function (id) { return !isDone(lv, id); }) : [], i = 0;
+    banner.classList.toggle("is-plan", !!(st.started && lv && c <= NL));
+    if (!(st.started && lv && c <= NL)) { plan.hidden = true; plan.innerHTML = ""; return; }
+    var d = lvCleared(lv), task = nextThing(lv, c), est = ids[0] && EST[ids[0]] ? EST[ids[0]][lang === "ar" ? 1 : 0] : "", dl = ids[0] ? dlFor(ids[0]) : null;
     plan.hidden = false;
-    plan.innerHTML = '<div class="jr-plan-bar"><i style="width:' + Math.round(d / ids.length * 100) + '%"></i></div>' +
-      (task ? '<p class="jr-plan-task"><span>' + esc(t.planTask) + '</span> ' + esc(task) + '</p>' : "") +
+    plan.innerHTML = '<div class="jr-plan-bar"><i style="width:' + Math.round(d / NL * 100) + '%"></i></div>' +
+      (task ? '<p class="jr-plan-task">' + starsHtml(lvState(lv, c).stars) + " " + esc(task) + '</p>' : "") +
       '<div class="jr-plan-chips">' + (est ? '<span>⏱ ' + esc(est) + '</span>' : "") +
-      (dl ? '<span>⏰ ' + esc((DLT[ids[i]] === "start" ? t.startsOn : t.nextDl) + ": " + dl.title) + ' · ' + esc(dl.date) + '</span>' : "") + '</div>';
+      (dl ? '<span>⏰ ' + esc((DLT[ids[0]] === "start" ? t.startsOn : t.nextDl) + ": " + dl.title) + ' · ' + esc(dl.date) + '</span>' : "") + '</div>';
   }
 
   // climb down the ladder, hop off, wave, then point at the button
@@ -742,8 +796,8 @@
     if (!fab) return;
     var lv = level(), sub = "";
     if (st.started && lv) {
-      var ids = stepsFor(lv), i = currentIndex(lv);
-      sub = i >= ids.length ? t.done : fmt(t.fabStep, { n: num(i + 1), total: num(ids.length) });
+      var c = curLevel(lv);
+      sub = c > NL ? t.done : fmt(t.fabLv, { n: num(c) });
     }
     fab.querySelector(".jr-fab-long").textContent = t.fab;
     fab.querySelector(".jr-fab-short").textContent = t.fabShort;
@@ -786,6 +840,7 @@
     live = panel.querySelector(".jr-live");
     panel.addEventListener("click", onPanelClick);
     panel.addEventListener("change", onTask);
+    panel.addEventListener("submit", onCheck);
     panel.addEventListener("keydown", function (e) {
       if (e.key === "Escape") { e.preventDefault(); close(); }
       if (e.key === "Tab") trap(e);
@@ -866,12 +921,11 @@
   }
 
   function renderMain(eyebrow) {
-    var lv = level(), ids = stepsFor(lv), V = vars(lv), v = V._v, n = ids.length;
-    var cur = currentIndex(lv), show = viewing === null ? Math.min(cur, n - 1) : viewing;
-    var finished = cur >= n;
+    var lv = level(), V = vars(lv), v = V._v;
+    var cur = curLevel(lv), finished = cur > NL, show = viewing === null ? Math.min(cur, NL) - 1 : viewing;
     var cn = window.MasarokCountry && pick().cc ? window.MasarokCountry.name(pick().cc) : "";
     var meta = pick().hasUni ? fmt(t.meta, { uni: esc(v.short), city: esc(v.city) }) : esc(cn ? (lang === "ar" ? "لأي جامعة في " + cn : "For any university in " + cn) : t.metaAll);
-    var d = countDone(lv);
+    var d = lvCleared(lv);
 
     var pf = lv === "foundation" && window.MasarokCountry && pick().cc ? window.MasarokCountry.pathF(pick().cc) : null;
     var h = eyebrow + '<h2 id="jr-title">' + esc(pf || t.pathTitle[lv]) + '</h2>' +
@@ -879,46 +933,97 @@
       '<button type="button" class="jr-textbtn" data-go="level">' + esc(t.changeLevel) + '</button>' +
       '<button type="button" class="jr-textbtn" data-change-uni>' + esc(t.changeUni) + '</button>' +
       '<button type="button" class="jr-textbtn" data-go="profile">' + esc(t.pEdit) + '</button></div>';
-    if (st.profile && st.profile.start === "soon" && !finished && n - cur >= 5) h += '<p class="jr-welcome jr-warn">' + esc(t.tight) + '</p>';
+    if (st.profile && st.profile.start === "soon" && !finished && NL - cur >= 5) h += '<p class="jr-welcome jr-warn">' + esc(t.tight) + '</p>';
 
-    if (st.welcome && !finished) h += '<p class="jr-welcome">' + esc(fmt(t.welcome, { n: num(cur + 1) })) + '</p>';
-    else if (st.stage === "dream" && cur === 0) h += '<p class="jr-welcome">' + esc(t.dreamNote) + '</p>';
+    if (st.welcome && !finished) h += '<p class="jr-welcome">' + esc(fmt(t.welcomeLv, { n: num(cur), name: lvName(cur) })) + '</p>';
+    else if (st.stage === "dream" && cur === 1) h += '<p class="jr-welcome">' + esc(t.dreamNote) + '</p>';
 
-    // the staircase
-    h += '<div class="jr-stairs-wrap"><div class="jr-progress"><span>' + esc(fmt(t.progress, { d: num(d), total: num(n) })) + '</span><i><b style="width:' + Math.round(d / n * 100) + '%"></b></i></div>' +
-      '<ol class="jr-stairs" style="--n:' + n + '">';
-    ids.forEach(function (id, i) {
-      var state = isDone(lv, id) ? (doneMap(lv)[id] === "skip" ? "skip" : "done") : (i === cur ? "open" : "locked");
-      var stateTxt = { done: t.done, skip: t.skipped, open: t.nextStep, locked: t.lockedLbl }[state];
-      var hh = stepH(i, n).toFixed(1);
-      h += '<li class="jr-step is-' + state + (i === show && !finished ? " is-viewing" : "") + '" style="--h:' + hh + '%">' +
-        '<button type="button" data-step="' + i + '" aria-label="' + esc(fmt(t.stepLabel, { n: num(i + 1), title: title(id, V).replace(/<[^>]+>/g, ""), state: stateTxt })) + '"' +
-        (state === "locked" ? ' aria-disabled="true"' : "") + (i === show && !finished ? ' aria-current="step"' : "") + '>' +
+    // the staircase: one stair per level
+    h += '<div class="jr-stairs-wrap"><div class="jr-progress"><span>' + esc(fmt(t.lvProg, { d: num(d) })) + '</span><i><b style="width:' + Math.round(d / NL * 100) + '%"></b></i></div>' +
+      '<ol class="jr-stairs jr-levels" style="--n:' + NL + '">';
+    for (var i = 0; i < NL; i++) {
+      var ls = lvState(lv, i + 1), open = lvOpen(lv, i + 1);
+      var state = ls.cleared ? "done" : open ? "open" : "locked";
+      var stateTxt = (state === "done" ? t.done : state === "open" ? t.nextStep : t.lockedLbl) + " · " + fmt(t.stars, { n: num(ls.stars) });
+      h += '<li class="jr-step is-' + state + (i === show ? " is-viewing" : "") + '" style="--h:' + stepH(i, NL).toFixed(1) + '%">' +
+        '<button type="button" data-step="' + i + '" aria-label="' + esc(fmt(t.lvLabel, { n: num(i + 1), name: lvName(i + 1), state: stateTxt })) + '"' +
+        (state === "locked" ? ' aria-disabled="true"' : "") + (i === show ? ' aria-current="step"' : "") + '>' +
         '<span class="jr-num">' + num(i + 1) + '</span>' +
-        (state === "locked" ? '<span class="jr-ic">' + ICON.lock + '</span>' : state === "done" ? '<span class="jr-ic">' + ICON.tick + '</span>' : state === "skip" ? '<span class="jr-ic">' + ICON.skip + '</span>' : "") +
+        (state === "locked" ? '<span class="jr-ic">' + ICON.lock + '</span>' : starsHtml(ls.stars)) +
         '</button></li>';
-    });
+    }
     h += '</ol><div class="jr-climber" aria-hidden="true">' + figure(finished ? "is-cheering" : "") + '</div></div>';
 
-    // the next-step card
+    // the level card
     if (finished && viewing === null) {
-      h += '<article class="jr-card jr-finished"><p class="jr-kicker">' + esc(fmt(t.progress, { d: num(d), total: num(n) })) + '</p>' +
-        '<h3>' + esc(t.finishedT) + '</h3><p>' + esc(welcome(t.finishedB)) + '</p>' +
+      h += '<article class="jr-card jr-finished"><p class="jr-kicker">' + esc(fmt(t.lvProg, { d: num(d) })) + '</p>' +
+        '<h3>' + esc(t.lvFinT) + '</h3><p>' + esc(welcome(t.finishedB)) + '</p>' +
         '<div class="jr-links">' + linkHtml("lessons", V) + '</div></article>';
     } else {
-      h += cardHtml(lv, show, V, cur);
+      h += levelCard(lv, show + 1, V, cur);
     }
 
-    // the whole path
-    h += '<details class="jr-path"><summary>' + esc(t.path) + '</summary><ol>' + ids.map(function (id, i) {
-      var state = isDone(lv, id) ? (doneMap(lv)[id] === "skip" ? "skip" : "done") : (i === cur ? "open" : "locked");
-      return '<li class="is-' + state + '"><button type="button" data-step="' + i + '"' + (state === "locked" ? ' aria-disabled="true"' : "") + '>' +
-        '<span class="jr-dot">' + (state === "done" ? ICON.tick : state === "skip" ? ICON.skip : state === "locked" ? ICON.lock : num(i + 1)) + '</span>' +
-        '<span>' + title(id, V) + (S[id].optional ? ' <em class="jr-opt">' + esc(t.optional) + '</em>' : "") + '</span></button></li>';
-    }).join("") + '</ol></details>';
+    // every level and the real steps inside it
+    h += '<details class="jr-path"><summary>' + esc(t.lvPath) + '</summary><ol>';
+    for (var k = 1; k <= NL; k++) {
+      var s2 = lvState(lv, k), st2 = s2.cleared ? "done" : lvOpen(lv, k) ? "open" : "locked";
+      var steps = levelSteps(lv, k).map(function (id) { return '<small class="jr-path-step' + (isDone(lv, id) ? " is-done" : "") + '">' + (isDone(lv, id) ? "✓ " : "· ") + title(id, V) + "</small>"; }).join("");
+      h += '<li class="is-' + st2 + '"><button type="button" data-step="' + (k - 1) + '"' + (st2 === "locked" ? ' aria-disabled="true"' : "") + '>' +
+        '<span class="jr-dot">' + (st2 === "done" ? ICON.tick : st2 === "locked" ? ICON.lock : num(k)) + '</span>' +
+        '<span><b>' + esc(fmt(t.lvKicker, { n: num(k), name: lvName(k) })) + '</b> ' + starsHtml(s2.stars) + '<br>' + esc(L2(LVD(k).goal)) + steps + '</span></button></li>';
+    }
+    h += '</ol></details>';
 
     h += '<div class="jr-foot"><span>' + esc(t.saved) + '</span><button type="button" class="jr-textbtn" data-reset>' + esc(resetArm ? t.startOverSure : t.startOver) + '</button></div>';
     return h;
+  }
+
+  // one level: Learn (an Academy lesson), Check (3 questions), Do (the real steps)
+  var chkOpen = {};
+  function levelCard(lv, n, V, cur) {
+    var D = LVD(n), s = lvState(lv, n), M = LVM(), les = M.learn(n);
+    var kicker = (n === cur ? esc(t.nextStep) + " · " : "") + esc(fmt(t.lvKicker, { n: num(n), name: lvName(n) })) + " · " + starsHtml(s.stars) +
+      (s.cleared ? ' · <span class="jr-tag is-done">' + esc(t.done) + "</span>" : "");
+    // Learn
+    var learn = '<li class="jr-part' + (s.learn ? " is-on" : "") + '"><div class="jr-part-h"><span class="jr-pstar" aria-hidden="true">★</span><b>' + esc(t.learn) + '</b><small>' + esc(fmt(t.learnSub, { m: num(les.mins) })) + '</small>' +
+      (s.learn ? '<span class="jr-tag is-done">' + esc(t.lessonDone) + "</span>" : "") + "</div>" +
+      '<a class="jr-lesson" href="' + esc(M.lessonUrl(n)) + '" data-jr-lesson><span class="jr-lesson-ic" aria-hidden="true">' + les.icon + '</span><span class="jr-lesson-tx"><b>' + esc(L2(les.t)) + "</b><small>" + esc(L2(les.d)) + '</small></span><span class="jr-lesson-go">' + esc(s.learn ? t.lessonReview : t.lessonGo) + ICON.arrow + "</span></a></li>";
+    // Do
+    var ids = levelSteps(lv, n), doBody;
+    if (n === 1) {
+      var p = pick(), cn = window.MasarokCountry && p.cc ? window.MasarokCountry.name(p.cc) : "", lvTxt = t.levels[lv] ? t.levels[lv][0] : "";
+      var mine = [cn, p.hasUni && p.v ? p.v.short : "", lvTxt].filter(Boolean).join(" · ");
+      doBody = '<p class="jr-p">' + esc(t.pickDo) + '</p><p class="jr-p"><b>' + esc(fmt(t.pickYours, { c: mine || t.pickNone })) + '</b></p>' +
+        '<div class="jr-actions"><button type="button" class="btn jr-btn-ghost" data-change-uni>' + esc(t.pickChange) + "</button></div>";
+    } else if (!ids.length) {
+      doBody = '<p class="jr-p">' + esc(t.noDo) + "</p>";
+    } else {
+      var all = stepsFor(lv), cIdx = currentIndex(lv);
+      doBody = ids.map(function (id) { return cardHtml(lv, all.indexOf(id), V, cIdx, true); }).join("");
+    }
+    var doo = '<li class="jr-part' + (s["do"] ? " is-on" : "") + '"><div class="jr-part-h"><span class="jr-pstar" aria-hidden="true">★</span><b>' + esc(t.doT) + "</b><small>" + esc(t.doSub) + "</small>" +
+      (s["do"] ? '<span class="jr-tag is-done">' + esc(t.done) + "</span>" : "") + "</div>" + doBody + "</li>";
+    // Check
+    var sc = M.checkScore(n), chk;
+    if (s.check && !chkOpen[n]) {
+      chk = '<p class="jr-p">✓ ' + esc(fmt(t.checkDoneT, { c: num(sc[0]) })) + ' <button type="button" class="jr-textbtn" data-chk-retry="' + n + '">' + esc(t.checkRetry) + "</button></p>";
+    } else {
+      chk = '<form class="jr-chk" data-chk="' + n + '">' + D.check.map(function (q, qi) {
+        return '<fieldset><legend><b>' + num(qi + 1) + ".</b> " + esc(L2(q.s)) + "</legend>" + q.o.map(function (o, oi) {
+          return '<label class="jr-opt-row"><input type="radio" name="q' + n + "-" + qi + '" value="' + oi + '"><span>' + esc(L2(o)) + "</span></label>";
+        }).join("") + '<p class="jr-why" hidden></p></fieldset>';
+      }).join("") + '<p class="jr-chk-msg" role="status"></p><div class="jr-actions"><button type="submit" class="btn btn-primary">' + esc(t.checkGo) + "</button></div></form>";
+    }
+    var check = '<li class="jr-part' + (s.check ? " is-on" : "") + '"><div class="jr-part-h"><span class="jr-pstar" aria-hidden="true">★</span><b>' + esc(t.checkT) + "</b><small>" + esc(t.checkSub) + "</small>" +
+      (s.check ? '<span class="jr-tag is-done">' + esc(t.done) + "</span>" : "") + "</div>" + chk + "</li>";
+    var foot = s.cleared
+      ? (n < NL ? '<p class="jr-lvnext">🎉 ' + esc(t.lvCleared) + ' <button type="button" class="jr-textbtn" data-step="' + n + '">' + esc(fmt(t.lvGoNext, { n: num(n + 1) })) + "</button></p>" : "")
+      : '<p class="jr-lvnext">' + esc(t.lvRule) + (n < NL ? " " + esc(fmt(t.lvNext, { n: num(n + 1), name: lvName(n + 1) })) : "") + "</p>";
+    return '<article class="jr-card jr-lvcard' + (n === cur ? " is-next" : "") + '" aria-labelledby="jr-card-h">' +
+      '<p class="jr-kicker">' + kicker + "</p>" +
+      '<h3 id="jr-card-h" tabindex="-1">' + esc(L2(D.goal)) + "</h3>" +
+      '<p class="jr-lvsub">' + esc(L2(D.sub)) + "</p>" +
+      '<ol class="jr-trio">' + learn + check + doo + "</ol>" + foot + "</article>";
   }
 
   function linkHtml(key, V) {
@@ -929,7 +1034,7 @@
     return '<a href="' + esc(href) + '"' + (ext ? ' rel="noopener" target="_blank"' : ' data-jr-anchor') + '>' + label + (ext ? '<span class="jr-ext" aria-hidden="true">↗</span>' : "") + '</a>';
   }
 
-  function cardHtml(lv, i, V, cur) {
+  function cardHtml(lv, i, V, cur, embedded) {
     var ids = stepsFor(lv), id = ids[i], s = S[id], ov = MCj(id), c = ov ? ov[lang] : s[lang], n = ids.length;
     var state = isDone(lv, id) ? (doneMap(lv)[id] === "skip" ? "skip" : "done") : "open";
     var kicker = (i === cur ? esc(t.nextStep) + ' · ' : "") + esc(fmt(t.stepN, { n: num(i + 1), total: num(n) })) +
@@ -953,14 +1058,15 @@
       ? '<button type="button" class="btn btn-primary" data-done="' + id + '">' + ICON.tick + esc(t.markDone) + '</button>' +
         (s.optional ? '<button type="button" class="btn jr-btn-ghost" data-skip="' + id + '">' + esc(t.skip) + '</button>' : "")
       : '<button type="button" class="jr-textbtn" data-undo="' + id + '">' + esc(t.undo) + '</button>';
-    return '<article class="jr-card' + (i === cur ? " is-next" : "") + '" aria-labelledby="jr-card-h">' +
-      '<p class="jr-kicker">' + kicker + '</p>' +
-      '<h3 id="jr-card-h" tabindex="-1">' + title(id, V) + '</h3>' +
+    if (embedded) kicker = state === "done" ? '<span class="jr-tag is-done">' + esc(t.done) + '</span>' : state === "skip" ? '<span class="jr-tag">' + esc(t.skipped) + '</span>' : s.optional ? '<span class="jr-tag">' + esc(t.optional) + '</span>' : "";
+    return '<' + (embedded ? 'section class="jr-card jr-sub"' : 'article class="jr-card' + (i === cur ? " is-next" : "") + '" aria-labelledby="jr-card-h"') + '>' +
+      (kicker ? '<p class="jr-kicker">' + kicker + '</p>' : "") +
+      (embedded ? '<h4 class="jr-sub-h">' + title(id, V) + '</h4>' : '<h3 id="jr-card-h" tabindex="-1">' + title(id, V) + '</h3>') +
       '<div class="jr-cols"><div><h4>' + esc(t.why) + '</h4><p>' + fmt(c.why, V) + '</p></div>' +
       '<div><h4>' + esc(t.tasks) + ' <span class="jr-tn">' + esc(fmt(t.tasksN, { d: num(td), n: num(list.length) })) + '</span></h4><ul class="jr-tasks">' + what + '</ul></div></div>' +
       (facts ? '<div class="jr-facts">' + facts + '</div>' : "") + note +
       (links ? '<div class="jr-links-wrap"><h4>' + esc(t.links) + '</h4><div class="jr-links">' + links + '</div></div>' : "") +
-      '<div class="jr-actions">' + actions + '</div></article>';
+      '<div class="jr-actions">' + actions + '</div></' + (embedded ? "section" : "article") + '>';
   }
 
   function stepH(i, n) { return 24 + 44 * (n === 1 ? 1 : i / (n - 1)); } // % of the staircase height
@@ -969,7 +1075,7 @@
   var climberAt = null;
   function placeClimber() {
     var wrap = panel.querySelector(".jr-stairs-wrap"); if (!wrap) return;
-    var lv = level(), n = stepsFor(lv).length, cur = currentIndex(lv);
+    var lv = level(), n = NL, cur = curLevel(lv) - 1;
     var target = Math.min(cur, n - 1);
     var c = wrap.querySelector(".jr-climber"), fig = c.querySelector(".jr-fig");
     function pos(i) {
@@ -1030,10 +1136,21 @@
     }
     if ((el = e.target.closest("[data-go]"))) { screen = el.getAttribute("data-go"); if (screen === "level") tmp.level = level(); if (screen === "profile") tmp.prof = Object.assign({}, st.profile || {}); render(true); return; }
     if (e.target.closest("[data-change-uni]")) { close(); if (window.Masarok && window.Masarok.openPicker) window.Masarok.openPicker(2); return; }
+    if ((el = e.target.closest("[data-chk-retry]"))) { chkOpen[+el.getAttribute("data-chk-retry")] = true; render(false); focusCard(); return; }
+    if ((el = e.target.closest("[data-chk-again]"))) {
+      var f0 = el.closest("form");
+      f0.querySelectorAll("input").forEach(function (x) { x.checked = false; x.disabled = false; });
+      f0.querySelectorAll("fieldset").forEach(function (x) { x.classList.remove("is-right", "is-wrong"); x.querySelector(".jr-why").hidden = true; });
+      f0.querySelectorAll(".is-answer").forEach(function (x) { x.classList.remove("is-answer"); });
+      f0.querySelector(".jr-chk-msg").textContent = "";
+      f0.querySelector(".jr-actions").innerHTML = '<button type="submit" class="btn btn-primary">' + esc(t.checkGo) + "</button>";
+      f0.querySelector("input").focus(); return;
+    }
+    if (e.target.closest("[data-chk-done]")) { render(false); focusCard(); return; }
     if ((el = e.target.closest("[data-step]"))) {
-      var i = +el.getAttribute("data-step"), lv2 = level(), cur = currentIndex(lv2);
+      var i = +el.getAttribute("data-step"), lv2 = level(), cur = curLevel(lv2) - 1;
       if (el.getAttribute("aria-disabled") === "true") {
-        say(fmt(t.locked, { n: num(cur + 1) }));
+        say(fmt(t.lvLocked, { n: num(Math.min(cur, NL - 1) + 1) }));
         el.classList.remove("is-nudge"); void el.offsetWidth; el.classList.add("is-nudge");
         return;
       }
@@ -1043,15 +1160,14 @@
       return;
     }
     if ((el = e.target.closest("[data-done]")) || (el = e.target.closest("[data-skip]"))) {
-      var lv3 = level(), id = el.getAttribute("data-done") || el.getAttribute("data-skip");
+      var lv3 = level(), id = el.getAttribute("data-done") || el.getAttribute("data-skip"), c3 = curLevel(lv3);
       doneMap(lv3)[id] = el.hasAttribute("data-skip") ? "skip" : "done";
       st.welcome = false; save(); viewing = null; refresh();
       var dl3 = dlFor(id);
       render(false);
       emit("masarok:journey", { type: "step", id: id, lv: lv3, skip: el.hasAttribute("data-skip"), early: !!(dl3 && DLT[id] !== "start" && dl3.days >= 30) });
-      var nc = currentIndex(lv3);
-      if (nc < stepsFor(lv3).length) say(fmt(t.unlocked, { n: num(nc + 1) }));
-      else say(t.finishedT);
+      var nc = curLevel(lv3);
+      if (nc > NL) say(t.lvFinT); else if (nc > c3) say(fmt(t.lvOpened, { n: num(nc) }));
       focusCard(true);
       return;
     }
@@ -1077,15 +1193,42 @@
     save(); refresh();
     emit("masarok:journey", { type: "task", id: id, lv: lv, on: cb.checked, el: cb });
     if (d === list.length && !isDone(lv, id)) {
-      var dlA = dlFor(id);
+      var dlA = dlFor(id), cA = curLevel(lv);
       doneMap(lv)[id] = "done"; st.welcome = false; save(); viewing = null; refresh();
       setTimeout(function () {
         render(false);
         emit("masarok:journey", { type: "step", id: id, lv: lv, early: !!(dlA && DLT[id] !== "start" && dlA.days >= 30) });
-        var nc = currentIndex(lv);
-        say(t.allTasks + (nc < stepsFor(lv).length ? " " + fmt(t.unlocked, { n: num(nc + 1) }) : ""));
+        var nc = curLevel(lv);
+        say(t.allTasks + (nc <= NL && nc > cA ? " " + fmt(t.lvOpened, { n: num(nc) }) : ""));
         focusCard(true);
       }, 450);
+    }
+  }
+  function onCheck(e) {
+    var f = e.target.closest && e.target.closest("form[data-chk]"); if (!f) return;
+    e.preventDefault();
+    var n = +f.getAttribute("data-chk"), D = LVD(n), right = 0, picks = [];
+    D.check.forEach(function (q, qi) { picks.push(f.querySelector('input[name="q' + n + "-" + qi + '"]:checked')); });
+    var msg = f.querySelector(".jr-chk-msg");
+    if (picks.some(function (x) { return !x; })) { msg.textContent = t.checkAll; return; }
+    D.check.forEach(function (q, qi) {
+      var c = picks[qi], ok = +c.value === q.a, fs = c.closest("fieldset");
+      if (ok) right++;
+      fs.classList.add(ok ? "is-right" : "is-wrong");
+      var ans = fs.querySelector('input[value="' + q.a + '"]'); if (ans) ans.closest("label").classList.add("is-answer");
+      var w = fs.querySelector(".jr-why"); w.hidden = false; w.textContent = (ok ? t.right : t.wrongA) + " " + L2(q.x);
+    });
+    f.querySelectorAll("input").forEach(function (x) { x.disabled = true; });
+    var lv = level(), was = lvState(lv, n).cleared, pass = right >= 2;
+    LVM().saveCheck(n, right);
+    msg.textContent = fmt(pass ? t.checkPass : t.checkFail, { c: num(right) });
+    var acts = f.querySelector(".jr-actions");
+    acts.innerHTML = pass ? '<button type="button" class="btn btn-primary" data-chk-done>' + esc(t.cont || "OK") + ICON.arrow + "</button>" : '<button type="button" class="btn jr-btn-ghost" data-chk-again>' + esc(t.checkRetry) + "</button>";
+    if (pass) {
+      chkOpen[n] = false;
+      if (window.MasarokGame && window.MasarokGame.award) window.MasarokGame.award("check:" + n, 30, acts.firstChild);
+      refresh();
+      if (!was && lvState(lv, n).cleared) { emit("masarok:journey", { type: "level", n: n }); say(t.lvCleared + (n < NL ? " " + fmt(t.lvOpened, { n: num(n + 1) }) : "")); }
     }
   }
   function chooseLevel(lv) {
@@ -1112,13 +1255,16 @@
     taskDone: function (lv, id) { var tm = taskMap(lv, id), n = 0; tm.forEach(function (x) { if (x) n++; }); return n; },
     title: function (id) { return stripTags(title(id, vars(level()))); },
     open: function () { open(); }, isOpen: function () { return !!(panel && !panel.hidden); },
-    figure: figure, onMain: function () { return screen === "main"; }
+    figure: figure, onMain: function () { return screen === "main"; },
+    levels: function () { var lv = level(), out = []; if (!lv || !window.MasarokLevels) return out; for (var n = 1; n <= NL; n++) { var x = lvState(lv, n); x.open = lvOpen(lv, n); x.name = lvName(n); x.goal = L2(LVD(n).goal); out.push(x); } return out; },
+    levelNow: function () { var lv = level(); return lv && window.MasarokLevels ? curLevel(lv) : 1; },
+    show: function (n) { viewing = n - 1; if (panel && !panel.hidden) { screen = "main"; render(false); focusCard(); } }
   };
 
   // ---------- start ----------
   function init() {
     // a returning student is greeted once per visit
-    if (st.started && level() && countDone(level()) > 0) st.welcome = true;
+    if (st.started && level() && (countDone(level()) > 0 || curLevel(level()) > 1)) st.welcome = true;
     buildBanner();
     buildFab();
     watchFab();

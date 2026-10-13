@@ -327,10 +327,10 @@
   function infoHtml(id) {
     var r = infoFor(id); if (!r) return "";
     var tabs = UI.tabs.map(function (t, i) {
-      return '<button type="button" role="tab" class="si-tab" id="si-t' + i + '" aria-controls="si-p" aria-selected="' + (i === tab) + '" tabindex="' + (i === tab ? 0 : -1) + '" data-si-tab="' + i + '">' + esc(T(t)) + "</button>";
+      return '<button type="button" role="tab" class="si-tab" id="si-t' + i + "-" + id + '" aria-controls="si-p-' + id + '" aria-selected="' + (i === tab) + '" tabindex="' + (i === tab ? 0 : -1) + '" data-si-tab="' + i + '">' + esc(T(t)) + "</button>";
     }).join("");
     return '<section class="si" aria-label="' + esc(T(UI.more)) + '"><h4>' + esc(T(UI.more)) + '</h4><div class="si-tabs" role="tablist">' + tabs + '</div>' +
-      '<div class="si-p" id="si-p" role="tabpanel" aria-labelledby="si-t' + tab + '">' + panel(r) + "</div></section>";
+      '<div class="si-p" id="si-p-' + id + '" role="tabpanel" aria-labelledby="si-t' + tab + "-" + id + '">' + panel(r) + "</div></section>";
   }
   function panel(r) {
     if (tab === 3) return '<div class="si-faq">' + (r.f || []).map(function (x, i) {
@@ -394,19 +394,24 @@
   }
 
   // put the extra blocks into the step card each time the guide draws it
+  // inside a level (journey.js), each real step is its own small card; the level's Learn and Check
+  // already cover the Academy lesson and the quick questions, so only the extra info is added there
   function render(keepFocus) {
-    var card = document.querySelector(".jr-panel:not([hidden]) .jr-card:not(.jr-finished)");
-    if (!card) return;
+    var cards = document.querySelectorAll(".jr-panel:not([hidden]) .jr-card.jr-sub");
+    if (!cards.length) { var one = document.querySelector(".jr-panel:not([hidden]) .jr-card:not(.jr-finished):not(.jr-lvcard)"); cards = one ? [one] : []; }
+    Array.prototype.forEach.call(cards, function (card) { renderCard(card, keepFocus, card.classList.contains("jr-sub")); });
+    syncAcademy();
+  }
+  function renderCard(card, keepFocus, inLevel) {
     var cb = card.querySelector("[data-task]"); if (!cb) return;
     var id = cb.getAttribute("data-task").split(":")[0];
-    var old = card.querySelectorAll(".si, .qz"); old.forEach(function (n) { n.remove(); });
-    var at = card.querySelector(".jr-links-wrap") || card.querySelector(".jr-actions");
+    var old = card.querySelectorAll(".si, .qz, .ac-train"); old.forEach(function (n) { n.remove(); });
+    var at = card.querySelector(":scope > .jr-links-wrap") || card.querySelector(":scope > .jr-actions");
     var wrap = document.createElement("div");
-    wrap.innerHTML = infoHtml(id) + quizHtml(id);
+    wrap.innerHTML = infoHtml(id) + (inLevel ? "" : quizHtml(id));
     while (wrap.firstChild) card.insertBefore(wrap.firstChild, at);
-    var tr = trainHtml(id);
+    var tr = inLevel ? "" : trainHtml(id);
     if (tr) { var tw = document.createElement("div"); tw.innerHTML = tr; card.insertBefore(tw.firstChild, card.querySelector(".si") || at); }
-    syncAcademy();
     gloss(card.querySelector(".jr-cols")); gloss(card.querySelector(".si-p"));
     if (keepFocus) { var f = card.querySelector(".qz-res") || card.querySelector(".qz-q"); if (f) { f.setAttribute("tabindex", "-1"); f.focus({ preventScroll: true }); } }
   }
@@ -485,7 +490,7 @@
       tab = +t.getAttribute("data-si-tab");
       var sec = t.closest(".si"), id = sec && sec.closest(".jr-card").querySelector("[data-task]").getAttribute("data-task").split(":")[0];
       sec.querySelectorAll(".si-tab").forEach(function (b, i) { b.setAttribute("aria-selected", String(i === tab)); b.tabIndex = i === tab ? 0 : -1; });
-      var p = sec.querySelector(".si-p"); p.setAttribute("aria-labelledby", "si-t" + tab); p.innerHTML = panel(infoFor(id)); gloss(p);
+      var p = sec.querySelector(".si-p"); p.setAttribute("aria-labelledby", "si-t" + tab + "-" + id); p.innerHTML = panel(infoFor(id)); gloss(p);
       return;
     }
     var gb = e.target.closest && e.target.closest(".gl");

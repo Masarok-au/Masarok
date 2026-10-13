@@ -1,4 +1,4 @@
-/* Masarok guide: side quests across the site and a wardrobe of outfits that ranks unlock.
+/* Masarok guide: side quests across the site and a wardrobe of outfits that levels unlock.
    Quests are checked automatically from what the student does on the page.
    Loaded after game.js and journeymap.js. */
 (function () {
@@ -97,16 +97,16 @@
     wSub: ["Each new rank unlocks an outfit for your traveller. Pick one to wear across the guide.", "كل رتبة جديدة تفتح زيًّا لمسافرك. اختر ما يلبسه في أنحاء الدليل."],
     outfits: ["Outfits", "الأزياء"], accs: ["Accessories", "الإكسسوارات"], pick: ["Carry", "اختر"],
     accSub: ["Badges unlock these. Your traveller carries one at a time.", "تفتحها الأوسمة، ويحمل مسافرك واحدًا منها في كل مرة."], unlockB: ["Unlocks with the {b} badge", "يُفتح بوسام «{b}»"],
-    wear: ["Wear", "البس"], wearing: ["Wearing", "تلبسه الآن"], unlock: ["Unlocks at {r}", "يُفتح عند رتبة «{r}»"]
+    wear: ["Wear", "البس"], wearing: ["Wearing", "تلبسه الآن"], unlock: ["Unlocks at {r}", "يُفتح عند {r}"]
   };
 
   // ---------- wardrobe ----------
   var OUTFITS = [
     { id: "classic", r: 0, n: ["Thobe and red shemagh", "الثوب والشماغ الأحمر"] },
-    { id: "ghutra", r: 1, n: ["White ghutra", "الغترة البيضاء"] },
-    { id: "winter", r: 2, n: ["Winter thobe", "الثوب الشتوي"] },
-    { id: "bisht", r: 3, n: ["Black bisht", "البشت الأسود"] },
-    { id: "gold", r: 4, n: ["Golden bisht", "البشت الذهبي"] }
+    { id: "ghutra", r: 2, n: ["White ghutra", "الغترة البيضاء"] },
+    { id: "winter", r: 4, n: ["Winter thobe", "الثوب الشتوي"] },
+    { id: "bisht", r: 6, n: ["Black bisht", "البشت الأسود"] },
+    { id: "gold", r: 9, n: ["Golden bisht", "البشت الذهبي"] }
   ];
   var ACC = [
     { id: "none", b: null, n: ["Nothing", "بدون"] },
@@ -130,7 +130,7 @@
       return '<div class="wd-o' + (open ? "" : " is-locked") + (on ? " is-on" : "") + '" data-outfit="' + o.id + '">' +
         '<div class="wd-fig">' + fig + (open ? "" : '<span class="wd-lock" aria-hidden="true">🔒</span>') + "</div><b>" + esc(T(o.n)) + "</b>" +
         (open ? '<button type="button" class="gm-btn" data-wear="' + o.id + '"' + (on ? ' aria-pressed="true" disabled' : "") + ">" + esc(T(on ? UI.wearing : UI.wear)) + "</button>"
-          : "<small>" + esc(fmt(UI.unlock, { r: T(g.ranks[o.r].n) })) + "</small>") + "</div>";
+          : "<small>" + esc(fmt(UI.unlock, { r: (A ? "المستوى " : "Level ") + (o.r + 1) + " · " + T(g.ranks[o.r].n) })) + "</small>") + "</div>";
     }).join("");
     var a = accOn();
     var accs = ACC.map(function (x) {

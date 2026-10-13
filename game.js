@@ -11,12 +11,10 @@
   var J = function () { return window.MasarokJourney; };
 
   // ---------- ranks and badges ----------
-  var RANKS = [
-    { at: 0, n: ["Dreamer", "الحالم"] },
-    { at: 100, n: ["Explorer", "المستكشف"] },
-    { at: 300, n: ["Traveller", "الرحّال"] },
-    { at: 600, n: ["Voyager", "المسافر"] },
-    { at: 1000, n: ["Arrived", "الواصل"] }
+  // ranks are the journey's 10 levels (levels.js): your rank is the level you're on
+  var LVLS = window.MasarokLevels ? window.MasarokLevels.list : [];
+  var RANKS = LVLS.length ? LVLS.map(function (l) { return { n: l.name, i: l.icon }; }) : [
+    { n: ["Dreamer", "الحالم"], i: "star" }, { n: ["Explorer", "المستكشف"], i: "compass" }, { n: ["Traveller", "الرحّال"], i: "map" }, { n: ["Voyager", "المسافر"], i: "plane" }, { n: ["Arrived", "الواصل"], i: "summit" }
   ];
   var ICON = {
     star: '<path d="M12 3l2.6 5.6 6 .7-4.5 4 1.3 6-5.4-3.1-5.4 3.1 1.3-6L3.4 9.3l6-.7z" fill="currentColor" stroke="none"/>',
@@ -89,9 +87,10 @@
   };
   var UI = {
     pts: ["{n} pts", "{n} نقطة"], plus: ["+{n}", "+{n}"],
-    rank: ["Rank", "الرتبة"], next: ["{n} pts to {r}", "{n} نقطة حتى «{r}»"], top: ["Top rank reached", "وصلت لأعلى رتبة"],
+    rank: ["Level", "المستوى"], next: ["{s} of 3 stars on this level · next: {r}", "{s} من 3 نجوم في هذا المستوى · التالي: {r}"], top: ["All 10 levels cleared", "اجتزت المستويات العشرة كلها"],
+    lvName: ["Level {n} · {name}", "المستوى {n} · {name}"],
     badges: ["Badges {d}/{n}", "الأوسمة {d}/{n}"], shelfT: ["Your badges", "أوسمتك"], shelfSub: ["Earn them by moving through your journey. Each one is woven with Sadu, like the tents of the desert.", "تكسبها بالتقدم في رحلتك، وكل وسام منسوج بنقش السدو مثل بيوت الشعر في البادية."],
-    stepDone: ["Step complete!", "أنجزت الخطوة!"], gotPts: ["+{n} points", "+{n} نقطة"], rankUp: ["New rank", "رتبة جديدة"],
+    stepDone: ["Step complete!", "أنجزت الخطوة!"], gotPts: ["+{n} points", "+{n} نقطة"], rankUp: ["Level up!", "مستوى جديد!"],
     newBadge: ["Badge earned", "حصلت على وسام"], newBadges: ["Badges earned", "حصلت على أوسمة"], tip: ["Tip unlocked", "نصيحة جديدة"],
     cont: ["Keep going", "واصل"], share: ["Share my progress", "شارك تقدمي"], close: ["Close", "إغلاق"], locked: ["Locked", "مقفل"],
     shareLine: ["I'm {p}% of the way to studying {in}", "أنجزت {p}% من طريقي للدراسة {in}"],
@@ -111,7 +110,7 @@
   // ---------- progress → points ----------
   function ctx() {
     var j = J(), sk = streak(), c = { tasks: 0, steps: 0, skips: 0, n: 0, done: {}, reminders: 0, sections: g.sections.length, early: !!g.early, lv: null, quiz: 0, quests: 0, academy: 0, bonus: 0, weeks: g.weeks.length, streak: sk.n, best: sk.best, risk: sk.risk };
-    Object.keys(g.bonus).forEach(function (k) { var v = +g.bonus[k] || 0; c.bonus += v; if (k.indexOf("quiz:") === 0 && v > 0) c.quiz++; if (k.indexOf("quest:") === 0) c.quests++; if (k.indexOf("academy:") === 0) c.academy++; });
+    Object.keys(g.bonus).forEach(function (k) { var v = +g.bonus[k] || 0; c.bonus += v; if ((k.indexOf("quiz:") === 0 || k.indexOf("check:") === 0) && v > 0) c.quiz++; if (k.indexOf("quest:") === 0) c.quests++; if (k.indexOf("academy:") === 0) c.academy++; });
     try { c.reminders = (JSON.parse(localStorage.getItem("masarok-reminders") || "[]") || []).length; } catch (e) {}
     if (!j) return c;
     var st = j.state(), lv = j.level(); c.lv = lv;
@@ -158,7 +157,9 @@
     tEl.textContent = msg; tEl.classList.add("is-on");
     clearTimeout(tT); tT = setTimeout(function () { tEl.classList.remove("is-on"); }, 3600);
   }
-  function rankOf(p) { var r = 0; RANKS.forEach(function (x, i) { if (p >= x.at) r = i; }); return r; }
+  function levelNow() { var j = J(); return j && j.levelNow ? j.levelNow() : 1; }
+  function rankNow() { return Math.min(levelNow(), RANKS.length) - 1; }
+  function rankName(r) { return fmt(UI.lvName, { n: r + 1, name: T(RANKS[r].n) }); }
   function pct(c) { return c.n ? Math.round((c.steps + c.skips) / c.n * 100) : 0; }
 
   // ---------- Sadu medal (SVG) ----------
@@ -187,10 +188,10 @@
       '<path d="' + gold + '" stroke="#C99A5B" stroke-width="1.2"/>' + diamonds +
       '<circle cx="50" cy="50" r="32" fill="url(#' + id + 'g)" stroke="#C99A5B" stroke-width="1.6"/>' +
       '<g transform="translate(32 32) scale(1.5)" fill="none" stroke="#E2B66C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="color:#E2B66C">' + ICON[locked ? "lock" : icon] + "</g>" +
-      (opts.tier != null ? '<g fill="#E2B66C">' + [0, 1, 2, 3, 4].slice(0, opts.tier + 1).map(function (k, i, arr) { return '<circle cx="' + (50 + (i - (arr.length - 1) / 2) * 6) + '" cy="76" r="1.8"/>'; }).join("") + "</g>" : "") +
+      (opts.tier != null ? '<text x="50" y="79.5" text-anchor="middle" font-size="9.5" font-weight="700" font-family="IBM Plex Mono, monospace" fill="#E2B66C">' + (opts.tier + 1) + "</text>" : "") +
       "</svg>";
   }
-  function rankMedal(r) { return medal(["star", "compass", "map", "plane", "summit"][r], { tier: r }); }
+  function rankMedal(r) { return medal(RANKS[r] ? RANKS[r].i : "star", { tier: r }); }
 
   // ---------- styles ----------
   var css =
@@ -302,11 +303,13 @@
   // ---------- checking for new badges and ranks ----------
   function check(reason) {
     var prev = lastPts;
-    var c = ctx(), e = earned(c), p = points(c, e), r = rankOf(p);
+    var c = ctx(), e = earned(c), p = points(c, e), r = rankNow();
     var fresh = e.filter(function (id) { return g.seen.indexOf(id) < 0; });
     lastPts = p;
+    // ranks used to come from points; from version 2 they are levels, so start counting again quietly
+    if (g.init && g.rv !== 2) { g.rv = 2; g.rank = r; gsave(); }
     var up = g.rank != null && r > g.rank;
-    if (!g.init) { g.init = true; g.seen = e.slice(); g.rank = r; gsave(); paint(); return; }
+    if (!g.init) { g.init = true; g.rv = 2; g.seen = e.slice(); g.rank = r; gsave(); paint(); return; }
     g.seen = g.seen.concat(fresh); g.rank = Math.max(g.rank || 0, r); gsave();
     paint();
     if (reason && reason.type === "quiet") {
@@ -324,7 +327,7 @@
     var tip = !reason.skip && TIPS[reason.id];
     var h = '<h2 id="gm-h">' + esc(T(UI.stepDone)) + "</h2>" +
       '<div class="gm-pts">' + esc(fmt(UI.gotPts, { n: gained })) + "</div>";
-    if (newRank != null) h += '<div class="gm-sec"><h3>' + esc(T(UI.rankUp)) + '</h3><div class="gm-badge">' + rankMedal(newRank) + "<b>" + esc(T(RANKS[newRank].n)) + "</b></div>" + outfitLine(newRank) + "</div>";
+    if (newRank != null) h += '<div class="gm-sec"><h3>' + esc(T(UI.rankUp)) + '</h3><div class="gm-badge">' + rankMedal(newRank) + "<b>" + esc(rankName(newRank)) + "</b></div>" + outfitLine(newRank) + "</div>";
     if (fresh.length) h += '<div class="gm-sec"><h3>' + esc(T(fresh.length > 1 ? UI.newBadges : UI.newBadge)) + '</h3><div class="gm-row">' +
       fresh.map(function (id) { return badgeHtml(BADGES.filter(function (b) { return b.id === id; })[0], false); }).join("") + "</div></div>";
     if (tip) h += '<div class="gm-sec"><h3>' + esc(T(UI.tip)) + '</h3><p class="gm-tip">💡 ' + esc(T(tip)) + "</p></div>";
@@ -338,7 +341,7 @@
   function celebrateSmall(fresh, newRank) {
     confetti();
     var h = "";
-    if (newRank != null) h += '<h2 id="gm-h">' + esc(T(UI.rankUp)) + '</h2><div class="gm-badge">' + rankMedal(newRank) + "<b>" + esc(T(RANKS[newRank].n)) + "</b></div>" + outfitLine(newRank);
+    if (newRank != null) h += '<h2 id="gm-h">' + esc(T(UI.rankUp)) + '</h2><div class="gm-badge">' + rankMedal(newRank) + "<b>" + esc(rankName(newRank)) + "</b></div>" + outfitLine(newRank);
     if (fresh.length) h += (newRank != null ? '<div class="gm-sec">' : "") + '<h2 id="gm-h">' + esc(T(fresh.length > 1 ? UI.newBadges : UI.newBadge)) + '</h2><div class="gm-row">' +
       fresh.map(function (id) { return badgeHtml(BADGES.filter(function (b) { return b.id === id; })[0], false, true); }).join("") + "</div>" + (newRank != null ? "</div>" : "");
     h += '<div class="gm-foot"><button type="button" class="btn btn-primary" data-gm-close data-gm-cont>' + esc(T(UI.cont)) + '</button><button type="button" class="gm-btn" data-gm-shelf>' + esc(T(fmt(UI.badges, { d: g.seen.length, n: BADGES.length }))) + "</button></div>";
@@ -347,9 +350,10 @@
 
   // ---------- the rank bar in the guide and on the plan card ----------
   function rankInfo() {
-    var c = ctx(), e = earned(c), p = points(c, e), r = rankOf(p), nx = RANKS[r + 1];
-    var w = nx ? Math.round((p - RANKS[r].at) / (nx.at - RANKS[r].at) * 100) : 100;
-    return { c: c, e: e, p: p, r: r, nx: nx, w: w };
+    var c = ctx(), e = earned(c), p = points(c, e), now = levelNow(), r = rankNow(), fin = now > RANKS.length, nx = fin ? null : RANKS[r + 1];
+    var j = J(), L = j && j.levels ? j.levels() : [], stars = L[r] ? L[r].stars : 0;
+    var w = fin ? 100 : Math.round(stars / 3 * 100);
+    return { c: c, e: e, p: p, r: r, nx: nx, w: w, stars: stars, fin: fin };
   }
   function paint() {
     var k = rankInfo();
@@ -359,9 +363,9 @@
     if (meta && k.c.n) {
       if (!bar) { bar = document.createElement("div"); bar.className = "gm-bar"; meta.parentNode.insertBefore(bar, meta.nextSibling); }
       bar.innerHTML = rankMedal(k.r) +
-        '<div class="gm-rk"><b>' + esc(T(RANKS[k.r].n)) + " · " + esc(fmt(UI.pts, { n: k.p })) + "</b>" +
+        '<div class="gm-rk"><b>' + esc(rankName(k.r)) + " · " + esc(fmt(UI.pts, { n: k.p })) + "</b>" +
         '<div class="gm-xp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + k.w + '"><i style="width:' + k.w + '%"></i></div>' +
-        "<small>" + esc(k.nx ? fmt(UI.next, { n: k.nx.at - k.p, r: T(k.nx.n) }) : T(UI.top)) + "</small>" +
+        "<small>" + esc(k.fin ? T(UI.top) : fmt(UI.next, { s: k.stars, r: k.nx ? rankName(k.r + 1) : T(UI.top) })) + "</small>" +
         '<span class="gm-streak' + (k.c.risk ? " is-risk" : "") + '">' + esc(k.c.streak ? fmt(UI.streak, { n: k.c.streak, w: weeksAr(k.c.streak) }) + (k.c.risk ? " · " + T(UI.streakRisk) : "") : T(UI.streakNew)) + "</span></div>" +
         '<div class="gm-acts"><button type="button" class="gm-btn" data-gm-shelf>🏅 ' + esc(fmt(UI.badges, { d: k.e.length, n: BADGES.length })) + '</button>' +
         (window.MasarokQuests ? '<button type="button" class="gm-btn" data-gq>🎯 ' + esc(fmt(UI.quests, { d: k.c.quests, n: window.MasarokQuests.total() })) + '</button><button type="button" class="gm-btn" data-gw>🧥 ' + esc(T(UI.wardrobe)) + '</button>' : "") +
@@ -372,7 +376,7 @@
     if (plan && k.c.n) {
       var chip = plan.querySelector(".gm-chip");
       if (!chip) { chip = document.createElement("div"); chip.className = "gm-chip"; plan.insertBefore(chip, plan.firstChild); }
-      chip.innerHTML = rankMedal(k.r) + "<span><b>" + esc(T(RANKS[k.r].n)) + "</b> · " + esc(fmt(UI.pts, { n: k.p })) + " · 🏅 " + k.e.length + "/" + BADGES.length + (k.c.streak >= 2 ? " · 🔥 " + k.c.streak : "") + "</span>";
+      chip.innerHTML = rankMedal(k.r) + "<span><b>" + esc(rankName(k.r)) + "</b> · " + esc(fmt(UI.pts, { n: k.p })) + " · 🏅 " + k.e.length + "/" + BADGES.length + (k.c.streak >= 2 ? " · 🔥 " + k.c.streak : "") + "</span>";
     }
   }
 
@@ -432,7 +436,7 @@
     var badges = k.e.slice(-6);
     Promise.all([svgImg(rankMedal(k.r))].concat(badges.map(function (id) { var b = BADGES.filter(function (q) { return q.id === id; })[0]; return svgImg(medal(b.i)); }))).then(function (ims) {
       if (ims[0]) x.drawImage(ims[0], cx - 90, y + 40, 180, 220);
-      x.fillStyle = "#E2B66C"; x.font = "800 54px " + font; x.fillText(T(RANKS[k.r].n) + " · " + fmt(UI.pts, { n: k.p }), cx, y + 320);
+      x.fillStyle = "#E2B66C"; x.font = "800 54px " + font; x.fillText(rankName(k.r) + " · " + fmt(UI.pts, { n: k.p }), cx, y + 320);
       var bs = ims.slice(1).filter(Boolean), bw = 130, gap = 20, total = bs.length * bw + (bs.length - 1) * gap, bx = cx - total / 2;
       bs.forEach(function (im, i) { x.drawImage(im, bx + i * (bw + gap), y + 380, bw, bw * 1.22); });
       x.fillStyle = "#EEF2F7"; x.font = "700 52px " + font; x.direction = "ltr"; x.fillText("masarok.org", cx, H - 120);

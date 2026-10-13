@@ -35,6 +35,8 @@
   ALL_LESSONS.forEach(fit);
   C.lessons = ALL_LESSONS.filter(visible);
   // paid lessons arrive as title cards (locked: true) until MasarokAccount brings their content for owners
+  // opened from a level in Guide me (masarok.org/#journey): the finish screen leads back there
+  var FROM_JOURNEY = /[?&]from=journey\b/.test(location.search);
   var ACCESS = "open"; // "open" | "off" | "signed_out" | "not_owned" | "offline"
   function hasLocked() { return ALL_LESSONS.some(function (l) { return l.locked; }); }
   function unlock(full) {
@@ -156,6 +158,7 @@
     bkHint: ["Your progress is saved on this device only.", "يُحفظ تقدمك على هذا الجهاز فقط."], bkGo: ["Move it to another phone", "انقله إلى جوال آخر"],
     acHint: ["Sign in to keep your progress on every device.", "سجّل الدخول لتحتفظ بتقدمك على كل أجهزتك."], acGo: ["Sign in", "تسجيل الدخول"],
     acIn: ["Your progress saves to your account ({e}).", "يُحفظ تقدمك في حسابك ({e})."],
+    backJourney: ["Back to your journey: claim your star", "عُد إلى رحلتك واستلم نجمتك"],
     lockTag: ["Full course", "الدورة الكاملة"], lockedT: ["Part of the full course", "ضمن الدورة الكاملة"],
     lockBanner: ["{f} free lessons to try. The other {p} are in the full course.", "{f} دروس مجانية للتجربة، والدروس الـ{p} الأخرى ضمن الدورة الكاملة."],
     lockSignedOut: ["This lesson is in the full course. Already bought it? Sign in with the same email to open it.", "هذا الدرس ضمن الدورة الكاملة. هل اشتريتها؟ سجّل الدخول بالبريد نفسه لتفتحه."],
@@ -412,7 +415,7 @@
     app.innerHTML = '<header class="cs-head"><a class="cs-back" href="#">' + backArrow() + esc(T(UI.back)) + "</a>" + arToggle() + "</header>" +
       '<section class="lp-done"><div class="lp-medal" aria-hidden="true">' + l.icon + '</div><h2 tabindex="-1">' + esc(T(UI.lessonDone)) + "</h2><p class=\"lp-dt\">" + esc(T(l.t)) + "</p>" +
       (t ? '<p class="lp-sc">' + esc(fmt(UI.score, { c: c, t: t })) + "</p>" : "") + '<p class="lp-pts">🏅 ' + esc(T(UI.guidePts)) + "</p>" +
-      '<div class="ac-cta">' + (nextId ? '<a class="btn btn-primary" href="#/l/' + nextId + '">' + esc(T(UI.nextLesson)) + ": " + esc(T(L(nextId).t)) + "</a>" : "") +
+      '<div class="ac-cta">' + (FROM_JOURNEY ? '<a class="btn btn-primary" href="' + base + '#journey">↩ ' + esc(T(UI.backJourney)) + "</a>" : "") + (nextId ? '<a class="btn ' + (FROM_JOURNEY ? "btn-ghost" : "btn-primary") + '" href="#/l/' + nextId + '">' + esc(T(UI.nextLesson)) + ": " + esc(T(L(nextId).t)) + "</a>" : "") +
       '<a class="btn btn-ghost" href="#">' + esc(T(UI.toCourse)) + "</a></div></section>";
     $(".lp-done h2").focus();
   }

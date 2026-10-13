@@ -19,16 +19,17 @@
     eyebrow: ["Your journey map", "خريطة رحلتك"],
     h: ["From home to {uni}", "من البيت إلى {uni}"],
     hAny: ["From home to campus", "من البيت إلى الجامعة"],
-    sub: ["{d} of {n} stops done", "المحطات المنجزة: {d} من {n}"],
-    back: ["Back to my step", "العودة إلى خطوتي"],
+    sub: ["{d} of {n} levels cleared", "اجتزت {d} من {n} مستويات"],
+    back: ["Back to my level", "العودة إلى مستواي"],
     home: ["Home", "البيت"], homeSub: ["Saudi Arabia", "المملكة العربية السعودية"],
     campus: ["Your campus", "جامعتك"],
-    stop: ["Stop {n}", "المحطة {n}"],
-    here: ["You are here", "أنت هنا"], done: ["Done", "تمت"], skip: ["Skipped", "تخطّيتها"], locked: ["Locked", "مقفلة"],
+    stop: ["Level {n}", "المستوى {n}"],
+    here: ["You are here", "أنت هنا"], done: ["Cleared", "اجتزته"], skip: ["Skipped", "تخطّيتها"], locked: ["Locked", "مقفل"], openSt: ["Open", "مفتوح"],
+    learnAt: ["Learn: {t}", "تعلّم: {t}"],
     earned: ["Badge earned: {b}", "حصلت على وسام: {b}"], unlocks: ["Unlocks: {b}", "تفتح وسام: {b}"],
     arrived: ["You made it. Welcome to campus!", "وصلت! أهلًا بك في جامعتك"],
     part: ["Part {n}", "المرحلة {n}"],
-    hint: ["Tap a stop to open it. Locked stops open one by one as you finish the stop before.", "اضغط على أي محطة لفتحها. المحطات المقفلة تُفتح واحدة تلو الأخرى كلما أنهيت المحطة التي قبلها."],
+    hint: ["Each level has 3 stars: Learn, Check and Do. Tap a level to open it. Clearing a level opens the next one.", "لكل مستوى 3 نجوم: تعلّم واختبر ونفّذ. اضغط على أي مستوى لفتحه، واجتياز المستوى يفتح الذي بعده."],
     label: ["{stop}: {title}. {state}", "{stop}: {title}. {state}"]
   };
   function tx(k) { return T[k][A]; }
@@ -41,10 +42,10 @@
     { n: ["Pack your bags", "تجهّز للسفر"], ids: ["visa", "housing"] },
     { n: ["Arrive", "الوصول"], ids: ["arrive", "progressF"] }
   ];
-  function chapterOf(id) { for (var c = CH.length - 1; c > 0; c--) if (CH[c].ids.indexOf(id) > -1) return c; return 0; }
+  function chapterOf(n) { var M = window.MasarokLevels; return M ? M.list[n - 1].part : 0; }
 
   // the badge each stop unlocks (see game.js)
-  var BADGE_AT = { englishF: "english", englishB: "english", englishPg: "english", offerF: "offer", offer: "offer", qubool: "nominated", safeer: "guarantee", visa: "visa", housing: "home", arrive: "landed" };
+  var BADGE_AT = { 3: "english", 5: "offer", 6: "nominated", 7: "guarantee", 8: "visa", 9: "home", 10: "landed" };
   function badge(id) {
     var G = window.MasarokGame, b = BADGE_AT[id];
     if (!G || !b) return null;
@@ -74,9 +75,9 @@
         chapters.push({ c: c, y: y + 22 * f });
         y += 46 * f; last = c;
       }
-      var sy = Math.round(y + 44 * f);
+      var sy = Math.round(y + 56 * f);
       pts.push({ x: i % 2 === 0 ? 138 : 62, y: sy, id: id });
-      y = sy + 48 * f;
+      y = sy + 76 * f;
     });
     var end = { x: 100, y: Math.round(y + 118) };
     return { pts: pts, chapters: chapters, plane: plane, end: end, H: end.y + 40 };
@@ -191,15 +192,14 @@
     var cn = C && v.cc && C.name ? C.name(v.cc) : "";
     return { uni: v.hasUni && v.v ? v.v.short : "", city: v.hasUni && v.v ? v.v.city : "", country: cn };
   }
-  function stateOf(st, lv, id, i, cur) {
-    var d = st.done && st.done[lv] ? st.done[lv][id] : null;
-    return d === "done" ? "done" : d === "skip" ? "skip" : i === cur ? "here" : "locked";
-  }
+  function stateOf(L, i, cur) { var x = L[i]; return x.cleared ? "done" : i === cur ? "here" : x.open ? "open" : "locked"; }
+  function starRow(k) { var h = ""; for (var i = 0; i < 3; i++) h += i < k ? "★" : "☆"; return '<span class="jm-stars" aria-hidden="true">' + h + "</span>"; }
 
   function build() {
-    var j = J(), lv = j.level(), ids = j.steps(lv), n = ids.length, st = j.state(), cur = j.current(lv);
+    var j = J(), lv = j.level(), LS = j.levels(), n = LS.length, cur = j.levelNow() - 1;
+    var ids = LS.map(function (x) { return x.n; });
     var fin = cur >= n, d = 0;
-    ids.forEach(function (id) { if (j.isDone(lv, id)) d++; });
+    LS.forEach(function (x) { if (x.cleared) d++; });
     var sheet = view.closest(".jr-sheet"), mw = Math.min(480, (sheet ? sheet.clientWidth : window.innerWidth) - 28);
     var g = layout(ids, Math.max(1, Math.min(1.6, 1.3 / (mw / W)))), H = g.H, me = info();
     var all = [DOOR].concat(g.pts, [g.end]);
@@ -227,8 +227,9 @@
     h += '<div class="jm-lbl jm-place" style="top:' + (118 / H * 100).toFixed(3) + '%"><b>' + esc(tx("home")) + "</b><small>" + esc(tx("homeSub")) + "</small></div>";
     // stops
     g.pts.forEach(function (p, i) {
-      var s = stateOf(st, lv, p.id, i, cur), title = j.title(p.id), b = badge(p.id);
-      var stTxt = { done: tx("done"), skip: tx("skip"), here: tx("here"), locked: tx("locked") }[s];
+      var s = stateOf(LS, i, cur), title = LS[i].goal, b = badge(p.id);
+      var stTxt = { done: tx("done"), skip: tx("skip"), here: tx("here"), locked: tx("locked"), open: tx("openSt") }[s];
+      var M = window.MasarokLevels, les = M ? M.learn(p.id) : null;
       var lock = s === "locked" ? ' aria-disabled="true"' : "";
       var top = (p.y / H * 100).toFixed(3) + "%";
       h += '<button type="button" class="jm-stop is-' + s + '" data-step="' + i + '" data-i="' + i + '" tabindex="-1" aria-hidden="true"' + lock + ' style="left:' + L(p.x) + "; top:" + top + '">' +
@@ -240,8 +241,9 @@
       }
       h += '<button type="button" class="jm-lbl is-' + s + '" data-step="' + i + '"' + lock + ' style="top:' + top + '"' +
         ' aria-label="' + esc(fmt(tx("label"), { stop: fmt(tx("stop"), { n: i + 1 }), title: title, state: stTxt })) + '"' + (s === "here" ? ' aria-current="step"' : "") + ">" +
-        '<span class="jm-k">' + esc(fmt(tx("stop"), { n: i + 1 })) + " · " + esc(stTxt) + "</span>" +
-        "<b>" + esc(title) + "</b>" + bl + "</button>";
+        '<span class="jm-k">' + esc(fmt(tx("stop"), { n: i + 1 })) + " · " + esc(LS[i].name) + " · " + esc(stTxt) + (s !== "locked" ? " " + starRow(LS[i].stars) : "") + "</span>" +
+        "<b>" + esc(title) + "</b>" +
+        (les ? '<span class="jm-learn">' + les.icon + " " + esc(les.t[A]) + "</span>" : "") + bl + "</button>";
     });
     // campus
     var summit = window.MasarokGame ? medal("summit", !fin) : "";
