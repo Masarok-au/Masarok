@@ -23,8 +23,11 @@
 <meta name="apple-mobile-web-app-title" content="Masarok">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@500&display=swap">
 <link rel="stylesheet" href="/academy.css">
+<link rel="stylesheet" href="/journey.css">
+<link rel="stylesheet" href="/ui.css">
+<script src="/icons.js"></script>
 </head>
 <body>
 <div class="stars" aria-hidden="true"></div>
@@ -44,7 +47,6 @@
         <p class="eyebrow">Masarok Academy</p>
         <h1 id="ac-h">Don't just read the steps. <em>Train for them.</em></h1>
         <p class="ac-lede">Short, hands-on courses for every step of your journey: practise IELTS, draft your application essay, rehearse your visa interview and learn the skills you'll need on campus. Free, on your phone, in English with Arabic help.</p>
-        <span class="ac-status"><i aria-hidden="true"></i> All five courses are open, with a free coach for your writing and speaking.</span>
         <div class="ac-cta">
           <a class="btn btn-primary" href="/academy/ielts/">Start the IELTS course</a>
           <a class="btn btn-ghost" href="#tracks">See the courses</a>
@@ -83,7 +85,7 @@
       <p class="ac-intro">Each track belongs to steps in Guide me. What you see changes with your country, degree and university.</p>
       <div class="tracks">
         <article class="track is-first">
-          <div class="track-top"><span class="track-ic" aria-hidden="true">🗣️</span><span class="chip is-first">Open now</span></div>
+          <div class="track-top"><span class="track-ic" aria-hidden="true"><svg class="mi" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h11v8H9l-4 3v-3H4z"/><path d="M15 9h5v8h-1v3l-4-3h-4v-3"/></svg></span></div>
           <h3>IELTS Academic</h3>
           <p>From a placement test to a full mock test, with a daily plan built around your test date and target band.</p>
           <ul>
@@ -97,7 +99,7 @@
           <a class="btn btn-primary track-go" href="/academy/ielts/">Start the course</a>
         </article>
         <article class="track">
-          <div class="track-top"><span class="track-ic" aria-hidden="true">✍️</span><span class="chip is-first">Open now</span></div>
+          <div class="track-top"><span class="track-ic" aria-hidden="true"><svg class="mi" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19z"/><path d="M14.5 6.5l3 3"/></svg></span></div>
           <h3>Application writing</h3>
           <p>A writing coach for what your country actually asks for, from first ideas to a final draft.</p>
           <p class="for-you" data-for-you hidden></p>
@@ -108,10 +110,10 @@
             <li>Research proposal and supervisor email for postgraduates</li>
           </ul>
           <div class="track-foot"><span><b>13 lessons, filtered for your country</b></span><span>For the step “Get your offer”</span></div>
-          <a class="btn btn-primary track-go" href="/academy/writing/">Start the course</a>
+          <a class="btn btn-ghost track-go" href="/academy/writing/">Start the course</a>
         </article>
         <article class="track">
-          <div class="track-top"><span class="track-ic" aria-hidden="true">📄</span><span class="chip is-first">Open now</span></div>
+          <div class="track-top"><span class="track-ic" aria-hidden="true"><svg class="mi" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg></span></div>
           <h3>Scholarship and paperwork</h3>
           <p>Understand the tracks and rules, and learn to spot the mistakes that delay students.</p>
           <ul>
@@ -121,10 +123,10 @@
             <li>A month on your allowance: the budget simulator</li>
           </ul>
           <div class="track-foot"><span><b>6 lessons, including a budget game</b></span><span>For the Qubool and Safeer steps</span></div>
-          <a class="btn btn-primary track-go" href="/academy/scholarship/">Start the course</a>
+          <a class="btn btn-ghost track-go" href="/academy/scholarship/">Start the course</a>
         </article>
         <article class="track">
-          <div class="track-top"><span class="track-ic" aria-hidden="true">🛂</span><span class="chip is-first">Open now</span></div>
+          <div class="track-top"><span class="track-ic" aria-hidden="true"><svg class="mi" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5.5" y="3" width="13" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M9 16.5h6"/></svg></span></div>
           <h3>Visa practice</h3>
           <p>Rehearse until you're calm: the questions, the documents and the rules for your country.</p>
           <ul>
@@ -134,10 +136,10 @@
             <li>At the border: a choose-your-path airport story</li>
           </ul>
           <div class="track-foot"><span><b>5 to 6 lessons for your country</b></span><span>For the visa step</span></div>
-          <a class="btn btn-primary track-go" href="/academy/visa/">Start the course</a>
+          <a class="btn btn-ghost track-go" href="/academy/visa/">Start the course</a>
         </article>
         <article class="track">
-          <div class="track-top"><span class="track-ic" aria-hidden="true">🏙️</span><span class="chip is-first">Open now</span></div>
+          <div class="track-top"><span class="track-ic" aria-hidden="true"><svg class="mi" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 21h18M5 21V10h5v11M10 21V5h6v16M16 21v-8h3v8"/><path d="M12.5 8h1M12.5 11h1M12.5 14h1M7 13h1M7 16h1"/></svg></span></div>
           <h3>Life and university skills</h3>
           <p>The things nobody teaches you before you land, practised as real situations.</p>
           <ul>
@@ -147,21 +149,25 @@
             <li>Your first week, and local words for your country</li>
           </ul>
           <div class="track-foot"><span><b>10 lessons for your country</b></span><span>For the housing and arrival steps</span></div>
-          <a class="btn btn-primary track-go" href="/academy/life/">Start the course</a>
+          <a class="btn btn-ghost track-go" href="/academy/life/">Start the course</a>
         </article>
       </div>
     </section>
 
-    <section class="ac-sec" aria-labelledby="road-h">
-      <p class="eyebrow">The roadmap</p>
-      <h2 id="road-h">How we're building it</h2>
-      <ol class="road">
-        <li class="is-live"><span class="n">0</span><div><b>Foundations</b><small>This page, and a menu that links every part of Masarok.</small></div><span class="chip is-live">Live</span></li>
-        <li class="is-live"><span class="n">1</span><div><b>IELTS pilot</b><small>Placement test, the first reading lessons, the essay builder with model answers, the speaking recorder and the first vocabulary deck.</small></div><span class="chip is-live">Live</span></li>
-        <li class="is-live"><span class="n">2</span><div><b>Full IELTS and application writing</b><small>All IELTS lessons, two mock tests, and the writing coach for every country.</small></div><span class="chip is-live">Live</span></li>
-        <li class="is-live"><span class="n">3</span><div><b>Scholarship, visa and life skills</b><small>Three new courses, and a “Train for this step” box on the Guide me steps.</small></div><span class="chip is-live">Live</span></li>
-        <li class="is-live"><span class="n">4</span><div><b>The coach</b><small>A free coach checks your writing and speaking on your device, and the <a href="/academy/coach/">AI coach</a> adds detailed feedback as a paid add-on.</small></div><span class="chip is-live">Live</span></li>
-      </ol>
+    <section class="ac-sec climb" id="climb" aria-labelledby="climb-h" data-climb>
+      <div class="climb-pin">
+        <div class="climb-copy">
+          <p class="eyebrow">Your 10 levels</p>
+          <h2 id="climb-h">Every lesson moves you up a level.</h2>
+          <p class="ac-intro">Each level in Guide me pairs one Academy lesson with one real step of your journey. Finish them and you climb, from Dreamer to Arrived.</p>
+          <ol class="climb-names"><li><small>Level 1</small>Dreamer</li><li><small>Level 2</small>Explorer</li><li><small>Level 3</small>Speaker</li><li><small>Level 4</small>Prepared</li><li><small>Level 5</small>Applicant</li><li><small>Level 6</small>Nominee</li><li><small>Level 7</small>Backed</li><li><small>Level 8</small>Visa holder</li><li><small>Level 9</small>Packed</li><li><small>Level 10</small>Arrived</li></ol>
+          <a class="btn btn-ghost" href="/#journey">Open Guide me</a>
+        </div>
+        <div class="climb-stage" aria-hidden="true">
+          <ol class="climb-steps"><li style="--h:18.0%"><span>1</span></li><li style="--h:26.2%"><span>2</span></li><li style="--h:34.4%"><span>3</span></li><li style="--h:42.6%"><span>4</span></li><li style="--h:50.8%"><span>5</span></li><li style="--h:59.0%"><span>6</span></li><li style="--h:67.2%"><span>7</span></li><li style="--h:75.4%"><span>8</span></li><li style="--h:83.6%"><span>9</span></li><li style="--h:91.8%"><span>10</span></li></ol>
+          <div class="climb-me"><svg class="jr-fig " viewBox="0 0 64 112" aria-hidden="true" focusable="false"><rect x="43" y="44" width="11" height="28" rx="4" fill="#173252"/><line x1="51" y1="48" x2="51" y2="60" stroke="#E2B66C" stroke-width="1.6" stroke-linecap="round"/><circle cx="51" cy="61.5" r="1.6" fill="#E2B66C"/><g class="jr-acc-sadu"><rect x="44.5" y="43" width="14" height="30" rx="4.5" fill="#2A1612" stroke="#C99A5B" stroke-width=".8"/><path d="M45.2 48 L48.5 45 L51.6 48 L54.8 45 L57.8 47.6 V49.6 H45.2 Z M45.2 68.2 L48.5 71.2 L51.6 68.2 L54.8 71.2 L57.8 68.6 V66.4 H45.2 Z" fill="#9C2A22"/><path d="M51.6 52 l2.8 2.8 -2.8 2.8 -2.8 -2.8z M51.6 59.2 l2.8 2.8 -2.8 2.8 -2.8 -2.8z" fill="#F3EBDD"/><path d="M45.4 50.6 H57.6 M45.4 65.4 H57.6" stroke="#C99A5B" stroke-width=".9"/></g><g class="jr-feet"><ellipse class="jr-foot-l" cx="25" cy="104" rx="5.5" ry="2.8" fill="#5A3C1E"/><ellipse class="jr-foot-r" cx="39" cy="104" rx="5.5" ry="2.8" fill="#5A3C1E"/></g><g class="jr-av-m"><path class="jr-c-thobe" d="M24 35 Q32 33 40 35 L46 40 L50.5 102 L13.5 102 L18 40 Z" fill="#F6F3EC" stroke="#D9D2C2" stroke-width=".9"/><line x1="32" y1="37" x2="32" y2="52" stroke="#D9D2C2" stroke-width="1"/><circle cx="32" cy="42" r=".9" fill="#D9D2C2"/><circle cx="32" cy="47" r=".9" fill="#D9D2C2"/></g><g class="jr-av-f"><path class="jr-c-abaya" d="M24 35 Q32 33 40 35 L46.5 40 L52.5 103 L11.5 103 L17.5 40 Z" stroke-width=".9"/><path class="jr-c-abaya-se" d="M32 36 V103" stroke-width=".9" fill="none"/><g class="jr-trim"><path d="M30.4 36 L29.4 103 M33.6 36 L34.6 103 M12.2 99.5 H51.8" stroke="#E2B66C" stroke-width="1.3" fill="none"/></g></g><line x1="21" y1="40" x2="23" y2="58" stroke="#173252" stroke-width="2.4" stroke-linecap="round"/><line x1="43" y1="40" x2="41" y2="58" stroke="#173252" stroke-width="2.4" stroke-linecap="round"/><g class="jr-av-m"><g class="jr-bisht"><path class="jr-c-bisht" d="M17.6 39.6 L24 35 L28.6 37.2 L27.4 103 L12.4 103 Z"/><path class="jr-c-bisht" d="M46.4 39.6 L40 35 L35.4 37.2 L36.6 103 L51.6 103 Z"/><path d="M28.6 37.2 L27.4 103 M35.4 37.2 L36.6 103" stroke="#E2B66C" stroke-width="1.7"/><path d="M24 35 L28.6 37.2 M40 35 L35.4 37.2" stroke="#E2B66C" stroke-width="1.7" stroke-linecap="round"/></g></g><g class="jr-arm jr-arm-l" style="transform-origin:19px 42px"><g class="jr-av-m"><line x1="19" y1="42" x2="16" y2="70" class="jr-c-sleeve-e" stroke="#D9D2C2" stroke-width="8.6" stroke-linecap="round"/><line x1="19" y1="42" x2="16" y2="70" class="jr-c-sleeve" stroke="#F6F3EC" stroke-width="7" stroke-linecap="round"/></g><g class="jr-av-f"><line x1="19" y1="42" x2="16" y2="70" class="jr-c-abaya-se" stroke-width="9" stroke-linecap="round"/><line x1="19" y1="42" x2="16" y2="70" class="jr-c-abaya-s" stroke-width="7.4" stroke-linecap="round"/></g><g class="jr-acc-dallah" transform="translate(-1.5 -4)"><path d="M10.6 80.6 Q7 79.4 6 75.2" fill="none" stroke="#C99A5B" stroke-width="1.7" stroke-linecap="round"/><path d="M17.6 80 Q21.2 80.6 20.6 84.4 Q20.2 86.6 18.4 86.8" fill="none" stroke="#9C7440" stroke-width="1.4" stroke-linecap="round"/><path d="M9.6 88 Q8.6 82 11.2 78.4 L16.8 78.4 Q19.4 82 18.4 88 Z" fill="#C99A5B"/><path d="M11.4 78.4 L12.4 75.4 L15.6 75.4 L16.6 78.4 Z" fill="#B0844D"/><circle cx="14" cy="74.3" r="1.1" fill="#E2B66C"/><path d="M10 83 H18" stroke="#9C7440" stroke-width=".8"/><rect x="9.2" y="87.4" width="9.6" height="1.8" rx=".9" fill="#9C7440"/></g><circle class="jr-c-skin" cx="16" cy="72.5" r="3.6" fill="#C08A5A"/></g><g class="jr-arm jr-arm-r" style="transform-origin:45px 42px"><g class="jr-av-m"><line x1="45" y1="42" x2="48" y2="70" class="jr-c-sleeve-e" stroke="#D9D2C2" stroke-width="8.6" stroke-linecap="round"/><line x1="45" y1="42" x2="48" y2="70" class="jr-c-sleeve" stroke="#F6F3EC" stroke-width="7" stroke-linecap="round"/></g><g class="jr-av-f"><line x1="45" y1="42" x2="48" y2="70" class="jr-c-abaya-se" stroke-width="9" stroke-linecap="round"/><line x1="45" y1="42" x2="48" y2="70" class="jr-c-abaya-s" stroke-width="7.4" stroke-linecap="round"/></g><circle class="jr-c-skin" cx="48" cy="72.5" r="3.6" fill="#C08A5A"/><g class="jr-acc-falcon" transform="translate(48 72.5) scale(1.55) translate(-48 -72.5)"><path d="M46.4 69.6 L43.6 76 L47.8 72.4 Z" fill="#4E351E"/><path d="M45.6 70.6 Q44.4 64 48.6 60.4 Q52.6 58.4 54.2 62 Q55.2 66.6 51.6 70.6 Z" fill="#6B4A2B"/><path d="M48.8 61.6 Q51.6 61 52.5 64 Q52.7 67.6 50.5 70 Q48.8 66 48.8 61.6 Z" fill="#E9DCC2"/><path d="M49.4 64 l1 .6 M49.6 66.4 l1 .6" stroke="#9C7440" stroke-width=".6"/><circle cx="52.6" cy="58.4" r="3" fill="#6B4A2B"/><path d="M49.7 58.8 Q49.9 55 52.6 55.1 Q55.5 55.3 55.7 58.5 Q53 57.5 49.7 58.8 Z" fill="#9C2A22"/><circle cx="52.6" cy="54.7" r=".8" fill="#E2B66C"/><path d="M55.4 58.6 L57.6 59.4 L55.4 60.3 Z" fill="#E2B66C"/><path d="M47.4 70.6 v1.6 M49.4 70.8 v1.6" stroke="#E2B66C" stroke-width=".8" stroke-linecap="round"/></g></g><g class="jr-av-m"><path class="jr-c-shem" d="M18.5 16 Q32 2 45.5 16 L48.5 41 Q40.5 34.5 32 34.5 Q23.5 34.5 15.5 41 Z" fill="#C8102E"/><path class="jr-c-dots" d="M17.5 24 L16 39 M46.5 24 L48 39 M20 18 L19 30 M44 18 L45 30" stroke="#fff" stroke-width=".9" stroke-dasharray="1.6 1.8" opacity=".85"/><ellipse class="jr-c-skin" cx="32" cy="22" rx="8.6" ry="9.6" fill="#C08A5A"/><path class="jr-c-shem" d="M21 18.5 Q32 7 43 18.5 Q32 13.5 21 18.5 Z" fill="#C8102E"/><path class="jr-c-dots" d="M22 17 Q32 9 42 17" fill="none" stroke="#fff" stroke-width=".9" stroke-dasharray="1.6 1.8" opacity=".85"/><ellipse cx="32" cy="12.6" rx="11.2" ry="2.6" fill="none" stroke="#14140F" stroke-width="2.2"/></g><g class="jr-av-f"><path class="jr-c-hijab" d="M19.2 20 Q19.2 6 32 6 Q44.8 6 44.8 20 L47.6 41 Q40 35.4 32 35.4 Q24 35.4 16.4 41 Z"/><path class="jr-c-hijab-e" d="M19.6 22 Q19.4 32 24 36 M44.4 22 Q44.6 32 40 36" fill="none" stroke-width="1.1"/><ellipse class="jr-c-skin" cx="32" cy="22.6" rx="8" ry="9.2" fill="#C08A5A"/><path class="jr-c-hijab" d="M23.4 19 Q24 10.4 32 10.2 Q40 10.4 40.6 19 Q37.4 15.2 32 15 Q26.6 15.2 23.4 19 Z"/><path class="jr-c-hijab-e" d="M23.6 19.4 Q22.6 27.6 26 32.4 M40.4 19.4 Q41.4 27.6 38 32.4" fill="none" stroke-width="1.2"/></g><circle cx="28.6" cy="22.6" r="1.25" fill="#14140F"/><circle cx="35.4" cy="22.6" r="1.25" fill="#14140F"/><path d="M28.6 26.8 Q32 29.6 35.4 26.8" fill="none" stroke="#14140F" stroke-width="1.25" stroke-linecap="round"/><circle cx="26.4" cy="26" r="1.6" fill="#E08A6E" opacity=".45"/><circle cx="37.6" cy="26" r="1.6" fill="#E08A6E" opacity=".45"/></svg></div>
+        </div>
+      </div>
     </section>
 
     <section class="ac-sec" aria-label="Help shape the Academy">

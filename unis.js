@@ -800,12 +800,12 @@
     st.id = "flight-css";
     st.textContent =
       ".flight{position:fixed; inset:0; z-index:120; pointer-events:none; overflow:hidden}" +
-      ".flight-veil{position:absolute; inset:0; background:radial-gradient(120% 90% at 70% 10%, #173252, #0B1626 70%); opacity:0; transition:opacity .5s ease}" +
+      ".flight-veil{position:absolute; inset:0; background:radial-gradient(120% 90% at 70% 10%, #173252, #0B1626 70%); opacity:0; transition:opacity .5s var(--spring, ease)}" +
       ".flight-trail{position:absolute; inset:0; width:100%; height:100%}" +
       ".flight-plane{position:absolute; left:0; top:0; will-change:transform; filter:drop-shadow(0 8px 14px rgba(0,0,0,.35))}" +
       ".flight-plane.rtl svg{transform:scaleX(-1)}" +
-      ".flight-label{position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); color:#E2B66C; font-family:var(--f-mono, monospace); letter-spacing:.14em; text-transform:uppercase; font-size:.85rem; opacity:0; transition:opacity .4s ease; white-space:nowrap}" +
-      "html[lang=ar] .flight-label{letter-spacing:0; font-family:var(--f-body, sans-serif); font-size:1rem}";
+      ".flight-label{position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); color:#E2B66C; font-family:var(--f-mono, monospace); font-size:.8125rem; opacity:0; transition:opacity .4s var(--spring, ease); white-space:nowrap}" +
+      "html[lang=ar] .flight-label{letter-spacing:0; font-family:var(--f-body, sans-serif); font-size:1.0625rem}";
     document.head.appendChild(st);
   }
 

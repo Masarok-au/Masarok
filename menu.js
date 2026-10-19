@@ -3,6 +3,7 @@
    Shared by the guide pages and the Academy pages, in English and Arabic. */
 (function () {
   "use strict";
+  function IC(x, c) { return window.MasarokIcon ? window.MasarokIcon.from(x, c) : (x || ""); }
 
   var AR = (document.documentElement.lang || "en").slice(0, 2) === "ar";
   var A = AR ? 1 : 0;
@@ -38,13 +39,13 @@
 
   // ---------- styles ----------
   var css =
-    ".mn-btn{display:inline-flex; align-items:center; gap:8px; font:inherit; font-size:.93rem; font-weight:700; color:var(--night-ink, #EEF2F7); background:rgba(226,182,108,.1); border:1px solid rgba(226,182,108,.6); border-radius:999px; padding:4px 14px 4px 12px; cursor:pointer}" +
+    ".mn-btn{display:inline-flex; align-items:center; gap:8px; font:inherit; font-size:.9375rem; font-weight:700; color:var(--night-ink, #EEF2F7); background:rgba(226,182,108,.1); border:1px solid rgba(226,182,108,.6); border-radius:999px; padding:4px 14px 4px 12px; cursor:pointer}" +
     ".mn-btn:hover{background:rgba(226,182,108,.22)}" +
     ".mn-btn:focus-visible{outline:3px solid var(--gold, #E2B66C); outline-offset:2px}" +
     ".mn-btn svg{width:16px; height:16px}" +
     // header layout: brand, then the page links, then Menu; on phones Menu sits beside the brand
     ".top > .brand{order:0} .top > nav{order:2; margin-inline-start:auto} .top > .mn-btn{order:3}" +
-    "@media (max-width:760px){ .top > .mn-btn{order:1; margin-inline-start:auto} .top > nav{order:2; width:100%; margin-inline-start:0} }" +
+    "@media (max-width:720px){ .top > nav{order:1; margin-inline-start:auto} .top > .mn-btn{order:2} }" +
     ".mn{position:fixed; inset:0; z-index:160}" +
     ".mn[hidden]{display:none}" +
     ".mn-bg{position:absolute; inset:0; background:rgba(5,10,18,.62); backdrop-filter:blur(3px); animation:mnFade .2s ease}" +
@@ -54,34 +55,34 @@
     "[dir='rtl'] .mn-sheet{animation-name:mnInR}" +
     ".mn-sheet > .sadu{flex:none; margin-top:env(safe-area-inset-top, 0px)}" +
     ".mn-head{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:16px 18px 6px}" +
-    ".mn-brand{font-family:var(--f-display); font-weight:800; font-size:1.2rem; color:var(--night-ink, #EEF2F7); text-decoration:none; display:flex; gap:8px; align-items:baseline}" +
-    ".mn-brand span{font-family:var(--f-ar); font-weight:500; color:var(--gold, #E2B66C); font-size:1.05rem}" +
+    ".mn-brand{font-family:var(--f-display); font-weight:800; font-size:1.25rem; color:var(--night-ink, #EEF2F7); text-decoration:none; display:flex; gap:8px; align-items:baseline}" +
+    ".mn-brand span{font-family:var(--f-ar); font-weight:500; color:var(--gold, #E2B66C); font-size:1.0625rem}" +
     ".mn-x{width:38px; height:38px; border-radius:50%; border:1px solid rgba(238,242,247,.25); background:transparent; color:var(--night-ink, #EEF2F7); font-size:1.4rem; line-height:1; cursor:pointer}" +
     ".mn-x:hover{border-color:var(--gold, #E2B66C); color:var(--gold, #E2B66C)}" +
     ".mn-g{padding:10px 14px 0}" +
-    ".mn-g h2{font-family:var(--f-mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold, #E2B66C); font-weight:500; margin:8px 6px 8px}" +
+    ".mn-g h2{font-family:var(--f-mono); font-size:.8125rem; color:var(--gold, #E2B66C); font-weight:500; margin:8px 6px 8px}" +
     ".mn-list{list-style:none; margin:0; padding:0; display:grid; gap:4px}" +
     ".mn-item{display:flex; align-items:center; gap:12px; width:100%; padding:10px 10px; border-radius:12px; color:var(--night-ink, #EEF2F7); text-decoration:none; border:1px solid transparent; background:none; font:inherit; text-align:start; cursor:pointer}" +
     ".mn-item:hover{background:rgba(226,182,108,.08); border-color:rgba(226,182,108,.3)}" +
     ".mn-item:focus-visible{outline:2px solid var(--gold, #E2B66C); outline-offset:1px}" +
     ".mn-item[aria-current='page']{background:rgba(226,182,108,.14); border-color:rgba(226,182,108,.55)}" +
-    ".mn-ic{flex:none; width:40px; height:40px; border-radius:12px; display:grid; place-items:center; font-size:1.2rem; background:rgba(255,255,255,.05); border:1px solid rgba(238,242,247,.1)}" +
+    ".mn-ic{flex:none; width:40px; height:40px; border-radius:12px; display:grid; place-items:center; font-size:1.25rem; background:rgba(255,255,255,.05); border:1px solid rgba(238,242,247,.1)}" +
     ".mn-tx{display:grid; gap:1px; min-width:0}" +
-    ".mn-tx b{font-size:1rem; display:flex; align-items:center; gap:8px}" +
-    ".mn-tx small{color:var(--night-dim, #A9B8CB); font-size:.84rem; line-height:1.35}" +
-    ".mn-new{font-family:var(--f-mono); font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; color:#1A1206; background:var(--gold, #E2B66C); border-radius:999px; padding:1px 7px; font-weight:500}" +
+    ".mn-tx b{font-size:1.0625rem; display:flex; align-items:center; gap:8px}" +
+    ".mn-tx small{color:var(--night-dim, #A9B8CB); font-size:.8125rem; line-height:1.35}" +
+    ".mn-new{font-family:var(--f-mono); font-size:.75rem; color:#1A1206; background:var(--gold, #E2B66C); border-radius:999px; padding:1px 7px; font-weight:500}" +
     ".mn-secs{list-style:none; margin:0; padding:0 4px; display:grid; grid-template-columns:1fr 1fr; gap:2px 8px}" +
-    ".mn-secs a{display:block; padding:7px 8px; border-radius:8px; color:var(--night-dim, #A9B8CB); text-decoration:none; font-size:.92rem}" +
+    ".mn-secs a{display:block; padding:7px 8px; border-radius:8px; color:var(--night-dim, #A9B8CB); text-decoration:none; font-size:.9375rem}" +
     ".mn-secs a:hover{color:var(--night-ink, #EEF2F7); background:rgba(255,255,255,.05)}" +
     ".mn-secs a:focus-visible{outline:2px solid var(--gold, #E2B66C)}" +
     ".mn-more{display:grid; gap:4px}" +
-    ".mn-reset .mn-ic{font-size:1.35rem; color:var(--gold, #E2B66C)}" +
+    ".mn-reset .mn-ic{font-size:1.25rem; color:var(--gold, #E2B66C)}" +
     ".mn-reset.is-armed{border-color:#E07A6E; background:rgba(224,122,110,.12)}" +
     ".mn-reset.is-armed b{color:#F2A79D}" +
     ".mn-reset[disabled]{opacity:.55; cursor:default}" +
     ".mn-reset[disabled]:hover{background:none; border-color:transparent}" +
     ".mn-lang:lang(ar){font-family:var(--f-ar)}" +
-    ".mn-foot{margin-top:auto; padding:18px 20px 0; color:var(--night-dim, #A9B8CB); font-size:.8rem}" +
+    ".mn-foot{margin-top:auto; padding:18px 20px 0; color:var(--night-dim, #A9B8CB); font-size:.8125rem}" +
     "@keyframes mnIn{from{transform:translateX(100%)}to{transform:none}}" +
     "@keyframes mnInR{from{transform:translateX(-100%)}to{transform:none}}" +
     "@keyframes mnFade{from{opacity:0}to{opacity:1}}" +
@@ -89,8 +90,8 @@
     // the menu holds every section, so the header keeps only the key links
     ".top nav a[href^='#']:not(.lang){display:none !important}" +
     ".top nav{align-items:center}" +
-    "@media (max-width:760px){ .top nav .nav-ac{display:none !important} }" +
-    ".nav-new{font-family:var(--f-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; color:#1A1206; background:var(--gold, #E2B66C); border-radius:999px; padding:0 6px; margin-inline-start:4px; vertical-align:2px}" +
+    "@media (max-width:720px){ .top nav .nav-ac{display:none !important} }" +
+    ".nav-new{font-family:var(--f-mono); font-size:.75rem; color:#1A1206; background:var(--gold, #E2B66C); border-radius:999px; padding:0 6px; margin-inline-start:4px; vertical-align:2px}" +
     ".bkm{display:grid; place-items:center; padding:16px}" +
     ".bkm .mn-bg{animation:mnFade .2s ease}" +
     ".bk-box{position:relative; width:min(32rem, 100%); max-height:calc(100vh - 32px); overflow:auto; background:var(--night, #0B1626); color:var(--night-ink, #EEF2F7); border:1px solid rgba(226,182,108,.45); border-radius:18px; box-shadow:0 30px 80px -30px rgba(0,0,0,.9)}" +
@@ -98,13 +99,13 @@
     ".bk-head{padding:14px 0 0}" +
     ".bk-head h2{font-family:var(--f-display); font-size:1.25rem; margin:0}" +
     "[lang='ar'] .bk-head h2{font-family:var(--f-ar)}" +
-    ".bk-p{margin:0; color:#D5DEE9; font-size:.95rem; line-height:1.6}" +
+    ".bk-p{margin:0; color:#D5DEE9; font-size:.9375rem; line-height:1.6}" +
     ".bk-s{display:grid; gap:10px; padding:14px; border-radius:14px; border:1px solid rgba(238,242,247,.14); background:rgba(16,34,60,.7)}" +
-    ".bk-s h3{margin:0; font-size:1rem; font-family:inherit}" +
-    ".bk-sum{margin:0; font-size:.9rem; color:var(--night-dim, #A9B8CB); line-height:1.6}" +
+    ".bk-s h3{margin:0; font-size:1.0625rem; font-family:inherit}" +
+    ".bk-sum{margin:0; font-size:.9375rem; color:var(--night-dim, #A9B8CB); line-height:1.6}" +
     ".bk-sum b{color:var(--night-ink, #EEF2F7)}" +
     ".bk-row{display:flex; gap:8px; flex-wrap:wrap}" +
-    ".bk-btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; font:inherit; font-weight:700; font-size:.95rem; padding:10px 16px; border-radius:999px; border:1px solid rgba(238,242,247,.35); background:transparent; color:var(--night-ink, #EEF2F7); cursor:pointer; position:relative}" +
+    ".bk-btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; font:inherit; font-weight:700; font-size:.9375rem; padding:10px 16px; border-radius:999px; border:1px solid rgba(238,242,247,.35); background:transparent; color:var(--night-ink, #EEF2F7); cursor:pointer; position:relative}" +
     ".bk-btn:hover{border-color:var(--gold, #E2B66C)}" +
     ".bk-btn.is-main{background:var(--gold, #E2B66C); color:#1A1206; border-color:var(--gold, #E2B66C)}" +
     ".bk-btn.is-armed{background:#E07A6E; border-color:#E07A6E; color:#1A0A06}" +
@@ -112,8 +113,8 @@
     ".bk-btn:focus-visible, .bk-pick:focus-within{outline:3px solid var(--gold, #E2B66C); outline-offset:2px}" +
     ".bk-pick{justify-self:start}" +
     ".bk-pick input{position:absolute; inset:0; opacity:0; cursor:pointer; width:100%}" +
-    ".bk-bad{margin:0; color:#F6C2B9; font-size:.92rem}" +
-    ".bk-note{margin:0; font-size:.84rem; color:var(--night-dim, #A9B8CB)}" +
+    ".bk-bad{margin:0; color:#F6C2B9; font-size:.9375rem}" +
+    ".bk-note{margin:0; font-size:.8125rem; color:var(--night-dim, #A9B8CB)}" +
     "@media (prefers-reduced-motion: reduce){ .mn-sheet, .mn-bg{animation:none} }";
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
@@ -188,7 +189,7 @@
         '<p class="bk-p">' + esc(T(BK.intro)) + "</p>" +
         '<section class="bk-s"><h3>' + esc(T(BK.saveT)) + '</h3><p class="bk-sum" data-bk-here></p><div class="bk-row"><button type="button" class="bk-btn is-main" data-bk-save>⬇ ' + esc(T(BK.save)) + '</button><button type="button" class="bk-btn" data-bk-share hidden>↗ ' + esc(T(BK.share)) + "</button></div></section>" +
         '<section class="bk-s"><h3>' + esc(T(BK.loadT)) + '</h3><label class="bk-btn bk-pick">📂 ' + esc(T(BK.pick)) + '<input type="file" accept=".json,application/json" data-bk-file></label><div data-bk-preview></div></section>' +
-        '<p class="bk-note">🔒 ' + esc(T(BK.priv)) + "</p></div></div>";
+        '<p class="bk-note">' + IC("lock") + ' ' + esc(T(BK.priv)) + "</p></div></div>";
       document.body.appendChild(bk);
       bk.addEventListener("click", bkClick);
       bk.addEventListener("change", bkChange);
@@ -263,7 +264,7 @@
     mn.className = "mn"; mn.hidden = true;
     var pages = PAGES.map(function (p) {
       return '<li><a class="mn-item" href="' + esc(p.href) + '" data-mn-id="' + p.id + '"' + (current(p.id) ? ' aria-current="page"' : "") + '>' +
-        '<span class="mn-ic" aria-hidden="true">' + p.i + '</span><span class="mn-tx"><b>' + esc(T(p.n)) + (p.isNew ? ' <span class="mn-new">' + esc(T(UI.newTag)) + "</span>" : "") + "</b><small>" + esc(T(p.d)) + "</small></span></a></li>";
+        '<span class="mn-ic" aria-hidden="true">' + IC(p.i) + '</span><span class="mn-tx"><b>' + esc(T(p.n)) + (p.isNew ? ' <span class="mn-new">' + esc(T(UI.newTag)) + "</span>" : "") + "</b><small>" + esc(T(p.d)) + "</small></span></a></li>";
     }).join("");
     var secs = SECTIONS.map(function (s) {
       return '<li><a href="' + (onGuide ? "#" + s[0] : base + "#" + s[0]) + '">' + esc(AR ? s[2] : s[1]) + "</a></li>";
@@ -339,6 +340,29 @@
     btn.addEventListener("click", open);
     var top = document.querySelector(".top");
     if (top && nav !== top) top.appendChild(btn); else nav.appendChild(btn);
+    if (top) miniBar(top);
+    skyRest();
+  }
+  // a slim translucent bar with the brand, the language link and Menu, shown once the header has scrolled away
+  function miniBar(top) {
+    if (!("IntersectionObserver" in window) || document.querySelector(".mb")) return;
+    var brand = top.querySelector(".brand"), lang = top.querySelector("a.lang");
+    var bar = document.createElement("div"); bar.className = "mb"; bar.setAttribute("aria-hidden", "true"); bar.inert = true;
+    bar.innerHTML = '<div class="mb-in"><a class="mb-brand" href="' + esc(brand ? brand.getAttribute("href") : base) + '">' + esc(AR ? "مسارُك" : "Masarok") + '</a><span class="mb-sp"></span>' +
+      (lang ? '<a class="mb-lang" href="' + esc(lang.getAttribute("href")) + '" lang="' + (AR ? "en" : "ar") + '" hreflang="' + (AR ? "en" : "ar") + '" dir="' + (AR ? "ltr" : "rtl") + '">' + esc(lang.textContent.trim()) + "</a>" : "") +
+      '<button type="button" class="mn-btn" aria-haspopup="dialog">' + ICON_MENU + "<span>" + esc(T(UI.menu)) + "</span></button></div>";
+    bar.querySelector(".mn-btn").addEventListener("click", open);
+    document.body.appendChild(bar);
+    new IntersectionObserver(function (es) {
+      var off = !es[0].isIntersecting && es[0].boundingClientRect.top < 0;
+      bar.classList.toggle("is-on", off); bar.inert = !off;
+      if (off) bar.removeAttribute("aria-hidden"); else bar.setAttribute("aria-hidden", "true");
+    }).observe(top);
+  }
+  // the night sky's twinkle rests while the hero is off screen
+  function skyRest() {
+    var hero = document.querySelector(".hero"); if (!hero || !("IntersectionObserver" in window)) return;
+    new IntersectionObserver(function (es) { document.documentElement.classList.toggle("sky-off", !es[0].isIntersecting); }).observe(hero);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
   window.MasarokMenu = { open: open, close: close, backup: bkOpen };

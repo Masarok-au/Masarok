@@ -177,18 +177,18 @@
   var css =
     ".acm .bk-box{width:min(28rem, 100%)}" +
     ".ac-f{display:grid; gap:8px}" +
-    ".ac-f label{font-weight:700; font-size:.92rem}" +
-    ".ac-in{font:inherit; font-size:1.05rem; padding:12px 14px; border-radius:12px; border:1px solid rgba(238,242,247,.35); background:rgba(255,255,255,.06); color:var(--night-ink, #EEF2F7); width:100%; box-sizing:border-box}" +
+    ".ac-f label{font-weight:700; font-size:.9375rem}" +
+    ".ac-in{font:inherit; font-size:1.0625rem; padding:12px 14px; border-radius:12px; border:1px solid rgba(238,242,247,.35); background:rgba(255,255,255,.06); color:var(--night-ink, #EEF2F7); width:100%; box-sizing:border-box}" +
     ".ac-in:focus{outline:3px solid var(--gold, #E2B66C); outline-offset:1px; border-color:transparent}" +
     ".ac-code{font-family:'IBM Plex Mono', monospace; font-size:1.6rem; letter-spacing:.4em; text-align:center; direction:ltr}" +
     ".ac-links{display:flex; gap:14px; flex-wrap:wrap}" +
-    ".ac-link{background:none; border:0; padding:0; font:inherit; font-size:.9rem; color:var(--gold, #E2B66C); text-decoration:underline; cursor:pointer}" +
+    ".ac-link{background:none; border:0; padding:0; font:inherit; font-size:.9375rem; color:var(--gold, #E2B66C); text-decoration:underline; cursor:pointer}" +
     ".ac-link:disabled{color:var(--night-dim, #A9B8CB); text-decoration:none; cursor:default}" +
     ".ac-list{margin:0; padding:0; list-style:none; display:grid; gap:6px}" +
-    ".ac-list li{display:flex; justify-content:space-between; gap:10px; font-size:.95rem}" +
+    ".ac-list li{display:flex; justify-content:space-between; gap:10px; font-size:.9375rem}" +
     ".ac-list small{color:var(--night-dim, #A9B8CB)}" +
-    ".ac-who{margin:0; font-size:1rem; word-break:break-all}" +
-    ".ac-toast{position:fixed; inset-inline:16px; bottom:16px; margin:0 auto; max-width:26rem; z-index:90; background:var(--night, #0B1626); color:var(--night-ink, #EEF2F7); border:1px solid var(--gold, #E2B66C); border-radius:14px; padding:12px 16px; font-size:.95rem; box-shadow:0 20px 50px -20px rgba(0,0,0,.8)}";
+    ".ac-who{margin:0; font-size:1.0625rem; word-break:break-all}" +
+    ".ac-toast{position:fixed; inset-inline:16px; bottom:16px; margin:0 auto; max-width:26rem; z-index:90; background:var(--night, #0B1626); color:var(--night-ink, #EEF2F7); border:1px solid var(--gold, #E2B66C); border-radius:14px; padding:12px 16px; font-size:.9375rem; box-shadow:0 20px 50px -20px rgba(0,0,0,.8)}";
   var cssDone = false;
   function addCss() { if (cssDone) return; cssDone = true; var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st); }
 

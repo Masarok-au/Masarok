@@ -5,6 +5,7 @@
    Progress stays in this browser (masarok-academy), like the rest of Masarok. */
 (function () {
   "use strict";
+  function IC(x, c) { return window.MasarokIcon ? window.MasarokIcon.from(x, c) : (x || ""); }
 
   var C = window.MasarokCourse; if (!C) return;
   // extra lesson files add themselves to the course, then everything is sorted by its order
@@ -188,15 +189,15 @@
   }
   function lessonRow(l) {
     var r = S.lessons[l.id] || {}, st = r.done ? "done" : r.started ? "started" : "new";
-    if (l.locked) return '<li><a class="ls is-locked" href="#/l/' + l.id + '"><span class="ls-ic" aria-hidden="true">' + l.icon + '</span>' +
+    if (l.locked) return '<li><a class="ls is-locked" href="#/l/' + l.id + '"><span class="ls-ic" aria-hidden="true">' + IC(l.icon) + '</span>' +
       '<span class="ls-tx"><b>' + esc(T(l.t)) + "</b><small>" + esc(T(l.d)) + '</small><span class="ls-meta">' + esc(fmt(UI.mins, { n: l.mins })) + "</span></span>" +
-      '<span class="ls-go">🔒 ' + esc(T(UI.lockTag)) + "</span></a></li>";
+      '<span class="ls-go">' + IC("lock") + ' ' + esc(T(UI.lockTag)) + "</span></a></li>";
     var m = S.mocks && S.mocks[l.id];
     var extra = l.words ? vocabStatus(l) : m ? fmt(UI.mockBand, { b: bandStr(m.o) }) : r.done && r.score && r.score[1] ? fmt(UI.score, { c: r.score[0], t: r.score[1] }) : "";
     var rec = recommended() === l.id;
     var tag = l.cc ? l.cc.map(function (c) { return CC_NAME[c] ? T(CC_NAME[c]) : c; }).join(" · ") : "";
     return '<li><a class="ls is-' + st + (rec ? " is-rec" : "") + '" href="#/l/' + l.id + '">' +
-      '<span class="ls-ic" aria-hidden="true">' + l.icon + '</span>' +
+      '<span class="ls-ic" aria-hidden="true">' + IC(l.icon) + '</span>' +
       '<span class="ls-tx"><b>' + esc(T(l.t)) + (rec ? ' <em class="ls-rec">' + esc(T(UI.startHere)) + "</em>" : "") + "</b><small>" + esc(T(l.d)) + "</small>" +
       '<span class="ls-meta">' + esc(fmt(UI.mins, { n: l.mins })) + (tag && !MY_CC ? " · " + esc(tag) : "") + (extra ? " · " + esc(extra) : "") + "</span></span>" +
       '<span class="ls-go">' + (st === "done" ? "✓ " + esc(T(UI.done)) : esc(T(st === "started" ? UI.cont : UI.start))) + "</span></a></li>";
@@ -246,7 +247,7 @@
     var why = ACCESS === "signed_out" ? UI.lockSignedOut : ACCESS === "not_owned" ? UI.lockNotOwned : ACCESS === "offline" ? UI.lockOffline : UI.lockSoon;
     var free = C.lessons.filter(function (x) { return !x.locked; })[0];
     app.innerHTML = '<header class="cs-head"><a class="cs-back" href="#">' + backArrow() + esc(T(UI.back)) + "</a>" + arToggle() + "</header>" +
-      '<section class="lp-done lk"><div class="lp-medal" aria-hidden="true">🔒</div><p class="eyebrow">' + l.icon + " " + esc(T(UI.lockedT)) + '</p><h2 tabindex="-1">' + esc(T(l.t)) + '</h2><p class="lp-dt">' + esc(T(l.d)) + "</p>" +
+      '<section class="lp-done lk"><div class="lp-medal" aria-hidden="true">' + IC("lock") + '</div><p class="eyebrow">' + esc(T(UI.lockedT)) + '</p><h2 tabindex="-1">' + esc(T(l.t)) + '</h2><p class="lp-dt">' + esc(T(l.d)) + "</p>" +
       '<p class="lk-why">' + esc(T(why)) + (ACCESS === "not_owned" ? " " + esc(T(UI.lockSoon)) : "") + "</p>" +
       '<div class="ac-cta">' + (ACCESS === "signed_out" ? '<button type="button" class="btn btn-primary" data-sign-in>' + esc(T(UI.acGo)) + "</button>" : "") +
       (ACCESS === "offline" ? '<button type="button" class="btn btn-primary" data-retry-load>' + esc(T(UI.lockRetry)) + "</button>" : "") +
@@ -255,7 +256,7 @@
     window.scrollTo(0, 0);
   }
   function backArrow() { return '<svg viewBox="0 0 16 16" aria-hidden="true" class="bk"><path d="M13 8H4M7.5 4.5L4 8l3.5 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'; }
-  function arToggle() { return '<button type="button" class="ar-tg" data-ar-toggle aria-pressed="' + !!S.arHelp + '">🌙 ' + esc(T(S.arHelp ? UI.arOn : UI.arOff)) + "</button>"; }
+  function arToggle() { return '<button type="button" class="ar-tg" data-ar-toggle aria-pressed="' + !!S.arHelp + '" aria-label="' + esc(T(S.arHelp ? UI.arOn : UI.arOff)) + '">' + IC("translate") + '<span class="ar-tx">' + esc(T(S.arHelp ? UI.arOn : UI.arOff)) + "</span></button>"; }
   function weakest(p) { var k = ["r", "l", "w", "s"].sort(function (a, b) { return p.b[a] - p.b[b]; }); return k[0]; }
   function isDone(id) { return !!(S.lessons[id] || {}).done; }
   function recommended() {
@@ -275,7 +276,7 @@
 
   // ---------- certificate when every lesson is done ----------
   function certHtml() {
-    return '<div class="cert"><b>🎓 ' + esc(T(UI.certT)) + "</b><p>" + esc(T(UI.certSub)) + '</p><div class="cert-row"><label><span>' + esc(T(UI.certName)) + '</span><input type="text" data-cert-name autocomplete="name" value="' + esc(S.certName || "") + '"></label>' +
+    return '<div class="cert"><b>' + IC("cap") + ' ' + esc(T(UI.certT)) + "</b><p>" + esc(T(UI.certSub)) + '</p><div class="cert-row"><label><span>' + esc(T(UI.certName)) + '</span><input type="text" data-cert-name autocomplete="name" value="' + esc(S.certName || "") + '"></label>' +
       '<button type="button" class="btn btn-primary" data-cert>' + esc(T(UI.certGo)) + "</button></div></div>";
   }
   function wireCert() {
@@ -357,20 +358,23 @@
   function openLesson(id, stepIx) {
     stopAll();
     var l = L(id); if (!l) { location.hash = ""; return; }
-    if (l.locked) { cur = null; lockScreen(l); return; }
+    if (l.locked) { cur = null; inLesson(false); lockScreen(l); return; }
     if (!cur || cur.l.id !== id) cur = { l: l, results: {}, ans: {} };
     cur.i = Math.max(0, Math.min(stepIx || 0, l.steps.length));
     var r = S.lessons[id] = S.lessons[id] || {}; r.started = true; save();
     renderStep();
   }
+  function inLesson(on) { document.documentElement.classList.toggle("in-lesson", !!on); }
   function renderStep() {
     var l = cur.l, n = l.steps.length, i = cur.i;
-    if (i >= n) return finishScreen();
+    if (i >= n) { inLesson(false); return finishScreen(); }
+    inLesson(true);
     var st = l.steps[i];
     app.innerHTML =
-      '<header class="cs-head"><a class="cs-back" href="#">' + backArrow() + esc(T(UI.back)) + "</a>" + arToggle() + "</header>" +
-      '<div class="lp-top"><p class="eyebrow">' + l.icon + " " + esc(T(l.t)) + '</p><div class="lp-prog" role="progressbar" aria-valuemin="1" aria-valuemax="' + n + '" aria-valuenow="' + (i + 1) + '"><i style="width:' + Math.round((i + 1) / n * 100) + '%"></i></div>' +
-      '<small class="lp-n">' + esc(fmt(UI.step, { n: i + 1, t: n })) + "</small></div>" +
+      '<header class="cs-head lp-bar"><a class="cs-back" href="#" aria-label="' + esc(T(UI.back)) + '">' + backArrow() + '<span class="lp-bk">' + esc(T(UI.back)) + "</span></a>" +
+      '<div class="lp-top"><p class="eyebrow">' + esc(T(l.t)) + '</p><small class="lp-n">' + esc(fmt(UI.step, { n: i + 1, t: n })) + "</small>" +
+      '<div class="lp-prog" role="progressbar" aria-label="' + esc(fmt(UI.step, { n: i + 1, t: n })) + '" aria-valuemin="1" aria-valuemax="' + n + '" aria-valuenow="' + (i + 1) + '"><i style="transform:scaleX(' + ((i + 1) / n).toFixed(3) + ')"></i></div></div>' +
+      arToggle() + "</header>" +
       '<article class="lp" aria-live="off"><div class="lp-body"></div><p class="lp-msg" role="status"></p>' +
       '<div class="lp-acts"><button type="button" class="btn btn-ghost" data-prev' + (i === 0 ? " hidden" : "") + '>' + esc(T(UI.prev)) + '</button><span class="lp-sp"></span>' +
       '<button type="button" class="btn btn-ghost" data-check hidden>' + esc(T(UI.check)) + '</button>' +
@@ -414,8 +418,8 @@
     var nextId = rec && rec !== l.id ? rec : nx && nx.id;
     if (window.MasarokGame && window.MasarokGame.confetti) window.MasarokGame.confetti();
     app.innerHTML = '<header class="cs-head"><a class="cs-back" href="#">' + backArrow() + esc(T(UI.back)) + "</a>" + arToggle() + "</header>" +
-      '<section class="lp-done"><div class="lp-medal" aria-hidden="true">' + l.icon + '</div><h2 tabindex="-1">' + esc(T(UI.lessonDone)) + "</h2><p class=\"lp-dt\">" + esc(T(l.t)) + "</p>" +
-      (t ? '<p class="lp-sc">' + esc(fmt(UI.score, { c: c, t: t })) + "</p>" : "") + '<p class="lp-pts">🏅 ' + esc(T(UI.guidePts)) + "</p>" +
+      '<section class="lp-done"><div class="lp-medal" aria-hidden="true">' + IC(l.icon) + '</div><h2 tabindex="-1">' + esc(T(UI.lessonDone)) + "</h2><p class=\"lp-dt\">" + esc(T(l.t)) + "</p>" +
+      (t ? '<p class="lp-sc">' + esc(fmt(UI.score, { c: c, t: t })) + "</p>" : "") + '<p class="lp-pts">' + IC("medal") + ' ' + esc(T(UI.guidePts)) + "</p>" +
       '<div class="ac-cta">' + (FROM_JOURNEY ? '<a class="btn btn-primary" href="' + base + '#journey">↩ ' + esc(T(UI.backJourney)) + "</a>" : "") + (nextId ? '<a class="btn ' + (FROM_JOURNEY ? "btn-ghost" : "btn-primary") + '" href="#/l/' + nextId + '">' + esc(T(UI.nextLesson)) + ": " + esc(T(L(nextId).t)) + "</a>" : "") +
       '<a class="btn btn-ghost" href="#">' + esc(T(UI.toCourse)) + "</a></div></section>";
     $(".lp-done h2").focus();
@@ -1290,7 +1294,7 @@
       var MC = window.MasarokCoach, D = drafts(); if (!MC) return "";
       return [["t1", "task1", "Task 1"], ["t2", "task2", "Task 2"]].map(function (x) {
         var t = (D[wKey(x[0])] || {}).text || ""; if (wcount(t) < 40) return "";
-        return '<details class="co-mk"><summary>🧭 ' + esc(T(UI.mkCoach)) + " · " + x[2] + "</summary>" + MC.writingHtml(MC.writing(t, x[1])) + "</details>";
+        return '<details class="co-mk"><summary>' + IC("compass") + ' ' + esc(T(UI.mkCoach)) + " · " + x[2] + "</summary>" + MC.writingHtml(MC.writing(t, x[1])) + "</details>";
       }).join("");
     }
     function onSelf(e) { var nm = e.target.name || ""; if (nm.indexOf("mk") === 0) self[nm.charAt(2)][+nm.slice(3)] = +e.target.value; }
@@ -1498,7 +1502,7 @@
     var qs = [], qi = 0, answered = 0, rounds = 0, voice = !!tts;
     function newSet() { qs = shuffle(st.bank).slice(0, st.n || 6); qi = 0; }
     function intro2() {
-      el.innerHTML = '<div class="en-block">' + head(st) + intro(st) + '<div class="iv-start"><span class="iv-ic" aria-hidden="true">' + (st.icon || "🛂") + "</span><p>" + esc(fmt(UI.ivHow, { n: st.n || 6, s: st.secs })) + "</p>" +
+      el.innerHTML = '<div class="en-block">' + head(st) + intro(st) + '<div class="iv-start"><span class="iv-ic" aria-hidden="true">' + IC(st.icon || "passport") + "</span><p>" + esc(fmt(UI.ivHow, { n: st.n || 6, s: st.secs })) + "</p>" +
         (tts ? '<label class="iv-voice"><input type="checkbox" data-iv-voice' + (voice ? " checked" : "") + "> " + esc(T(UI.ivVoice)) + "</label>" : "") +
         '<button type="button" class="btn btn-primary" data-iv-go>' + esc(T(rounds ? UI.ivAgain : UI.ivStart)) + "</button></div>" +
         (rounds ? '<p class="cs-note">' + esc(fmt(UI.ivRounds, { n: rounds })) + "</p>" : "") + "</div>";
@@ -1539,7 +1543,7 @@
       var i = m[2] ? +m[2] : 0;
       if (!cur || cur.l.id !== m[1]) { cur = null; }
       openLesson(m[1], i);
-    } else { cur = null; home(); var h = $("#main-h"); if (h && document.activeElement === document.body) h.focus({ preventScroll: true }); }
+    } else { cur = null; inLesson(false); home(); var h = $("#main-h"); if (h && document.activeElement === document.body) h.focus({ preventScroll: true }); }
   }
   app.addEventListener("click", function (e) {
     if (e.target.closest("[data-backup]") && window.MasarokMenu) { window.MasarokMenu.backup(); return; }

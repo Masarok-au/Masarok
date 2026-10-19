@@ -57,10 +57,10 @@
     " border:1.5px solid var(--gold, #E2B66C); border-radius:16px; padding:14px 18px; box-shadow:0 18px 40px -14px rgba(0,0,0,.7); display:grid; gap:8px;" +
     " transform-origin:100% 18px; animation:fbSway 3.2s ease-in-out infinite}" +
     "[dir=rtl] .fb-card{transform-origin:0 18px}" +
-    ".fb-card h2{margin:0; font-family:var(--f-ar, sans-serif); font-weight:700; font-size:1.3rem; color:var(--gold, #E2B66C); padding-inline-end:32px; line-height:1.5}" +
-    ".fb-card p{margin:0; color:#C8D3E0; font-size:.93rem; line-height:1.6}" +
+    ".fb-card h2{margin:0; font-family:var(--f-ar, sans-serif); font-weight:700; font-size:1.25rem; color:var(--gold, #E2B66C); padding-inline-end:32px; line-height:1.5}" +
+    ".fb-card p{margin:0; color:#C8D3E0; font-size:.9375rem; line-height:1.6}" +
     ".fb-card .btn{display:inline-flex; align-items:center; justify-self:start; gap:8px; cursor:pointer; margin-top:2px}" +
-    ".fb-x{position:absolute; top:10px; inset-inline-end:10px; width:30px; height:30px; border-radius:50%; border:1px solid rgba(238,242,247,.25); background:transparent; color:var(--night-ink, #EEF2F7); font-size:1.15rem; line-height:1; cursor:pointer}" +
+    ".fb-x{position:absolute; top:10px; inset-inline-end:10px; width:30px; height:30px; border-radius:50%; border:1px solid rgba(238,242,247,.25); background:transparent; color:var(--night-ink, #EEF2F7); font-size:1.25rem; line-height:1; cursor:pointer}" +
     ".fb-x:hover{border-color:var(--gold, #E2B66C); color:var(--gold, #E2B66C)}" +
     ".fb-card :focus-visible{outline:3px solid var(--gold, #E2B66C); outline-offset:2px}" +
     ".fb-rope{width:46px; height:40px; margin-top:6px; flex:none; overflow:visible}" +
@@ -83,7 +83,7 @@
     " [dir=rtl] .fb-craft{margin:0 0 -8px 6px}" +
     " html.fb-showing .jr-fab{opacity:0; pointer-events:none; visibility:hidden} }" +
     "@media (prefers-reduced-motion: reduce){ .fb-card, .fb-craft, .fb-prop, .fb-wave{animation:none !important} }" +
-    ".fb-foot{display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border:1px solid var(--gold, #E2B66C); border-radius:999px; color:var(--gold, #E2B66C); text-decoration:none; font-size:.9rem; width:fit-content}" +
+    ".fb-foot{display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border:1px solid var(--gold, #E2B66C); border-radius:999px; color:var(--gold, #E2B66C); text-decoration:none; font-size:.9375rem; width:fit-content}" +
     ".fb-foot:hover{background:rgba(226,182,108,.12)}";
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 

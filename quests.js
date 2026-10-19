@@ -3,6 +3,7 @@
    Loaded after game.js and journeymap.js. */
 (function () {
   "use strict";
+  function IC(x, c) { return window.MasarokIcon ? window.MasarokIcon.from(x, c) : (x || ""); }
 
   var A = (document.documentElement.lang || "en").slice(0, 2) === "ar" ? 1 : 0;
   function T(x) { return Array.isArray(x) ? x[A] : x; }
@@ -150,12 +151,12 @@
     var g = G(); if (!g) return;
     var rows = Q.map(function (q) {
       var d = awarded(q.id);
-      return '<li class="qs' + (d ? " is-done" : "") + '"><span class="qs-ic" aria-hidden="true">' + q.i + '</span><span class="qs-tx"><b>' + esc(T(q.n)) + "</b><small>" + esc(T(q.d)) + "</small></span>" +
+      return '<li class="qs' + (d ? " is-done" : "") + '"><span class="qs-ic" aria-hidden="true">' + IC(q.i) + '</span><span class="qs-tx"><b>' + esc(T(q.n)) + "</b><small>" + esc(T(q.d)) + "</small></span>" +
         '<span class="qs-r"><em>' + esc(ptsTxt(q.p)) + "</em>" + (d ? '<span class="qs-done">✓ ' + esc(T(UI.done)) + "</span>" : '<button type="button" class="gm-btn" data-quest-go="' + q.id + '">' + esc(T(UI.go)) + "</button>") + "</span></li>";
     }).join("");
     var life = LQ.map(function (q) {
       var d = lifeDone(q.id);
-      return '<li class="qs' + (d ? " is-done" : "") + '"><span class="qs-ic" aria-hidden="true">' + q.i + '</span><span class="qs-tx"><b>' + esc(T(q.n)) + "</b><small>" + esc(T(q.d())) + "</small>" + (q.x ? q.x() : "") + "</span>" +
+      return '<li class="qs' + (d ? " is-done" : "") + '"><span class="qs-ic" aria-hidden="true">' + IC(q.i) + '</span><span class="qs-tx"><b>' + esc(T(q.n)) + "</b><small>" + esc(T(q.d())) + "</small>" + (q.x ? q.x() : "") + "</span>" +
         '<span class="qs-r"><em>' + esc(ptsTxt(q.p)) + "</em>" + (d ? '<span class="qs-done">✓ ' + esc(T(UI.done)) + "</span>" : '<button type="button" class="gm-btn" data-life="' + q.id + '">' + esc(T(UI.did)) + "</button>") + "</span></li>";
     }).join("");
     g.overlay('<h2 id="gm-h">🎯 ' + esc(T(UI.title)) + ' <span class="qs-n">' + count() + "/" + (Q.length + LQ.length) + '</span></h2><p class="gm-sub">' + esc(T(UI.sub)) + '</p>' +

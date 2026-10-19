@@ -2,6 +2,7 @@
    Shared by the English and Arabic pages. Loaded after unis.js. */
 (function () {
   "use strict";
+  function IC(x, c) { return window.MasarokIcon ? window.MasarokIcon.from(x, c) : (x || ""); }
 
   var lang = (document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en";
   var rtl = document.documentElement.dir === "rtl";
@@ -420,6 +421,7 @@
       pickDo: "Choose your country and degree in the picker. Adding your university makes every step fit you.", pickYours: "Your choices: {c}",
       pickChange: "Change my choices", pickNone: "Not chosen yet",
       lvLabel: "Level {n}: {name}. {state}", lvLocked: "Clear Level {n} first to open this one.", lvOpened: "Level {n} is now open.",
+      hmGo: "Start your journey", hmGoOn: "Continue your journey", hmT: "Guide me", hmOpen: "Open Guide me: your 10-level plan",
       welcomeLv: "Welcome back. You're on Level {n} · {name}.", fabLv: "Level {n} of 10", planLv: "Level {n} of 10 · {name}",
       nextLearn: "Learn: {t}", nextCheck: "Check: answer 3 quick questions", nextDo: "Do: {t}",
       noDo: "There's no real-world step at this level for your degree. Learn and Check clear it.", lvPath: "All 10 levels"
@@ -494,6 +496,7 @@
       pickDo: "اختر دولتك ودرجتك من أداة الاختيار، وإضافة جامعتك تجعل كل خطوة مناسبة لك.", pickYours: "اختياراتك: {c}",
       pickChange: "غيّر اختياراتي", pickNone: "لم تختر بعد",
       lvLabel: "المستوى {n}: {name}. {state}", lvLocked: "اجتز المستوى {n} أولًا لفتح هذا المستوى.", lvOpened: "فُتح المستوى {n}.",
+      hmGo: "ابدأ رحلتك", hmGoOn: "أكمل رحلتك", hmT: "أرشدني", hmOpen: "افتح أرشدني: خطتك في 10 مستويات",
       welcomeLv: "أهلًا بعودتك. أنت في المستوى {n} · {name}.", fabLv: "المستوى {n} من 10", planLv: "المستوى {n} من 10 · {name}",
       nextLearn: "تعلّم: {t}", nextCheck: "اختبر: أجب عن 3 أسئلة سريعة", nextDo: "نفّذ: {t}",
       noDo: "لا توجد خطوة فعلية في هذا المستوى لدرجتك، ويكفي «تعلّم» و«اختبر» لاجتيازه.", lvPath: "المستويات العشرة"
@@ -798,7 +801,31 @@
     hero.parentNode.insertBefore(banner, hero.nextSibling);
     updateBanner();
   }
+  // the real product in the hero: a phone showing Guide me, the stairs, your avatar and the level card
+  function heroMock() {
+    var inner = document.querySelector(".hero-inner"); if (!inner || !LVM()) return;
+    var hm = inner.querySelector(".hm");
+    if (!hm) {
+      hm = document.createElement("button"); hm.type = "button"; hm.className = "hm"; hm.setAttribute("data-journey-open", "");
+      inner.appendChild(hm); inner.classList.add("has-hm");
+    }
+    var lv = level(), c = Math.min(lv ? curLevel(lv) : 1, NL), s = lv ? lvState(lv, c) : { learn: false, "do": false, check: false, stars: 0 };
+    var steps = "";
+    for (var n = 1; n <= NL; n++) {
+      var cl = n < c || (lv && lvState(lv, n).cleared) ? "is-done" : n === c ? "is-open" : "is-locked";
+      steps += '<li class="hm-st ' + cl + '" style="--h:' + (22 + n * 7.4) + '%"><span>' + num(n) + "</span></li>";
+    }
+    function part(on, label, sub) { return '<li class="' + (on ? "is-on" : "") + '"><span class="hm-star" aria-hidden="true">★</span><b>' + esc(label) + "</b><small>" + esc(sub) + "</small></li>"; }
+    var learnT = LVM().learn(c) ? L2(LVM().learn(c).t) : t.learn;
+    hm.setAttribute("aria-label", t.hmOpen);
+    hm.innerHTML = '<span class="hm-phone" aria-hidden="true"><span class="hm-notch"></span>' +
+      '<span class="hm-head"><b>' + esc(t.hmT) + '</b><small>' + esc(fmt(t.planLv, { n: num(c), name: lvName(c) })) + "</small></span>" +
+      '<span class="hm-stage"><ol class="hm-stairs">' + steps + '</ol><span class="hm-me" style="--x:' + ((c - .5) / NL).toFixed(3) + "; --y:" + ((22 + c * 7.4) / 100).toFixed(3) + '">' + figure() + "</span></span>" +
+      '<ul class="hm-card">' + part(s.learn, t.learn, learnT) + part(s["do"], t.doT, t.doSub) + part(s.check, t.checkT, t.checkSub) + "</ul></span>";
+    var go = document.querySelector("[data-hero-go]"); if (go) go.textContent = st.started && lv ? t.hmGoOn : t.hmGo;
+  }
   function updateBanner() {
+    heroMock();
     if (!banner) return;
     setTimeout(function () { emit("masarok:journey-banner", {}); }, 0);
     var b = bannerText();
@@ -1080,7 +1107,7 @@
     // Learn
     var learn = '<li class="jr-part' + (s.learn ? " is-on" : "") + '"><div class="jr-part-h"><span class="jr-pstar" aria-hidden="true">★</span><b>' + esc(t.learn) + '</b><small>' + esc(fmt(t.learnSub, { m: num(les.mins) })) + '</small>' +
       (s.learn ? '<span class="jr-tag is-done">' + esc(t.lessonDone) + "</span>" : "") + "</div>" +
-      '<a class="jr-lesson" href="' + esc(M.lessonUrl(n)) + '" data-jr-lesson><span class="jr-lesson-ic" aria-hidden="true">' + les.icon + '</span><span class="jr-lesson-tx"><b>' + esc(L2(les.t)) + "</b><small>" + esc(L2(les.d)) + '</small></span><span class="jr-lesson-go">' + esc(s.learn ? t.lessonReview : t.lessonGo) + ICON.arrow + "</span></a></li>";
+      '<a class="jr-lesson" href="' + esc(M.lessonUrl(n)) + '" data-jr-lesson><span class="jr-lesson-ic" aria-hidden="true">' + IC(les.icon) + '</span><span class="jr-lesson-tx"><b>' + esc(L2(les.t)) + "</b><small>" + esc(L2(les.d)) + '</small></span><span class="jr-lesson-go">' + esc(s.learn ? t.lessonReview : t.lessonGo) + ICON.arrow + "</span></a></li>";
     // Do
     var ids = levelSteps(lv, n), doBody;
     if (!ids.length) {
@@ -1105,7 +1132,7 @@
     var check = '<li class="jr-part' + (s.check ? " is-on" : "") + '"><div class="jr-part-h"><span class="jr-pstar" aria-hidden="true">★</span><b>' + esc(t.checkT) + "</b><small>" + esc(t.checkSub) + "</small>" +
       (s.check ? '<span class="jr-tag is-done">' + esc(t.done) + "</span>" : "") + "</div>" + chk + "</li>";
     var foot = s.cleared
-      ? (n < NL ? '<p class="jr-lvnext">🎉 ' + esc(t.lvCleared) + ' <button type="button" class="jr-textbtn" data-step="' + n + '">' + esc(fmt(t.lvGoNext, { n: num(n + 1) })) + "</button></p>" : "")
+      ? (n < NL ? '<p class="jr-lvnext">' + esc(t.lvCleared) + ' <button type="button" class="jr-textbtn" data-step="' + n + '">' + esc(fmt(t.lvGoNext, { n: num(n + 1) })) + "</button></p>" : "")
       : '<p class="jr-lvnext">' + esc(t.lvRule) + (n < NL ? " " + esc(fmt(t.lvNext, { n: num(n + 1), name: lvName(n + 1) })) : "") + "</p>";
     return '<article class="jr-card jr-lvcard' + (n === cur ? " is-next" : "") + '" aria-labelledby="jr-card-h">' +
       '<p class="jr-kicker">' + kicker + "</p>" +

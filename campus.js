@@ -58,7 +58,7 @@
       "background:linear-gradient(180deg, rgba(8,17,30,.78) 0%, rgba(8,17,30,.12) 50%, rgba(8,17,30,.8) 100%), var(--campus-img) center/cover no-repeat, var(--surface) !important}" +
     ".glance > [data-flip=\"g:city\"].has-photo dt, .glance > [data-flip=\"g:city\"].has-photo dd{text-shadow:0 1px 3px rgba(0,0,0,.65)}" +
     ".glance > [data-flip=\"g:city\"].has-photo dd{color:#fff; font-weight:700}" +
-    ".campus-credit{font-size:.72rem; color:rgba(238,242,247,.82); text-decoration:none; text-shadow:0 1px 2px rgba(0,0,0,.7); margin-top:auto; align-self:flex-start}" +
+    ".campus-credit{font-size:.8125rem; color:rgba(238,242,247,.82); text-decoration:none; text-shadow:0 1px 2px rgba(0,0,0,.7); margin-top:auto; align-self:flex-start}" +
     ".campus-credit:hover{text-decoration:underline}" +
     ".flip-front > .campus-credit{order:5}" +
     ".flip-front > .flip-open{order:6}" +

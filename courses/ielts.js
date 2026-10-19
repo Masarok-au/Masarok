@@ -330,7 +330,7 @@
   window.MasarokCourse = {
     id: "ielts",
     t: ["IELTS Academic", "اختبار IELTS الأكاديمي"],
-    sub: ["Pilot course · more lessons are coming", "النسخة التجريبية · دروس أخرى قادمة"],
+    sub: ["22 lessons and 2 full mock tests", "22 درسًا واختباران تجريبيان كاملان"],
     lessons: [PLACEMENT, KNOW, TFNG, HEAD, WRITE, SPEAK, VOCAB]
   };
 })();

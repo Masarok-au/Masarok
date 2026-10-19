@@ -39,7 +39,55 @@
   var box = document.querySelector("[data-for-you]");
   if (box && (W[cc] || lv === "master" || lv === "phd")) {
     var t = (lv === "master" || lv === "phd") ? PG : W[cc];
-    box.textContent = "📍 " + t[AR ? 1 : 0];
+    box.textContent = t[AR ? 1 : 0];
     box.hidden = false;
+  }
+  // ---------- the climb: as you scroll, your avatar climbs the 10 levels (read scroll, damped; never scroll-jacking) ----------
+  var climb = document.querySelector("[data-climb]");
+  if (climb) {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var stage = climb.querySelector(".climb-stage"), me = climb.querySelector(".climb-me");
+    var steps = [].slice.call(climb.querySelectorAll(".climb-steps li")), names = [].slice.call(climb.querySelectorAll(".climb-names li"));
+    var N = steps.length, cur = -1, target = 0, smooth = 0, running = false, geo = null;
+    function measure() {
+      var W = stage.clientWidth, H = stage.clientHeight, mw = me.offsetWidth, inner = W - 36, top = 24;
+      geo = { x: [], y: [] };
+      steps.forEach(function (li, i) {
+        var cx = 18 + inner * (i + .5) / N - mw / 2;
+        geo.x.push(AR ? W - cx - mw : cx);
+        geo.y.push((H - top) * parseFloat(li.style.getPropertyValue("--h")) / 100);
+      });
+    }
+    function mark(n) {
+      if (n === cur) return; cur = n;
+      steps.forEach(function (li, i) { li.classList.toggle("is-done", i < n); li.classList.toggle("is-on", i === n); });
+      names.forEach(function (li, i) { li.classList.toggle("is-done", i < n); li.classList.toggle("is-on", i === n); });
+    }
+    function place(p) {
+      var f = Math.max(0, Math.min(1, p)) * (N - 1), i0 = Math.floor(f), i1 = Math.min(N - 1, i0 + 1), k = f - i0;
+      var x = geo.x[i0] + (geo.x[i1] - geo.x[i0]) * k, y = geo.y[i0] + (geo.y[i1] - geo.y[i0]) * k + Math.sin(k * Math.PI) * 16;
+      me.style.transform = "translate3d(" + x.toFixed(1) + "px," + (-y).toFixed(1) + "px,0)";
+      mark(Math.round(f));
+    }
+    function read() {
+      var r = climb.getBoundingClientRect(), span = r.height - window.innerHeight;
+      target = span > 0 ? Math.max(0, Math.min(1, -r.top / span)) : 1;
+    }
+    function tick() {
+      read(); smooth += (target - smooth) * 0.1;
+      if (Math.abs(target - smooth) < 0.0005) smooth = target;
+      place(smooth);
+      if (running) requestAnimationFrame(tick);
+    }
+    measure();
+    if (reduce || !("IntersectionObserver" in window)) { climb.classList.add("is-static"); place(1); }
+    else {
+      read(); smooth = target; place(smooth);
+      new IntersectionObserver(function (es) {
+        var on = es[0].isIntersecting;
+        if (on && !running) { running = true; requestAnimationFrame(tick); } else if (!on) running = false;
+      }).observe(climb);
+      window.addEventListener("resize", function () { measure(); place(smooth); }, { passive: true });
+    }
   }
 })();

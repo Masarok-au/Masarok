@@ -3,6 +3,7 @@
    Loaded after journey.js and game.js. */
 (function () {
   "use strict";
+  function IC(x, c) { return window.MasarokIcon ? window.MasarokIcon.from(x, c) : (x || ""); }
 
   var lang = (document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en";
   var rtl = document.documentElement.dir === "rtl";
@@ -243,7 +244,7 @@
         ' aria-label="' + esc(fmt(tx("label"), { stop: fmt(tx("stop"), { n: i + 1 }), title: title, state: stTxt })) + '"' + (s === "here" ? ' aria-current="step"' : "") + ">" +
         '<span class="jm-k">' + esc(fmt(tx("stop"), { n: i + 1 })) + " · " + esc(LS[i].name) + " · " + esc(stTxt) + (s !== "locked" ? " " + starRow(LS[i].stars) : "") + "</span>" +
         "<b>" + esc(title) + "</b>" +
-        (les ? '<span class="jm-learn">' + les.icon + " " + esc(les.t[A]) + "</span>" : "") + bl + "</button>";
+        (les ? '<span class="jm-learn">' + IC(les.icon) + " " + esc(les.t[A]) + "</span>" : "") + bl + "</button>";
     });
     // campus
     var summit = window.MasarokGame ? medal("summit", !fin) : "";

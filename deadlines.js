@@ -375,34 +375,34 @@
   // ---------- styles ----------
   var css =
     "#deadlines .dl-group{margin-top:22px}" +
-    "#deadlines .dl-group h3{font-size:1.02rem; margin:0 0 8px; color:var(--sand)}" +
+    "#deadlines .dl-group h3{font-size:1.0625rem; margin:0 0 8px; color:var(--sand)}" +
     ".dl-list{list-style:none; margin:0; padding:0; display:grid; gap:8px}" +
     ".dl-row{display:grid; grid-template-columns:auto auto 1fr; gap:12px; align-items:start; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:12px 14px}" +
     ".dl-row.dl-soon{border-color:color-mix(in srgb, var(--sand) 60%, var(--line))}" +
     ".dl-pick{width:22px; padding-top:10px} .dl-pick input{width:20px; height:20px; accent-color:var(--sand); cursor:pointer}" +
     ".sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}" +
     ".dl-date{width:52px; text-align:center; border:1px solid color-mix(in srgb, var(--sand) 50%, transparent); border-radius:8px; padding:4px 0; line-height:1.1}" +
-    ".dl-date b{display:block; font-size:1.25rem; color:var(--ink)} .dl-date span{font-size:.75rem; color:var(--sand); font-family:var(--f-mono); text-transform:uppercase}" +
+    ".dl-date b{display:block; font-size:1.25rem; color:var(--ink)} .dl-date span{font-size:.8125rem; color:var(--sand); font-family:var(--f-mono);}" +
     ".dl-date.dl-start{border-color:color-mix(in srgb, var(--green) 50%, transparent)} .dl-date.dl-start span{color:var(--green)}" +
     ".dl-date.dl-info{height:36px; display:grid; place-items:center; color:var(--muted); font-family:var(--f-mono); border-style:dashed}" +
     ".dl-body{min-width:0} .dl-body p{margin:0}" +
-    ".dl-t{color:var(--ink); font-weight:700; font-size:.97rem}" +
-    ".dl-exp{display:inline-block; font-weight:500; font-size:.72rem; font-family:var(--f-mono); color:var(--sand); border:1px dashed var(--sand); border-radius:999px; padding:0 7px; vertical-align:2px}" +
-    ".dl-when{color:var(--muted); font-size:.88rem; margin-top:2px !important} .dl-when b{color:var(--ink); font-weight:500}" +
+    ".dl-t{color:var(--ink); font-weight:700; font-size:.9375rem}" +
+    ".dl-exp{display:inline-block; font-weight:500; font-size:.8125rem; font-family:var(--f-mono); color:var(--sand); border:1px dashed var(--sand); border-radius:999px; padding:0 7px; vertical-align:2px}" +
+    ".dl-when{color:var(--muted); font-size:.9375rem; margin-top:2px !important} .dl-when b{color:var(--ink); font-weight:500}" +
     ".dl-soon .dl-when b{color:var(--sand)}" +
-    ".dl-n{color:var(--muted); font-size:.88rem; margin-top:4px !important}" +
-    ".dl-links{font-size:.85rem; margin-top:6px !important} .dl-links a{color:var(--green)}" +
+    ".dl-n{color:var(--muted); font-size:.9375rem; margin-top:4px !important}" +
+    ".dl-links{font-size:.8125rem; margin-top:6px !important} .dl-links a{color:var(--green)}" +
     ".dl-uni{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); margin-top:8px; padding:0 14px}" +
     ".dl-uni summary{cursor:pointer; padding:12px 0; font-weight:700; color:var(--ink); display:flex; justify-content:space-between; align-items:center; gap:8px}" +
     ".dl-uni[open] summary{border-bottom:1px dashed var(--line); margin-bottom:10px}" +
     ".dl-uni .dl-list{padding-bottom:12px} .dl-uni .dl-row{background:transparent}" +
-    ".dl-count{font-family:var(--f-mono); font-size:.78rem; color:var(--sand); border:1px solid color-mix(in srgb, var(--sand) 45%, transparent); border-radius:999px; padding:0 8px}" +
+    ".dl-count{font-family:var(--f-mono); font-size:.8125rem; color:var(--sand); border:1px solid color-mix(in srgb, var(--sand) 45%, transparent); border-radius:999px; padding:0 8px}" +
     ".dl-bar{position:sticky; bottom:max(12px, env(safe-area-inset-bottom)); z-index:5; margin-top:16px; display:flex; justify-content:center}" +
     ".dl-bar .btn[disabled]{opacity:.6; cursor:default}" +
     ".dl-toast{position:fixed; z-index:70; top:max(12px, env(safe-area-inset-top)); inset-inline:12px; margin-inline:auto; max-width:520px; display:flex; align-items:center; gap:10px; background:#10223C; color:var(--night-ink, #EEF2F7); border:1px solid var(--gold, #E2B66C); border-radius:14px; padding:10px 12px; box-shadow:0 18px 40px -18px rgba(0,0,0,.8)}" +
-    ".dl-toast p{margin:0; flex:1; font-size:.92rem} .dl-toast small{color:var(--night-dim, #A9B8CB)}" +
-    ".dl-toast a{color:var(--gold, #E2B66C); font-size:.88rem; white-space:nowrap}" +
-    ".dl-toast button{background:none; border:0; color:var(--night-dim, #A9B8CB); font-size:1.3rem; cursor:pointer; line-height:1}" +
+    ".dl-toast p{margin:0; flex:1; font-size:.9375rem} .dl-toast small{color:var(--night-dim, #A9B8CB)}" +
+    ".dl-toast a{color:var(--gold, #E2B66C); font-size:.9375rem; white-space:nowrap}" +
+    ".dl-toast button{background:none; border:0; color:var(--night-dim, #A9B8CB); font-size:1.25rem; cursor:pointer; line-height:1}" +
     "@media (max-width:700px){ .dl-bar{justify-content:flex-start} }" +
     "@media (max-width:560px){ .dl-row{grid-template-columns:auto 1fr; } .dl-row .dl-date{grid-row:span 1} .dl-pick{grid-row:1} .dl-row .dl-body{grid-column:1 / -1} }";
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);

@@ -1,0 +1,225 @@
+/* Masarok design layer, loaded last on every page.
+   Keeps the night look and adds: spring motion, 44px touch targets, press feedback, one gold accent,
+   quieter cards and chrome, a slim sticky bar, a compact lesson bar, and fallbacks for
+   reduced motion, reduced transparency and higher contrast. */
+
+:root{
+  /* springs (response .5s, damping .86) and (response .3s, damping .78), drawn with linear() */
+  --spring:linear(0, 0.0273, 0.0947, 0.1846, 0.2846, 0.3859, 0.4831, 0.5725, 0.6523, 0.7219, 0.7812, 0.8309, 0.8717, 0.9048, 0.9311, 0.9517, 0.9675, 0.9795, 0.9883, 0.9946, 0.9989, 1.0018, 1.0036, 1.0046, 1.005, 1.005, 1.0047, 1.0043, 1.0038, 1.0033, 1);
+  --spring-snappy:linear(0, 0.0491, 0.1635, 0.3059, 0.4518, 0.5868, 0.703, 0.7979, 0.8717, 0.9265, 0.9652, 0.991, 1.007, 1.0157, 1.0194, 1.0198, 1.0182, 1.0157, 1.0128, 1.0099, 1.0074, 1.0052, 1);
+  /* type: one text family for body and labels */
+  --f-mono:var(--f-body);
+  --t-caption:.75rem; --t-foot:.8125rem; --t-sub:.9375rem; --t-body:1.0625rem; --t-title:1.25rem;
+  /* surfaces */
+  --card:#10223B; --card-hi:#14294A; --hair:rgba(238,242,247,.12); --hair-hi:rgba(226,182,108,.55);
+  --bar-h:48px;
+}
+html[lang="ar"]{--f-mono:var(--f-ar, var(--f-body))}
+@supports not (transition-timing-function:linear(0, 1)){
+  :root{--spring:cubic-bezier(.2,.8,.2,1); --spring-snappy:cubic-bezier(.25,.9,.3,1)}
+}
+
+/* ---------- one accent ---------- */
+a{color:var(--gold)}
+::selection{background:rgba(226,182,108,.35)}
+.eyebrow{font-size:var(--t-foot); font-weight:700; color:var(--gold)}
+.trust{font-size:var(--t-foot); color:var(--night-dim)}
+
+/* ---------- touch targets (44px) ---------- */
+.btn, .bk-btn, .gm-btn, .mn-btn, .ar-tg, .cs-back, .uni-chip, .acc-btn, .jr-cta, .es-link, .lp-acts button,
+.acc-tools button, [data-acc-all], .flip-btn, .mn-x, select, summary, .pk-panel button, .jr-sheet button:not(.jr-step button),
+.gm-ov button, .qs button, .co button, .sp-row button, .mn-item{min-height:44px}
+.mn-x{min-width:44px}
+.btn, .bk-btn, .gm-btn, .ar-tg, .uni-chip, .acc-tools button, [data-acc-all], .flip-btn{display:inline-flex; align-items:center; justify-content:center; gap:8px}
+summary{display:flex; align-items:center; gap:8px; cursor:pointer}
+/* inline text buttons: a taller hit area without moving the text */
+.linkish, .jr-textbtn{padding-block:12px; margin-block:-12px; touch-action:manipulation}
+.top nav a, .top nav button{min-height:44px; display:inline-flex; align-items:center}
+.top nav a.lang{padding:0 14px; min-height:36px; margin-block:4px}
+input[type="checkbox"], input[type="radio"]{min-width:22px; min-height:22px}
+
+/* ---------- press feedback and springs ---------- */
+button, .btn, a.mn-item, .acc-btn, .ls, .track, .jr-lesson, .option, summary{-webkit-tap-highlight-color:transparent}
+.btn, .bk-btn, .gm-btn, .mn-btn, .ar-tg, .uni-chip, .mn-item, .acc-btn, .ls, .jr-lesson, .jr-cta, .lp-acts button, .mn-x, .qs button, .track a, .es-link{
+  transition:transform .32s var(--spring-snappy), opacity .2s var(--spring), background-color .2s var(--spring), border-color .2s var(--spring), color .2s var(--spring)}
+.btn:active, .bk-btn:active, .gm-btn:active, .mn-btn:active, .ar-tg:active, .uni-chip:active, .jr-cta:active, .lp-acts button:active, .mn-x:active, .qs button:active, .es-link:active{transform:scale(.96); transition-duration:.08s}
+.mn-item:active, .acc-btn:active, .ls:active, .jr-lesson:active{transform:scale(.985); opacity:.85; transition-duration:.08s}
+.linkish:active, .jr-textbtn:active, .top nav a:active, a:active{opacity:.6}
+.btn{border-radius:12px}
+.btn:hover{translate:none; box-shadow:none; filter:brightness(1.06)}
+.acc-btn:hover{translate:none}
+
+/* ---------- quieter surfaces: solid cards, no glows ---------- */
+.demo, .pl-card, .vc, .lp-done, .cert, .qz, .contact, .help, .ac-train, .loop li:last-child, .track.is-first, .ls.is-rec, .jr-card.is-next{background:var(--card)}
+.track.is-first, .jr-card.is-next, .ls.is-rec{border-color:var(--hair-hi)}
+.jr-finished{background:rgba(11,107,58,.16)}
+.co{background:rgba(108,203,152,.06)}
+.co-bar b, .jm-sub i b, .jr-plan-bar i{background:var(--gold)}
+.jr-step.is-open button{animation:none; box-shadow:0 0 0 4px rgba(226,182,108,.22)}
+.jm-stop.is-here{background:var(--gold); color:#1A1206; animation:none; box-shadow:0 0 0 5px rgba(226,182,108,.25)}
+.jm-stop.is-pop{animation:jmPop .6s var(--spring-snappy)}
+.ac-status i{animation:none}
+.gm-bar{background:var(--card); border-color:var(--hair-hi)}
+/* Sadu: keep it as a signature at the hero and footer; not inside sheets, dialogs and menus */
+.jr-sheet > .sadu, .pk-panel > .sadu, .mn-sheet > .sadu, .bk-box .sadu, .gm-ov .sadu, .gm-box .sadu, .lp-done .sadu, .tour .sadu, [role="dialog"] .sadu{display:none}
+.sadu{animation:none}
+/* the night sky rests while it is off screen */
+html.sky-off .hero *, html.sky-off .stars, html.sky-off .stars *{animation-play-state:paused !important}
+.shoot{display:none}
+
+/* ---------- key sections: the two to start with ---------- */
+main > section.acc.is-key .acc-btn{padding:20px 20px; border-color:var(--hair-hi); background:var(--card-hi)}
+main > section.acc.is-key .acc-eb{color:var(--gold); font-weight:700}
+main > section.acc.is-key .acc-num{background:var(--gold); color:#1A1206; border-color:var(--gold)}
+main > section.acc.is-key .acc-t{font-size:clamp(1.3rem, 1.4vw + 1rem, 1.7rem)}
+
+/* ---------- headers ---------- */
+.top{padding-block:6px; min-height:56px; box-sizing:border-box; flex-wrap:nowrap; gap:12px}
+.top nav{flex-wrap:nowrap; gap:4px 18px}
+.brand{min-height:44px; display:flex; align-items:center}
+.mn-btn{padding:0 16px 0 14px; border-radius:999px}
+@media (max-width:720px){
+  .top nav{gap:8px; margin-inline-start:auto}
+  .top nav a:not(.lang), .top nav .uni-chip, .top nav .nav-ac{display:none !important}
+  .top > .mn-btn{margin-inline-start:0}
+  .brand .ar{display:none}
+}
+/* slim sticky bar that appears once the page header has scrolled away */
+.mb{position:fixed; top:0; left:0; right:0; z-index:90; height:calc(var(--bar-h) + env(safe-area-inset-top, 0px)); padding-top:env(safe-area-inset-top, 0px); box-sizing:border-box;
+  background:rgba(11,22,38,.72); -webkit-backdrop-filter:saturate(180%) blur(20px); backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--hair);
+  transform:translateY(-100%); opacity:0; transition:transform .45s var(--spring), opacity .25s var(--spring); pointer-events:none}
+.mb.is-on{transform:none; opacity:1; pointer-events:auto}
+.mb-in{height:var(--bar-h); max-width:62rem; margin:0 auto; padding:0 max(16px, env(safe-area-inset-left, 0px)); display:flex; align-items:center; gap:12px}
+.mb-brand{font-family:var(--f-display); font-weight:800; font-size:1.0625rem; color:var(--night-ink); text-decoration:none; min-height:44px; display:flex; align-items:center}
+html[lang="ar"] .mb-brand{font-family:var(--f-ar)}
+.mb-sp{flex:1}
+.mb-lang{color:var(--night-ink); text-decoration:none; font-size:var(--t-sub); min-height:44px; display:inline-flex; align-items:center; padding:0 10px}
+.mb-lang:lang(ar){font-family:var(--f-ar)}
+.mb .mn-btn{min-height:36px; font-size:var(--t-sub)}
+.mb .mn-btn::before{content:""; position:absolute; inset:-4px} /* 44px hit area */
+.mb .mn-btn{position:relative}
+.read-bar{z-index:95}
+
+/* ---------- lessons: a compact pinned bar, the site header steps aside ---------- */
+html.in-lesson .top, html.in-lesson .mb{display:none}
+.cs-head.lp-bar{position:sticky; top:0; z-index:40; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:4px 12px; flex-wrap:nowrap;
+  margin-inline:-16px; padding:calc(4px + env(safe-area-inset-top, 0px)) 16px 0; background:rgba(11,22,38,.78);
+  -webkit-backdrop-filter:saturate(180%) blur(20px); backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--hair)}
+.lp-bar .cs-back{min-width:44px; justify-content:center}
+.lp-bar .lp-bk{display:none}
+.lp-bar .lp-top{display:grid; grid-template-columns:1fr auto; align-items:baseline; gap:0 10px; min-width:0}
+.lp-bar .lp-top .eyebrow{color:var(--night-ink); font-size:var(--t-sub); font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block}
+.lp-bar .lp-n{font-size:var(--t-foot); white-space:nowrap}
+.lp-bar .lp-prog{grid-column:1 / -1; height:3px; border-radius:2px; margin:8px -0px 0}
+.lp-bar .ar-tg{min-height:36px; position:relative; padding:0 12px}
+.lp-bar .ar-tg::before{content:""; position:absolute; inset:-4px}
+.lp-bar + .lp{margin-top:16px}
+@media (min-width:720px){ .lp-bar .lp-bk{display:inline} .cs-head.lp-bar{margin-inline:0; padding-inline:0; background:rgba(11,22,38,.86)} }
+
+/* ---------- icons ---------- */
+.mi{width:1.15em; height:1.15em; vertical-align:-.2em; flex:none; stroke-width:1.8}
+.mi-w{display:inline-flex; vertical-align:-.18em}
+.mi-w .mi{vertical-align:0}
+.mn-ic .mi, .ls-ic .mi, .jr-lesson-ic .mi, .qs-ic .mi, .track-ic .mi, .iv-ic .mi, .sy-ic .mi{width:22px; height:22px; color:var(--gold)}
+.lp-medal .mi{width:44px; height:44px; color:var(--gold)}
+.track-ic .mi{width:28px; height:28px}
+.mi-flag{font-size:1.1em; line-height:1}
+
+/* ---------- motion preferences ---------- */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{scroll-behavior:auto !important}
+  .btn:active, .bk-btn:active, .gm-btn:active, .mn-btn:active, .ar-tg:active, .uni-chip:active, .jr-cta:active, .lp-acts button:active, .mn-x:active, .qs button:active,
+  .mn-item:active, .acc-btn:active, .ls:active, .jr-lesson:active{transform:none; opacity:.7}
+  .mb{transition:opacity .2s linear; transform:none}
+  .sky circle, .cross circle, .palms, .ripples, .landmark .glow{animation:none !important}
+}
+
+/* ---------- transparency and contrast preferences ---------- */
+@media (prefers-reduced-transparency: reduce){
+  .mb, .cs-head.lp-bar{background:#0E1C30; -webkit-backdrop-filter:none; backdrop-filter:none}
+  .mn-bg, .pk-backdrop, .jr-backdrop{background:rgba(5,10,18,.92); -webkit-backdrop-filter:none; backdrop-filter:none}
+}
+@media (prefers-contrast: more){
+  :root{--night-dim:#D3DCE7; --muted:#D3DCE7; --hair:rgba(238,242,247,.45); --hair-hi:#E2B66C}
+  .mb, .cs-head.lp-bar{background:#08111E; -webkit-backdrop-filter:none; backdrop-filter:none; border-bottom-color:#EEF2F7}
+  .acc-btn, .track, .ls, .option, .jr-card, .btn-ghost, .mn-item{border-color:rgba(238,242,247,.55) !important}
+  a:not(.btn):not(.mn-item):not(.brand):not(.mb-brand){text-decoration:underline}
+  .eyebrow, .acc-eb, .lp-n, small{color:#E6ECF3}
+}
+@media (forced-colors: active){
+  .mi{stroke:CanvasText}
+  .btn, .acc-btn, .mn-btn{border:1px solid ButtonText}
+}
+
+/* ---------- homepage hero: copy and the real product ---------- */
+.hero-copy{gap:18px}
+.hero .lede{font-size:clamp(1.0625rem, .6vw + .95rem, 1.25rem); color:#D5DEE9; max-width:32rem}
+.hero .cta{display:flex; flex-wrap:wrap; align-items:center; gap:10px 22px}
+.hero-link{text-decoration:none; font-size:var(--t-body); color:var(--gold); min-height:44px; padding-block:0; margin-block:0; display:inline-flex; align-items:center; gap:6px}
+.hero-link:hover{text-decoration:underline; text-underline-offset:4px}
+.trust{gap:4px 0}
+.trust span{gap:0}
+.trust span::before{content:none}
+.trust span + span::before{content:"·"; width:auto; height:auto; background:none; transform:none; margin-inline:10px; color:var(--night-dim)}
+.hm{appearance:none; -webkit-appearance:none; background:none; border:0; padding:0; margin:0; font:inherit; color:inherit; text-align:start; cursor:pointer; justify-self:center; position:relative; z-index:3; -webkit-tap-highlight-color:transparent}
+.hm-phone{display:grid; gap:12px; width:272px; box-sizing:border-box; padding:12px 14px 16px; border-radius:40px; background:#0D1B2E; border:1px solid rgba(238,242,247,.16);
+  box-shadow:0 0 0 7px #050B14, 0 0 0 8px rgba(238,242,247,.12), 0 40px 80px -30px rgba(0,0,0,.85); transition:transform .5s var(--spring)}
+.hm:hover .hm-phone{transform:translateY(-4px)}
+.hm:active .hm-phone{transform:scale(.98); transition-duration:.1s}
+.hm:focus-visible{outline:none}
+.hm:focus-visible .hm-phone{outline:3px solid var(--gold); outline-offset:10px}
+.hm-notch{justify-self:center; width:80px; height:22px; border-radius:12px; background:#050B14}
+.hm-head{display:grid; gap:2px; padding-inline:4px}
+.hm-head b{font-family:var(--f-display); font-size:var(--t-title); color:var(--night-ink)}
+html[lang="ar"] .hm-head b{font-family:var(--f-ar)}
+.hm-head small{font-size:var(--t-foot); color:var(--gold); font-weight:700}
+.hm-stage{position:relative; display:block; height:176px; border-radius:16px; overflow:hidden; background:radial-gradient(90% 120% at 100% 0%, #1B3A60 0%, #10213A 60%); border:1px solid var(--hair)}
+.hm-stairs{position:absolute; inset:14px 10px 0; list-style:none; margin:0; padding:0; display:flex; align-items:flex-end; gap:3px}
+.hm-st{flex:1 1 0; min-width:0; height:var(--h); border-radius:5px 5px 0 0; display:flex; justify-content:center; padding-top:5px; box-sizing:border-box; font-size:var(--t-caption); font-weight:700}
+.hm-st.is-done{background:#0B6B3A; color:#EAF6EE}
+.hm-st.is-open{background:var(--gold); color:#1A1206}
+.hm-st.is-locked{background:rgba(255,255,255,.06); color:var(--night-dim)}
+.hm-me{position:absolute; width:28px; height:49px; inset-inline-start:calc(10px + (100% - 20px) * var(--x) - 14px); bottom:calc((100% - 14px) * var(--y) - 2px)}
+.hm-me .jr-fig{width:100%; height:100%; filter:drop-shadow(0 3px 4px rgba(0,0,0,.45))}
+.hm-card{list-style:none; margin:0; padding:0; display:grid; gap:6px}
+.hm-card li{display:grid; grid-template-columns:auto minmax(0, 1fr); column-gap:10px; align-items:center; padding:9px 12px; border-radius:12px; background:var(--card); border:1px solid var(--hair)}
+.hm-card .hm-star{grid-row:span 2; color:rgba(238,242,247,.28); font-size:1.0625rem}
+.hm-card li.is-on .hm-star{color:var(--gold)}
+.hm-card b{font-size:var(--t-sub); color:var(--night-ink)}
+.hm-card small{font-size:var(--t-foot); color:var(--night-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+@media (min-width:900px){
+  .hero-inner.has-hm{display:grid; grid-template-columns:minmax(0, 1fr) auto; column-gap:56px}
+  .hero-inner.has-hm > .top{grid-column:1 / -1}
+  .hero-inner.has-hm > .hm{align-self:start; margin-top:44px}
+}
+@media (max-width:899px){
+  .hero-inner.has-hm{display:flex; flex-direction:column}
+  .hero-inner.has-hm .hero-copy{padding-block:32px 28px}
+  .hero-inner.has-hm > .hm{margin-bottom:150px}
+  .hm-phone{width:min(272px, 78vw)}
+}
+@media (prefers-reduced-motion: reduce){ .hm:hover .hm-phone, .hm:active .hm-phone{transform:none} }
+.ar-tg{display:inline-flex; align-items:center; gap:6px}
+@media (max-width:519px){ .lp-bar .ar-tx{display:none} .lp-bar .ar-tg{min-width:44px; justify-content:center; padding:0} }
+
+/* ---------- touch targets that need a stronger selector (styles injected by scripts come after this file) ---------- */
+html .mn-btn{min-height:44px; padding:0 16px 0 14px}
+html .top nav a.lang{min-height:44px; margin-block:0; padding:0 16px}
+html .acc-tools button{min-height:44px; display:inline-flex; align-items:center; padding-inline:4px}
+html .acc-tools div{gap:10px}
+html .dl-pick{width:44px; min-height:44px; padding-top:0; display:flex; justify-content:center; align-items:flex-start; padding-top:12px; box-sizing:border-box}
+html .q-o{min-height:44px}
+html .lp-bar .ar-tg{min-height:44px}
+html .mb .mn-btn{min-height:40px}
+/* inline links in running text: a taller tap area without moving the text */
+main a:not([class]), .note a, .src a, .campus-credit, .acc-src a{padding-block:12px; margin-block:-12px}
+html input[type="number"], html input[type="text"], html input[type="email"], html select{min-height:44px; box-sizing:border-box}
+html .fb-foot{min-height:44px; display:inline-flex; align-items:center}
+html .mb .mn-btn{min-height:44px}
+html .cs-grp h3 small{font-size:var(--t-caption)}
+.jr-track .jr-lane, .jr-track > .sadu{display:none}
+html .jr-sheet > .jr-track{height:10px}
+.uni-chip{white-space:nowrap}
+@media (max-width:999px){ .top nav .uni-chip{display:none !important} }
+@media (max-width:899px){ .hero-inner.has-hm > .hm{align-self:center} }
+@media (max-width:720px){ html[lang="ar"] .brand .ar{display:inline} }

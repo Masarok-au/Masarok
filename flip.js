@@ -421,8 +421,8 @@
 
   // ---------- styles ----------
   var css =
-    ".flip{position:relative; perspective:1600px; border-radius:var(--flip-r, var(--radius)); background:transparent !important; border-color:transparent !important; padding:0 !important; display:flex !important; flex-direction:column; gap:0 !important; cursor:pointer; transition:min-height .45s ease, translate .25s ease, box-shadow .25s ease}" +
-    ".flip > .flip-face{background:var(--surface); border:1px solid var(--line); border-radius:var(--flip-r, var(--radius)); padding:var(--flip-p, 18px); display:grid; gap:var(--flip-g, 10px); align-content:start; min-width:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; transition:transform .6s cubic-bezier(.2,.7,.2,1), border-color .25s ease}" +
+    ".flip{position:relative; perspective:1600px; border-radius:var(--flip-r, var(--radius)); background:transparent !important; border-color:transparent !important; padding:0 !important; display:flex !important; flex-direction:column; gap:0 !important; cursor:pointer; transition:min-height .45s var(--spring, ease), translate .25s var(--spring, ease), box-shadow .25s var(--spring, ease)}" +
+    ".flip > .flip-face{background:var(--surface); border:1px solid var(--line); border-radius:var(--flip-r, var(--radius)); padding:var(--flip-p, 18px); display:grid; gap:var(--flip-g, 10px); align-content:start; min-width:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; transition:transform .6s var(--spring, ease), border-color .25s var(--spring, ease)}" +
     ".flip > .flip-front{flex:1; transform:rotateY(0deg); display:flex; flex-direction:column}" +
     ".flip > .flip-back{position:absolute; inset:0; overflow:auto; transform:rotateY(180deg); background:color-mix(in srgb, var(--surface) 88%, var(--sand) 12%)}" +
     ".flip.is-flipped > .flip-front{transform:rotateY(-180deg)}" +
@@ -432,19 +432,19 @@
     ".option.flip{--flip-p:18px; --flip-g:10px}" +
     ".track.flip{--flip-p:14px 16px; --flip-g:4px; --flip-r:8px}" +
     ".glance > .flip{--flip-p:14px 16px; --flip-g:4px}" +
-    ".flip-btn{font:inherit; font-size:.8rem; font-family:var(--f-mono); letter-spacing:.04em; color:var(--sand); background:transparent; border:1px solid color-mix(in srgb, var(--sand) 40%, transparent); border-radius:999px; padding:4px 10px; cursor:pointer; line-height:1.3}" +
+    ".flip-btn{font:inherit; font-size:.8125rem; font-family:var(--f-mono); letter-spacing:.04em; color:var(--sand); background:transparent; border:1px solid color-mix(in srgb, var(--sand) 40%, transparent); border-radius:999px; padding:4px 10px; cursor:pointer; line-height:1.3}" +
     ".flip-btn:hover{background:color-mix(in srgb, var(--sand) 14%, transparent)}" +
     ".flip-btn:focus-visible{outline:2px solid var(--sand); outline-offset:2px}" +
     ".flip-open{align-self:flex-end; margin-top:auto}" +
     ".flip-front > .flip-open{margin-top:auto; padding-top:4px; padding-bottom:4px}" +
     ".fb-top{display:flex; justify-content:space-between; align-items:center; gap:8px}" +
-    ".fb-kicker{font-family:var(--f-mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}" +
-    ".flip-back .fb-title{margin:0; font-size:1.02rem; color:var(--ink)}" +
-    ".flip-back p{margin:0; color:var(--ink); font-size:.93rem}" +
-    ".fb-pts{margin:0; padding-inline-start:1.1em; display:grid; gap:5px; color:var(--muted); font-size:.9rem}" +
+    ".fb-kicker{font-family:var(--f-mono); font-size:.8125rem; color:var(--muted)}" +
+    ".flip-back .fb-title{margin:0; font-size:1.0625rem; color:var(--ink)}" +
+    ".flip-back p{margin:0; color:var(--ink); font-size:.9375rem}" +
+    ".fb-pts{margin:0; padding-inline-start:1.1em; display:grid; gap:5px; color:var(--muted); font-size:.9375rem}" +
     ".fb-links{display:flex; flex-wrap:wrap; gap:6px 12px; padding-top:6px; border-top:1px dashed var(--line)}" +
-    ".fb-links a{color:var(--green); font-size:.9rem}" +
-    "@media (prefers-reduced-motion: reduce){ .flip > .flip-face{transition:opacity .2s ease !important; transform:none !important} .flip > .flip-back{opacity:0} .flip.is-flipped > .flip-back{opacity:1} .flip.is-flipped > .flip-front{opacity:0} .flip{transition:none} }";
+    ".fb-links a{color:var(--green); font-size:.9375rem}" +
+    "@media (prefers-reduced-motion: reduce){ .flip > .flip-face{transition:opacity .2s var(--spring, ease) !important; transform:none !important} .flip > .flip-back{opacity:0} .flip.is-flipped > .flip-back{opacity:1} .flip.is-flipped > .flip-front{opacity:0} .flip{transition:none} }";
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
   // ---------- events ----------

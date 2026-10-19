@@ -24,18 +24,18 @@
 
   var css =
     ".is-app .top{padding-top:max(20px, env(safe-area-inset-top))}" +
-    ".app-chip{font:inherit; font-size:.93rem; color:var(--night-ink, #EEF2F7); background:rgba(226,182,108,.12); border:1px solid var(--gold, #E2B66C); border-radius:999px; padding:1px 12px; cursor:pointer; display:inline-flex; align-items:center; gap:6px}" +
+    ".app-chip{font:inherit; font-size:.9375rem; color:var(--night-ink, #EEF2F7); background:rgba(226,182,108,.12); border:1px solid var(--gold, #E2B66C); border-radius:999px; padding:1px 12px; cursor:pointer; display:inline-flex; align-items:center; gap:6px}" +
     ".app-chip:hover{background:rgba(226,182,108,.22)}" +
     ".app-chip svg{width:14px; height:14px}" +
-    ".app-foot{display:inline-flex; align-items:center; gap:6px; margin-inline-start:8px; padding:6px 14px; border:1px solid rgba(238,242,247,.35); border-radius:999px; color:var(--night-ink, #EEF2F7); background:transparent; font:inherit; font-size:.9rem; cursor:pointer}" +
+    ".app-foot{display:inline-flex; align-items:center; gap:6px; margin-inline-start:8px; padding:6px 14px; border:1px solid rgba(238,242,247,.35); border-radius:999px; color:var(--night-ink, #EEF2F7); background:transparent; font:inherit; font-size:.9375rem; cursor:pointer}" +
     ".app-foot:hover{background:rgba(238,242,247,.08)}" +
     ".is-app .app-chip, .is-app .app-foot{display:none !important}" +
     ".app-dlg{position:fixed; inset:0; z-index:90; display:grid; place-items:end center; background:rgba(5,10,18,.6); padding:16px}" +
     ".app-dlg[hidden]{display:none}" +
     ".app-card{width:min(420px, 100%); background:#10223C; color:var(--night-ink, #EEF2F7); border:1px solid rgba(238,242,247,.16); border-radius:16px; padding:20px; box-shadow:0 20px 60px -20px rgba(0,0,0,.7); margin-bottom:env(safe-area-inset-bottom)}" +
-    ".app-card h2{margin:0 0 10px; font-size:1.15rem}" +
+    ".app-card h2{margin:0 0 10px; font-size:1.25rem}" +
     ".app-card ol{margin:0 0 10px; padding-inline-start:1.2em; display:grid; gap:6px}" +
-    ".app-card p{margin:0 0 14px; color:var(--night-dim, #A9B8CB); font-size:.92rem}" +
+    ".app-card p{margin:0 0 14px; color:var(--night-dim, #A9B8CB); font-size:.9375rem}" +
     ".app-card .row{display:flex; align-items:center; gap:12px}" +
     ".app-card img{width:48px; height:48px; border-radius:11px}" +
     ".app-card button{font:inherit; background:var(--gold, #E2B66C); color:#0B1626; border:0; border-radius:999px; padding:8px 18px; font-weight:700; cursor:pointer}";

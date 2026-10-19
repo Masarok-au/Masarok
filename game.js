@@ -4,6 +4,7 @@
    Everything is worked out from the journey's saved progress, so it stays on this device. */
 (function () {
   var AR = (document.documentElement.lang || "en").slice(0, 2) === "ar";
+  function IC(x, c) { return window.MasarokIcon ? window.MasarokIcon.from(x, c) : (x || ""); }
   function T(x) { return Array.isArray(x) ? x[AR ? 1 : 0] : x; }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function fmt(s, o) { return T(s).replace(/\{(\w+)\}/g, function (m, k) { return o[k] != null ? o[k] : m; }); }
@@ -96,8 +97,8 @@
     shareLine: ["I'm {p}% of the way to studying {in}", "أنجزت {p}% من طريقي للدراسة {in}"],
     shareSub: ["My step-by-step plan on Masarok", "خطتي خطوة بخطوة على مسارُك"],
     shareText: ["I'm {p}% of the way to studying {in}. Plan yours on Masarok:", "أنجزت {p}% من طريقي للدراسة {in}. خطط لطريقك على مسارُك:"],
-    streak: ["🔥 {n}-week streak", "🔥 سلسلة {w}"], streakRisk: ["Do one thing this week to keep it going", "أنجز شيئًا هذا الأسبوع لتحافظ عليها"],
-    streakNew: ["🔥 Start a weekly streak: do one thing each week", "🔥 ابدأ سلسلة أسبوعية: أنجز شيئًا كل أسبوع"], streakUp: ["🔥 {n}-week streak!", "🔥 سلسلة {w}!"],
+    streak: ["{n}-week streak", "سلسلة {w}"], streakRisk: ["Do one thing this week to keep it going", "أنجز شيئًا هذا الأسبوع لتحافظ عليها"],
+    streakNew: ["Start a weekly streak: do one thing each week", "ابدأ سلسلة أسبوعية: أنجز شيئًا كل أسبوع"], streakUp: ["{n}-week streak!", "سلسلة {w}!"],
     abroad: ["abroad", "في الخارج"], quests: ["Side quests {d}/{n}", "المهمات {d}/{n}"], wardrobe: ["Wardrobe", "الخزانة"], outfit: ["New outfit unlocked", "زيّ جديد مفتوح"], saved: ["Image saved", "حُفظت الصورة"]
   };
 
@@ -201,19 +202,19 @@
     ".gm-bar{display:grid; grid-template-columns:auto 1fr auto; gap:6px 14px; align-items:center; padding:12px 14px; border-radius:14px; border:1px solid rgba(226,182,108,.45); background:linear-gradient(135deg, rgba(226,182,108,.12), rgba(156,42,34,.10))}" +
     ".gm-bar .gm-medal{width:46px; height:56px}" +
     ".gm-rk{display:grid; gap:3px; min-width:0}" +
-    ".gm-rk b{font-family:var(--f-display); font-size:1.08rem; color:var(--night-ink)}" +
-    ".gm-rk small{color:var(--night-dim); font-size:.84rem}" +
+    ".gm-rk b{font-family:var(--f-display); font-size:1.0625rem; color:var(--night-ink)}" +
+    ".gm-rk small{color:var(--night-dim); font-size:.8125rem}" +
     ".gm-xp{height:7px; border-radius:999px; background:rgba(238,242,247,.12); overflow:hidden}" +
-    ".gm-xp i{display:block; height:100%; background:linear-gradient(90deg, #9C2A22, #E2B66C); border-radius:999px; transition:width .6s ease}" +
+    ".gm-xp i{display:block; height:100%; background:linear-gradient(90deg, #9C2A22, #E2B66C); border-radius:999px; transition:width .6s var(--spring, ease)}" +
     ".gm-acts{display:flex; flex-direction:column; gap:6px; align-items:stretch}" +
-    ".gm-btn{font:inherit; font-size:.85rem; color:var(--night-ink); background:rgba(255,255,255,.05); border:1px solid rgba(226,182,108,.5); border-radius:999px; padding:5px 12px; cursor:pointer; white-space:nowrap}" +
+    ".gm-btn{font:inherit; font-size:.8125rem; color:var(--night-ink); background:rgba(255,255,255,.05); border:1px solid rgba(226,182,108,.5); border-radius:999px; padding:5px 12px; cursor:pointer; white-space:nowrap}" +
     ".gm-btn:hover{background:rgba(226,182,108,.16)}" +
     ".gm-btn:focus-visible{outline:2px solid var(--gold); outline-offset:2px}" +
     "@media (max-width:560px){ .gm-bar{grid-template-columns:auto 1fr} .gm-acts{grid-column:1 / -1; display:grid; grid-template-columns:1fr 1fr} .gm-acts .gm-btn{white-space:normal} }" +
-    ".gm-chip{display:flex; align-items:center; gap:8px; font-size:.86rem; color:var(--night-ink)}" +
+    ".gm-chip{display:flex; align-items:center; gap:8px; font-size:.8125rem; color:var(--night-ink)}" +
     ".gm-chip .gm-medal{width:26px; height:32px}" +
     ".gm-chip b{color:var(--gold)}" +
-    ".gm-float{position:fixed; z-index:140; pointer-events:none; font-family:var(--f-display); font-weight:800; color:#E2B66C; text-shadow:0 2px 8px rgba(0,0,0,.6); font-size:1.05rem}" +
+    ".gm-float{position:fixed; z-index:140; pointer-events:none; font-family:var(--f-display); font-weight:800; color:#E2B66C; text-shadow:0 2px 8px rgba(0,0,0,.6); font-size:1.0625rem}" +
     ".gm-confetti{position:fixed; inset:0; z-index:130; pointer-events:none; overflow:hidden}" +
     ".gm-confetti i{position:absolute; top:-20px; width:10px; height:10px; transform:rotate(45deg)}" +
     ".gm-ov{position:fixed; inset:0; z-index:125; display:grid; place-items:center; padding:calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px)); background:rgba(5,10,18,.66); backdrop-filter:blur(4px)}" +
@@ -224,20 +225,20 @@
     ".gm-card h2{margin:0; font-size:1.5rem; color:var(--night-ink)}" +
     ".gm-pts{font-family:var(--f-display); font-weight:800; font-size:2rem; color:#E2B66C}" +
     ".gm-sec{width:100%; border-top:1px dashed rgba(238,242,247,.16); padding-top:12px; display:grid; gap:8px; justify-items:center}" +
-    ".gm-sec h3{margin:0; font-family:var(--f-mono); font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; color:var(--night-dim, #A9B8CB)}" +
+    ".gm-sec h3{margin:0; font-family:var(--f-mono); font-size:.8125rem; color:var(--night-dim, #A9B8CB)}" +
     ".gm-row{display:flex; flex-wrap:wrap; justify-content:center; gap:14px}" +
-    ".gm-badge{display:grid; gap:4px; justify-items:center; width:96px; font-size:.84rem}" +
+    ".gm-badge{display:grid; gap:4px; justify-items:center; width:96px; font-size:.8125rem}" +
     ".gm-badge .gm-medal{width:72px; height:88px}" +
     ".gm-card .gm-badge .gm-medal{animation:gmShine 1.2s ease .2s both}" +
-    ".gm-tip{max-width:26rem; color:#C8D3E0; font-size:.98rem; background:rgba(255,255,255,.04); border-radius:12px; padding:10px 14px; text-align:start}" +
+    ".gm-tip{max-width:26rem; color:#C8D3E0; font-size:.9375rem; background:rgba(255,255,255,.04); border-radius:12px; padding:10px 14px; text-align:start}" +
     ".gm-tip b{color:#E2B66C}" +
     ".gm-foot{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; padding-top:6px}" +
-    ".gm-x{position:absolute; top:28px; inset-inline-end:12px; width:34px; height:34px; border-radius:50%; border:1px solid rgba(238,242,247,.25); background:transparent; color:inherit; font-size:1.2rem; cursor:pointer}" +
+    ".gm-x{position:absolute; top:28px; inset-inline-end:12px; width:34px; height:34px; border-radius:50%; border:1px solid rgba(238,242,247,.25); background:transparent; color:inherit; font-size:1.25rem; cursor:pointer}" +
     ".gm-shelf{display:grid; grid-template-columns:repeat(auto-fill, minmax(96px, 1fr)); gap:14px 8px; width:100%; text-align:center}" +
     ".gm-shelf .gm-badge{width:auto}" +
-    ".gm-shelf .gm-badge small{color:var(--night-dim, #A9B8CB); font-size:.76rem; line-height:1.35}" +
+    ".gm-shelf .gm-badge small{color:var(--night-dim, #A9B8CB); font-size:.8125rem; line-height:1.35}" +
     ".gm-medal.is-locked{filter:grayscale(1); opacity:.38}" +
-    ".gm-sub{color:#C8D3E0; font-size:.94rem; max-width:26rem}" +
+    ".gm-sub{color:#C8D3E0; font-size:.9375rem; max-width:26rem}" +
     "@keyframes gmPop{from{opacity:0; transform:scale(.86) translateY(14px)} to{opacity:1; transform:none}}" +
     "@keyframes gmShine{0%{transform:scale(.4) rotate(-14deg); opacity:0} 60%{transform:scale(1.12) rotate(4deg); opacity:1} 100%{transform:none}}" +
     "@media (prefers-reduced-motion: reduce){ .gm-card, .gm-card .gm-badge .gm-medal{animation:none} .gm-xp i{transition:none} }";
@@ -341,7 +342,7 @@
   }
   function outfitLine(r) {
     var W = window.MasarokQuests, o = W && W.outfitAt ? W.outfitAt(r) : null;
-    return o ? '<p class="gm-tip">🧥 <b>' + esc(T(UI.outfit)) + ":</b> " + esc(o) + "</p>" : "";
+    return o ? '<p class="gm-tip">' + IC("hanger") + ' <b>' + esc(T(UI.outfit)) + ":</b> " + esc(o) + "</p>" : "";
   }
   function celebrateSmall(fresh, newRank) {
     confetti();
@@ -372,8 +373,8 @@
         '<div class="gm-xp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + k.w + '"><i style="width:' + k.w + '%"></i></div>' +
         "<small>" + esc(k.fin ? T(UI.top) : fmt(UI.next, { s: k.stars, r: k.nx ? rankName(k.r + 1) : T(UI.top) })) + "</small>" +
         '<span class="gm-streak' + (k.c.risk ? " is-risk" : "") + '">' + esc(k.c.streak ? fmt(UI.streak, { n: k.c.streak, w: weeksAr(k.c.streak) }) + (k.c.risk ? " · " + T(UI.streakRisk) : "") : T(UI.streakNew)) + "</span></div>" +
-        '<div class="gm-acts"><button type="button" class="gm-btn" data-gm-shelf>🏅 ' + esc(fmt(UI.badges, { d: k.e.length, n: BADGES.length })) + '</button>' +
-        (window.MasarokQuests ? '<button type="button" class="gm-btn" data-gq>🎯 ' + esc(fmt(UI.quests, { d: k.c.quests, n: window.MasarokQuests.total() })) + '</button><button type="button" class="gm-btn" data-gw>🧥 ' + esc(T(UI.wardrobe)) + '</button>' : "") +
+        '<div class="gm-acts"><button type="button" class="gm-btn" data-gm-shelf>' + IC("medal") + ' ' + esc(fmt(UI.badges, { d: k.e.length, n: BADGES.length })) + '</button>' +
+        (window.MasarokQuests ? '<button type="button" class="gm-btn" data-gq>' + IC("target") + ' ' + esc(fmt(UI.quests, { d: k.c.quests, n: window.MasarokQuests.total() })) + '</button><button type="button" class="gm-btn" data-gw>' + IC("hanger") + ' ' + esc(T(UI.wardrobe)) + '</button>' : "") +
         '<button type="button" class="gm-btn" data-gm-share>' + esc(T(UI.share)) + "</button></div>";
     }
     // on the plan card under the hero
@@ -381,7 +382,7 @@
     if (plan && k.c.n) {
       var chip = plan.querySelector(".gm-chip");
       if (!chip) { chip = document.createElement("div"); chip.className = "gm-chip"; plan.insertBefore(chip, plan.firstChild); }
-      chip.innerHTML = rankMedal(k.r) + "<span><b>" + esc(rankName(k.r)) + "</b> · " + esc(ptsTxt(k.p)) + " · 🏅 " + k.e.length + "/" + BADGES.length + (k.c.streak >= 2 ? " · 🔥 " + k.c.streak : "") + "</span>";
+      chip.innerHTML = rankMedal(k.r) + "<span><b>" + esc(rankName(k.r)) + "</b> · " + esc(ptsTxt(k.p)) + " · " + esc(fmt(UI.badges, { d: k.e.length, n: BADGES.length })) + (k.c.streak >= 2 ? " · " + esc(fmt(UI.streak, { n: k.c.streak, w: weeksAr(k.c.streak) })) : "") + "</span>";
     }
   }
 
