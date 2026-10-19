@@ -223,3 +223,4 @@ html .jr-sheet > .jr-track{height:10px}
 @media (max-width:999px){ .top nav .uni-chip{display:none !important} }
 @media (max-width:899px){ .hero-inner.has-hm > .hm{align-self:center} }
 @media (max-width:720px){ html[lang="ar"] .brand .ar{display:inline} }
+main [id], main > section{scroll-margin-top:calc(var(--bar-h) + 12px)}
