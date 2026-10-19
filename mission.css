@@ -1,0 +1,167 @@
+/* Masarok Academy · mission layer. Loaded after ui.css on every Academy page.
+   The feel: calm, heavy, precise. Big type, lots of space, Sadu as thin gold trim.
+   Motion rules: no bounce, no glow, no lift. Taps answer in ~100ms; pages move slowly and smoothly.
+   Works with mission.js (page thread, scroll reveal, step changes). Without JS everything is simply visible. */
+
+:root{
+  /* one set of curves for the whole Academy: long, calm ease-outs with no overshoot */
+  --ease-out:cubic-bezier(.16, 1, .3, 1);      /* arrive: fast start, long soft landing */
+  --ease-in:cubic-bezier(.55, 0, .75, .2);     /* leave: quiet start, quick exit */
+  --ease-io:cubic-bezier(.65, 0, .35, 1);      /* travel: the Sadu thread */
+  --spring:var(--ease-out);                     /* replaces ui.css springs (they overshoot) */
+  --spring-snappy:cubic-bezier(.2, .9, .25, 1);
+  --d-tap:.1s; --d-ui:.24s; --d-reveal:.9s; --d-page:.7s;
+  --trim:linear-gradient(90deg, transparent, rgba(226,182,108,.65) 18%, rgba(226,182,108,.65) 82%, transparent);
+}
+
+/* ---------- 1. Type: grand and quiet ---------- */
+.eyebrow{font-size:.75rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); gap:12px}
+.eyebrow::before{width:28px; height:1px; background:var(--gold); transform:none; opacity:.9}
+html[lang="ar"] .eyebrow{letter-spacing:0; text-transform:none; font-size:.875rem}
+
+.ac-hero{padding-block:clamp(56px, 10vh, 120px) clamp(48px, 8vh, 96px); gap:clamp(32px, 5vw, 72px)}
+.ac-hero h1{font-size:clamp(2.6rem, 5.2vw + 1rem, 5.25rem); line-height:1.02; letter-spacing:-.035em; font-weight:800}
+html[lang="ar"] .ac-hero h1{letter-spacing:0; line-height:1.25; font-size:clamp(2.3rem, 4.4vw + 1rem, 4.4rem)}
+.ac-lede{font-size:clamp(1.0625rem, .4vw + 1rem, 1.25rem); line-height:1.6; color:#B9C6D6; max-width:36rem}
+.ac-copy{gap:24px}
+
+.ac-sec{padding-block:clamp(64px, 11vh, 128px) 0; gap:24px}
+.ac-sec > h2, .ac-sec h2{font-size:clamp(1.9rem, 2.6vw + 1rem, 3.25rem); line-height:1.06; letter-spacing:-.03em; max-width:22ch}
+html[lang="ar"] .ac-sec > h2, html[lang="ar"] .ac-sec h2{letter-spacing:0; line-height:1.3}
+.ac-intro{font-size:1.0625rem; max-width:40rem}
+
+.cs-hero{gap:14px; padding-block:clamp(24px, 6vh, 64px) clamp(8px, 3vh, 24px)}
+.cs-hero h1{font-size:clamp(2.3rem, 4.4vw + 1rem, 4.25rem); line-height:1.02; letter-spacing:-.035em}
+html[lang="ar"] .cs-hero h1{letter-spacing:0; line-height:1.25}
+.cs-sub{font-size:clamp(1.0625rem, .3vw + 1rem, 1.1875rem); max-width:38rem}
+.cs-ls > h2{font-size:clamp(1.5rem, 1.6vw + 1rem, 2.25rem); letter-spacing:-.02em; margin-top:16px}
+html[lang="ar"] .cs-ls > h2{letter-spacing:0}
+.cs-grp h3{font-size:.75rem; letter-spacing:.18em; text-transform:uppercase; padding-top:18px; border-top:1px solid var(--hair)}
+html[lang="ar"] .cs-grp h3{letter-spacing:0; text-transform:none; font-size:.875rem}
+
+/* ---------- 2. Sadu: thin gold trim, not decoration ---------- */
+.sadu{height:7px; background-size:auto 7px; opacity:.9}
+.ac-foot .sadu{height:5px; background-size:auto 5px}
+
+/* ---------- 3. Mission numbering: 01 02 03 on a hairline, not gold dots ---------- */
+.loop li{padding:20px 16px 18px; border-radius:0; background:transparent; border:0; border-top:1px solid var(--hair); gap:10px}
+.loop li::before{content:counter(loop, decimal-leading-zero); width:auto; height:auto; background:none; border-radius:0; display:block;
+  color:var(--gold); font-size:.8125rem; font-weight:700; letter-spacing:.14em; font-variant-numeric:tabular-nums}
+.loop li:last-child{background:transparent; border-top-color:var(--gold)}
+.loop b{font-size:1.125rem}
+.road .n{border-radius:4px; font-variant-numeric:tabular-nums; font-size:.8125rem}
+
+/* ---------- 4. Surfaces: sharper, flatter, one hairline ---------- */
+.track, .ls, .lp, .demo, .help, .pl-card, .lp-done{border-radius:8px}
+.track-ic, .ls-ic{border-radius:6px}
+.demo{box-shadow:0 40px 80px -48px rgba(0,0,0,.9)}
+.lp-done{background:var(--card)}
+.ls.is-rec{background:var(--card-hi)}
+/* a gold line draws across the top edge of a card on hover / focus, nothing lifts */
+.track, .ls{position:relative; isolation:isolate}
+.track::after, .ls::after{content:""; position:absolute; inset-inline:0; top:0; height:1px; background:var(--gold);
+  transform:scaleX(0); transform-origin:var(--from, left) 50%; transition:transform .6s var(--ease-out); pointer-events:none}
+html[dir="rtl"] .track::after, html[dir="rtl"] .ls::after{--from:right}
+.ls{transition:border-color var(--d-ui) var(--ease-out), background-color var(--d-ui) var(--ease-out), transform var(--d-ui) var(--ease-out), opacity var(--d-ui) var(--ease-out)}
+.ls:hover{translate:none; border-color:var(--line)}
+@media (hover:hover){
+  .track:hover::after, .ls:hover::after, .ls:focus-visible::after{transform:scaleX(1)}
+  .ls:hover{background:var(--card-hi)}
+}
+
+/* ---------- 5. Buttons: precise, they sink when pressed ---------- */
+.btn{border-radius:6px; min-height:48px; padding:0 22px; letter-spacing:.01em;
+  transition:transform var(--d-ui) var(--ease-out), background-color var(--d-ui) var(--ease-out), border-color var(--d-ui) var(--ease-out), color var(--d-ui) var(--ease-out), opacity var(--d-ui) var(--ease-out)}
+html[lang="en"] .ac-cta .btn, html[lang="en"] .track-go{text-transform:uppercase; font-size:.8125rem; letter-spacing:.1em}
+.btn:hover{filter:none}
+.btn-primary:hover{background:#EAC584}
+.btn-ghost:hover{border-color:var(--gold); color:var(--gold)}
+/* press: a short sink, no scale-bounce on release */
+.btn:active, .bk-btn:active, .gm-btn:active, .mn-btn:active, .ar-tg:active, .uni-chip:active, .jr-cta:active, .lp-acts button:active, .mn-x:active, .qs button:active, .es-link:active,
+.demo-o:active, .q-o:active, .cc-btn:active{transform:translateY(1px) scale(.985); transition-duration:var(--d-tap)}
+.mn-item:active, .acc-btn:active, .ls:active, .jr-lesson:active, .track:active{transform:scale(.992); opacity:.9; transition-duration:var(--d-tap)}
+.demo-o, .q-o, .cc-btn{transition:transform var(--d-ui) var(--ease-out), border-color var(--d-ui) var(--ease-out), background-color var(--d-ui) var(--ease-out)}
+.demo-o{border-radius:6px}
+.top nav a, .top nav a.lang{transition:color var(--d-ui) var(--ease-out), border-color var(--d-ui) var(--ease-out)}
+
+/* ---------- 6. Progress: a steady instrument ---------- */
+.lp-prog i, .jr-progress i b{transition:transform .9s var(--ease-out), width .9s var(--ease-out)}
+.lp-bar .lp-prog{height:2px}
+
+/* ---------- 7. The earned moment: a medal settles in, a gold line draws under it ---------- */
+.lp-done:not(.lk) .lp-medal{animation:moMedal 1.1s var(--ease-out) .15s both}
+.lp-done:not(.lk) h2{animation:moRise .9s var(--ease-out) .35s both}
+.lp-done:not(.lk) .lp-medal + h2::after{content:""; display:block; height:1px; width:96px; margin:14px auto 0; background:var(--gold);
+  transform-origin:50% 50%; animation:moLine 1.2s var(--ease-out) .55s both}
+@keyframes moMedal{from{opacity:0; transform:scale(.86); box-shadow:0 0 0 0 rgba(156,42,34,0)} to{opacity:1; transform:none}}
+@keyframes moLine{from{transform:scaleX(0)} to{transform:scaleX(1)}}
+@keyframes moRise{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
+
+/* ---------- 8. Scroll reveal (mission.js adds .mo-js and marks [data-rv]) ---------- */
+.mo-js [data-rv]{opacity:0; transform:translateY(28px); transition:opacity var(--d-reveal) var(--ease-out), transform var(--d-reveal) var(--ease-out); transition-delay:var(--rv-d, 0s)}
+.mo-js [data-rv].is-in{opacity:1; transform:none}
+.mo-js [data-rv="line"]{opacity:1; transform:scaleX(0); transform-origin:var(--from, left) 50%}
+html[dir="rtl"].mo-js [data-rv="line"]{--from:right}
+.mo-js [data-rv="line"].is-in{transform:scaleX(1)}
+
+/* the sky climbs slowly as you scroll (mission.js sets --sky) */
+.stars{bottom:-30vh; transform:translate3d(0, var(--sky, 0px), 0); will-change:transform}
+
+/* ---------- 9. Step changes inside a course (mission.js adds .mo-step to #app) ---------- */
+.mo-step > :not(.cs-head){animation:moStepIn .55s var(--ease-out) both}
+.mo-step > :nth-child(2){animation-delay:.03s}
+.mo-step > :nth-child(3){animation-delay:.07s}
+.mo-step > :nth-child(4){animation-delay:.11s}
+.mo-step > :nth-child(n+5){animation-delay:.15s}
+.mo-step.mo-back > :not(.cs-head){animation-name:moStepBack}
+.mo-step.mo-home > :not(.cs-head){animation-name:moRise; animation-duration:.8s}
+@keyframes moStepIn{from{opacity:0; transform:translateX(calc(24px * var(--dir, 1)))} to{opacity:1; transform:none}}
+@keyframes moStepBack{from{opacity:0; transform:translateX(calc(-24px * var(--dir, 1)))} to{opacity:1; transform:none}}
+html[dir="rtl"]{--dir:-1}
+
+/* ---------- 10. Moving between pages ---------- */
+/* a Sadu thread weaves across the top while the next page loads */
+.mo-thread{position:fixed; top:0; left:0; right:0; z-index:9999; height:4px; pointer-events:none;
+  background:var(--sadu) repeat-x left center; background-size:auto 4px; box-shadow:0 1px 0 rgba(226,182,108,.5);
+  transform:scaleX(0); transform-origin:left 50%; opacity:0}
+html[dir="rtl"] .mo-thread{transform-origin:right 50%}
+.mo-thread.is-go{opacity:1; transform:scaleX(.82); transition:transform 1.6s var(--ease-out), opacity .15s linear}
+.mo-thread.is-full{opacity:1; transform:scaleX(1); transition:none}
+.mo-thread.is-done{opacity:0; transform:scaleX(1); transition:opacity .5s var(--ease-out) .15s}
+
+/* where the browser supports it, pages cross over smoothly: the sky and header stay, only the content moves */
+@view-transition{navigation:auto}
+.stars{view-transition-name:mo-sky}
+.top{view-transition-name:mo-top}
+main{view-transition-name:mo-page}
+.ac-foot{view-transition-name:mo-foot}
+::view-transition-group(root){animation:none}
+::view-transition-old(root), ::view-transition-new(root){animation:none}
+::view-transition-group(mo-sky){animation:none}
+::view-transition-old(mo-sky){display:none}
+::view-transition-new(mo-sky){animation:none}
+::view-transition-group(mo-page){animation-duration:var(--d-page); animation-timing-function:var(--ease-out)}
+::view-transition-old(mo-page){animation:moPageOut .32s var(--ease-in) both}
+::view-transition-new(mo-page){animation:moPageIn var(--d-page) var(--ease-out) .12s both}
+::view-transition-old(mo-foot){animation:moFade .2s linear both reverse}
+::view-transition-new(mo-foot){animation:moFade .5s var(--ease-out) .3s both}
+@keyframes moPageOut{to{opacity:0; transform:translateY(-16px)}}
+@keyframes moPageIn{from{opacity:0; transform:translateY(32px)}}
+@keyframes moFade{from{opacity:0}}
+/* no view transitions: the page still arrives the same way */
+html.mo-arrive main{animation:moPageIn var(--d-page) var(--ease-out) both}
+
+/* ---------- 11. Respect reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  .mo-js [data-rv], .mo-js [data-rv="line"]{opacity:1; transform:none; transition:none}
+  .stars{transform:none}
+  .mo-step > *, html.mo-arrive main, .lp-done .lp-medal, .lp-done h2, .lp-done h2::after{animation:none !important}
+  .track::after, .ls::after{transition:none}
+  .btn:active, .demo-o:active, .q-o:active, .cc-btn:active, .ls:active, .track:active{transform:none}
+  @view-transition{navigation:none}
+  .mo-thread.is-go{transition:opacity .15s linear; transform:scaleX(1)}
+}
+
+/* the lesson bar title stays a plain title */
+.lp-bar .lp-top .eyebrow{text-transform:none; letter-spacing:0}
+.lp-bar .lp-top .eyebrow::before{display:none}
