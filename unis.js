@@ -881,7 +881,13 @@
     uniNames: function () { var o = {}; UNIS.forEach(function (u) { o[u.id] = u.name[lang]; }); return o; },
     // for Guide me's first questions: the countries, their universities, and saving a choice
     countries: function () { return COUNTRY_ORDER.map(function (cc) { return { cc: cc, name: MC.name(cc) }; }); },
-    unis: function (cc) { return UNIS.filter(function (u) { return ccOfCity(u.city) === cc; }).map(function (u) { return { id: u.id, short: u.short, name: u.name[lang] }; }); },
+    unis: function (cc) { return UNIS.filter(function (u) { return ccOfCity(u.city) === cc; }).map(function (u) { return { id: u.id, short: u.short, name: u.name[lang], city: u.city, cityName: CITIES[u.city] ? CITIES[u.city][lang] : "" }; }); },
+    // everything the homepage shows about one university
+    uniInfo: function (id) {
+      var u = byId(id); if (!u) return null; var c = CITIES[u.city] || {};
+      return { id: u.id, short: u.short, name: u.name[lang], cc: c.cc, city: u.city, cityName: c[lang] || "",
+        campus: u.campus ? u.campus[lang] : "", college: u.college ? u.college.name : "", transport: c.transport ? c.transport[lang] : "", suburbs: u.suburbs || "" };
+    },
     current: function () { return { cc: currentCountry(), uni: state.uni && state.uni !== "all" ? state.uni : null }; },
     choose: function (o) {
       if (o.country && validCountry(o.country)) {
@@ -924,7 +930,8 @@
       if (la) { e.preventDefault(); state.level = "all"; put("level", "all"); apply(); }
     });
 
-    if (nothing) openDialog(0);
+    // the new homepage asks these questions with its own first-visit picker
+    if (nothing && !document.documentElement.hasAttribute("data-home3")) openDialog(0);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

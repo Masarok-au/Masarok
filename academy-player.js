@@ -79,7 +79,7 @@
     estNote: ["This is a practice estimate, not an official IELTS score.", "هذا تقدير تدريبي وليس درجة IELTS رسمية."],
     finishParts: ["Answer all four parts first, then your result appears here.", "أجب عن الأجزاء الأربعة أولًا، ثم تظهر نتيجتك هنا."],
     redo: ["Retake", "أعد الاختبار"], editPlan: ["Change plan", "عدّل الخطة"],
-    lessonDone: ["Lesson complete!", "أكملت الدرس!"], guidePts: ["If this lesson is part of a Guide me level, its Learn star is waiting for you there.", "إذا كان هذا الدرس ضمن مستوى في «أرشدني»، فنجمة «تعلّم» بانتظارك هناك."], nextLesson: ["Next lesson", "الدرس التالي"], toCourse: ["Back to the course", "العودة إلى الدورة"],
+    lessonDone: ["Lesson complete!", "أكملت الدرس!"], guidePts: ["If this lesson is part of a Guide me level, its Learn star is waiting for you there.", "إذا كان هذا الدرس ضمن مستوى في «دُلّني»، فنجمة «تعلّم» بانتظارك هناك."], nextLesson: ["Next lesson", "الدرس التالي"], toCourse: ["Back to the course", "العودة إلى الدورة"],
     t: ["True", "صحيح"], f: ["False", "خطأ"], ng: ["Not Given", "غير مذكور"],
     play: ["Play recording", "شغّل التسجيل"], playing: ["Playing…", "يعمل…"], loading: ["Starting…", "جارٍ التشغيل…"],
     noSound: ["The recording didn't start, so this play wasn't counted. Turn the volume up and check your phone isn't on silent, then try again. If it still doesn't play, your browser can't read it aloud: the script is open below, so read it once, then answer.", "لم يبدأ التسجيل، لذا لم تُحتسب هذه المرة. ارفع الصوت وتأكد أن جوالك ليس على الوضع الصامت، ثم حاول مرة أخرى. إن لم يعمل فمتصفحك لا يستطيع قراءته بصوت: النص مفتوح بالأسفل، فاقرأه مرة واحدة ثم أجب."], playsLeft: ["Plays left: {n}", "مرات التشغيل المتبقية: {n}"], noPlays: ["No plays left", "انتهت مرات التشغيل"],

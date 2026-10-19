@@ -26,7 +26,7 @@
   };
   var PAGES = [
     { id: "home", i: "🏠", href: base, n: ["The guide", "الدليل"], d: ["Everything about studying abroad, for your country", "كل ما تحتاجه للدراسة في الخارج، حسب دولتك"] },
-    { id: "journey", i: "🧭", href: base + "#journey", n: ["Guide me, step by step", "أرشدني خطوة بخطوة"], d: ["Your personal plan, with points and badges", "خطتك الشخصية، مع النقاط والأوسمة"] },
+    { id: "journey", i: "🧭", href: base + "#journey", n: ["Guide me, step by step", "دُلّني خطوة بخطوة"], d: ["Your personal plan, with points and badges", "خطتك الشخصية، مع النقاط والأوسمة"] },
     { id: "map", i: "🗺️", href: base + "#map", n: ["Journey map", "خريطة الرحلة"], d: ["Your road from home to campus", "طريقك من البيت إلى الجامعة"] },
     { id: "academy", i: "🎓", href: base + "academy/", n: ["Masarok Academy", "أكاديمية مسارُك"], d: ["Train for every step: IELTS, essays, visa practice", "تدرّب على كل خطوة: IELTS والمقالات والتأشيرة"], isNew: true },
     { id: "coach", i: "✨", href: base + "academy/coach/", n: ["AI coach", "المدرب الذكي"], d: ["Detailed AI feedback on your writing and speaking", "ملاحظات مفصلة بالذكاء الاصطناعي على كتابتك ومحادثتك"] }
@@ -144,7 +144,7 @@
     apply: ["Replace my progress with this backup", "استبدل تقدمي بهذه النسخة"], applySure: ["Tap again: this replaces what's on this device", "اضغط مرة أخرى: سيُستبدل ما على هذا الجهاز"],
     bad: ["That isn't a Masarok backup file.", "هذا ليس ملفًا احتياطيًا من مسارُك."], empty: ["Nothing saved on this device yet.", "لا يوجد تقدم محفوظ على هذا الجهاز بعد."],
     from: ["Backup from {d}", "نسخة بتاريخ {d}"], here: ["On this device", "على هذا الجهاز"],
-    steps: ["{n} Guide me steps done", "{n} خطوات منجزة في «أرشدني»"], lessons: ["{n} Academy lessons done", "{n} دروس منجزة في الأكاديمية"], pts: ["{n} bonus points", "{n} نقطة إضافية"],
+    steps: ["{n} Guide me steps done", "{n} خطوات منجزة في «دُلّني»"], lessons: ["{n} Academy lessons done", "{n} دروس منجزة في الأكاديمية"], pts: ["{n} bonus points", "{n} نقطة إضافية"],
     code: ["your AI coach code", "رمز المدرب الذكي"], choices: ["your country and university", "دولتك وجامعتك"],
     priv: ["The file stays with you: nothing is uploaded. It includes your AI coach code if you have one, so only send it to yourself.", "يبقى الملف معك ولا يُرفع إلى أي مكان. ويتضمن رمز المدرب الذكي إن كان لديك، فلا ترسله إلا لنفسك."],
     done: ["Progress loaded. Reloading…", "تم تحميل التقدم. جارٍ إعادة التحميل…"], close: ["Close", "إغلاق"]
