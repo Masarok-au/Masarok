@@ -119,7 +119,8 @@
   function cName(cc) { var d = MC() && MC().data[cc]; return d ? T(d.short) : ""; }
   function dest(c) {
     if (c.uni && AIR[c.uni.city]) return { code: AIR[c.uni.city], city: c.uni.cityName };
-    var x = CAPITAL_AIR[c.cc || "au"]; return { code: x[0], city: x[1 + L] };
+    if (!c.cc) return { code: "?", city: AR ? "وجهتك" : "Your choice" };
+    var x = CAPITAL_AIR[c.cc]; return { code: x[0], city: x[1 + L] };
   }
   function levelNow() {
     var J = window.MasarokJourney, LV = window.MasarokLevels, n = 1;
@@ -163,14 +164,14 @@
     var D = window.MasarokDeadlines && window.MasarokDeadlines.data || [], now = new Date().toISOString().slice(0, 10);
     var lvl = { foundation: "f", bachelor: "b", master: "m", phd: "p" }[c.level] || null;
     return D.filter(function (x) {
-      if (x.cc !== "sa" && x.cc !== (c.cc || "au")) return false;
+      if (x.cc !== "sa" && x.cc !== c.cc) return false;
       if (x.u && (!c.uni || x.u !== c.uni.id)) return false;
       if (lvl && x.lv && x.lv.split(" ").indexOf(lvl) < 0) return false;
       return (x.e || x.d) >= now && x.k !== "info";
     }).sort(function (a, b) { return ((a.k === "win" && a.d <= now ? a.e : a.d) < (b.k === "win" && b.d <= now ? b.e : b.d)) ? -1 : 1; }).slice(0, 2);
   }
   function chapters() {
-    var c = choice(), cc = c.cc || "au", d = MC() && MC().data[cc] || {}, u = c.uni, cn = cName(cc);
+    var c = choice(), cc = c.cc, d = cc && MC() && MC().data[cc] || {}, u = c.uni, cn = cc ? cName(cc) : "";
     var ch = [];
     // 01 · your university
     if (u) {
@@ -183,12 +184,15 @@
     } else {
       ch.push({ label: AR ? "ابدأ من هنا · جامعتك" : "Start here · Your university", title: AR ? "اختر جامعتك" : "Pick your university",
         body: AR ? "اختر جامعة لترى حرمها الجامعي وكليتها التحضيرية وأحياء الطلاب وطرق التنقل." : "Choose a university to see its campus, pathway college, student suburbs and how to get around.",
-        stats: [[cn, AR ? "الدولة" : "Country"], [String(M() && M().unis ? M().unis(cc).length : ""), AR ? "جامعات في الدليل" : "Universities in the guide"]], action: AR ? "اختر جامعتك" : "Choose your university", go: "@picker" });
+        stats: cc ? [[cn, AR ? "الدولة" : "Country"], [String(M() && M().unis ? M().unis(cc).length : ""), AR ? "جامعات في الدليل" : "Universities in the guide"]]
+          : [[String(M() ? M().countries().length : 6), AR ? "دول" : "Countries"], [String(M() ? M().countries().reduce(function (a, x) { return a + M().unis(x.cc).length; }, 0) : ""), AR ? "جامعات في الدليل" : "Universities in the guide"]],
+        action: AR ? "اختر جامعتك" : "Choose your university", go: "@picker" });
     }
     // 02 · deadlines
     var up = upcoming(c);
     ch.push({ label: AR ? "ابدأ من هنا · المواعيد" : "Start here · Deadlines", title: AR ? "اعرف مواعيدك" : "Know your dates",
-      body: up.length ? (AR ? "أقرب المواعيد لك " + (u ? "في " + u.short : T(d.inPlace || ["", "في " + cn])) + "، ويمكنك إضافتها إلى تقويمك مع تذكير." : "Your next dates " + (u ? "for " + u.short : T(d.inPlace || ["in " + cn, ""])) + ", with reminders you can add to your calendar.")
+      body: !cc && !u ? (AR ? "أقرب مواعيد الابتعاث لكل طالب سعودي، مع تذكيرات تضيفها إلى تقويمك." : "The next scholarship dates for every Saudi student, with reminders you can add to your calendar.")
+        : up.length ? (AR ? "أقرب المواعيد لك " + (u ? "في " + u.short : T(d.inPlace || ["", "في " + cn])) + "، ويمكنك إضافتها إلى تقويمك مع تذكير." : "Your next dates " + (u ? "for " + u.short : T(d.inPlace || ["in " + cn, ""])) + ", with reminders you can add to your calendar.")
         : (AR ? "مواعيد التقديم لدولتك وجامعتك، مع تذكيرات في تقويمك." : "Application dates for your country and university, with reminders in your calendar."),
       stats: up.map(function (x) { var open = x.k === "win" && x.d <= new Date().toISOString().slice(0, 10); return [shortDate(open ? x.e : x.d), (open ? (AR ? "يُغلق: " : "Closes: ") : "") + T(x.t)]; }),
       action: AR ? "أضف إلى التقويم" : "Add to calendar", go: "deadlines" });
@@ -215,7 +219,11 @@
     // 05 · before you fly
     var n = cc === "au" ? 7 : (d.before || []).length || 6, vi = VISA[cc] || VISA.au, doc = cc === "au" ? "CoE" : (d.enrolDoc ? T(d.enrolDoc) : (AR ? "خطاب القبول" : "offer"));
     var nW = AR ? ({ 6: "ست", 7: "سبع", 8: "ثماني" }[n] || n) : ({ 6: "Six", 7: "Seven", 8: "Eight" }[n] || n);
-    ch.push({ label: AR ? "قائمة التجهيز" : "Packing list", title: AR ? "قبل أن تسافر" : "Before you fly",
+    if (!cc) ch.push({ label: AR ? "قائمة التجهيز" : "Packing list", title: AR ? "قبل أن تسافر" : "Before you fly",
+      body: AR ? "ما ترتّبه قبل السفر، من خطاب القبول والتأشيرة إلى أول مكان تسكن فيه." : "What to sort out before you go, from your offer letter and visa to your first place to stay.",
+      stats: [[AR ? "التأشيرة" : "Visa", AR ? "قدّم مبكرًا" : "Apply early"], [AR ? "السكن" : "Housing", AR ? "أول أسبوعين" : "Your first weeks"]],
+      action: AR ? "افتح القائمة" : "Open the checklist", go: "before" });
+    else ch.push({ label: AR ? "قائمة التجهيز" : "Packing list", title: AR ? "قبل أن تسافر" : "Before you fly",
       body: cc === "au" ? (AR ? "سبع خطوات ترتّبها، من وثيقة CoE والتأشيرة إلى سكن مؤقت لأسبوعين." : "Seven things to sort out, from your CoE and visa to two weeks of short-term housing.")
         : (AR ? nW + " خطوات ترتّبها، من " + doc + " والتأشيرة إلى أول مكان تسكن فيه." : nW + " things to sort out, from your " + doc + " and visa to your first place to stay."),
       stats: [[String(n), AR ? "خطوات" : "Steps"], [vi[0][L], vi[1][L]], cc === "au" ? [AR ? "أسبوعان" : "2 weeks", AR ? "سكن مؤقت أولًا" : "Short stay first"] : [AR ? "السكن" : "Housing", AR ? "قدّم مبكرًا" : "Apply early"]],
@@ -238,7 +246,10 @@
     var pickLine = (c.cc ? FLAGS[c.cc] + "  " : "") + (c.uni ? c.uni.short : (c.cc ? cName(c.cc) : T(S.chooseUni))) + (stage ? " · " + stage : "");
     var head = window.MasarokJourney && window.MasarokJourney.head ? window.MasarokJourney.head() : "";
     var rp = roadPt(tOf(lv.n)), rr = 3 + 6 * (1 - tOf(lv.n));
-    var h1 = $(".h3-h1 .gold", app); if (h1 && MC()) { var d = MC().data[c.cc || "au"]; if (d) h1.textContent = AR ? T(d.inPlace) + "." : T(d.inPlace).replace(/^in /, "") + "."; }
+    // the headline names the chosen country, or says "abroad" until one is chosen
+    var h1 = $(".h3-h1 .gold", app), h1in = $(".h3-h1 .h3-in", app), d = c.cc && MC() ? MC().data[c.cc] : null;
+    if (h1) h1.textContent = d ? (AR ? T(d.inPlace) : T(d.inPlace).replace(/^in /, "")) + "." : (AR ? "في الخارج." : "abroad.");
+    if (h1in) h1in.textContent = d && !AR ? "in " : "";
 
     // the scene's road and avatar
     $(".h3-roadbox", app).innerHTML = roadSvg(lv.n) +
