@@ -16,7 +16,13 @@
   var A = AR ? 1 : 0;
   var base = AR ? "/ar/" : "/";
   function T(x) { return Array.isArray(x) ? x[A] : x; }
-  function EN(x) { return Array.isArray(x) ? x[0] : x; }
+  // IELTS teaches English, so its lessons stay in English with optional Arabic help lines.
+  // Every other course (scholarship, visa, life, writing) is taught fully in the page's language.
+  var NATIVE = !/^ielts/.test(C.id || "");
+  function EN0(x) { return Array.isArray(x) ? x[0] : x; }
+  function EN(x) { return NATIVE ? T(x) : EN0(x); }
+  // the language and direction of teaching text
+  var LD = NATIVE && AR ? 'lang="ar" dir="rtl"' : 'lang="en" dir="ltr"';
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]; }); }
   function fmt(s, o) { return T(s).replace(/\{(\w+)\}/g, function (m, k) { return o[k] != null ? o[k] : m; }); }
   function $(sel, root) { return (root || document).querySelector(sel); }
@@ -174,8 +180,11 @@
   var app = $("#app");
   function L(id) { for (var i = 0; i < ALL_LESSONS.length; i++) if (ALL_LESSONS[i].id === id) return ALL_LESSONS[i]; return null; }
   function lessonIndex(id) { for (var i = 0; i < C.lessons.length; i++) if (C.lessons[i].id === id) return i; return -1; }
+  function arOn() { return !NATIVE && !!S.arHelp; }
   function help(x) { return Array.isArray(x) && x[1] ? '<p class="ar-help" lang="ar" dir="rtl">' + esc(x[1]) + "</p>" : ""; }
-  function enText(x) { return '<p lang="en" dir="ltr">' + esc(EN(x)) + "</p>"; }
+  // English example material inside an Arabic lesson keeps its own direction
+  function la(x) { return NATIVE && AR && !Array.isArray(x) && /[A-Za-z]/.test(x || "") && !/[\u0600-\u06FF]/.test(x || "") ? ' lang="en" dir="ltr"' : ""; }
+  function enText(x) { return "<p " + (la(x) ? la(x).trim() : LD) + ">" + esc(EN(x)) + "</p>"; }
   function bandStr(b) { return (Math.round(b * 2) / 2).toFixed(1); }
 
   // ================= course home =================
@@ -256,7 +265,7 @@
     window.scrollTo(0, 0);
   }
   function backArrow() { return '<svg viewBox="0 0 16 16" aria-hidden="true" class="bk"><path d="M13 8H4M7.5 4.5L4 8l3.5 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'; }
-  function arToggle() { return '<button type="button" class="ar-tg" data-ar-toggle aria-pressed="' + !!S.arHelp + '" aria-label="' + esc(T(S.arHelp ? UI.arOn : UI.arOff)) + '">' + IC("translate") + '<span class="ar-tx">' + esc(T(S.arHelp ? UI.arOn : UI.arOff)) + "</span></button>"; }
+  function arToggle() { if (NATIVE) return ""; return '<button type="button" class="ar-tg" data-ar-toggle aria-pressed="' + !!S.arHelp + '" aria-label="' + esc(T(arOn() ? UI.arOn : UI.arOff)) + '">' + IC("translate") + '<span class="ar-tx">' + esc(T(arOn() ? UI.arOn : UI.arOff)) + "</span></button>"; }
   function weakest(p) { var k = ["r", "l", "w", "s"].sort(function (a, b) { return p.b[a] - p.b[b]; }); return k[0]; }
   function isDone(id) { return !!(S.lessons[id] || {}).done; }
   function recommended() {
@@ -429,22 +438,22 @@
   var RENDER = {};
 
   RENDER.text = function (el, st) {
-    var h = "<h2>" + esc(EN(st.h)) + "</h2>" + (S.arHelp && Array.isArray(st.h) ? '<p class="ar-help ar-h" lang="ar" dir="rtl">' + esc(st.h[1]) + "</p>" : "");
-    (st.p || []).forEach(function (x) { h += '<div class="tx">' + enText(x) + (S.arHelp ? help(x) : "") + "</div>"; });
-    if (st.list) h += '<ul class="tx-list">' + st.list.map(function (x) { return "<li>" + enText(x) + (S.arHelp ? help(x) : "") + "</li>"; }).join("") + "</ul>";
+    var h = "<h2>" + esc(EN(st.h)) + "</h2>" + (arOn() && Array.isArray(st.h) ? '<p class="ar-help ar-h" lang="ar" dir="rtl">' + esc(st.h[1]) + "</p>" : "");
+    (st.p || []).forEach(function (x) { h += '<div class="tx">' + enText(x) + (arOn() ? help(x) : "") + "</div>"; });
+    if (st.list) h += '<ul class="tx-list">' + st.list.map(function (x) { return "<li>" + enText(x) + (arOn() ? help(x) : "") + "</li>"; }).join("") + "</ul>";
     if (st.cta) h += '<p class="tx-cta"><a class="btn btn-ghost" href="' + base + st.cta.href + '">' + esc(T(st.cta.t)) + " →</a></p>";
-    el.innerHTML = '<div class="en-block" lang="en" dir="ltr">' + h + "</div>";
+    el.innerHTML = '<div class="en-block" ' + LD + '>' + h + "</div>";
     fixArDir(el);
   };
   // Arabic help lines inside the English block keep their own direction
   function fixArDir(el) { $$(".ar-help", el).forEach(function (p) { p.setAttribute("dir", "rtl"); }); }
-  function head(st) { return '<h2 lang="en" dir="ltr">' + esc(EN(st.h)) + "</h2>" + (S.arHelp && Array.isArray(st.h) ? '<p class="ar-help ar-h" lang="ar" dir="rtl">' + esc(st.h[1]) + "</p>" : ""); }
+  function head(st) { return "<h2 " + LD + ">" + esc(EN(st.h)) + "</h2>" + (arOn() && Array.isArray(st.h) ? '<p class="ar-help ar-h" lang="ar" dir="rtl">' + esc(st.h[1]) + "</p>" : ""); }
 
   RENDER.table = function (el, st) {
     var h = head(st) + '<div class="tb-wrap"><table class="tb"><thead><tr>' + st.cols.map(function (c) { return "<th>" + esc(EN(c)) + "</th>"; }).join("") + "</tr></thead><tbody>" +
       st.rows.map(function (r) { return "<tr>" + r.map(function (c, i) { return i === 0 ? '<th scope="row">' + esc(c) + "</th>" : "<td>" + esc(c) + "</td>"; }).join("") + "</tr>"; }).join("") + "</tbody></table></div>";
-    (st.p || []).forEach(function (x) { h += '<div class="tx">' + enText(x) + (S.arHelp ? help(x) : "") + "</div>"; });
-    el.innerHTML = '<div class="en-block" lang="en" dir="ltr">' + h + "</div>";
+    (st.p || []).forEach(function (x) { h += '<div class="tx">' + enText(x) + (arOn() ? help(x) : "") + "</div>"; });
+    el.innerHTML = '<div class="en-block" ' + LD + '>' + h + "</div>";
   };
 
   // ================= questions: one engine for every kind =================
@@ -461,7 +470,7 @@
   function itemHtml(e, name, ctx) {
     var it = e.it, k = kindOf(it), n = e.n, h = "";
     var qs = Array.isArray(it.s) ? EN(it.s) : it.s;
-    var arQ = S.arHelp && Array.isArray(it.s) ? '<p class="ar-help" lang="ar" dir="rtl">' + esc(it.s[1]) + "</p>" : "";
+    var arQ = arOn() && Array.isArray(it.s) ? '<p class="ar-help" lang="ar" dir="rtl">' + esc(it.s[1]) + "</p>" : "";
     if (k === "tfng" || k === "ynng") {
       h = '<legend><span class="q-n">' + n + "</span> " + esc(qs) + "</legend>" + arQ + '<div class="q-os is-tfng">' + CHOICE3[k].map(function (o) {
         return '<label class="q-o"><input type="radio" name="' + name + n + '" value="' + o[0] + '"><span>' + esc(EN(o[1])) + "</span></label>";
@@ -476,8 +485,8 @@
       var lb = k === "head" ? "Paragraph " + it.p : qs, sid = name + "s" + n;
       h = '<div class="q-gap q-sel"><label for="' + sid + '"><span class="q-n">' + n + "</span> " + esc(lb) + '</label><select id="' + sid + '"><option value="">—</option>' + opts.map(function (o) { return '<option value="' + esc(o[0]) + '">' + esc(o[1]) + "</option>"; }).join("") + "</select></div>" + arQ;
     } else {
-      h = '<legend><span class="q-n">' + n + "</span> " + esc(qs) + "</legend>" + arQ + '<div class="q-os' + (it.row ? " is-tfng is-row" : "") + '">' + it.o.map(function (o, j) {
-        return '<label class="q-o"><input type="radio" name="' + name + n + '" value="' + j + '"><span>' + esc(EN(o)) + (S.arHelp && Array.isArray(o) ? ' <small class="ar-o" lang="ar" dir="rtl">' + esc(o[1]) + "</small>" : "") + "</span></label>";
+      h = '<legend><span class="q-n">' + n + "</span> <span" + la(qs) + ">" + esc(qs) + "</span></legend>" + arQ + '<div class="q-os' + (it.row ? " is-tfng is-row" : "") + '">' + it.o.map(function (o, j) {
+        return '<label class="q-o"><input type="radio" name="' + name + n + '" value="' + j + '"><span' + la(o) + '>' + esc(EN(o)) + (arOn() && Array.isArray(o) ? ' <small class="ar-o" lang="ar" dir="rtl">' + esc(o[1]) + "</small>" : "") + "</span></label>";
       }).join("") + "</div>";
     }
     var tag = (k === "tfng" || k === "ynng" || k === "mcq") ? "fieldset" : "div";
@@ -520,7 +529,7 @@
     node.classList.add(ok ? "is-ok" : "is-no");
     $$("input, select", node).forEach(function (f) { if (f.type === "radio") { f.disabled = true; if (f.value === rightVal(it)) f.parentNode.classList.add("is-right"); else if (f.checked) f.parentNode.classList.add("is-wrong"); } else { f.readOnly = true; if (f.tagName === "SELECT") f.disabled = true; } });
     var x = $(".q-x", node); x.hidden = false;
-    x.innerHTML = "<b>" + (ok ? "✓" : "✕ Answer: " + esc(answerText(it, ctx))) + "</b> " + esc(EN(it.x)) + (S.arHelp ? help(it.x) : "");
+    x.innerHTML = "<b>" + (ok ? "✓" : "✕ " + (NATIVE ? T(["Answer", "الإجابة"]) : "Answer") + ": " + esc(answerText(it, ctx))) + "</b> " + esc(EN(it.x)) + (arOn() ? help(it.x) : "");
     fixArDir(x);
     return ok;
   }
@@ -533,10 +542,10 @@
   }
   function groupsHtml(st, name, ctx) {
     var list = entries(st), h = "";
-    if (st.instr) h += '<p class="q-instr">' + esc(EN(st.instr)) + "</p>" + (S.arHelp ? help(st.instr) : "");
+    if (st.instr) h += '<p class="q-instr">' + esc(EN(st.instr)) + "</p>" + (arOn() ? help(st.instr) : "");
     var gi = -2;
     list.forEach(function (e) {
-      if (e.g !== gi) { gi = e.g; if (gi > -1) { var g = st.groups[gi]; h += '<p class="q-instr">' + esc(EN(g.instr)) + "</p>" + (S.arHelp ? help(g.instr) : ""); } }
+      if (e.g !== gi) { gi = e.g; if (gi > -1) { var g = st.groups[gi]; h += '<p class="q-instr">' + esc(EN(g.instr)) + "</p>" + (arOn() ? help(g.instr) : ""); } }
       h += itemHtml(e, name, ctx);
     });
     return h;
@@ -573,7 +582,7 @@
   };
   RENDER.quiz = function (el, st) {
     var name = "z" + cur.i + "-";
-    el.innerHTML = '<div class="en-block" lang="en" dir="ltr">' + head(st) + intro(st) + '<div class="qs-col">' + groupsHtml(st, name, {}) + "</div></div>";
+    el.innerHTML = '<div class="en-block" ' + LD + '>' + head(st) + intro(st) + '<div class="qs-col">' + groupsHtml(st, name, {}) + "</div></div>";
     fixArDir(el);
     return { check: function () { var r = gradeEntries(el, entries(st), {}); if (r && st.part) cur.ans[st.part] = r.c; return r; } };
   };
@@ -607,7 +616,7 @@
           if (ok) c++;
           box.classList.add(ok ? "is-ok" : "is-no"); s.disabled = true;
           var x = $(".q-x", box); x.hidden = false;
-          x.innerHTML = "<b>" + (ok ? "✓" : "✕ Answer: " + st.ans[p.k] + ". " + esc((st.heads.filter(function (h) { return h.k === st.ans[p.k]; })[0] || {}).s || "")) + "</b> " + esc(EN(st.x[p.k])) + (S.arHelp ? help(st.x[p.k]) : ""); fixArDir(x);
+          x.innerHTML = "<b>" + (ok ? "✓" : "✕ Answer: " + st.ans[p.k] + ". " + esc((st.heads.filter(function (h) { return h.k === st.ans[p.k]; })[0] || {}).s || "")) + "</b> " + esc(EN(st.x[p.k])) + (arOn() ? help(st.x[p.k]) : ""); fixArDir(x);
         });
         return { c: c, t: st.paras.length };
       }
@@ -711,7 +720,7 @@
   // the listening block: play button (limited plays), optional map, then the questions
   function listenBlock(st, name, plays) {
     var can = !!(tts && window.SpeechSynthesisUtterance), names = st.names || { a: "Officer", b: "Student" };
-    return (st.intro ? '<div class="tx">' + enText(st.intro) + (S.arHelp ? help(st.intro) : "") + "</div>" : "") +
+    return (st.intro ? '<div class="tx">' + enText(st.intro) + (arOn() ? help(st.intro) : "") + "</div>" : "") +
       (can ? '<div class="ls-play"><button type="button" class="btn btn-primary" data-play>▶ ' + esc(EN(UI.play)) + '</button><span data-left>Plays left: ' + plays + "</span></div>"
         : '<p class="pl-warn">' + esc(EN(UI.noTts)) + "</p>") +
       '<details class="ls-script"' + (can ? " hidden" : " open") + "><summary>" + esc(EN(UI.script)) + "</summary>" + st.lines.map(function (l) { return "<p><b>" + esc(names[l[0]] || l[0]) + ":</b> " + esc(l[1]) + "</p>"; }).join("") + "</details>" +
@@ -844,7 +853,7 @@
   }
   RENDER.chart = function (el, st) {
     var h = head(st) + chartSvg(st.chart);
-    (st.p || []).forEach(function (x) { h += '<div class="tx">' + enText(x) + (S.arHelp ? help(x) : "") + "</div>"; });
+    (st.p || []).forEach(function (x) { h += '<div class="tx">' + enText(x) + (arOn() ? help(x) : "") + "</div>"; });
     el.innerHTML = '<div class="en-block" lang="en" dir="ltr">' + h + "</div>"; fixArDir(el);
   };
   RENDER.models = function (el, st, l) {
@@ -855,7 +864,7 @@
         '<blockquote class="prompt" lang="en" dir="ltr">' + esc(st.prompt) + "</blockquote>" + (st.chart ? '<div lang="en" dir="ltr">' + chartSvg(st.chart) + "</div>" : "") +
         '<div class="md-tabs" role="tablist">' + models.map(function (x, k) { return '<button type="button" role="tab" class="md-tab" aria-selected="' + (k === tab) + '" data-md="' + k + '">' + esc(fmt(UI.bandTab, { b: x.band })) + "</button>"; }).join("") + "</div>" +
         '<div class="md" lang="en" dir="ltr"><p class="md-wc">' + wcount(m.text.join(" ")) + " words</p>" + m.text.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + "</div>" +
-        '<div class="md-notes"><h3>' + esc(T(UI.notesT)) + "</h3><ul>" + m.notes.map(function (n) { return "<li>" + enText(n) + (S.arHelp ? help(n) : "") + "</li>"; }).join("") + "</ul></div>" +
+        '<div class="md-notes"><h3>' + esc(T(UI.notesT)) + "</h3><ul>" + m.notes.map(function (n) { return "<li>" + enText(n) + (arOn() ? help(n) : "") + "</li>"; }).join("") + "</ul></div>" +
         '<p class="cs-note">' + esc(T(UI.modelNote)) + "</p></div>";
       fixArDir(el);
     }
@@ -891,8 +900,8 @@
   RENDER.pad = function (el, st) {
     var D = drafts(), d = D[st.key] = D[st.key] || { text: "", checks: [] }, unit = st.unit || "words";
     var need = st.min ? Math.ceil(st.min * 0.6) : (unit === "chars" ? 100 : 20), running = false, left = d.left != null ? d.left : (st.mins || 0) * 60;
-    el.innerHTML = '<div class="en-block"><h2 lang="en" dir="ltr">' + esc(EN(st.h)) + "</h2>" + (S.arHelp && Array.isArray(st.h) ? '<p class="ar-help ar-h" lang="ar" dir="rtl">' + esc(st.h[1]) + "</p>" : "") +
-      (st.intro ? st.intro.map(function (x) { return '<div class="tx">' + enText(x) + (S.arHelp ? help(x) : "") + "</div>"; }).join("") : "") +
+    el.innerHTML = '<div class="en-block"><h2 ' + LD + '>' + esc(EN(st.h)) + "</h2>" + (arOn() && Array.isArray(st.h) ? '<p class="ar-help ar-h" lang="ar" dir="rtl">' + esc(st.h[1]) + "</p>" : "") +
+      (st.intro ? st.intro.map(function (x) { return '<div class="tx">' + enText(x) + (arOn() ? help(x) : "") + "</div>"; }).join("") : "") +
       (st.prompt ? '<blockquote class="prompt" lang="en" dir="ltr">' + esc(st.prompt) + "</blockquote>" : "") +
       (st.chart ? '<div lang="en" dir="ltr">' + chartSvg(st.chart) + "</div>" : "") +
       '<div class="es-bar">' + (st.mins ? '<button type="button" class="btn btn-ghost es-tm" data-tm>⏱ ' + esc(fmt(UI.timerN, { n: st.mins })) + '</button><span class="es-clock" data-clock></span><button type="button" class="es-link" data-tr>' + esc(T(UI.timerReset)) + "</button>" : "") +
@@ -903,7 +912,7 @@
       '<p class="es-need" data-need></p>' + (st.noCoach ? "" : "<div data-coach></div>") + "</div>";
     fixArDir(el);
     var pad = $(".es-pad", el), wc = $("[data-wc]", el), over = $("[data-over]", el), nd = $("[data-need]", el);
-    if (window.MasarokCoach && !st.noCoach) window.MasarokCoach.writingBox($("[data-coach]", el), function () { return pad.value; }, coachKind(st), Object.assign(unit === "chars" ? { min: 0, max: 0 } : { min: st.min, max: st.max }, { prompt: st.prompt, meta: { course: EN(st.h), limit: st.max ? st.max + " " + unit + " maximum" : st.min ? st.min + "+ " + unit : "" } }));
+    if (window.MasarokCoach && !st.noCoach) window.MasarokCoach.writingBox($("[data-coach]", el), function () { return pad.value; }, coachKind(st), Object.assign(unit === "chars" ? { min: 0, max: 0 } : { min: st.min, max: st.max }, { prompt: st.prompt, meta: { course: EN0(st.h), limit: st.max ? st.max + " " + unit + " maximum" : st.min ? st.min + "+ " + unit : "" } }));
     function upd() {
       var n = count(pad.value, unit);
       var lim = st.min && st.max ? " / " + st.min + "–" + st.max : st.max ? " / " + st.max : st.min ? " / " + st.min + "+" : "";
@@ -935,7 +944,7 @@
   RENDER.notes = function (el, st) {
     var D = drafts(), d = D[st.key] = D[st.key] || [];
     el.innerHTML = '<div class="en-block">' + head(st) + '<p class="lp-sub">' + esc(T(UI.notesSub)) + '</p><div class="ol">' + st.prompts.map(function (p, k) {
-      return '<label class="ol-f"><span><span lang="en" dir="ltr">' + esc(EN(p)) + "</span>" + (S.arHelp && Array.isArray(p) ? '<small class="ar-help" lang="ar" dir="rtl">' + esc(p[1]) + "</small>" : "") + '</span><textarea rows="2" lang="en" dir="auto" data-nt="' + k + '">' + esc(d[k] || "") + "</textarea></label>";
+      return '<label class="ol-f"><span><span ' + LD + '>' + esc(EN(p)) + "</span>" + (arOn() && Array.isArray(p) ? '<small class="ar-help" lang="ar" dir="rtl">' + esc(p[1]) + "</small>" : "") + '</span><textarea rows="2" lang="en" dir="auto" data-nt="' + k + '">' + esc(d[k] || "") + "</textarea></label>";
     }).join("") + "</div></div>";
     fixArDir(el);
     el.addEventListener("input", function (e) { var k = e.target.getAttribute("data-nt"); if (k != null) { d[k] = e.target.value; save(); gateUpdate(); } });
@@ -945,16 +954,16 @@
   RENDER.builder = function (el, st) {
     var D = drafts(), d = D[st.key] = D[st.key] || {}, tot = st.total || {}, unit = tot.unit || (st.fields[0] && st.fields[0].unit) || "words";
     el.innerHTML = '<div class="en-block">' + head(st) +
-      (st.intro ? st.intro.map(function (x) { return '<div class="tx">' + enText(x) + (S.arHelp ? help(x) : "") + "</div>"; }).join("") : "") +
+      (st.intro ? st.intro.map(function (x) { return '<div class="tx">' + enText(x) + (arOn() ? help(x) : "") + "</div>"; }).join("") : "") +
       '<div class="bd">' + st.fields.map(function (f) {
-        return '<div class="bd-f" data-bf="' + f.id + '"><label for="bf-' + f.id + '"><b lang="en" dir="ltr">' + esc(EN(f.label)) + "</b>" + (S.arHelp && Array.isArray(f.label) ? '<small class="ar-help" lang="ar" dir="rtl">' + esc(f.label[1]) + "</small>" : "") + "</label>" +
-          (f.hint ? '<p class="bd-hint" lang="en" dir="ltr">' + esc(EN(f.hint)) + "</p>" + (S.arHelp ? help(f.hint) : "") : "") +
+        return '<div class="bd-f" data-bf="' + f.id + '"><label for="bf-' + f.id + '"><b ' + LD + '>' + esc(EN(f.label)) + "</b>" + (arOn() && Array.isArray(f.label) ? '<small class="ar-help" lang="ar" dir="rtl">' + esc(f.label[1]) + "</small>" : "") + "</label>" +
+          (f.hint ? '<p class="bd-hint" ' + LD + '>' + esc(EN(f.hint)) + "</p>" + (arOn() ? help(f.hint) : "") : "") +
           '<textarea id="bf-' + f.id + '" class="es-pad" rows="' + (f.rows || 5) + '" lang="en" dir="ltr" spellcheck="true">' + esc(d[f.id] || "") + '</textarea><span class="bd-n es-wc" data-bn="' + f.id + '"></span></div>';
       }).join("") + "</div>" +
       '<div class="bd-tot"><span data-btot></span><span class="lp-sp"></span><button type="button" class="es-link" data-bcopy>' + esc(T(UI.copyAll)) + '</button><button type="button" class="btn btn-ghost" data-bdl>⬇ ' + esc(T(UI.download)) + "</button></div>" +
       '<div class="es-over" data-over></div><div data-coach></div></div>';
     fixArDir(el);
-    if (window.MasarokCoach) window.MasarokCoach.writingBox($("[data-coach]", el), function () { return all(); }, st.coach || "statement", { min: 0, max: 0, aiText: function () { return st.fields.map(function (f) { return d[f.id] ? EN(f.label) + "\n" + d[f.id] : ""; }).filter(Boolean).join("\n\n"); }, meta: { course: st.export || EN(st.h), limit: tot.max ? tot.max + " " + (tot.unit || unit) + " in total" : "" } });
+    if (window.MasarokCoach) window.MasarokCoach.writingBox($("[data-coach]", el), function () { return all(); }, st.coach || "statement", { min: 0, max: 0, aiText: function () { return st.fields.map(function (f) { return d[f.id] ? EN0(f.label) + "\n" + d[f.id] : ""; }).filter(Boolean).join("\n\n"); }, meta: { course: st.export || EN0(st.h), limit: tot.max ? tot.max + " " + (tot.unit || unit) + " in total" : "" } });
     function all() { return st.fields.map(function (f) { return d[f.id] || ""; }).join("\n\n"); }
     function upd() {
       var sum = 0;
@@ -973,7 +982,7 @@
     }
     el.addEventListener("input", function (e) { var f = e.target.closest("[data-bf]"); if (f) { d[f.getAttribute("data-bf")] = e.target.value; save(); upd(); } });
     $("[data-bcopy]", el).addEventListener("click", function (e) { copyText(all(), e.currentTarget); });
-    $("[data-bdl]", el).addEventListener("click", function () { download(st.export || EN(st.h), st.fields.map(function (f) { return [EN(f.label), d[f.id] || ""]; })); });
+    $("[data-bdl]", el).addEventListener("click", function () { download(st.export || EN0(st.h), st.fields.map(function (f) { return [EN0(f.label), d[f.id] || ""]; })); });
     upd();
     return { gate: function () { return st.fields.filter(function (f) { return (d[f.id] || "").trim().length >= 20; }).length >= Math.ceil(st.fields.length / 2); } };
   };
@@ -1285,7 +1294,7 @@
         return '<div class="mk-rv" lang="en" dir="ltr">' + ents[pi].map(function (e) {
           var v = store[e.n], ok = isRight(e.it, v), q = kindOf(e.it) === "form" ? e.it.l : kindOf(e.it) === "head" ? "Paragraph " + e.it.p : EN(e.it.s);
           return '<div class="mk-r ' + (ok ? "is-ok" : "is-no") + '"><b>' + e.n + ". " + (ok ? "✓" : "✕") + "</b> " + esc(q) + "<br><small>Your answer: " + esc(valText(e.it, v, ctx)) + (ok ? "" : " · Answer: " + esc(answerText(e.it, ctx))) + "</small>" +
-            '<small class="mk-x">' + esc(EN(e.it.x)) + "</small>" + (S.arHelp && Array.isArray(e.it.x) ? '<small class="ar-help" lang="ar" dir="rtl">' + esc(e.it.x[1]) + "</small>" : "") + "</div>";
+            '<small class="mk-x">' + esc(EN(e.it.x)) + "</small>" + (arOn() && Array.isArray(e.it.x) ? '<small class="ar-help" lang="ar" dir="rtl">' + esc(e.it.x[1]) + "</small>" : "") + "</div>";
         }).join("") + "</div>";
       }).join("");
     }
@@ -1329,8 +1338,8 @@
 
   // ================= Phase 3 exercise types =================
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
-  function intro(st) { return (st.intro || []).map(function (x) { return '<div class="tx">' + enText(x) + (S.arHelp ? help(x) : "") + "</div>"; }).join(""); }
-  function both(x) { return "<span>" + esc(EN(x)) + "</span>" + (S.arHelp && Array.isArray(x) && x[1] ? '<small class="ar-help" lang="ar" dir="rtl">' + esc(x[1]) + "</small>" : ""); }
+  function intro(st) { return (st.intro || []).map(function (x) { return '<div class="tx">' + enText(x) + (arOn() ? help(x) : "") + "</div>"; }).join(""); }
+  function both(x) { return "<span" + la(x) + ">" + esc(EN(x)) + "</span>" + (arOn() && Array.isArray(x) && x[1] ? '<small class="ar-help" lang="ar" dir="rtl">' + esc(x[1]) + "</small>" : ""); }
 
   // put the steps in the right order with up and down buttons
   RENDER.order = function (el, st) {
@@ -1340,10 +1349,10 @@
     function draw() {
       el.innerHTML = '<div class="en-block">' + head(st) + intro(st) + '<p class="lp-sub">' + esc(T(UI.orderSub)) + '</p><ol class="od">' + cur2.map(function (ix, p) {
         var cls = checked ? (ix === p ? " is-right" : " is-wrong") : "";
-        return '<li class="od-i' + cls + '"><span class="od-n">' + (p + 1) + '</span><span class="od-t" lang="en" dir="ltr">' + both(st.items[ix]) + "</span>" +
+        return '<li class="od-i' + cls + '"><span class="od-n">' + (p + 1) + '</span><span class="od-t" ' + LD + '>' + both(st.items[ix]) + "</span>" +
           (checked ? "" : '<span class="od-b"><button type="button" class="od-mv" data-mv="' + p + ':-1" aria-label="' + esc(T(UI.moveUp)) + '"' + (p === 0 ? " disabled" : "") + '>↑</button><button type="button" class="od-mv" data-mv="' + p + ':1" aria-label="' + esc(T(UI.moveDown)) + '"' + (p === cur2.length - 1 ? " disabled" : "") + ">↓</button></span>") + "</li>";
       }).join("") + "</ol>" +
-        (checked ? '<div class="od-ans"><b>' + esc(T(UI.rightOrder)) + '</b><ol>' + st.items.map(function (x) { return '<li lang="en" dir="ltr">' + both(x) + "</li>"; }).join("") + "</ol>" + (st.x ? '<div class="tx">' + enText(st.x) + (S.arHelp ? help(st.x) : "") + "</div>" : "") + "</div>" : "") + "</div>";
+        (checked ? '<div class="od-ans"><b>' + esc(T(UI.rightOrder)) + '</b><ol>' + st.items.map(function (x) { return "<li " + LD + ">" + both(x) + "</li>"; }).join("") + "</ol>" + (st.x ? '<div class="tx">' + enText(st.x) + (arOn() ? help(st.x) : "") + "</div>" : "") + "</div>" : "") + "</div>";
       fixArDir(el);
     }
     el.addEventListener("click", function (e) {
@@ -1362,7 +1371,7 @@
       var f = !!flags[i], res = "";
       if (checked) {
         var cls = r[2] ? (f ? "is-right" : "is-miss") : (f ? "is-wrong" : "");
-        res = cls ? '<div class="dd-x ' + cls + '"><b dir="auto">' + esc(T(r[2] ? (f ? UI.spotRight : UI.spotMissed) : UI.spotFine)) + "</b>" + (r[3] ? " " + esc(EN(r[3])) + (S.arHelp && Array.isArray(r[3]) ? '<small class="ar-help" lang="ar" dir="rtl">' + esc(r[3][1]) + "</small>" : "") : "") + "</div>" : "";
+        res = cls ? '<div class="dd-x ' + cls + '"' + (NATIVE && AR ? ' lang="ar" dir="rtl"' : "") + '><b dir="auto">' + esc(T(r[2] ? (f ? UI.spotRight : UI.spotMissed) : UI.spotFine)) + "</b>" + (r[3] ? " " + esc(EN(r[3])) + (arOn() && Array.isArray(r[3]) ? '<small class="ar-help" lang="ar" dir="rtl">' + esc(r[3][1]) + "</small>" : "") : "") + "</div>" : "";
         return '<div class="dd-row ' + cls + '"><div class="dd-k">' + esc(r[0]) + '</div><div class="dd-v">' + esc(r[1]) + "</div>" + res + "</div>";
       }
       return '<button type="button" class="dd-row" data-sp="' + i + '" aria-pressed="' + f + '"><span class="dd-k">' + esc(r[0]) + '</span><span class="dd-v">' + esc(r[1]) + '</span><span class="dd-flag" aria-hidden="true">' + (f ? "🚩" : "") + "</span></button>";
@@ -1396,16 +1405,16 @@
     function draw() {
       var n = st.nodes[node];
       var h = '<div class="en-block">' + head(st) + (node === st.start && !made ? intro(st) : "") + '<div class="sy">' +
-        '<div class="sy-scene"><span class="sy-ic" aria-hidden="true">' + (n.i || "📍") + '</span><div class="tx">' + enText(n.p) + (S.arHelp ? help(n.p) : "") + "</div></div>";
+        '<div class="sy-scene"><span class="sy-ic" aria-hidden="true">' + (n.i || "📍") + '</span><div class="tx">' + enText(n.p) + (arOn() ? help(n.p) : "") + "</div></div>";
       if (n.end) {
         ended = true;
         h += '<div class="sy-end"><b>' + esc(fmt(UI.storyScore, { c: good, t: made })) + "</b><p>" + esc(T(good === made ? UI.storyBest : UI.storyOk)) + '</p><button type="button" class="btn btn-ghost" data-sy-again>↺ ' + esc(T(UI.storyAgain)) + "</button></div>";
         cur.results[cur.i] = { c: good, t: made };
       } else if (picked == null) {
-        h += '<div class="sy-ch" role="group" aria-label="' + esc(T(UI.storyPick)) + '">' + n.ch.map(function (c, k) { return '<button type="button" class="cc-btn sy-btn" data-ch="' + k + '" lang="en" dir="ltr">' + both(c.t) + "</button>"; }).join("") + "</div>";
+        h += '<div class="sy-ch" role="group" aria-label="' + esc(T(UI.storyPick)) + '">' + n.ch.map(function (c, k) { return '<button type="button" class="cc-btn sy-btn" data-ch="' + k + '" ' + LD + '>' + both(c.t) + "</button>"; }).join("") + "</div>";
       } else {
         var c = n.ch[picked];
-        h += '<div class="sy-fb ' + (c.ok === false ? "is-no" : c.ok ? "is-ok" : "") + '"><b>' + esc(T(c.ok === false ? UI.storyNo : c.ok ? UI.storyYes : UI.storyHm)) + '</b><div class="tx">' + enText(c.fb) + (S.arHelp ? help(c.fb) : "") + '</div></div><button type="button" class="btn btn-primary" data-sy-go>' + esc(T(UI.storyCont)) + " →</button>";
+        h += '<div class="sy-fb ' + (c.ok === false ? "is-no" : c.ok ? "is-ok" : "") + '"><b>' + esc(T(c.ok === false ? UI.storyNo : c.ok ? UI.storyYes : UI.storyHm)) + '</b><div class="tx">' + enText(c.fb) + (arOn() ? help(c.fb) : "") + '</div></div><button type="button" class="btn btn-primary" data-sy-go>' + esc(T(UI.storyCont)) + " →</button>";
       }
       el.innerHTML = h + "</div></div>"; fixArDir(el); gateUpdate();
       var f = $("[data-sy-go]", el) || $(".sy-scene", el); if (f && made) { if (!f.hasAttribute("tabindex") && f.tagName !== "BUTTON") f.setAttribute("tabindex", "-1"); f.focus({ preventScroll: false }); }
@@ -1465,9 +1474,9 @@
     function week() {
       var ev = st.events[wk], h = '<div class="en-block">' + head(st) +
         '<div class="bg-meter"><span>' + esc(fmt(UI.bgWeek, { n: wk + 1, t: st.events.length })) + '</span><b class="' + (bal >= 0 ? "is-ok" : "is-low") + '">' + esc(T(UI.bgBal)) + ": " + money(bal) + "</b></div>" +
-        '<div class="sy"><div class="sy-scene"><span class="sy-ic" aria-hidden="true">' + (ev.i || "📅") + '</span><div class="tx">' + enText(ev.p) + (S.arHelp ? help(ev.p) : "") + "</div></div>";
-      if (picked == null) h += '<div class="sy-ch">' + ev.ch.map(function (c, k) { return '<button type="button" class="cc-btn sy-btn" data-bc="' + k + '" lang="en" dir="ltr">' + both(c.t) + '<em class="bg-cost">' + (c.cost ? "−" + money(scale(c.cost)) : esc(EN(UI.bgFree))) + "</em></button>"; }).join("") + "</div>";
-      else { var c = ev.ch[picked]; h += '<div class="sy-fb ' + (c.ok === false ? "is-no" : c.ok ? "is-ok" : "") + '"><div class="tx">' + enText(c.fb) + (S.arHelp ? help(c.fb) : "") + '</div></div><button type="button" class="btn btn-primary" data-bg-next>' + esc(T(wk < st.events.length - 1 ? UI.bgNextWeek : UI.bgEnd)) + " →</button>"; }
+        '<div class="sy"><div class="sy-scene"><span class="sy-ic" aria-hidden="true">' + (ev.i || "📅") + '</span><div class="tx">' + enText(ev.p) + (arOn() ? help(ev.p) : "") + "</div></div>";
+      if (picked == null) h += '<div class="sy-ch">' + ev.ch.map(function (c, k) { return '<button type="button" class="cc-btn sy-btn" data-bc="' + k + '" ' + LD + '>' + both(c.t) + '<em class="bg-cost">' + (c.cost ? "−" + money(scale(c.cost)) : esc(EN(UI.bgFree))) + "</em></button>"; }).join("") + "</div>";
+      else { var c = ev.ch[picked]; h += '<div class="sy-fb ' + (c.ok === false ? "is-no" : c.ok ? "is-ok" : "") + '"><div class="tx">' + enText(c.fb) + (arOn() ? help(c.fb) : "") + '</div></div><button type="button" class="btn btn-primary" data-bg-next>' + esc(T(wk < st.events.length - 1 ? UI.bgNextWeek : UI.bgEnd)) + " →</button>"; }
       el.innerHTML = h + "</div></div>"; fixArDir(el);
     }
     function end() {
@@ -1475,7 +1484,7 @@
       B.cc = cc; B.allow = A.v; B.left = bal; B.at = Date.now(); save();
       el.innerHTML = '<div class="en-block">' + head(st) + '<div class="pl-card bg-res"><div class="pl-ov"><small>' + esc(T(UI.bgLeftEnd)) + '</small><b class="' + (bal >= 0 ? "" : "is-low") + '">' + money(bal) + "</b></div>" +
         '<p class="pl-note">' + esc(T(bal >= A.v * 0.1 ? UI.bgGreat : bal >= 0 ? UI.bgOk : UI.bgOver)) + "</p>" +
-        '<ul class="tx-list">' + st.tips.map(function (x) { return "<li>" + enText(x) + (S.arHelp ? help(x) : "") + "</li>"; }).join("") + "</ul>" +
+        '<ul class="tx-list">' + st.tips.map(function (x) { return "<li>" + enText(x) + (arOn() ? help(x) : "") + "</li>"; }).join("") + "</ul>" +
         '<button type="button" class="btn btn-ghost" data-bg-again>↺ ' + esc(T(UI.bgAgain)) + "</button></div></div>";
       fixArDir(el);
       cur.results[cur.i] = { c: good, t: log.length };
@@ -1511,7 +1520,7 @@
     function ask() {
       var q = qs[qi];
       el.innerHTML = '<div class="en-block">' + head(st) + '<p class="lp-n">' + esc(fmt(UI.ivQ, { n: qi + 1, t: qs.length })) + '</p><div class="qa-q iv-q" lang="en" dir="ltr"><span aria-hidden="true">' + (st.officer || "👮") + "</span> " + esc(q.q) + "</div>" +
-        (q.tip ? '<details class="iv-tip"><summary>💡 ' + esc(T(UI.ivTip)) + '</summary><div class="tx">' + enText(q.tip) + (S.arHelp ? help(q.tip) : "") + "</div></details>" : "") +
+        (q.tip ? '<details class="iv-tip"><summary>💡 ' + esc(T(UI.ivTip)) + '</summary><div class="tx">' + enText(q.tip) + (arOn() ? help(q.tip) : "") + "</div></details>" : "") +
         '<div data-recbox></div><div class="sp-row"><button type="button" class="btn btn-ghost" data-iv-say>🔊 ' + esc(T(UI.ivRepeat)) + '</button><button type="button" class="btn btn-ghost" data-iv-next>' + esc(T(qi < qs.length - 1 ? UI.nextQ : UI.ivFinish)) + "</button></div>" +
         '<p class="cs-note">' + esc(T(UI.private)) + "</p></div>";
       fixArDir(el);
