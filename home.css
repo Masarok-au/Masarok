@@ -308,7 +308,7 @@
 .h3-pk-sum > div:last-child{border-bottom:0}
 .h3-pk-sum span{width:84px; flex:none; font-size:13px; color:var(--h3-dim)}
 .h3-pk-sum b{flex:1; font-size:15px; font-weight:700; min-width:0; line-height:1.35}
-.h3-pk-sum button{height:44px; padding:0 4px; border:0; background:transparent; color:var(--h3-gold) !important; font-size:13px; font-weight:700; cursor:pointer}
+.h3-pk-sum button{height:44px; min-width:44px; padding:0 4px; border:0; background:transparent; color:var(--h3-gold) !important; font-size:13px; font-weight:700; cursor:pointer}
 .h3-pk-pane .h3-btn-gold{height:56px; margin-top:4px; flex:none}
 .h3-pk-note{font-size:13px; color:var(--h3-dim); text-align:center}
 

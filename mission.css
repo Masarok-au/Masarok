@@ -72,6 +72,7 @@ html[dir="rtl"] .track::after, html[dir="rtl"] .ls::after{--from:right}
 /* ---------- 5. Buttons: precise, they sink when pressed ---------- */
 .btn{border-radius:6px; min-height:48px; padding:0 22px; letter-spacing:.01em;
   transition:transform var(--d-ui) var(--ease-out), background-color var(--d-ui) var(--ease-out), border-color var(--d-ui) var(--ease-out), color var(--d-ui) var(--ease-out), opacity var(--d-ui) var(--ease-out)}
+html[lang="ar"] .btn{letter-spacing:0}
 html[lang="en"] .ac-cta .btn, html[lang="en"] .track-go{text-transform:uppercase; font-size:.8125rem; letter-spacing:.1em}
 .btn:hover{filter:none}
 .btn-primary:hover{background:#EAC584}

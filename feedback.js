@@ -60,7 +60,7 @@
     ".fb-card h2{margin:0; font-family:var(--f-ar, sans-serif); font-weight:700; font-size:1.25rem; color:var(--gold, #E2B66C); padding-inline-end:32px; line-height:1.5}" +
     ".fb-card p{margin:0; color:#C8D3E0; font-size:.9375rem; line-height:1.6}" +
     ".fb-card .btn{display:inline-flex; align-items:center; justify-self:start; gap:8px; cursor:pointer; margin-top:2px}" +
-    ".fb-x{position:absolute; top:10px; inset-inline-end:10px; width:30px; height:30px; border-radius:50%; border:1px solid rgba(238,242,247,.25); background:transparent; color:var(--night-ink, #EEF2F7); font-size:1.25rem; line-height:1; cursor:pointer}" +
+    ".fb-x{position:absolute; top:6px; inset-inline-end:6px; width:40px; height:40px; border-radius:50%; border:1px solid rgba(238,242,247,.25); background:transparent; color:var(--night-ink, #EEF2F7); font-size:1.25rem; line-height:1; cursor:pointer}" +
     ".fb-x:hover{border-color:var(--gold, #E2B66C); color:var(--gold, #E2B66C)}" +
     ".fb-card :focus-visible{outline:3px solid var(--gold, #E2B66C); outline-offset:2px}" +
     ".fb-rope{width:46px; height:40px; margin-top:6px; flex:none; overflow:visible}" +

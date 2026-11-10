@@ -52,7 +52,7 @@
     notSure: ["Not sure yet", "لم أقرر بعد"], notSureSub: ["See every university in {c}", "اعرض كل جامعات {c}"],
     q2: ["What will you study?", "ماذا ستدرس؟"], s2: ["At {u}.", "في {u}."], s2any: ["In {c}.", "في {c}."],
     readyE: ["Your road is ready", "طريقك جاهز"], ready: ["Riyadh to {c}", "من الرياض إلى {c}"], show: ["Show my guide", "اعرض دليلي"],
-    note: ["Saved on this phone. You can change it any time.", "محفوظ على هذا الجهاز، ويمكنك تغييره متى شئت."], stepOf: ["{n} of 3", "{n} من 3"],
+    note: ["Saved on this device. You can change it any time.", "محفوظ على هذا الجهاز، ويمكنك تغييره متى شئت."], stepOf: ["{n} of 3", "{n} من 3"],
     country: ["Country", "الدولة"], uni: ["University", "الجامعة"], study: ["Study level", "المرحلة"], anyUni: ["Not chosen yet", "لم تُحدد بعد"]
   };
   function fmt(k, o) { return T(S[k] || k).replace(/\{(\w+)\}/g, function (m, x) { return o[x] != null ? o[x] : m; }); }
