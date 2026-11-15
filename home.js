@@ -342,13 +342,15 @@
   // ---------- scroll: hero layers, stacked sections, read tracking ----------
   var current = -1, raf = null, queue = [], busy = false;
   var HDR = 56, RAIL = 56;
+  var CALM = true; // plain scrolling: no stacking cards, no scroll-driven movement (set false for the old stacked sections)
   function OFF() { return HDR + RAIL; }
   function fx() {
+    var still = reduce || CALM; // calm layout: sections sit in the page, nothing is scrubbed by the scroll
     var y = window.scrollY, vh = window.innerHeight;
     if (hero && y < 1400) {
-      $$("[data-px]", hero).forEach(function (n) { n.style.transform = reduce ? "" : "translate3d(0," + (y * +n.getAttribute("data-px")).toFixed(1) + "px,0)"; });
+      $$("[data-px]", hero).forEach(function (n) { n.style.transform = still ? "" : "translate3d(0," + (y * +n.getAttribute("data-px")).toFixed(1) + "px,0)"; });
       var f = $("[data-fade]", hero);
-      if (f && !reduce) { var o = clamp(1 - y / 360); f.style.opacity = o.toFixed(3); f.style.transform = "translate3d(0," + (y * 0.3).toFixed(1) + "px,0)"; f.style.filter = o > 0.98 ? "none" : "blur(" + ((1 - o) * 7).toFixed(1) + "px)"; }
+      if (f && !still) { var o = clamp(1 - y / 360); f.style.opacity = o.toFixed(3); f.style.transform = "translate3d(0," + (y * 0.3).toFixed(1) + "px,0)"; f.style.filter = o > 0.98 ? "none" : "blur(" + ((1 - o) * 7).toFixed(1) + "px)"; }
     }
     var top = $(".h3-top"); if (top) top.classList.toggle("is-solid", y > 40);
     var vt = OFF(), vb = vh, span = vb - vt;
@@ -357,18 +359,18 @@
     var eg = clamp((vb - gTop) / span);
     secs.forEach(function (n, k) {
       var e = E[k], cov = k < secs.length - 1 ? E[k + 1] : eg;
-      n.style.transform = reduce ? "" : "scale(" + (1 - 0.07 * cov).toFixed(4) + ")";
-      var dim = $("[data-dim]", n); if (dim) dim.style.opacity = (cov * 0.7).toFixed(3);
+      n.style.transform = still ? "" : "scale(" + (1 - 0.07 * cov).toFixed(4) + ")";
+      var dim = $("[data-dim]", n); if (dim) dim.style.opacity = still ? "0" : (cov * 0.7).toFixed(3);
       var num = $("[data-num]", n);
-      if (num && !reduce) { num.style.transform = "translate3d(" + (sgn * -1 * (1 - e) * 80).toFixed(1) + "px," + ((1 - e) * 30).toFixed(1) + "px,0)"; num.style.opacity = (0.15 + 0.85 * e).toFixed(3); }
+      if (num && !still) { num.style.transform = "translate3d(" + (sgn * -1 * (1 - e) * 80).toFixed(1) + "px," + ((1 - e) * 30).toFixed(1) + "px,0)"; num.style.opacity = (0.15 + 0.85 * e).toFixed(3); }
       $$("[data-rv]", n).forEach(function (r) {
-        var j = +r.getAttribute("data-rv"), p = reduce ? 1 : clamp((e - 0.35 - j * 0.09) / 0.38);
-        r.style.opacity = p.toFixed(3); r.style.transform = reduce ? "" : "translate3d(0," + ((1 - p) * 28).toFixed(1) + "px,0)";
+        var j = +r.getAttribute("data-rv"), p = still ? 1 : clamp((e - 0.35 - j * 0.09) / 0.38);
+        r.style.opacity = p.toFixed(3); r.style.transform = still ? "" : "translate3d(0," + ((1 - p) * 28).toFixed(1) + "px,0)";
         if (j === 1) r.style.filter = p > 0.99 ? "none" : "blur(" + ((1 - p) * 8).toFixed(1) + "px)";
       });
     });
     var gp = $("[data-gplane]", gate);
-    if (gp && !reduce) { var g = clamp((vb - gTop) / (span * 1.25)), gw = gate.clientWidth; gp.style.transform = "translate3d(" + (sgn * (-70 + g * (gw + 140))).toFixed(1) + "px," + (-g * 46).toFixed(1) + "px,0) rotate(" + (AR ? 9 : -9) + "deg)"; }
+    if (gp && !still) { var g = clamp((vb - gTop) / (span * 1.25)), gw = gate.clientWidth; gp.style.transform = "translate3d(" + (sgn * (-70 + g * (gw + 140))).toFixed(1) + "px," + (-g * 46).toFixed(1) + "px,0) rotate(" + (AR ? 9 : -9) + "deg)"; }
     return { E: E, eg: eg };
   }
   function check() {
@@ -399,6 +401,7 @@
     // sticky sections: use the place in the normal flow (the rail, then the sections before it)
     var railBox = rail.parentElement, flow = railBox.getBoundingClientRect().top + window.scrollY + rail.offsetHeight;
     for (var k = 0; k < i; k++) flow += chWrap.children[k].offsetHeight;
+    if (CALM) flow = sec.getBoundingClientRect().top + window.scrollY;
     window.scrollTo({ top: Math.max(0, flow - OFF() + 2), behavior: reduce ? "auto" : "smooth" });
     void top;
   }

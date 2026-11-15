@@ -353,3 +353,26 @@
   .h3-pk-pane{filter:none}
   .h3-pk.is-done{transform:none; opacity:0; transition:opacity .2s !important}
 }
+
+/* ---------- Calm layout (home.js CALM = true): the 5 sections are ordinary page sections ----------
+   No sticky stacking, no scaling or dimming, nothing moves with the scroll. Small numbers, hairlines, plain spacing. */
+:root{--h3-spring:cubic-bezier(.2, .7, .2, 1)}
+.h3-ch{position:relative; top:auto; height:auto; padding:0; display:block; overflow:visible; box-shadow:none; will-change:auto; background:#0C1829 !important; border-top:1px solid rgba(238,242,247,.1)}
+.h3-ch:nth-child(even){background:#0E1C30 !important}
+.h3-ch-in{height:auto; padding:48px 24px 52px; gap:18px; justify-content:flex-start}
+.h3-dim{display:none}
+.h3-num{align-items:center; gap:10px; will-change:auto}
+.h3-num > span{font-family:var(--h3-fh); font-size:15px !important; font-weight:700; line-height:1; letter-spacing:.14em; color:var(--h3-gold); -webkit-text-stroke:0; transition:none}
+.h3-num > span::after{content:""; display:inline-block; vertical-align:middle; width:36px; height:1px; margin-inline-start:12px; background:rgba(226,182,108,.55)}
+.h3-ch.is-read .h3-num > span{color:var(--h3-gold)}
+.h3-badge{width:22px; height:22px; margin-top:0; box-shadow:none; transition:opacity .25s ease}
+.h3-badge svg{width:12px; height:12px}
+.h3-ch-body{gap:14px}
+.h3-ch h2, .h3-gate h2{font-size:28px}
+.h3-chk{transition:transform .2s ease}
+.h3-gplane{display:none}
+@media (min-width:760px){
+  .h3-ch-in{padding:64px 24px 68px}
+  .h3-ch h2, .h3-gate h2{font-size:34px}
+}
+@media (max-height:700px){ .h3-ch-in{padding-top:44px; padding-bottom:48px} }
